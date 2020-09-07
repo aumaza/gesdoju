@@ -1,0 +1,5 @@
+#tabla usuarios
+create table usuarios (id int(11) auto_increment primary key, nombre varchar(30) binary not null, user varchar(15) binary not null, password varchar(10) binary not null, email varchar(90) not null, role int(1) default 1 not null)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla normas
+create table normas (id int(11) auto_increment primary key, n_norma varchar(100) not null, t_norma varchar(11) not null, foro_norma varchar(9) not null, f_pub date not null, anio_pub varchar(4) not null, observaciones varchar(300), file_name varchar(100), file_path varchar(100))ENGINE=InnoDB DEFAULT CHARSET=utf8;
