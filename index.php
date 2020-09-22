@@ -14,32 +14,21 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <?php skeleton();?>
+  <link href="/gesdoju/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
 
+  
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Olvidé mi Password</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+   
+    <ul class="nav navbar-nav">
+      <a href="registro/password.php" data-toggle="tooltip" data-placement="bottom" title="Ingrese aquí para blanquear su Password"><button type="button" class="btn btn-light navbar-btn"><img class="img-reponsive img-rounded" src="icons/status/task-attempt.png" /> Olvidé mi Password</button></a>
+      </ul>
+    
+    
   </nav>
 
   <header class="bg-primary text-white">
@@ -105,7 +94,7 @@
 				echo "<strong> Aguarde un Instante...</strong>";
 				echo "<br>";
 				echo "</div>";
-  				echo '<meta http-equiv="refresh" content="5;URL=root/main/main.php "/>';
+  				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
 				
 			}else{
 				echo '<div class="alert alert-success" role="alert">';

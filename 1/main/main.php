@@ -1,8 +1,8 @@
-<?php include "../../connection/connection.php";
+<?php include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       
-      
-	session_start();
+
+      session_start();
 	$varsession = $_SESSION['user'];
 	
 	$sql = "select nombre from usuarios where user = '$varsession'";
@@ -25,30 +25,13 @@
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
+  <title>Gesdoju</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Gestión Documental Jurídica</title>
-  <?php skeleton();?>
-
-  <!-- Bootstrap core CSS -->
-  <link href="/gesdoju/skeleton/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="/gesdoju/skeleton/css/blog-post.css" rel="stylesheet">
+  <?php skeleton(); ?>
   
-    <script>
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
-});
-</script>
-
- 
   <!-- Data Table Script -->
 <script>
  $(document).ready(function(){
@@ -80,7 +63,7 @@ $(document).ready(function(){
   </script>
   <!-- END Data Table Script -->
   
-   <script >
+  <script >
     function limitText(limitField, limitNum) {
        if (limitField.value.length > limitNum) {
           
@@ -95,52 +78,162 @@ $(document).ready(function(){
 }
 </script>
 
-</head>
+<script>
+function Numeros(string){
+//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){ 
+             //Se añaden a la salida los caracteres validos
+              out += string.charAt(i);
+	     }else{
+		alert("ATENCION - Sólo se permiten Números");
+	     }
+	     }
+	
+    //Retornar valor filtrado
+    return out;
+} 
+</script>
 
+<script> 
+function Text(string){//validacion solo letras
+    var out = '';
+    //Se añaden las letras validas
+    var filtro ="^[abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ- ]+$"; // Caracteres Válidos
+  
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){ 
+	     out += string.charAt(i);
+	     }else{
+		alert("ATENCION - Sólo se permite Texto");
+	     }
+	     }
+    return out;
+}
+</script>
+
+  <script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+  
+  
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+
+    .avatar {
+  vertical-align: middle;
+  horizontal-align: right;
+  width: 60px;
+  height: 60px;
+  border-radius: 60%;
+}
+</style>
+ 
+</head>
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="main.php" data-toggle="tooltip" data-placement="right" title="Búsque y consulte normativas de manera sencilla"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gestión Documental Jurídica</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-          <form action="main.php" method="POST">
-            <a class="nav-link js-scroll-trigger" href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos Personales"><button class="btn btn-default navbar-btn" type="submit" name="B"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> <?php echo $nombre ?></button></a>
-          </form>
-          </li>      
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-        <a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> <button class="btn btn-danger navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
-      </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Page Content -->
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
-
-    <div class="row">
-
-      <!-- Post Content Column -->
-      <div class="col-lg-8"><br><hr>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+     
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gestión Documental Jurídica"><button type="button" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
+     </ul>
+     <ul class="nav navbar-nav">
+     <form action="main.php" method="POST">
+      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Datos Personales"><button type="submit" name="C" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> <?php echo $nombre ?></button></a>
+      <?php 
+      if($_SESSION['user'] == 'root'){
+      echo '<a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Usuarios"><button type="submit" name="J" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button></a>';
+      }
+      ?>
+      </form>
+     </ul>
+      <ul class="nav navbar-nav navbar-right">
+      <a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> <button class="btn btn-danger navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <form action="main.php" method="POST">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
+	<p><img class="img-reponsive img-rounded" src="../../icons/emblems/image-stack.png" /> Categorías</p><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Decretos"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resol.</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disp.</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
+	</form>
+	</div>
 	
-	<?php
-	
-	if($conn){
+    <div class="col-sm-10 text-left"> 
+    <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/apps/clock.png" /> <?php echo "<strong>Hora Actual:</strong> " . date("H:i"); ?></button>
+      <?php setlocale(LC_ALL,"es_ES"); ?>
+      <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong>Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?></button>
+     <hr>
+      
+      <?php
+   
+      if($conn){
 	
 	  if(isset($_POST['A'])){
 	    newNorma();
 	  }
 	  if(isset($_POST['B'])){
-	    loadUser($conn,$nombre);
+	    normas($conn);
+	    
 	  }
 	  if(isset($_POST['C'])){
-	    normas($conn);
+	    loadUser($conn,$nombre);
 	  }
 	  if(isset($_POST['D'])){
 	      $norma = "Ley";
@@ -166,100 +259,61 @@ $(document).ready(function(){
 	      $norma = "Memo";
 	      normativas($conn,$norma);
 	  }
-	
+	  if(isset($_POST['J'])){
+	      usuarios($conn);
+	}
 	}else{
 	  mysqli_error($conn);
 	}
 	mysqli_close($conn);
-	
-	?>
-        
-      </div>
-
-      <!-- Sidebar Widgets Column -->
-      <div class="col-md-4"><br><hr>
-
-        <!-- Search Widget -->
-        <div class="card my-4">
-          <h5 class="card-header bg-dark text-white"><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-verify.png" /> Búsqueda</h5>
-          <div class="card-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Buscar...">
-              <span class="input-group-append">
-                <button class="btn btn-secondary" type="submit">Aceptar</button>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Categories Widget -->
-        <div class="card my-4"> 
-          <h5 class="card-header bg-dark text-white"><img class="img-reponsive img-rounded" src="../../icons/emblems/image-stack.png" /> Categorías</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <form action="main.php" method="POST">
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Leyes"><input type="submit" name="D" value="Ley"></a>
-                  </li>
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Decretos"><input type="submit" name="E" value="Decreto"></a>
-                  </li>
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Resoluciones"><input type="submit" name="F" value="Resolución"></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><input type="submit" name="G" value="Disposición"></a>
-                  </li>
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><input type="submit" name="H" value="Nota"></a>
-                  </li>
-                  <li>
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><input type="submit" name="I" value="Memo"></a>
-                  </li>
-                  </form>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header bg-dark text-white"><img class="img-reponsive img-rounded" src="../../icons/status/task-delegate.png" /> Acciones</h5>
-          <div class="card-body" align="center">
-             <form action="main.php" method="POST">
-	      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Norma"><button type="submit" class="btn btn-secondary btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> Normativa</button></a>
-	      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas"><button type="submit" class="btn btn-secondary btn-sm" name="C"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normativas</button></a><hr>
-	      </form>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- /.row -->
-
-  </div>
-  <!-- /.container -->
-
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-    <p class="m-0 text-center text-white"><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
+      
+   
+   
+   ?>
+      
+      
+      
+     <br>
      </div>
-    <!-- /.container -->
-  </footer>
+ 
+  </div>
+</div>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="/gesdoju/skeleton/jquery/jquery.min.js"></script>
-  <script src="/gesdoju/skeleton/js/bootstrap.bundle.min.js"></script>
+<footer class="container-fluid text-center">
+  <p><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
+</footer>
+
+<!-- Modal -->
+		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+					</div>
+
+					<div class="modal-body">
+						¿Desea eliminar este registro?
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>
+						<a class="btn btn-danger btn-ok"><span class="glyphicon glyphicon-trash"></span> Borrar</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			$('#confirm-delete').on('show.bs.modal', function(e) {
+				$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+				$('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+			});
+		</script>
+		
+		<!-- END Modal -->
 
 </body>
-
 </html>
