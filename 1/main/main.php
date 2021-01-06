@@ -1,6 +1,7 @@
 <?php include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_users.php";
+      include "../lib/lib_normas.php";
       
 
       session_start();
@@ -221,7 +222,10 @@ $(document).ready(function(){
       <?php setlocale(LC_ALL,"es_ES"); ?>
       <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong>Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?></button>
      <hr>
-      
+     <div class="alert alert-warning">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
+     </div><hr>
+     
       <?php
    
       if($conn){
@@ -296,7 +300,16 @@ $(document).ready(function(){
         $role = mysqli_real_escape_string($conn,$_POST['role']);
         changeRole($id,$role,$conn);
 	}
-	
+	if(isset($_POST['pass_user'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        editPassUser($id,$conn);
+	}
+	if(isset($_POST['change_pass'])){
+       $id = mysqli_real_escape_string($conn,$_POST['id']);
+       $pass1 = mysqli_real_escape_string($conn,$_POST['pass1']);
+       $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
+       updatePass($id,$pass1,$pass2,$conn);	
+	}
 	
 	
 	}else{

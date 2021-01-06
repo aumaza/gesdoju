@@ -343,4 +343,166 @@ function changeRole($id,$role,$conn){
 	}
 }
 
+/*
+** funcion que lista los datos del usuario
+*/
+function loadUser($conn,$nombre){
+
+if($conn){
+	
+	$sql = "SELECT * FROM usuarios where nombre = '$nombre'";
+    	mysqli_select_db($conn,'gesdoju');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="container">
+	      <div class="alert alert-success">
+	      <img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Mis Datos
+	      </div><br>';
+	
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Nombre</th>
+                    <th class='text-nowrap text-center'>Usuario</th>
+                    <th>&nbsp;</th>
+                    </thead>";
+
+
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center>".$fila['nombre']."</td>";
+			 echo "<td align=center>".$fila['user']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila['id'].'">';
+                    echo '<button type="submit" class="btn btn-primary btn-sm" name="pass_user"><img src="../../icons/actions/view-refresh.png"  class="img-reponsive img-rounded"> Cambiar Password</button>
+             </form></td>';
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+
+}
+
+
+/*
+** funcion que carga formulario para modificar password de usuario
+*/
+function editPassUser($id,$conn){
+
+      $sql = "select * from usuarios where id = '$id'";
+      mysqli_select_db($conn,'gesdoju');
+      $res = mysqli_query($conn,$sql);
+      $fila = mysqli_fetch_assoc($res);
+      
+
+      echo '<div class="container">
+	    <div class="row">
+	    <div class="col-sm-8">
+	      <h2>Cambiar Password</h2><hr>
+	      
+	      <form action="main.php" method="post">
+	      <input type="hidden" id="id" name="id" value="' . $fila['id'].'" />
+   
+         
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	    <input id="text" type="text" class="form-control" value="' . $fila['nombre'].'" name="nombre" value="" onkeyup="this.value=Text(this.value);" readonly required>
+	  </div>
+	
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	    <input id="text" type="text" class="form-control" name="user" onKeyDown="limitText(this,20);" onKeyUp="limitText(this,20);" value="' . $fila['user'].'" readonly required>
+	  </div>
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	    <input id="password" type="password" class="form-control" name="pass1" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Password" >
+	  </div>
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	    <input  type="password" class="form-control" name="pass2" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Repita Password" >
+	  </div>
+	  <br>
+	
+	<button type="submit" class="btn btn-success btn-block" name="change_pass"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+	      </form>
+	      
+	      <a href="main.php"><button type="submit" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
+	      <br>
+	  </div>
+	  </div>
+	
+	      
+	      </div>
+	      </div>
+	      </div>';
+
+}
+
+/*
+* Funcion para editar la contraseña de los usuarios al sistema
+*/
+function updatePass($id,$pass1,$pass2,$conn){
+
+	mysqli_select_db($conn,'gesdoju');	
+
+	$sqlInsert = "update usuarios set password = '$pass1' where id = '$id'";
+      
+			
+	    if(strlen($pass1) <= 15 || strlen($pass2) <= 15){
+
+	      if(strcmp($pass2, $pass1) == 0){
+		    
+		   $query = mysqli_query($conn,$sqlInsert);
+		    
+		    if($query){
+		    echo "<br>";
+		    echo '<div class="container">';
+		    echo '<div class="alert alert-success" alert-dismissible">
+		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Password Actualizado Satisfactoriamente.';
+		    echo "</div>";
+		    echo "</div>";
+            }else{
+			   
+			    echo '<div class="container">';
+                echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Actualizar el Password. '  .mysqli_error($conn);
+			    echo "</div>";
+			    echo "</div>";
+		    }
+		    }else{
+                echo '<div class="container">';
+                echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Las Contraseñas no Coinciden. Reintente.';
+			    echo "</div>";
+			    echo "</div>";
+		    
+		    }
+		    }else{
+			    echo '<div class="container">';
+                echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Ha superado los 15 caracteres. Reintente.';
+			    echo "</div>";
+			    echo "</div>";
+		    }
+    
+}
+   
+
+
+
 ?>

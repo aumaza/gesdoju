@@ -12,10 +12,15 @@ role int(1) default 1 not null
 create table normas (
 id int(11) auto_increment primary key, 
 n_norma varchar(100) not null, 
-t_norma varchar(11) not null, 
+tipo_norma varchar(11) not null,
+tema_norma varchar(2),
 f_norma varchar(9) not null, 
 f_pub date not null, 
-anio_pub varchar(4) not null, 
-observaciones varchar(300), file_name varchar(100), 
-file_path varchar(100)
+anio_pub varchar(4) not null,
+jurisdiccion varchar(100),
+organismo varchar(100),
+observaciones varchar(300), 
+file_name varchar(100), 
+file_path varchar(100),
+unidad_fisica varchar(10)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
