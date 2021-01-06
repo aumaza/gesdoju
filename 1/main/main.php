@@ -1,5 +1,6 @@
 <?php include "../../connection/connection.php"; 
       include "../../functions/functions.php";
+      include "../lib/lib_users.php";
       
 
       session_start();
@@ -224,7 +225,8 @@ $(document).ready(function(){
       <?php
    
       if($conn){
-	
+	  
+	  // seccion normas
 	  if(isset($_POST['A'])){
 	    newNorma();
 	  }
@@ -259,9 +261,44 @@ $(document).ready(function(){
 	      $norma = "Memo";
 	      normativas($conn,$norma);
 	  }
+	  // fin seccion normas
+	  
+	  //seccion usuarios
 	  if(isset($_POST['J'])){
 	      usuarios($conn);
 	}
+	if(isset($_POST['add_user'])){
+        newUser();
+	}
+	if(isset($_POST['insert_user'])){
+        $nombre = mysqli_real_escape_string($conn,$_POST['nombre']);
+        $user = mysqli_real_escape_string($conn,$_POST['user']);
+        $email = mysqli_real_escape_string($conn,$_POST['email']);
+        $pass1 = mysqli_real_escape_string($conn,$_POST['pass1']);
+        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
+        $role = mysqli_real_escape_string($conn,$_POST['role']);
+        agregarUser($nombre,$user,$email,$pass1,$pass2,$role,$conn);
+	}
+	if(isset($_POST['del_user'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarUser($id,$conn);
+	}
+	if(isset($_POST['delete_user'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delUser($id,$conn);
+	}
+	if(isset($_POST['allow_user'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formAllowUser($id,$conn);
+	}
+	if(isset($_POST['role_user'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $role = mysqli_real_escape_string($conn,$_POST['role']);
+        changeRole($id,$role,$conn);
+	}
+	
+	
+	
 	}else{
 	  mysqli_error($conn);
 	}

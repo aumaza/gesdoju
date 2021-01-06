@@ -13,8 +13,9 @@
   <link rel="icon" type="image/png" href="icons/apps/accessories-dictionary.png" />
   <meta name="description" content="">
   <meta name="author" content="">
-  <?php skeleton();?>
-  <link href="/gesdoju/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
 </head>
 
@@ -27,15 +28,12 @@
     <ul class="nav navbar-nav">
       <a href="registro/password.php" data-toggle="tooltip" data-placement="bottom" title="Ingrese aquí para blanquear su Password"><button type="button" class="btn btn-light navbar-btn"><img class="img-reponsive img-rounded" src="icons/status/task-attempt.png" /> Olvidé mi Password</button></a>
       </ul>
-    
-    
-  </nav>
+   </nav>
 
-  <header class="bg-primary text-white">
+  
     <div class="container text-center">
       <h1>Gestión Documental Jurídica</h1>
-     </div>
-   </header><br>
+     </div><br>
    <div class="container">
    <div class="main">
   
@@ -175,14 +173,15 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="/gesdoju/skeleton/jquery/jquery.min.js"></script>
-  <script src="/gesdoju/skeleton/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom JavaScript for this theme -->
-  <script src="/gesdoju/skeleton/js/scrolling-nav.js"></script>
+  <script src="skeleton/js/scrolling-nav.js"></script>
+  <script src="skeleton/js/bootstrap.min.js"></script>
 
 </body>
 
