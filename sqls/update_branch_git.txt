@@ -1,0 +1,9 @@
+ The default branch on this repository has been renamed.
+
+The master branch is now called main.
+
+To update your local environment, please run these commands:
+
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
