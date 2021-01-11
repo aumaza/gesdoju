@@ -2,6 +2,7 @@
       include "../../functions/functions.php";
       include "../lib/lib_users.php";
       include "../lib/lib_normas.php";
+      include "../lib/lib_system.php";
       
 
       session_start();
@@ -139,7 +140,7 @@ $(document).ready(function(){
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 160%;
+      height: 170%;
     }
     
     /* Set black background color, white text and some padding */
@@ -224,11 +225,36 @@ $(document).ready(function(){
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
-	</form>
 	</div>
       </ul>
       </div>
   </div>
+  
+  <?php 
+	
+	if($_SESSION['user'] == 'root'){
+	
+        echo '<div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Mantenimiento</a>
+                    </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                    <ul class="list-group">
+                    <br>
+                        <a href="main.php" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><button type="submit" class="btn btn-default btn-sm" name="back_up"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button></a><hr>
+                        <a href="main.php" data-toggle="tooltip" data-placement="right" title="Backup Base de Datos"><button type="submit" class="btn btn-default btn-sm" name="dump_base"><img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button></a><hr>
+                    </ul>
+                </div>
+                </div>
+                </div>';
+	
+	}
+	?>
+  
+  </form>
 </div> 
 	
 	  <div class="col-sm-10 text-left"> 
@@ -371,6 +397,15 @@ $(document).ready(function(){
        $pass1 = mysqli_real_escape_string($conn,$_POST['pass1']);
        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
        updatePass($id,$pass1,$pass2,$conn);	
+	}
+	// fin seccion usuarios
+	
+	// seccion mantenimiento
+	if(isset($_POST['back_up'])){
+        backup();
+	}
+	if(isset($_POST['dump_base'])){
+        dumpMysql($conn);
 	}
 	
 	
