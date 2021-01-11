@@ -38,57 +38,5 @@ function skeleton(){
 }
 
 
-/*
-* Funcion para cambiar los permisos de los usuarios al sistema
-*/
-
-function cambiarPermisos($id,$role,$conn){
-
-  $sql = "UPDATE usuarios set role = '$role' where id = '$id'";
-  mysqli_select_db('gesdoju');
-  $retval = mysqli_query($conn,$sql);
-  if($retval){
-    
-    echo "<br>";
-			echo '<div class="section"><br>
-			      <div class="container">
-			      <div class="row">
-			      <div class="col-md-12">';
-			echo '<div class="alert alert-success" role="alert">';
-			echo 'Rol Actualizado Satisfactoriamente';
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-  
-	  }else{
-			echo "<br>";
-			echo '<div class="section"><br>
-			      <div class="container">
-			      <div class="row">
-			      <div class="col-md-12">';
-			echo '<div class="alert alert-warning" role="alert">';
-			echo "El usuario no existe. Intente Nuevamente!";
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-			echo "</div>";
-		}
- 
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

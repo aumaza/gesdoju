@@ -3,17 +3,17 @@
 /*
 ** Funcion alta de norma
 */
-function newNorma(){
+function newNorma($conn){
 
       echo '<div class="container">
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Cargar Normativa</h2><hr>
-	        <form action="../normas/formNuevoRegistro.php" method="POST">
+	        <form action="main.php" method="POST">
 	        
 	        <div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
-		  <input type="text" class="form-control" id="nombre" name="n_norma"  onKeyDown="limitText(this,25);" placeholder="00000/00" required>
+		  <input type="text" class="form-control" id="nombre" name="n_norma"  maxlength="25" placeholder="00000/00" required>
 		</div>
 		
 		<div class="form-group">
@@ -37,6 +37,10 @@ function newNorma(){
 		    <option value="Laboral">Laboral</option>
 		    <option value="Civil">Civil</option>
 		    <option value="Penal">Penal</option>
+		    <option value="Salarial">Salarial</option>
+		    <option value="Estructura">Estructura Organizativa</option>
+		    <option value="Presupuesto">Presupuesto</option>
+		    <option value="Carrera">Carrera</option>
 		    </select>
 		</div>
 		
@@ -47,15 +51,65 @@ function newNorma(){
 		
 		<div class="form-group">
 		  <label for="pwd">Año:</label>
-		  <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" onKeyDown="limitText(this,4);" required>
+		  <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" maxlength="4" required>
+		</div>';
+		
+		  
+        echo '<div class="form-group">
+		  <label for="sel1">Organismos</label>
+		  <select class="form-control" name="organismo" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM organismos";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[cod_org].'">'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="sel1">Jurisdicción</label>
+		  <select class="form-control" name="jurisdiccion" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM jurisdicciones";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+                while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[cod_jur].'">'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="nombre">Ubicación Física/Carpeta</label>
+		  <input type="text" class="form-control" name="ub_fis" required>
 		</div>
 		
 		<div class="form-group">
 		  <label for="pwd">Observaciones:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" onKeyDown="limitText(this,300);" required></textarea>
+		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required></textarea>
 		</div>
 		
-		<button type="submit" class="btn btn-success btn-block" name="A"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		<button type="submit" class="btn btn-success btn-block" name="add_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
 	      </form> <br>
 	      
 	    </div>
@@ -71,7 +125,7 @@ function newNorma(){
 function editNorma($id,$conn){
     
     $sql = "select * from normas where id = '$id'";
-      mysqli_select_db('gesdoju');
+      mysqli_select_db($conn,'gesdoju');
       $res = mysqli_query($conn,$sql);
       $fila = mysqli_fetch_assoc($res);
 
@@ -79,24 +133,24 @@ function editNorma($id,$conn){
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Editar Normativa</h2><hr>
-	        <form action="../normas/formUpdate.php" method="POST">
+	        <form action="main.php" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
 	        
 	        <div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
-		  <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" onKeyDown="limitText(this,25);" required>
+		  <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" required>
 		</div>
 		
 		<div class="form-group">
 		  <label for="sel1">Tipo de Norma:</label>
 		  <select class="form-control" name="t_norma">
 		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Ley" '.($fila['t_norma'] == "Ley" ? "selected" : ""). '>Ley</option>
-		    <option value="Decreto" '.($fila['t_norma'] == "Decreto" ? "selected" : "").'>Decreto</option>
-		    <option value="Resolución" '.($fila['t_norma'] == "Resolución" ? "selected" : "").'>Resolución</option>
-		    <option value="Disposición" '.($fila['t_norma'] == "Disposición" ? "selected" : "").'>Disposición</option>
-		    <option value="Nota" '.($fila['t_norma'] == "Nota" ? "selected" : "").'>Nota</option>
-		    <option value="Memo" '.($fila['t_norma'] == "Memo" ? "selected" : "").'>Memo</option>
+		    <option value="Ley" '.($fila['tipo_norma'] == "Ley" ? "selected" : ""). '>Ley</option>
+		    <option value="Decreto" '.($fila['tipo_norma'] == "Decreto" ? "selected" : "").'>Decreto</option>
+		    <option value="Resolución" '.($fila['tipo_norma'] == "Resolución" ? "selected" : "").'>Resolución</option>
+		    <option value="Disposición" '.($fila['tipo_norma'] == "Disposición" ? "selected" : "").'>Disposición</option>
+		    <option value="Nota" '.($fila['tipo_norma'] == "Nota" ? "selected" : "").'>Nota</option>
+		    <option value="Memo" '.($fila['tipo_norma'] == "Memo" ? "selected" : "").'>Memo</option>
 		  </select>
 		</div> 
 		
@@ -104,10 +158,14 @@ function editNorma($id,$conn){
 		  <label for="sel1">Ambito de la Norma:</label>
 		  <select class="form-control" name="foro_norma">
 		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Comercial" '.($fila['foro_norma'] == "Comercial" ? "selected" : ""). '>Comercial</option>
-		    <option value="Laboral" '.($fila['foro_norma'] == "Laboral" ? "selected" : ""). '>Laboral</option>
-		    <option value="Civil" '.($fila['foro_norma'] == "Civil" ? "selected" : ""). '>Civil</option>
-		    <option value="Penal" '.($fila['foro_norma'] == "Penal" ? "selected" : ""). '>Penal</option>
+		    <option value="Comercial" '.($fila['f_norma'] == "Comercial" ? "selected" : ""). '>Comercial</option>
+		    <option value="Laboral" '.($fila['f_norma'] == "Laboral" ? "selected" : ""). '>Laboral</option>
+		    <option value="Civil" '.($fila['f_norma'] == "Civil" ? "selected" : ""). '>Civil</option>
+		    <option value="Penal" '.($fila['f_norma'] == "Penal" ? "selected" : ""). '>Penal</option>
+		    <option value="Salarial" '.($fila['f_norma'] == "Salarial" ? "selected" : ""). '>Salarial</option>
+		    <option value="Estructura" '.($fila['f_norma'] == "Estructura" ? "selected" : ""). '>Estructura Organizativa</option>
+		    <option value="Presupuesto" '.($fila['f_norma'] == "Presupuesto" ? "selected" : ""). '>Presupuesto</option>
+		    <option value="Carrera" '.($fila['f_norma'] == "Carrera" ? "selected" : ""). '>Carrera</option>
 		    </select>
 		</div>
 		
@@ -118,17 +176,105 @@ function editNorma($id,$conn){
 		
 		<div class="form-group">
 		  <label for="pwd">Año:</label>
-		  <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" onKeyDown="limitText(this,4);" required>
+		  <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" maxlength="4" required>
+		</div>';
+		
+		echo '<div class="form-group">
+		  <label for="sel1">Organismos</label>
+		  <select class="form-control" name="organismo" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM organismos";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while($valores = mysqli_fetch_array($res)){
+               echo '<option value="'.$valores[cod_org].'" '.("'.$fila[organismo].'" == "'.$valores[cod_org].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+				}
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="sel1">Jurisdicción</label>
+		  <select class="form-control" name="jurisdiccion" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM jurisdicciones";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+                while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[cod_jur].'" '.("'.$fila[jurisdiccion].'" == "'.$valores[cod_jur].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+				}
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="nombre">Ubicación Física/Carpeta</label>
+		  <input type="text" class="form-control" name="ub_fis" value="'.$fila['unidad_fisica'].'" required>
 		</div>
 		
 		<div class="form-group">
 		  <label for="pwd">Observaciones:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" onKeyDown="limitText(this,300);" required>'.$fila['observaciones'].'</textarea>
+		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required>'.$fila['observaciones'].'</textarea>
 		</div>
 		
-		<button type="submit" class="btn btn-success btn-block" name="A"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		<button type="submit" class="btn btn-success btn-block" name="editar_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+	      </form><hr> 
+	      <a href="main.php"><button type="button" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
+	      <br>
+	      
+	    </div>
+	    </div>
+	</div>';
+
+}
+
+/*
+** Funcion carga formulario de eliminacion de registro
+*/
+function formBorrarNorma($id,$conn){
+    
+    $sql = "select * from normas where id = '$id'";
+      mysqli_select_db($conn,'gesdoju');
+      $res = mysqli_query($conn,$sql);
+      $fila = mysqli_fetch_assoc($res);
+
+      echo '<div class="container">
+	    <div class="row">
+	    <div class="col-sm-8">
+	      <h2>Eliminar Norma</h2><hr>
+	      <div class="alert alert-danger">
+	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
+            <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
+          </div><hr>
+          
+	        <form action="main.php" method="POST">
+	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
+	        
+	        <div class="form-group">
+		  <label for="nombre">Nro de Norma</label>
+		  <input type="text" class="form-control" id="nombre" value="'.$fila['n_norma'].'" readonly>
+		</div><hr>
+		
+		
+		<button type="submit" class="btn btn-success btn-block" name="delete_norma"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
 	      </form> 
-	      <a href="../main/main.php"><button type="submit" class="btn btn-primary btn-block" ><img src="../../icons/actions/arrow-left.png"  class="img-reponsive img-rounded"> Volver</button></a>
+	      <a href="main.php"><button type="button" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
 	      <br>
 	      
 	    </div>
@@ -138,28 +284,99 @@ function editNorma($id,$conn){
 }
 
 
-function updateNorma($id,$n_norma,$t_norma,$foro_norma,$f_pub,$anio,$obs,$conn){
+
+/*
+** Función para agregar un registro a la base de datos en la tabla normas
+*/ 
+
+function addNorma($n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
 
 		
-	mysqli_select_db('gesdoju');
-	$sqlInsert = "update normas set n_norma = '$n_norma', t_norma = '$t_norma', foro_norma = '$foro_norma', f_pub = '$f_pub', anio_pub = '$anio', observaciones = '$obs' where id = '$id'";
+	mysqli_select_db($conn,'gesdoju');
+	$sqlInsert = "INSERT INTO normas ".
+		"(n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones)".
+		"VALUES ".
+      "('$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs')";
            
 	$res = mysqli_query($conn,$sqlInsert);
 
 
 	if($res){
-		//mysqli_query($conn,$sqlInsert);
-		echo "<br>";
-		echo '<div class="container">';
-		echo '<div class="alert alert-success" role="alert">';
-		echo 'Registro Actualizado Exitosamente. Aguarde un Instante que será Redireccionado';
-		echo "</div>";
-		echo "</div>";	
+            echo "<br>";
+		    echo '<div class="container">';
+		    echo '<div class="alert alert-success" alert-dismissible">
+		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Norma Agregada Satisfactoriamente.';
+		    echo "</div>";
+		    echo "</div>";
 	}else{
+            echo '<div class="container">';
+            echo '<div class="alert alert-warning" alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+			echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Agregar la Norma. '  .mysqli_error($conn);
+			echo "</div>";
+			echo "</div>";
+	}
+}
+
+
+/*
+** Función para editar un registro de la tabla normas
+*/
+
+function updateNorma($id,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
+
+		
+	mysqli_select_db($conn,'gesdoju');
+	$sqlInsert = "update normas set n_norma = '$n_norma', tipo_norma = '$tipo_norma', f_norma = '$foro_norma', f_pub = '$f_pub', anio_pub = '$anio', jurisdiccion = '$jurisdiccion', organismo = '$organismo', unidad_fisica = '$unidad_fisica', observaciones = '$obs' where id = '$id'";
+           
+	$res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
 		echo "<br>";
+        echo '<div class="container">';
+		echo '<div class="alert alert-success" alert-dismissible">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Norma Editada Satisfactoriamente.';
+		echo "</div>";
+		echo "</div>";
+	}else{
 		echo '<div class="container">';
-		echo '<div class="alert alert-warning" role="alert">';
-		echo "Hubo un error al Actualizar el Registro!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
+        echo '<div class="alert alert-warning" alert-dismissible">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Editar la Norma. '  .mysqli_error($conn);
+		echo "</div>";
+		echo "</div>";
+	}
+}
+
+/*
+** Función para eliminar un registro de la tabla normas
+*/
+
+function delNorma($id,$conn){
+
+		
+	mysqli_select_db($conn,'gesdoju');
+	$sql = "delete from normas where id = '$id'";
+           
+	$res = mysqli_query($conn,$sql);
+
+
+	if($res){
+		echo "<br>";
+        echo '<div class="container">';
+		echo '<div class="alert alert-success" alert-dismissible">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />Registro Eliminado Satisfactoriamente.';
+		echo "</div>";
+		echo "</div>";
+	}else{
+		echo '<div class="container">';
+        echo '<div class="alert alert-warning" alert-dismissible">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Eliminar el Registro. '  .mysqli_error($conn);
 		echo "</div>";
 		echo "</div>";
 	}
@@ -172,7 +389,7 @@ function normas($conn){
 if($conn){
 	
 	$sql = "SELECT * FROM normas";
-    	mysqli_select_db('gesdoju');
+    	mysqli_select_db($conn,'gesdoju');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
@@ -185,14 +402,17 @@ if($conn){
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
-                    <th class='text-nowrap text-center'>Tipo Norma</th>
-                    <th class='text-nowrap text-center'>Foro</th>
-                    <th class='text-nowrap text-center'>F. Publicación</th>
-                    <th class='text-nowrap text-center'>Año Publicación</th>
-                    <th class='text-nowrap text-center'>Observaciones</th>
-                    <th class='text-nowrap text-center'>Archivo</th>
-                    <th>&nbsp;</th>
-                    </thead>";
+            <th class='text-nowrap text-center'>Tipo Norma</th>
+            <th class='text-nowrap text-center'>Foro</th>
+            <th class='text-nowrap text-center'>F. Publicación</th>
+            <th class='text-nowrap text-center'>Año Publicación</th>
+            <th class='text-nowrap text-center'>Organismo</th>
+            <th class='text-nowrap text-center'>Jurisdicción</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Observaciones</th>
+            <th class='text-nowrap text-center'>Archivo</th>
+            <th>&nbsp;</th>
+            </thead>";
 
 
 	while($fila = mysqli_fetch_array($resultado)){
@@ -200,18 +420,25 @@ if($conn){
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
-			 echo "<td align=center>".$fila['t_norma']."</td>";
-			 echo "<td align=center>".$fila['foro_norma']."</td>";
+			 echo "<td align=center>".$fila['tipo_norma']."</td>";
+			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
+			 echo "<td align=center>".$fila['organismo']."</td>";
+			 echo "<td align=center>".$fila['jurisdiccion']."</td>";
+			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
 			 echo "<td align=center>".$fila['observaciones']."</td>";
 			 echo "<td align=center>".$fila['file_name']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '<a href="../normas/editar.php?id='.$fila['id'].'" class="btn btn-primary btn-sm " ><span class="glyphicon glyphicon-pencil"></span> Editar</a><br>';
-			 echo '<a href="#" data-href="../normas/eliminar.php?id='.$fila['id'].'" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Borrar</a><br>';
-			 echo '<a href="../normas/upload.php?id='.$fila['id'].'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cloud-upload"></span> PDF</a><br>';
-			 echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-cloud-download"></span> PDF</a>';
-			 echo "</td>";
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila['id'].'">
+                                     
+                    <button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                    <button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
+                   <a href="../normas/download.php?file_name='.$fila['file_name'].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+             echo '</form>';
+             echo "</td>";
 			 $count++;
 		}
 
@@ -232,8 +459,8 @@ function normativas($conn,$norma){
 
 if($conn){
 	
-	$sql = "SELECT * FROM normas where t_norma = '$norma'";
-    	mysqli_select_db('gesdoju');
+	$sql = "SELECT * FROM normas where tipo_norma = '$norma'";
+    	mysqli_select_db($conn,'gesdoju');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
@@ -246,14 +473,17 @@ if($conn){
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
-                    <th class='text-nowrap text-center'>Tipo Norma</th>
-                    <th class='text-nowrap text-center'>Foro</th>
-                    <th class='text-nowrap text-center'>F. Publicación</th>
-                    <th class='text-nowrap text-center'>Año Publicación</th>
-                    <th class='text-nowrap text-center'>Observaciones</th>
-                    <th class='text-nowrap text-center'>Archivo</th>
-                    <th>&nbsp;</th>
-                    </thead>";
+            <th class='text-nowrap text-center'>Tipo Norma</th>
+            <th class='text-nowrap text-center'>Foro</th>
+            <th class='text-nowrap text-center'>F. Publicación</th>
+            <th class='text-nowrap text-center'>Año Publicación</th>
+            <th class='text-nowrap text-center'>Organismo</th>
+            <th class='text-nowrap text-center'>Jurisdicción</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Observaciones</th>
+            <th class='text-nowrap text-center'>Archivo</th>
+            <th>&nbsp;</th>
+            </thead>";
 
 
 	while($fila = mysqli_fetch_array($resultado)){
@@ -261,17 +491,25 @@ if($conn){
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
-			 echo "<td align=center>".$fila['t_norma']."</td>";
-			 echo "<td align=center>".$fila['foro_norma']."</td>";
+			 echo "<td align=center>".$fila['tipo_norma']."</td>";
+			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
+			 echo "<td align=center>".$fila['organismo']."</td>";
+			 echo "<td align=center>".$fila['jurisdiccion']."</td>";
+			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
 			 echo "<td align=center>".$fila['observaciones']."</td>";
 			 echo "<td align=center>".$fila['file_name']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '<a href="../normas/editar.php?id='.$fila['id'].'" class="btn btn-primary btn-sm " ><span class="glyphicon glyphicon-pencil"></span> Editar</a><br>';
-			 echo '<a href="#" data-href="../normas/eliminar.php?id='.$fila['id'].'" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Borrar</a><br>';
-			 echo '<a href="../normas/upload.php?id='.$fila['id'].'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cloud-upload"></span> PDF</a><br>';
-			 echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-cloud-download"></span> PDF</a>';
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila['id'].'">
+                    <input type="hidden" name="file_name" value="'.$fila['file_name'].'">
+                    
+                    <button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                    <button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
+                    <a href="../normas/download.php?file_name='.$fila['file_name'].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+             echo '</form>';
 			 echo "</td>";
 			 $count++;
 		}
@@ -289,77 +527,57 @@ if($conn){
 
 }
 
-function delNorma($id,$conn){
-
-		
-	mysqli_select_db('gesdoju');
-	$sql = "delete from normas where id = '$id'";
-           
-	$res = mysqli_query($conn,$sql);
 
 
-	if($res){
-		//mysqli_query($conn,$sqlInsert);
-		echo "<br>";
-		echo '<div class="container">';
-		echo '<div class="alert alert-success" role="alert">';
-		echo 'Registro Eliminado Exitosamente. Aguarde un Instante que será Redireccionado';
-		echo "</div>";
-		echo "</div>";	
-	}else{
-		echo "<br>";
-		echo '<div class="container">';
-		echo '<div class="alert alert-warning" role="alert">';
-		echo "Hubo un error al Eliminar el Registro!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
-		echo "</div>";
-		echo "</div>";
-	}
+
+
+/*
+* Funcion para cambiar avatar de usuario
+*/
+function selectFile($id){
+
+    echo '<div class="panel panel-success" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/apps/acroread.png"  class="img-reponsive img-rounded"> Archivo PDF';
+	echo '</div><br>';
+	                         
+	echo '
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong>Seleccione el Archivo a Subir:</strong><br>
+                <form action="main.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="'.$id.'">
+                
+                <input type="file" name="file"><br>
+                <button type="submit" name="upload"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
+                </form>
+            </div>
+            </div>
+            
+	      </div>  
+	    </div>
+	  </div>
+	  </div>';
 }
 
-function addNorma($n_norma,$t_norma,$foro_norma,$f_pub,$anio,$obs,$conn){
-
-		
-	mysqli_select_db('gesdoju');
-	$sqlInsert = "INSERT INTO normas ".
-		"(n_norma,t_norma,foro_norma,f_pub,anio_pub,observaciones)".
-		"VALUES ".
-      "('$n_norma','$t_norma','$foro_norma','$f_pub','$anio','$obs')";
-           
-	$res = mysqli_query($conn,$sqlInsert);
-
-
-	if($res){
-		//mysqli_query($conn,$sqlInsert);
-		echo "<br>";
-		echo '<div class="container">';
-		echo '<div class="alert alert-success" role="alert">';
-		echo 'Registro Guardado Exitosamente. Aguarde un Instante que será Redireccionado';
-		echo "</div>";
-		echo "</div>";	
-	}else{
-		echo "<br>";
-		echo '<div class="container">';
-		echo '<div class="alert alert-warning" role="alert">';
-		echo "Hubo un error al guardar el Registro!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
-		echo "</div>";
-		echo "</div>";
-	}
-}
 
 /*
 ** Funcion para subir pdf
 */
 
-function uploadPDF($id,$conn){
+function uploadPDF($id,$file,$conn){
 
   // File upload path
 $targetDir = '../../uploads/';
-$fileName = basename($_FILES["file"]["name"]);
+$fileName = $file;
+//$fileName = basename($_FILES["file"]["name"]);
 $targetFilePath = $targetDir . $fileName;
 
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 
-if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
+if(!empty($_FILES["file"]["name"])){
     // Allow certain file formats
     $allowTypes = array('pdf');
     
@@ -372,56 +590,38 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
             // Insert image file name into database
            
            $sql = "update normas set file_path = '$targetFilePath', file_name = '$fileName' where id = '$id'";
-           mysqli_select_db('gesdoju');
+           mysqli_select_db($conn,'gesdoju');
 	    $insert = mysqli_query($conn,$sql);
          
             if($insert){
             
 			  echo '<div class="alert alert-success" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/success-img.png" alt="Avatar" class="avatar" ><strong> Base de Datos Actualizada. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Base de Datos Actualizada. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
                           echo "</div><hr>";
-                          echo '<div class="alert alert-success" role="alert">';
-                          echo "<a href='../main/main.php'><button class='btn btn-warning navbar-btn'><span class='glyphicon glyphicon-chevron-left'></span> Volver</button></a>";
-                          echo "</div><hr>";
-                
             }else{
 		  
 			  echo '<div class="alert alert-success" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/success-img.png" alt="Avatar" class="avatar" ><strong>El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
                           echo "</div><hr>";
-                          echo '<div class="alert alert-success" role="alert">';
-                          echo "<a href='../main/main.php'><button class='btn btn-warning navbar-btn'><span class='glyphicon glyphicon-chevron-left'></span> Volver</button></a>";
-                          echo "</div><hr>";
-                
             } 
-        }else{
+            }else{
 			  echo '<div class="alert alert-warning" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/think-img.png" alt="Avatar" class="avatar" ><strong> Ups. Hubo un error subiendo el Archivo.</strong>';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong>';
                           echo "</div><hr>";
-                          echo '<div class="alert alert-success" role="alert">';
-                          echo "<a href='../main/main.php'><button class='btn btn-warning navbar-btn'><span class='glyphicon glyphicon-chevron-left'></span> Volver</button></a>";
-                          echo "</div><hr>";
-        }
-    }else{
+                }
+                }else{
     
 			  echo '<div class="alert alert-danger" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/aircraft-crash64-img.png" alt="Avatar" class="avatar" ><strong> Ups, solo archivos con extensión: PDF son soportados.</strong>';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: PDF son soportados.</strong>';
 			  echo "</div><hr>";
-                          echo '<div class="alert alert-success" role="alert">';
-                          echo "<a href='../main/main.php'><button class='btn btn-warning navbar-btn'><span class='glyphicon glyphicon-chevron-left'></span> Volver</button></a>";
+                }
+                }else{
+                          echo '<div class="alert alert-info" role="alert">';
+                          echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
                           echo "</div><hr>";
-    }
-}else{
-			  echo '<div class="alert alert-info" role="alert">';
-                          echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/refresh-img.png" alt="Avatar" class="avatar" ><strong> Por favor, seleccione al archivo a subir.</strong>';
-                          echo "</div><hr>";
-                          echo '<div class="alert alert-success" role="alert">';
-                          echo "<a href='../main/main.php'><button class='btn btn-warning navbar-btn'><span class='glyphicon glyphicon-chevron-left'></span> Volver</button></a>";
-                          echo "</div><hr>";
-}
+                }
 
 }
-
 
 
 ?>

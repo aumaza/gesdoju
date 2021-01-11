@@ -139,7 +139,7 @@ $(document).ready(function(){
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 100%;
+      height: 160%;
     }
     
     /* Set black background color, white text and some padding */
@@ -207,22 +207,36 @@ $(document).ready(function(){
       <form action="main.php" method="POST">
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a>
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
-	<p><img class="img-reponsive img-rounded" src="../../icons/emblems/image-stack.png" /> Categorías</p><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a>
+		
+	 <div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">Categorías</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse">
+      <ul class="list-group">
+      <br>
+        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Decretos"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resol.</button></a>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disp.</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
 	</form>
 	</div>
+      </ul>
+      </div>
+  </div>
+</div> 
 	
-    <div class="col-sm-10 text-left"> 
+	  <div class="col-sm-10 text-left"> 
     <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/apps/clock.png" /> <?php echo "<strong>Hora Actual:</strong> " . date("H:i"); ?></button>
-      <?php setlocale(LC_ALL,"es_ES"); ?>
+      <?php setlocale(LC_ALL,"es_ES.UTF-8"); ?>
       <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong>Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?></button>
      <hr>
-     <div class="alert alert-warning">
+     <div class="alert alert-info">
         <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
      </div><hr>
      
@@ -230,14 +244,62 @@ $(document).ready(function(){
    
       if($conn){
 	  
-	  // seccion normas
+	  // seccion ABM de normas
 	  if(isset($_POST['A'])){
-	    newNorma();
+	    newNorma($conn);
 	  }
+	  if(isset($_POST['add_norma'])){
+        $n_norma = mysqli_real_escape_string($conn,$_POST['n_norma']);
+        $tipo_norma = mysqli_real_escape_string($conn,$_POST['t_norma']);
+        $foro_norma = mysqli_real_escape_string($conn,$_POST['foro_norma']);
+        $f_pub = mysqli_real_escape_string($conn,$_POST['f_pub']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        $organismo = mysqli_real_escape_string($conn,$_POST['organismo']);
+        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+        $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
+        $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
+        addNorma($n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+	  }
+	  if(isset($_POST['edit_norma'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        editNorma($id,$conn);
+	  }
+	  if(isset($_POST['editar_norma'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $n_norma = mysqli_real_escape_string($conn,$_POST['n_norma']);
+        $tipo_norma = mysqli_real_escape_string($conn,$_POST['t_norma']);
+        $foro_norma = mysqli_real_escape_string($conn,$_POST['foro_norma']);
+        $f_pub = mysqli_real_escape_string($conn,$_POST['f_pub']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        $organismo = mysqli_real_escape_string($conn,$_POST['organismo']);
+        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+        $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
+        $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
+        updateNorma($id,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+	  }
+	  if(isset($_POST['del_norma'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarNorma($id,$conn);
+	  }
+	  if(isset($_POST['delete_norma'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delNorma($id,$conn);
+	  }
+	  if(isset($_POST['upload_file'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        selectFile($id);
+	  }
+	  if(isset($_POST['upload'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $file = basename($_FILES["file"]["name"]);
+        uploadPDF($id,$file,$conn);
+	  }
+	  // fin seccion ABM de normas
+	  
+	  // seccion consulta de normas
 	  if(isset($_POST['B'])){
 	    normas($conn);
-	    
-	  }
+      }
 	  if(isset($_POST['C'])){
 	    loadUser($conn,$nombre);
 	  }
@@ -265,7 +327,7 @@ $(document).ready(function(){
 	      $norma = "Memo";
 	      normativas($conn,$norma);
 	  }
-	  // fin seccion normas
+	  // fin seccion consulta de normas
 	  
 	  //seccion usuarios
 	  if(isset($_POST['J'])){

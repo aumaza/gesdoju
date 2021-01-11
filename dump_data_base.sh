@@ -1,7 +1,7 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 fecha=`date +%d-%m-%Y`
-archivo="siadcon-$fecha.sql"
-mysqldump --user=siadcon --password=siadcon siadcon > $archivo
+archivo="gesdoju-$fecha.sql"
+mysqldump --user=root --password=slack142 gesdoju > $archivo
 mv $archivo sqls/
 echo -e "Database Backing Up Successfully \n File storage Successfully"
 
