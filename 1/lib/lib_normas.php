@@ -433,10 +433,10 @@ if($conn){
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
-                    <button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
-                    <button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
-                   <a href="../normas/download.php?file_name='.$fila['file_name'].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma"><button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
+                   <a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo PDF de la Norma"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
              echo '</form>';
              echo "</td>";
 			 $count++;
@@ -505,10 +505,10 @@ if($conn){
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                     <input type="hidden" name="file_name" value="'.$fila['file_name'].'">
                     
-                    <button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
-                    <button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
-                    <a href="../normas/download.php?file_name='.$fila['file_name'].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma"><button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
+                   <a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo PDF de la Norma"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
              echo '</form>';
 			 echo "</td>";
 			 $count++;

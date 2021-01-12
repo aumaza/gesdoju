@@ -140,7 +140,7 @@ $(document).ready(function(){
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 170%;
+      height: 200%;
     }
     
     /* Set black background color, white text and some padding */
@@ -166,12 +166,23 @@ $(document).ready(function(){
   height: 60px;
   border-radius: 60%;
 }
+.affix {
+    top: 0;
+    width: 100%;
+    z-index: 9999 !important;
+  }
+
+  .affix ~ .container-fluid {
+    position: relative;
+    padding-top: 70px;
+  }
+
 </style>
  
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -202,33 +213,58 @@ $(document).ready(function(){
   </div>
 </nav>
   
-<div class="container-fluid text-center">    
+<div class="container-fluid">    
   <div class="row content">
     <div class="col-sm-2 sidenav">
       <form action="main.php" method="POST">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
-		
+	
 	 <div class="panel-group">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">Categorías</a>
+        <a data-toggle="collapse" href="#collapse1">Normativas</a>
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
       <ul class="list-group">
       <br>
-        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Decretos"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a><hr>
+      
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
+	
+        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
+        
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Decretos"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
+	
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
+	
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
+	
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
+	
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
 	</div>
       </ul>
       </div>
   </div>
+  
+   <div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse3">Autoridades Superiores</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <ul class="list-group">
+        <li class="list-group-item">One</li>
+        <li class="list-group-item">Two</li>
+        <li class="list-group-item">Three</li>
+      </ul>
+    </div>
+  </div>
+</div> 
   
   <?php 
 	
@@ -407,7 +443,7 @@ $(document).ready(function(){
 	if(isset($_POST['dump_base'])){
         dumpMysql($conn);
 	}
-	
+	//fin seccion mantenimiento
 	
 	}else{
 	  mysqli_error($conn);
