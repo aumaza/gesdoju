@@ -12,8 +12,13 @@ function newNorma($conn){
 	        <form action="main.php" method="POST">
 	        
 	        <div class="form-group">
+		  <label for="nombre">Nombre de la Norma</label>
+		  <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" required>
+		</div>
+	        
+	        <div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
-		  <input type="text" class="form-control" id="nombre" name="n_norma"  maxlength="25" placeholder="00000/00" required>
+		  <input type="text" class="form-control" id="nombre" name="n_norma"  maxlength="25" placeholder="00000" required>
 		</div>
 		
 		<div class="form-group">
@@ -135,6 +140,11 @@ function editNorma($id,$conn){
 	      <h2>Editar Normativa</h2><hr>
 	        <form action="main.php" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
+	        
+	        <div class="form-group">
+		  <label for="nombre">Nombre de la Norma</label>
+		  <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" required>
+		</div>
 	        
 	        <div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
@@ -289,14 +299,14 @@ function formBorrarNorma($id,$conn){
 ** Función para agregar un registro a la base de datos en la tabla normas
 */ 
 
-function addNorma($n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
+function addNorma($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
 
 		
 	mysqli_select_db($conn,'gesdoju');
 	$sqlInsert = "INSERT INTO normas ".
-		"(n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones)".
+		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones)".
 		"VALUES ".
-      "('$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs')";
+      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs')";
            
 	$res = mysqli_query($conn,$sqlInsert);
 
@@ -324,11 +334,11 @@ function addNorma($n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$o
 ** Función para editar un registro de la tabla normas
 */
 
-function updateNorma($id,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
+function updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn){
 
 		
 	mysqli_select_db($conn,'gesdoju');
-	$sqlInsert = "update normas set n_norma = '$n_norma', tipo_norma = '$tipo_norma', f_norma = '$foro_norma', f_pub = '$f_pub', anio_pub = '$anio', jurisdiccion = '$jurisdiccion', organismo = '$organismo', unidad_fisica = '$unidad_fisica', observaciones = '$obs' where id = '$id'";
+	$sqlInsert = "update normas set nombre_norma = '$nombre_norma', n_norma = '$n_norma', tipo_norma = '$tipo_norma', f_norma = '$foro_norma', f_pub = '$f_pub', anio_pub = '$anio', jurisdiccion = '$jurisdiccion', organismo = '$organismo', unidad_fisica = '$unidad_fisica', observaciones = '$obs' where id = '$id'";
            
 	$res = mysqli_query($conn,$sqlInsert);
 
@@ -401,6 +411,7 @@ if($conn){
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Foro</th>
@@ -419,6 +430,7 @@ if($conn){
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center>".$fila['nombre_norma']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila['f_norma']."</td>";
@@ -472,6 +484,7 @@ if($conn){
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Foro</th>
@@ -490,6 +503,7 @@ if($conn){
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center>".$fila['nombre_norma']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila['f_norma']."</td>";

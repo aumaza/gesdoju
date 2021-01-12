@@ -257,10 +257,8 @@ $(document).ready(function(){
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <ul class="list-group">
-        <li class="list-group-item">One</li>
-        <li class="list-group-item">Two</li>
-        <li class="list-group-item">Three</li>
+      <ul class="list-group"><br>
+        <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
       </ul>
     </div>
   </div>
@@ -311,6 +309,7 @@ $(document).ready(function(){
 	    newNorma($conn);
 	  }
 	  if(isset($_POST['add_norma'])){
+        $nombre_norma = mysqli_real_escape_string($conn,$_POST['nombre_norma']);
         $n_norma = mysqli_real_escape_string($conn,$_POST['n_norma']);
         $tipo_norma = mysqli_real_escape_string($conn,$_POST['t_norma']);
         $foro_norma = mysqli_real_escape_string($conn,$_POST['foro_norma']);
@@ -320,7 +319,7 @@ $(document).ready(function(){
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        addNorma($n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+        addNorma($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
 	  }
 	  if(isset($_POST['edit_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -328,6 +327,7 @@ $(document).ready(function(){
 	  }
 	  if(isset($_POST['editar_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $nombre_norma = mysqli_real_escape_string($conn,$_POST['nombre_norma']);
         $n_norma = mysqli_real_escape_string($conn,$_POST['n_norma']);
         $tipo_norma = mysqli_real_escape_string($conn,$_POST['t_norma']);
         $foro_norma = mysqli_real_escape_string($conn,$_POST['foro_norma']);
@@ -337,7 +337,7 @@ $(document).ready(function(){
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        updateNorma($id,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+        updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
 	  }
 	  if(isset($_POST['del_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
