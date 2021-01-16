@@ -38,6 +38,7 @@
   <!-- Data Table Script -->
 <script>
  $(document).ready(function(){
+      
       $('#myTable').DataTable({
       "order": [[1, "asc"]],
       "responsive": true,
@@ -61,10 +62,11 @@
         },
       }
     });
-
-  });
+         
+    });
   </script>
   <!-- END Data Table Script -->
+  
   
   <script >
     function limitText(limitField, limitNum) {

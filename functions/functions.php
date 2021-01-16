@@ -27,9 +27,11 @@ function skeleton(){
 	<script src="/gesdoju/skeleton/js/bootstrap.min.js"></script>
 	
 	<script src="/gesdoju/skeleton/js/jquery.dataTables.min.js"></script>
+	<script src="/gesdoju/skeleton/dataTables/DataTables/js/jquery.dataTables1.min.js"></script>
 	<script src="/gesdoju/skeleton/js/dataTables.editor.min.js"></script>
 	<script src="/gesdoju/skeleton/js/dataTables.select.min.js"></script>
 	<script src="/gesdoju/skeleton/js/dataTables.buttons.min.js"></script>
+	
 	
 	<script src="/gesdoju/skeleton/Chart.js/Chart.min.js"></script>
 	<script src="/gesdoju/skeleton/Chart.js/Chart.bundle.min.js"></script>

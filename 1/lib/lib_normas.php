@@ -66,7 +66,7 @@ function newNorma($conn){
 		  <option value="" disabled selected>Seleccionar</option>';
 		    
 		    if($conn){
-		      $query = "SELECT * FROM organismos";
+		      $query = "SELECT * FROM organismos order by descripcion ASC";
 		      mysqli_select_db($conn,'gesdoju');
 		      $res = mysqli_query($conn,$query);
 
@@ -88,7 +88,7 @@ function newNorma($conn){
 		  <option value="" disabled selected>Seleccionar</option>';
 		    
 		    if($conn){
-		      $query = "SELECT * FROM jurisdicciones";
+		      $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
 		      mysqli_select_db($conn,'gesdoju');
 		      $res = mysqli_query($conn,$query);
 
@@ -110,8 +110,8 @@ function newNorma($conn){
 		</div>
 		
 		<div class="form-group">
-		  <label for="pwd">Observaciones:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required></textarea>
+		  <label for="pwd">Breve Descripción:</label>
+		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" placeholder="Ingrese una breve Descripción, recuerde que sólo se permiten 240 caracteres" required></textarea>
 		</div>
 		
 		<button type="submit" class="btn btn-success btn-block" name="add_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
@@ -195,7 +195,7 @@ function editNorma($id,$conn){
 		  <option value="" disabled selected>Seleccionar</option>';
 		    
 		    if($conn){
-		      $query = "SELECT * FROM organismos";
+		      $query = "SELECT * FROM organismos by descripcion ASC";
 		      mysqli_select_db($conn,'gesdoju');
 		      $res = mysqli_query($conn,$query);
 
@@ -217,7 +217,7 @@ function editNorma($id,$conn){
 		  <option value="" disabled selected>Seleccionar</option>';
 		    
 		    if($conn){
-		      $query = "SELECT * FROM jurisdicciones";
+		      $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
 		      mysqli_select_db($conn,'gesdoju');
 		      $res = mysqli_query($conn,$query);
 
@@ -239,7 +239,7 @@ function editNorma($id,$conn){
 		</div>
 		
 		<div class="form-group">
-		  <label for="pwd">Observaciones:</label>
+		  <label for="pwd">Breve Descripción:</label>
 		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required>'.$fila['observaciones'].'</textarea>
 		</div>
 		
@@ -399,28 +399,29 @@ function normas($conn){
 if($conn){
 	
 	$sql = "SELECT * FROM normas";
-    	mysqli_select_db($conn,'gesdoju');
-    	$resultado = mysqli_query($conn,$sql);
+    mysqli_select_db($conn,'gesdoju');
+    $resultado = mysqli_query($conn,$sql);
+        
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container">
 	      <div class="alert alert-success">
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
 	      </div><br>';
-	
-            echo "<table class='display compact' style='width:100%' id='myTable'>";
-              echo "<thead>
+                  
+      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
-            <th class='text-nowrap text-center'>Foro</th>
+            <th class='text-nowrap text-center'>Ambito</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>Jurisdicción</th>
             <th class='text-nowrap text-center'>Unidad Física</th>
-            <th class='text-nowrap text-center'>Observaciones</th>
+            <th class='text-nowrap text-center'>Descripción</th>
             <th class='text-nowrap text-center'>Archivo</th>
             <th>&nbsp;</th>
             </thead>";
@@ -436,8 +437,18 @@ if($conn){
 			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
-			 echo "<td align=center>".$fila['organismo']."</td>";
-			 echo "<td align=center>".$fila['jurisdiccion']."</td>";
+			 $mysql = "select * from organismos where cod_org = '$fila[organismo]'";
+			 $res = mysqli_query($conn,$mysql);
+			 while($row = mysqli_fetch_array($res)){
+			 echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$row['descripcion'].'">'.$fila['organismo'].'</td>';
+			 }
+			 
+			 $query = "select * from jurisdicciones where cod_jur = '$fila[jurisdiccion]'";
+			 $resp = mysqli_query($conn,$query);
+			 while($linea = mysqli_fetch_array($resp)){
+             echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$linea['descripcion'].'">'.$fila['jurisdiccion'].'</td>'; 
+			 }
+			 
 			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
 			 echo "<td align=center>".$fila['observaciones']."</td>";
 			 echo "<td align=center>".$fila['file_name']."</td>";
@@ -487,13 +498,13 @@ if($conn){
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
-            <th class='text-nowrap text-center'>Foro</th>
+            <th class='text-nowrap text-center'>Ambito</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>Jurisdicción</th>
             <th class='text-nowrap text-center'>Unidad Física</th>
-            <th class='text-nowrap text-center'>Observaciones</th>
+            <th class='text-nowrap text-center'>Descripción</th>
             <th class='text-nowrap text-center'>Archivo</th>
             <th>&nbsp;</th>
             </thead>";
@@ -509,8 +520,17 @@ if($conn){
 			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
-			 echo "<td align=center>".$fila['organismo']."</td>";
-			 echo "<td align=center>".$fila['jurisdiccion']."</td>";
+			 $mysql = "select * from organismos where cod_org = '$fila[organismo]'";
+			 $res = mysqli_query($conn,$mysql);
+			 while($row = mysqli_fetch_array($res)){
+			 echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$row['descripcion'].'">'.$fila['organismo'].'</td>';
+			 }
+			 
+			 $query = "select * from jurisdicciones where cod_jur = '$fila[jurisdiccion]'";
+			 $resp = mysqli_query($conn,$query);
+			 while($linea = mysqli_fetch_array($resp)){
+             echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$linea['descripcion'].'">'.$fila['jurisdiccion'].'</td>';			 
+			 }
 			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
 			 echo "<td align=center>".$fila['observaciones']."</td>";
 			 echo "<td align=center>".$fila['file_name']."</td>";
