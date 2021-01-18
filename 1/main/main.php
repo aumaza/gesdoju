@@ -3,6 +3,8 @@
       include "../lib/lib_users.php";
       include "../lib/lib_normas.php";
       include "../lib/lib_system.php";
+      include "../lib/lib_organismos.php";
+      include "../lib/lib_jurisdicciones.php";
       
 
       session_start();
@@ -41,7 +43,7 @@
       
       $('#myTable').DataTable({
         "order": [[1, "asc"]],
-        "responsive": true,
+        "responsive":     true,
         "scrollY":        "300px",
         "scrollX":        true,
         "scrollCollapse": true,
@@ -224,16 +226,16 @@ $(document).ready(function(){
     <div class="col-sm-2 sidenav">
       <form action="main.php" method="POST">
 	
-	 <div class="panel-group">
-  <div class="panel panel-default">
+	 <div class="panel-group" id="accordion">
+  <div class="panel panel-default" align="center">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">Normativas</a>
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        Normativas</a>
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
-      <ul class="list-group">
-      <br>
+      <div class="panel-body">
       
       <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a><hr>
       
@@ -249,39 +251,54 @@ $(document).ready(function(){
 	
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
 	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
-	</div>
-      </ul>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
+      
       </div>
+    </div>
   </div>
   
-   <div class="panel-group">
-  <div class="panel panel-default">
+  <div class="panel panel-default" align="center">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse3">Autoridades Superiores</a>
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        Autoridades Superiores</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body">
+      <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel panel-default" align="center">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+        Escalas Salariales</a>
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <ul class="list-group"><br>
-        <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
-      </ul>
+      <div class="panel-body">
+      <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      </div>
     </div>
   </div>
 </div> 
+
   
   <?php 
 	
 	if($_SESSION['user'] == 'root'){
 	
         echo '<div class="panel-group">
-                <div class="panel panel-default">
+                <div class="panel panel-primary" align="center">
                     <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse2">Mantenimiento</a>
+                        <a data-toggle="collapse" href="#collapse6">Mantenimiento</a>
                     </h4>
                     </div>
-                    <div id="collapse2" class="panel-collapse collapse">
+                    <div id="collapse6" class="panel-collapse collapse">
                     <ul class="list-group">
                     <br>
                         <a href="main.php" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><button type="submit" class="btn btn-default btn-sm" name="back_up"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button></a><hr>
@@ -290,6 +307,41 @@ $(document).ready(function(){
                 </div>
                 </div>
                 </div>';
+                // fin seccion mantenimiento
+                
+        echo '<div class="panel-group" id="accordion">
+                <div class="panel panel-default" align="center">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                        Organismos</a>
+                    </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body">
+                    
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Organismos"><button type="submit" class="btn btn-default btn-sm" name="K"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button></a>
+                    
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="panel panel-default" align="center">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                        Jurisdicciones</a>
+                    </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                    <div class="panel-body">
+                    
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><button type="submit" class="btn btn-default btn-sm" name="L"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button></a>
+                    
+                    </div>
+                    </div>
+                </div>
+              </div>';
 	
 	}
 	?>
@@ -450,6 +502,78 @@ $(document).ready(function(){
         dumpMysql($conn);
 	}
 	//fin seccion mantenimiento
+	
+	// seccion organismos
+	if(isset($_POST['K'])){
+       organismos($conn); 
+	}
+	if(isset($_POST['add_org'])){
+       newOrganismo($conn);
+	}
+	if(isset($_POST['add_organismo'])){
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $cod_org = strtoupper($cod_org);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        $descripcion = strtoupper($descripcion);
+        addOrganismo($cod_org,$descripcion,$conn);
+	}
+	if(isset($_POST['edit_org'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditOrganismo($id,$conn);
+	}
+	if(isset($_POST['updateOrg'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $cod_org = strtoupper($cod_org);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        $descripcion = strtoupper($descripcion);
+        updateOrganismo($id,$cod_org,$descripcion,$conn);
+	}
+	if(isset($_POST['del_org'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarOrganismo($id,$conn);
+	}
+	if(isset($_POST['delete_org'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delOrganismo($id,$conn);
+	}
+	// fin seccion organismos
+	
+	// seccion jurisdicciones
+	if(isset($_POST['L'])){
+        jurisdicciones($conn);
+	}
+	if(isset($_POST['add_jur'])){
+        newJurisdiccion($conn);
+	}
+	if(isset($_POST['add_jurisdiccion'])){
+        $cod_jur = mysqli_real_escape_string($conn,$_POST['cod_jur']);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        $descripcion = strtoupper($descripcion);
+        add_jurisdiccion($cod_jur,$descripcion,$conn);
+	}
+	if(isset($_POST['edit_jur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditJurisdiccion($id,$conn);
+	}
+	if(isset($_POST['updateJur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $cod_jur = mysqli_real_escape_string($conn,$_POST['cod_jur']);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        $descripcion = strtoupper($descripcion);
+        updateJurisdiccion($id,$cod_jur,$descripcion,$conn);
+	
+	}
+	if(isset($_POST['del_jur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarJurisdiccion($id,$conn);
+	}
+	if(isset($_POST['delete_jur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delJurisdiccion($id,$conn);
+	}
+	
+	// fin seccion jurisdicciones
 	
 	}else{
 	  mysqli_error($conn);
