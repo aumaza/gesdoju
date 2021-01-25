@@ -13,6 +13,16 @@ email varchar(90) not null,
 role int(1) default 1 not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla usuarios para el explorador de archivos
+create table usuarios_explorer (
+id int(11) auto_increment primary key, 
+nombre varchar(30) binary not null, 
+user varchar(15) binary not null, 
+password varchar(15) binary not null, 
+email varchar(90) not null, 
+role int(1) default 1 not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #tabla normas
 create table normas (
 id int(11) auto_increment primary key,

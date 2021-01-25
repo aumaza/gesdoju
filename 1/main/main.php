@@ -8,7 +8,7 @@
       
 
       session_start();
-	$varsession = $_SESSION['user'];
+        $varsession = $_SESSION['user'];
 	
 	$sql = "select nombre from usuarios where user = '$varsession'";
 	mysqli_select_db('gesdoju');
@@ -18,13 +18,22 @@
 	}
 	
 	if($varsession == null || $varsession = ''){
-	echo '<div class="alert alert-danger" role="alert">';
-	echo "Usuario o Contraseña Incorrecta. Reintente Por Favor...";
-	echo '<br>';
-	echo "O no tiene permisos o no ha iniciado sesion...";
-	echo "</div>";
-	echo '<a href="../../logout.php"><br><br><button type="submit" class="btn btn-primary">Aceptar</button></a>';	
-	die();
+        echo '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+        <title>Gesdoju</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />';
+        skeleton();
+        echo '</head><body>';
+        echo '<br><div class="container">
+                <div class="alert alert-danger" role="alert">';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
+        echo "</div></div>";
+        die();
+        echo '</body></html>';
 	}
 ?>
 
@@ -237,7 +246,7 @@ $(document).ready(function(){
     <div id="collapse1" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/apps/accessories-text-editor.png" /> + Norma</button></a><hr>
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Norma</button></a><hr>
       
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
 	
@@ -284,6 +293,21 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
+  
+  <div class="panel panel-default" align="center">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+        Explorador de Archivos</a>
+      </h4>
+    </div>
+    <div id="collapse7" class="panel-collapse collapse">
+      <div class="panel-body">
+      <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Exlorardor de Archivos" target="_blank"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/places/user-home.png" /> Explorer</button></a>
+      </div>
+    </div>
+  </div>
+  
 </div> 
 
   

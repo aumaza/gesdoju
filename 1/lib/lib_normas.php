@@ -195,7 +195,7 @@ function editNorma($id,$conn){
 		  <option value="" disabled selected>Seleccionar</option>';
 		    
 		    if($conn){
-		      $query = "SELECT * FROM organismos by descripcion ASC";
+		      $query = "SELECT * FROM organismos order by descripcion ASC";
 		      mysqli_select_db($conn,'gesdoju');
 		      $res = mysqli_query($conn,$query);
 
@@ -243,11 +243,10 @@ function editNorma($id,$conn){
 		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required>'.$fila['observaciones'].'</textarea>
 		</div>
 		
-		<button type="submit" class="btn btn-success btn-block" name="editar_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-	      </form><hr> 
-	      <a href="main.php"><button type="button" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
-	      <br>
-	      
+		<button type="submit" class="btn btn-success btn-block" name="editar_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button><hr>
+		<button type="submit" class="btn btn-danger btn-block" name="B"><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
+	    </form><hr> 
+	    
 	    </div>
 	    </div>
 	</div>';
@@ -282,12 +281,10 @@ function formBorrarNorma($id,$conn){
 		</div><hr>
 		
 		
-		<button type="submit" class="btn btn-success btn-block" name="delete_norma"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+		<button type="submit" class="btn btn-success btn-block" name="delete_norma"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><hr>
+		<button type="submit" class="btn btn-danger btn-block" name="B"><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
 	      </form> 
-	      <a href="main.php"><button type="button" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
-	      <br>
-	      
-	    </div>
+	      </div>
 	    </div>
 	</div>';
 
@@ -460,7 +457,9 @@ if($conn){
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>';
                     if($fila['file_name'] != ''){
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo PDF de la Norma"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$fila[file_name].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   }else{
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="No Existe Archivo cargado aún"><button type="button" class="btn btn-primary btn-sm disabled"><img src="../../icons/actions/layer-visible-off.png"  class="img-reponsive img-rounded"> Ver</button>';
                    }
              echo '</form>';
              echo "</td>";
@@ -545,7 +544,9 @@ if($conn){
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>';
                    if($fila['file_name'] != ''){
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo PDF de la Norma"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$fila[file_name].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   }else{
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="No Existe Archivo cargado aún"><button type="button" class="btn btn-primary btn-sm disabled"><img src="../../icons/actions/layer-visible-off.png"  class="img-reponsive img-rounded"> Ver</button>';
                    }
              echo '</form>';
 			 echo "</td>";
