@@ -52,8 +52,8 @@ function dumpMysql($conn){
     
     $dbname = "gesdoju-";
     $file = $dbname . date("d-m-Y") . '.sql';
-    //$dump = "mysqldump --user=root --password=slack142 gesdoju > $file";
-    $dump = "mysqldump --user=gesdoju --password=gesdoju gesdoju > $file";
+    $dump = "mysqldump --user=root --password=slack142 gesdoju > $file";
+    //$dump = "mysqldump --user=gesdoju --password=gesdoju gesdoju > $file";
 	$command = system($dump);
 	chmod($file, 0777);
 		
