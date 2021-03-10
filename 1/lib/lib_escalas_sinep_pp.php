@@ -322,7 +322,7 @@ function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agr
 	$sqlInsert = "INSERT INTO escalas_sinep_pp ".
           "(norma_regulatoria,f_entrada_vigencia,mes,anio,valor_ur,nivel,grado,agrupamiento,sueldo_ur,sueldo_monto,dedicacion_funcional_ur,dedicacion_funcional_monto,asignacion_basica_ur,asignacion_basica_monto,basico_conformado_ur,basico_conformado_monto,adicional_grado_ur,adicional_grado_monto,suplemento_agrup_porcentaje,suplemento_agrup_monto,tramo_porcentaje,tramo_suma,monto_total)".
 		"VALUES ".
-		"('$norma_regulatoria','$f_vigencia','$mes','$anio','$nivel','$grado','$agrupameinto','$valor_ur','$sueldo_ur','$sueldo_monto','$dedicacion_funcional_ur','$dedicacion_funcional_monto','$asignacion_basica_ur','$asignacion_basica_monto','$basico_conformado_ur','$basico_conformado_monto','$adicional_grado_ur','$adicional_grado_monto','$suplemento_agrup_porcentaje','$monto_agrupamiento','$tramo_porcentaje','$tramo_suma','$monto_total')";
+		"('$norma_regulatoria','$f_vigencia','$mes','$anio','$nivel','$grado','$agrupamiento','$valor_ur','$sueldo_ur','$sueldo_monto','$dedicacion_funcional_ur','$dedicacion_funcional_monto','$asignacion_basica_ur','$asignacion_basica_monto','$basico_conformado_ur','$basico_conformado_monto','$adicional_grado_ur','$adicional_grado_monto','$suplemento_agrup_porcentaje','$monto_agrupamiento','$tramo_porcentaje','$tramo_suma','$monto_total')";
            
 	$res = mysqli_query($conn,$sqlInsert);
 
