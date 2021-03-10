@@ -5,7 +5,10 @@
       include "../lib/lib_system.php";
       include "../lib/lib_organismos.php";
       include "../lib/lib_jurisdicciones.php";
-      
+      include "../lib/lib_autoridades_superiores.php";
+      include "../lib/lib_funciones_ejecutivas.php";
+      include "../lib/lib_escalas_sinep_pp.php";
+      include "../lib/lib_adicional_grado.php";
 
       session_start();
         $varsession = $_SESSION['user'];
@@ -157,7 +160,7 @@ $(document).ready(function(){
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 200%;
+      height: auto;
     }
     
     /* Set black background color, white text and some padding */
@@ -165,6 +168,7 @@ $(document).ready(function(){
       background-color: #555;
       color: white;
       padding: 15px;
+      height: auto;
     }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -199,6 +203,13 @@ $(document).ready(function(){
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading" align="center">
+        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</strong></h4>
+        </div>
+      </div>
+      
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -222,13 +233,16 @@ $(document).ready(function(){
       }
       ?>
       </form>
-     </ul>
+      </ul>
+      
       <ul class="nav navbar-nav navbar-right">
       <a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> <button class="btn btn-danger navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
       </ul>
     </div>
   </div>
 </nav>
+
+
   
 <div class="container-fluid">    
   <div class="row content">
@@ -275,7 +289,15 @@ $(document).ready(function(){
     </div>
     <div id="collapse2" class="panel-collapse collapse">
       <div class="panel-body">
-      <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Autoridades Superiores">
+        <button type="submit" class="btn btn-default btn-sm" name="a_s">
+            <img class="img-reponsive img-rounded" src="../../icons/status/meeting-participant.png" /> Autoridades Superiores</button></a><hr>
+     
+     <a href="#" data-toggle="tooltip" data-placement="right" title="Calcular Promedios en Remuneraciones">
+        <button type="submit" class="btn btn-default btn-sm" name="promedio_autoridades">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/office-chart-bar.png" /> Promedios</button></a>
+      
       </div>
     </div>
   </div>
@@ -289,7 +311,34 @@ $(document).ready(function(){
     </div>
     <div id="collapse3" class="panel-collapse collapse">
       <div class="panel-body">
-      <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Escalas Salariales Planta Permanente">
+        <button type="submit" class="btn btn-default btn-sm" name="sinep_pp">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/format-list-ordered.png" /> SINEP Planta Permanente</button></a><hr>
+      
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default" align="center">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+        Tablas Adicionales</a>
+      </h4>
+    </div>
+    <div id="collapse8" class="panel-collapse collapse">
+      <div class="panel-body">
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Funciones Ejecutivas">
+        <button type="submit" class="btn btn-default btn-sm" name="funciones_ejecutivas">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/quickopen-class.png" /> Funciones Ejecutivas</button></a><hr>
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Adicionales por Grado">
+        <button type="submit" class="btn btn-default btn-sm" name="adicional_grado">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Adicional Grado</button></a><hr>
+      
       </div>
     </div>
   </div>
@@ -377,6 +426,9 @@ $(document).ready(function(){
     <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/apps/clock.png" /> <?php echo "<strong>Hora Actual:</strong> " . date("H:i"); ?></button>
       <?php setlocale(LC_ALL,"es_ES.UTF-8"); ?>
       <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong>Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?></button>
+      <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
+            <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
      <hr>
      <div class="alert alert-info">
         <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
@@ -472,6 +524,172 @@ $(document).ready(function(){
 	      normativas($conn,$norma);
 	  }
 	  // fin seccion consulta de normas
+	  // ============================================================================== //
+	  
+	  // sección AUTORIDADES SUPERIORES
+	  if(isset($_POST['a_s'])){
+         autoridadesSuperiores($conn);
+	  }
+	  if(isset($_POST['add_as'])){
+        formAddAutoridad($conn);
+	  }
+	  if(isset($_POST['add_funcionario'])){
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+        $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
+        $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
+        $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
+        $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
+        $sac = mysqli_real_escape_string($conn,$_POST['sac']);
+        $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
+        $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
+        addAutoridad($anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
+	  }
+	  if(isset($_POST['edit_autoridad'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditAutoridad($id,$conn);
+	  }
+	  if(isset($_POST['update_funcionario'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+        $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
+        $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
+        $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
+        $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
+        $sac = mysqli_real_escape_string($conn,$_POST['sac']);
+        $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
+        $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
+        updateAutoridad($id,$anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
+	  }
+	  if(isset($_POST['del_autoridad'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarAutoridad($id,$conn);
+	  }
+	  if(isset($_POST['delete_autoridad'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delAutoridad($id,$conn);
+	  }
+	  if(isset($_POST['promedio_autoridades'])){
+        formPromedio();
+	  }
+	  if(isset($_POST['promedio_mes_autoridades'])){
+        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        filtroMesAutoridades($mes,$anio,$conn);
+	  }
+	  if(isset($_POST['promedio_anio_autoridades'])){
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        filtroAnioAutoridades($anio,$conn);
+	  }
+	    
+	  
+	  // fin sección AUTORIDADES SUPERIORES
+	  // =============================================================================== //
+	  
+	  // SECCION ESCALAS SALARIALES
+	  // =============================================================================== //
+	  // SUBSECCION FUNCIONES EJECUTIVAS
+	  // =============================================================================== //
+	  if(isset($_POST['funciones_ejecutivas'])){
+        funcionesEjecutivas($conn);
+	  }
+	  if(isset($_POST['add_fe'])){
+        formAddFuncionEjecutiva($conn);
+	  }
+	  if(isset($_POST['add_funcion_ejecutiva'])){
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+        $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
+        $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
+        $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
+        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        addFuncionEjecutiva($nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
+	  }
+	  if(isset($_POST['edit_funcion_ejecutiva'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditFuncionEjecutiva($id,$conn);
+	  }
+	  if(isset($_POST['update_fe'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+        $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
+        $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
+        $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
+        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+        updateFuncionEjecutiva($id,$nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
+	  }
+	  if(isset($_POST['del_funcion_ejecutiva'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarFuncionEjecutiva($id,$conn);
+	  }
+	  if(isset($_POST['delete_funcion_ejecutiva'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delFuncionEjecutiva($id,$conn);
+	  }
+	  // FIN SUBSECCION FUNCIONES EJECUTIVAS
+	  
+	  // =============================================================================== //
+	  // SECCION ESCALAS SINEP PLANTA PERMANENTE
+	  // =============================================================================== //
+	  if(isset($_POST['sinep_pp'])){
+        escalasSinepPP($conn);
+	  }
+	  if(isset($_POST['add_pp'])){
+        formAddSinepPP($conn);
+	  }
+	  
+	  
+	  
+	  // FIN SUBSECCION ESCALAS SINEP PLANTA PERMANENTE
+	  // =============================================================================== //
+	  
+	  
+	  
+	  // SECCION ADICIONAL GRADO
+	  // =============================================================================== //
+	  if(isset($_POST['adicional_grado'])){
+        adicionalGrado($conn);
+	  }
+	  if(isset($_POST['add_adicional_grado'])){
+        formAddAdicionalGrado($conn);
+	  }
+	  if(isset($_POST['add_adi_gr'])){
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $grado = mysqli_real_escape_string($conn,$_POST['grado']);
+        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+        addAdicionalGrado($nivel,$grado,$cant_ur,$conn);
+	  }
+	  if(isset($_POST['edit_adicional_grado'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditAdicionalGrado($id,$conn);
+	  }
+	  if(isset($_POST['update_adicional_grado'])){
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $grado = mysqli_real_escape_string($conn,$_POST['grado']);
+        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+        updateAdicionalGrado($id,$nivel,$grado,$cant_ur,$conn);
+	  }
+	  if(isset($_POST['del_adicional_grado'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarAdicionalGrado($id,$conn);
+      }
+      if(isset($_POST['delete_adicional_grado'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delAdicionalGrado($id,$conn);
+      }
+	  
+	  
+	  
+	  
+	  //FIN SECCION ADICIONAL GRADO
+	  // =============================================================================== //
 	  
 	  //seccion usuarios
 	  if(isset($_POST['J'])){
@@ -610,15 +828,13 @@ $(document).ready(function(){
       
       
       
-     <br>
+    
      </div>
  
   </div>
-</div>
+</div><hr><br>
 
-<footer class="container-fluid text-center">
-  <p><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
-</footer>
+
 
 <!-- Modal -->
 		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -651,6 +867,86 @@ $(document).ready(function(){
 		</script>
 		
 		<!-- END Modal -->
+		
+		<!-- Modal 2 -->
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+            <img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /> Acerca de Gesdoju</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="container-fluid">
+            <ul class="nav nav-pills nav-justified">
+    <li class="active"><a data-toggle="tab" href="#home">
+        <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gesdoju</a></li>
+    <li><a data-toggle="tab" href="#menu1">
+        <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> Desarroladores</a></li>
+    <li><a data-toggle="tab" href="#menu2">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Colaboradores</a></li>
+    <li><a data-toggle="tab" href="#menu3">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/flag-green.png" /> Version</a></li>
+    <li><a data-toggle="tab" href="#menu4">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/bookmarks-organize.png" /> Licencia</a></li>
+    <li><a data-toggle="tab" href="#menu5">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> Características Técnicas</a></li>
+    </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h2>Gestión de Documentación Jurídica</h2>
+      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
+    </div>
+    
+    <div id="menu1" class="tab-pane fade">
+      <h2>Augusto Maza</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/run-build.png" /> Desarrollador Principal</p>
+    </div>
+    
+    <div id="menu2" class="tab-pane fade">
+      <h2>Sonia Boiarov</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento Jurídico</p>
+    </div>
+    
+    <div id="menu3" class="tab-pane fade">
+      <h2>1.0.0</h2>
+      <p>Version beta</p>
+      <p>2019-2021</p>
+    </div>
+    
+    <div id="menu4" class="tab-pane fade">
+      <h2>GNU GPL</h2>
+      <p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank"> Version 2</a></p>
+
+    </div>
+    
+    <div id="menu5" class="tab-pane fade">
+      <h2>Tecnología</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> HTML 5</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> PHP 5 o superior</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> JavaScript</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> MariaDB 5 o superior</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> Bootstrap 3 (framework)</p>
+    </div>
+    
+  </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/window-close.png" /> Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END Modal 2 -->
 
 </body>
 </html>

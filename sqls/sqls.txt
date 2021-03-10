@@ -40,12 +40,80 @@ file_name varchar(100),
 file_path varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla autoridades_superiores
+create table autoridades_superiores (
+id int(11) auto_increment primary key,
+anio varchar(4) not null,
+mes varchar(10) not null, 
+jurisdiccion varchar(120) not null,
+apellido_nombre varchar(100) not null,
+cargo varchar(90) not null,
+asignacion_mensual float(8,2) not null,
+desarragaigo float(8,2),
+sac float(8,2),
+otros_conceptos float(8,2),
+observaciones varchar(300) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 #tabla jurisdicciones
 create table jurisdicciones(
 id int(11) auto_increment primary key, 
 cod_jur varchar(2) not null,
 descripcion varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#tabla funciones Ejecutivas
+create table funciones_ejecutivas(
+id int(11) auto_increment primary key, 
+nivel varchar(1) not null,
+cant_ur int(11) not null,
+valor_ur float(8,2) not null,
+monto float(8,2) not null,
+norma_regulatoria varchar(100) not null,
+f_entrada_vigencia date not null,
+mes varchar(10) not null,
+anio varchar(4) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla escala salarial sinep
+create table escalas_sinep_pp (
+id int(11) auto_increment primary key,
+norma_reguladora varchar(100) not null,
+f_vigencia date not null,
+mes varchar(10) not null,
+anio varchar(4) not null,
+valor_ur float(8,2) not null,
+nivel varchar(1) not null,
+grado varchar(2) not null,
+agrupamiento varchar(18) not null,
+sueldo_ur int(11) not null,
+sueldo_monto float(8,2) not null,
+dedicacion_funcional_ur int(11) not null,
+dedicacion_funcional_monto float(8,2) not null,
+asignacion_basica_ur int(11) not null,
+asignacion_basica_monto float(8,2) not null,
+basico_conformado_ur int(11) not null,
+basico_conformado_monto float(8,2) not null,
+adicional_grado_ur int(11) not null,
+adicional_grado_monto float(8,2) not null,
+suplemento_agrup_porcentaje int(11) not null,
+suplemento_agrup_monto float(8,2) not null,
+tramo_porcentaje int(11) not null,
+tramo_suma float(8,2) not null,
+monto_total float(8,2) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#tabla adicional grado UR
+create table adicional_grado_ur(
+id int(11) auto_increment primary key,
+nivel varchar(1) not null,
+grado varchar(2) not null,
+cant_ur int(11) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 #subir csv jurisdicciones
 load data local infile '/var/www/html/gesdoju/sqls/jurisdiccion.csv' 
@@ -58,6 +126,11 @@ id int(11) auto_increment primary key,
 cod_org varchar(2) not null,
 descripcion varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
 
 #subir csv organismos
 load data local infile '/var/www/html/gesdoju/sqls/organismos.csv' 
