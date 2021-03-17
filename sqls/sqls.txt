@@ -114,6 +114,22 @@ grado varchar(2) not null,
 cant_ur int(11) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla unidades retributivas
+create table unidades_retributivas(
+id int(11) auto_increment primary key,
+nivel varchar(1) not null,
+grado varchar(2) not null,
+sueldo_ur int(11) not null,
+dedicacion_funcional_ur int(11) not null,
+total_ur int(11) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#subir csv unidades retributivas
+load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
+into table unidades_retributivas fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(nivel,grado,sueldo_ur,dedicacion_funcional_ur,total_ur);
+
 
 #subir csv jurisdicciones
 load data local infile '/var/www/html/gesdoju/sqls/jurisdiccion.csv' 

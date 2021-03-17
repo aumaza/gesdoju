@@ -23,38 +23,38 @@ if($conn){
       echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Norma Regulatoria</th>
-            <th class='text-nowrap text-center'>Entrada Vigencia</th>
-            <th class='text-nowrap text-center'>Mes</th>
-            <th class='text-nowrap text-center'>Año</th>
-            <th class='text-nowrap text-center'>Valor UR</th>
-            <th class='text-nowrap text-center'>Nivel</th>
-            <th class='text-nowrap text-center'>Grado</th>
-            <th class='text-nowrap text-center'>Agrupamiento</th>
-            <th class='text-nowrap text-center'>Sueldo UR</th>
-            <th class='text-nowrap text-center'>Sueldo Monto</th>
-            <th class='text-nowrap text-center'>Dedicación Func. UR</th>
-            <th class='text-nowrap text-center'>Dedicación Func. Monto</th>
-            <th class='text-nowrap text-center'>Asig. Bas. UR</th>
-            <th class='text-nowrap text-center'>Asig. Bas. Monto</th>
-            <th class='text-nowrap text-center'>Básico Conformado UR</th>
-            <th class='text-nowrap text-center'>Básico Conformado Monto</th>
-            <th class='text-nowrap text-center'>Adicional Grado UR</th>
-            <th class='text-nowrap text-center'>Adicional Grado Monto</th>
-            <th class='text-nowrap text-center'>Sup. Agrup %</th>
-            <th class='text-nowrap text-center'>Sup. Agrup. Monto</th>
-            <th class='text-nowrap text-center'>% Tramo</th>
-            <th class='text-nowrap text-center'>Tramo Monto</th>
-            <th class='text-nowrap text-center'>Monto Total</th>
-            <th>&nbsp;</th>
-            </thead>";
+		    <th class='text-nowrap text-center'>Entrada Vigencia</th>
+		    <th class='text-nowrap text-center'>Mes</th>
+		    <th class='text-nowrap text-center'>Año</th>
+		    <th class='text-nowrap text-center'>Valor UR</th>
+		    <th class='text-nowrap text-center'>Nivel</th>
+		    <th class='text-nowrap text-center'>Grado</th>
+		    <th class='text-nowrap text-center'>Agrupamiento</th>
+		    <th class='text-nowrap text-center'>Sueldo UR</th>
+		    <th class='text-nowrap text-center'>Sueldo Monto</th>
+		    <th class='text-nowrap text-center'>Dedicación Func. UR</th>
+		    <th class='text-nowrap text-center'>Dedicación Func. Monto</th>
+		    <th class='text-nowrap text-center'>Asig. Bas. UR</th>
+		    <th class='text-nowrap text-center'>Asig. Bas. Monto</th>
+		    <th class='text-nowrap text-center'>Básico Conformado UR</th>
+		    <th class='text-nowrap text-center'>Básico Conformado Monto</th>
+		    <th class='text-nowrap text-center'>Adicional Grado UR</th>
+		    <th class='text-nowrap text-center'>Adicional Grado Monto</th>
+		    <th class='text-nowrap text-center'>Sup. Agrup %</th>
+		    <th class='text-nowrap text-center'>Sup. Agrup. Monto</th>
+		    <th class='text-nowrap text-center'>% Tramo</th>
+		    <th class='text-nowrap text-center'>Tramo Monto</th>
+		    <th class='text-nowrap text-center'>Monto Total</th>
+		    <th>&nbsp;</th>
+		    </thead>";
 
 
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
-			 echo "<td align=center>".$fila['norma_regulatoria']."</td>";
-			 echo "<td align=center>".$fila['f_entrada_vigencia']."</td>";
+			 echo "<td align=center>".$fila['norma_reguladora']."</td>";
+			 echo "<td align=center>".$fila['f_vigencia']."</td>";
 			 echo "<td align=center>".$fila['mes']."</td>";
 			 echo "<td align=center>".$fila['anio']."</td>";
 			 echo "<td align=center><strong>$</strong>".$fila['valor_ur']."</td>";
@@ -208,21 +208,6 @@ echo '<div class="container">
                     <div class="form-group">
                     <label>Valor de UR:</label>
                     <input type="text" class="form-control" placeholder="Ingrese el valor de UR sin separador de miles y use un punto en lugar de una coma para los decimales" name="valor_ur" required>
-                    </div>
-                    
-                    <div class="form-group">
-                    <label>Sueldo (Cantidad UR):</label>
-                    <input type="text" class="form-control" placeholder="Ingrese la cantidad de UR" name="sueldo_ur" required>
-                    </div>
-                    
-                    <div class="form-group">
-                    <label>Dedicación Funcional (Cantidad UR):</label>
-                    <input type="text" class="form-control" placeholder="Ingrese la cantidad de UR" name="dedicacion_funcional_ur" required>
-                    </div>
-                    
-                    <div class="form-group">
-                    <label>Adicional Grado (Cantidad UR):</label>
-                    <input type="text" class="form-control" placeholder="Ingrese la cantidad de UR" name="asignacion_grado_ur" required>
                     </div><hr> 
                                         
                     <button type="submit" class="btn btn-success btn-block" name="add_sinep_pp">
@@ -240,12 +225,19 @@ echo '<div class="container">
 /*
 ** funcion para persistencia de escalas salariales sinep planta Permanente
 */
-function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agrupamiento,$valor_ur,$sueldo_ur,$dedicacion_funcional_ur,$adicional_grado_ur,$conn){
+function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agrupamiento,$valor_ur,$conn){
 
-    //$monto = $cant_ur * $valor_ur;
+    $consult = "select * from unidades_retributivas where nivel = '$nivel' and grado = '$grado'";
+    $resval = mysqli_query($conn,$consult);
+    while($fila = mysqli_fetch_array($resval)){
+      $sueldo_ur = $fila['sueldo_ur'];
+      $dedicacion_funcional_ur = $fila['dedicacion_funcional_ur'];
+      $asignacion_basica_ur = $fila['total_ur'];
+    
+    }
+    
     
     // se calcula asignacion basica
-    $asignacion_basica_ur = $sueldo_ur + $dedicacion_funcional_ur;
     $asignacion_basica_monto = $asignacion_basica_ur * $valor_ur;
     $asignacion_basica_monto = number_format((float)$asignacion_basica_monto, 2, '.', ''); // se castea a flotante
     
@@ -262,6 +254,10 @@ function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agr
     $adicional_grado_monto = number_format((float)$adicional_grado_monto, 2, '.', '');
     
     // se calcula el basico conformado
+    $basico_conformado_ur = $adicional_grado_ur + $asignacion_basica_ur;
+    $basico_conformado_monto = $basico_conformado_ur * $valor_ur;
+    $basico_conformado_monto = number_format((float)$basico_conformado_monto,2 , '.', '');
+    
     
     // se calcula suplemento por agrupamiento
     if($agrupamiento == 'General'){
@@ -288,25 +284,11 @@ function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agr
         $monto_agrupamiento = $asignacion_basica_monto * $porcentaje_agrup;
         $monto_agrupamiento = number_format((float)$monto_agrupamiento, 2, '.', '');
     }
-    
-    
-    // se calcula adicional por tramo
-    if($grado >= 4 && $grado <= 7){
-        
-        $tramo_porcentaje = 0.15;
-        $tramo_suma = $asignacion_basica_monto * $tramo_porcentaje;
-        $tramo_suma = number_format((float)$tramo_suma, 2, '.', '');
-    }
-    if($grado >= 8 && $grado <= 10){
-        
-        $tramo_porcentaje = 0.30;
-        $tramo_suma = $asignacion_basica_monto * $tramo_porcentaje;
-        $tramo_suma = number_format((float)$tramo_suma, 2, '.', '');
-    }
+    $porcentaje_agrup = number_format((float)$porcentaje_agrup, 2, '.', '');
     
     // se calcula adicional grado
-    mysqli_select_db($conn,'gesdoju');
     $sql = "select cant_ur from adicional_grado_ur where nivel = '$nivel' and grado = '$grado'";
+    mysqli_select_db($conn,'gesdoju');
     $query = mysqli_query($conn,$sql);
     while($row = mysqli_fetch_array($query)){
 	      $adicional_grado_ur = $row['cant_ur'];
@@ -316,13 +298,79 @@ function addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agr
     $adicional_grado_monto = number_format((float)$adicional_grado_monto, 2, '.', '');
     
     
+    // se calcula adicional por tramo
+    $grado = (int)$grado;
+    // tramo intermedio
+    if($grado >= 4 && $grado <= 7){
+        
+        $tramo_porcentaje = 0.15;
+        $tramo_suma = $asignacion_basica_monto * $tramo_porcentaje;
+        $tramo_suma = number_format((float)$tramo_suma, 2, '.', '');
+    }
+    // tramo avanzado
+    if($grado >= 8 && $grado <= 10){
+        
+        $tramo_porcentaje = 0.30;
+        $tramo_suma = $asignacion_basica_monto * $tramo_porcentaje;
+        $tramo_suma = number_format((float)$tramo_suma, 2, '.', '');
+    }
+    $tramo_porcentaje = number_format((float)$tramo_porcentaje, 2, '.', '');
+    
+    
+    
     //$monto_total = number_format((float)$monto_total, 2, '.', '');
     
     
 	$sqlInsert = "INSERT INTO escalas_sinep_pp ".
-          "(norma_regulatoria,f_entrada_vigencia,mes,anio,valor_ur,nivel,grado,agrupamiento,sueldo_ur,sueldo_monto,dedicacion_funcional_ur,dedicacion_funcional_monto,asignacion_basica_ur,asignacion_basica_monto,basico_conformado_ur,basico_conformado_monto,adicional_grado_ur,adicional_grado_monto,suplemento_agrup_porcentaje,suplemento_agrup_monto,tramo_porcentaje,tramo_suma,monto_total)".
-		"VALUES ".
-		"('$norma_regulatoria','$f_vigencia','$mes','$anio','$nivel','$grado','$agrupamiento','$valor_ur','$sueldo_ur','$sueldo_monto','$dedicacion_funcional_ur','$dedicacion_funcional_monto','$asignacion_basica_ur','$asignacion_basica_monto','$basico_conformado_ur','$basico_conformado_monto','$adicional_grado_ur','$adicional_grado_monto','$suplemento_agrup_porcentaje','$monto_agrupamiento','$tramo_porcentaje','$tramo_suma','$monto_total')";
+          "(
+	    norma_reguladora,
+	    f_vigencia,
+	    mes,
+	    anio,
+	    valor_ur,
+	    nivel,
+	    grado,
+	    agrupamiento,
+	    sueldo_ur,
+	    sueldo_monto,
+	    dedicacion_funcional_ur,
+	    dedicacion_funcional_monto,
+	    asignacion_basica_ur,
+	    asignacion_basica_monto,
+	    basico_conformado_ur,
+	    basico_conformado_monto,
+	    adicional_grado_ur,
+	    adicional_grado_monto,
+	    suplemento_agrup_porcentaje,
+	    suplemento_agrup_monto,
+	    tramo_porcentaje,
+	    tramo_suma,
+	    monto_total)".
+	"VALUES ".
+	"(
+	  '$norma_regulatoria',
+	  '$f_vigencia',
+	  '$mes',
+	  '$anio',
+	  '$valor_ur',
+	  '$nivel',
+	  '$grado',
+	  '$agrupamiento',
+	  '$sueldo_ur',
+	  '$sueldo_monto',
+	  '$dedicacion_funcional_ur',
+	  '$dedicacion_funcional_monto',
+	  '$asignacion_basica_ur',
+	  '$asignacion_basica_monto',
+	  '$basico_conformado_ur',
+	  '$basico_conformado_monto',
+	  '$adicional_grado_ur',
+	  '$adicional_grado_monto',
+	  '$porcentaje_agrup',
+	  '$monto_agrupamiento',
+	  '$tramo_porcentaje',
+	  '$tramo_suma',
+	  '$monto_total')";
            
 	$res = mysqli_query($conn,$sqlInsert);
 

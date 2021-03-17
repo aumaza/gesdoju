@@ -9,6 +9,7 @@
       include "../lib/lib_funciones_ejecutivas.php";
       include "../lib/lib_escalas_sinep_pp.php";
       include "../lib/lib_adicional_grado.php";
+      include "../lib/lib_unidades_retributivas.php";
 
       session_start();
         $varsession = $_SESSION['user'];
@@ -32,7 +33,7 @@
         echo '</head><body>';
         echo '<br><div class="container">
                 <div class="alert alert-danger" role="alert">';
-        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesiÃ³n a caducado. Por favor, inicie sesiÃ³n nuevamente</p>';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
         echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
         echo "</div></div>";
         die();
@@ -90,7 +91,7 @@
     function limitText(limitField, limitNum) {
        if (limitField.value.length > limitNum) {
           
-           alert("Ha ingresado mÃ¡s caracteres de los requeridos, deben ser: \n" + limitNum);
+           alert("Ha ingresado más caracteres de los requeridos, deben ser: \n" + limitNum);
             limitField.value = limitField.value.substring(0, limitNum);
        }
        
@@ -110,10 +111,10 @@ function Numeros(string){
     //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
-             //Se aÃ±aden a la salida los caracteres validos
+             //Se añaden a la salida los caracteres validos
               out += string.charAt(i);
 	     }else{
-		alert("ATENCION - SÃ³lo se permiten NÃºmeros");
+		alert("ATENCION - Sólo se permiten Números");
 	     }
 	     }
 	
@@ -125,14 +126,14 @@ function Numeros(string){
 <script> 
 function Text(string){//validacion solo letras
     var out = '';
-    //Se aÃ±aden las letras validas
-    var filtro ="^[abcdefghijklmnÃ±opqrstuvwxyzABCDEFGHIJKLMNÃ‘OPQRSTUVWXYZ- ]+$"; // Caracteres VÃ¡lidos
+    //Se añaden las letras validas
+    var filtro ="^[abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ- ]+$"; // Caracteres Válidos
   
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-		alert("ATENCION - SÃ³lo se permite Texto");
+		alert("ATENCION - Sólo se permite Texto");
 	     }
 	     }
     return out;
@@ -206,7 +207,7 @@ $(document).ready(function(){
 <div class="panel-group">
     <div class="panel panel-default">
       <div class="panel-heading" align="center">
-        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de EconomÃ­a de la NaciÃ³n - DirecciÃ³n de Presupuesto y EvaluaciÃ³n de Gastos en Personal</strong></h4>
+        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</strong></h4>
         </div>
       </div>
       
@@ -222,21 +223,32 @@ $(document).ready(function(){
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="GestiÃ³n Documental JurÃ­dica"><button type="button" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
+      
+      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gestión Documental Jurídica">
+	<button type="button" class="btn btn-default navbar-btn">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
      </ul>
      <ul class="nav navbar-nav">
      <form action="main.php" method="POST">
-      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Datos Personales"><button type="submit" name="C" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> <?php echo $nombre ?></button></a>
+      
+      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Datos Personales">
+	<button type="submit" name="C" class="btn btn-default navbar-btn">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> <?php echo $nombre ?></button></a>
       <?php 
       if($_SESSION['user'] == 'root'){
-      echo '<a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Usuarios"><button type="submit" name="J" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button></a>';
+      echo '<a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Usuarios">
+	<button type="submit" name="J" class="btn btn-default navbar-btn">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button></a>';
       }
       ?>
       </form>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-      <a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar SesiÃ³n"> <button class="btn btn-danger navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
+      
+	<a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> 
+	  <button class="btn btn-danger navbar-btn">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
       </ul>
     </div>
   </div>
@@ -260,21 +272,37 @@ $(document).ready(function(){
     <div id="collapse1" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Norma</button></a><hr>
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma">
+	<button type="submit" class="btn btn-default btn-sm" name="A">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Norma</button></a><hr>
       
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
+	  <button type="submit" class="btn btn-default btn-sm" name="B">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
 	
-        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Leyes"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
+        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Leyes">
+	  <button type="submit" class="btn btn-default btn-sm" name="D">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
         
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Decretos"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Decretos">
+	  <button type="submit" class="btn btn-default btn-sm" name="E">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
 	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Resoluciones"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Resoluciones">
+	  <button type="submit" class="btn btn-default btn-sm" name="F">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
 	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Disposiciones"><button type="submit" class="btn btn-default btn-sm" name="G"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Disposiciones">
+	  <button type="submit" class="btn btn-default btn-sm" name="G">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
 	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Notas"><button type="submit" class="btn btn-default btn-sm" name="H"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Notas">
+	  <button type="submit" class="btn btn-default btn-sm" name="H">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
 	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sÃ³lo Memos"><button type="submit" class="btn btn-default btn-sm" name="I"><img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos">
+	  <button type="submit" class="btn btn-default btn-sm" name="I">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
       
       </div>
     </div>
@@ -325,7 +353,7 @@ $(document).ready(function(){
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
-        Tablas Adicionales</a>
+        Tablas Base</a>
       </h4>
     </div>
     <div id="collapse8" class="panel-collapse collapse">
@@ -338,6 +366,10 @@ $(document).ready(function(){
       <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Adicionales por Grado">
         <button type="submit" class="btn btn-default btn-sm" name="adicional_grado">
             <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Adicional Grado</button></a><hr>
+      
+      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Unidades Retributivas por Nivel y Grado">
+        <button type="submit" class="btn btn-default btn-sm" name="unidades_retributivas">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button></a><hr>
       
       </div>
     </div>
@@ -431,7 +463,7 @@ $(document).ready(function(){
             <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
      <hr>
      <div class="alert alert-info">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - GestiÃ³n Documental JurÃ­dica</strong>
+        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
      </div><hr>
      
       <?php
@@ -508,11 +540,11 @@ $(document).ready(function(){
 	      normativas($conn,$norma);
 	  }
 	  if(isset($_POST['F'])){
-	      $norma = "ResoluciÃ³n";
+	      $norma = "Resolución";
 	      normativas($conn,$norma);
 	  }
 	  if(isset($_POST['G'])){
-	      $norma = "DisposiciÃ³n";
+	      $norma = "Disposición";
 	      normativas($conn,$norma);
 	  }
 	  if(isset($_POST['H'])){
@@ -526,67 +558,67 @@ $(document).ready(function(){
 	  // fin seccion consulta de normas
 	  // ============================================================================== //
 	  
-	  // secciÃ³n AUTORIDADES SUPERIORES
+	  // sección AUTORIDADES SUPERIORES
 	  if(isset($_POST['a_s'])){
-         autoridadesSuperiores($conn);
+	    autoridadesSuperiores($conn);
 	  }
 	  if(isset($_POST['add_as'])){
-        formAddAutoridad($conn);
+	    formAddAutoridad($conn);
 	  }
 	  if(isset($_POST['add_funcionario'])){
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-        $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
-        $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
-        $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
-        $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
-        $sac = mysqli_real_escape_string($conn,$_POST['sac']);
-        $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
-        $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        addAutoridad($anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+	    $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
+	    $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
+	    $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
+	    $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
+	    $sac = mysqli_real_escape_string($conn,$_POST['sac']);
+	    $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
+	    $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
+	    addAutoridad($anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
 	  }
 	  if(isset($_POST['edit_autoridad'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formEditAutoridad($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    formEditAutoridad($id,$conn);
 	  }
 	  if(isset($_POST['update_funcionario'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-        $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-        $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
-        $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
-        $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
-        $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
-        $sac = mysqli_real_escape_string($conn,$_POST['sac']);
-        $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
-        $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        updateAutoridad($id,$anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+	    $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
+	    $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
+	    $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
+	    $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
+	    $sac = mysqli_real_escape_string($conn,$_POST['sac']);
+	    $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
+	    $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
+	    updateAutoridad($id,$anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
 	  }
 	  if(isset($_POST['del_autoridad'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formBorrarAutoridad($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    formBorrarAutoridad($id,$conn);
 	  }
 	  if(isset($_POST['delete_autoridad'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        delAutoridad($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    delAutoridad($id,$conn);
 	  }
 	  if(isset($_POST['promedio_autoridades'])){
-        formPromedio();
+	    formPromedio();
 	  }
 	  if(isset($_POST['promedio_mes_autoridades'])){
-        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        filtroMesAutoridades($mes,$anio,$conn);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    filtroMesAutoridades($mes,$anio,$conn);
 	  }
 	  if(isset($_POST['promedio_anio_autoridades'])){
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        filtroAnioAutoridades($anio,$conn);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    filtroAnioAutoridades($anio,$conn);
 	  }
 	    
 	  
-	  // fin secciÃ³n AUTORIDADES SUPERIORES
+	  // fin sección AUTORIDADES SUPERIORES
 	  // =============================================================================== //
 	  
 	  // SECCION ESCALAS SALARIALES
@@ -594,43 +626,43 @@ $(document).ready(function(){
 	  // SUBSECCION FUNCIONES EJECUTIVAS
 	  // =============================================================================== //
 	  if(isset($_POST['funciones_ejecutivas'])){
-        funcionesEjecutivas($conn);
+	    funcionesEjecutivas($conn);
 	  }
 	  if(isset($_POST['add_fe'])){
-        formAddFuncionEjecutiva($conn);
+	    formAddFuncionEjecutiva($conn);
 	  }
 	  if(isset($_POST['add_funcion_ejecutiva'])){
-        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
-        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
-        $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
-        $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
-        $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
-        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        addFuncionEjecutiva($nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
+	    $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+	    $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+	    $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
+	    $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
+	    $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    addFuncionEjecutiva($nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
 	  }
 	  if(isset($_POST['edit_funcion_ejecutiva'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formEditFuncionEjecutiva($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    formEditFuncionEjecutiva($id,$conn);
 	  }
 	  if(isset($_POST['update_fe'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
-        $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
-        $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
-        $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
-        $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
-        $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-        $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-        updateFuncionEjecutiva($id,$nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+	    $cant_ur = mysqli_real_escape_string($conn,$_POST['cant_ur']);
+	    $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
+	    $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
+	    $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    updateFuncionEjecutiva($id,$nivel,$cant_ur,$valor_ur,$norma_regulatoria,$f_vigencia,$mes,$anio,$conn);
 	  }
 	  if(isset($_POST['del_funcion_ejecutiva'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formBorrarFuncionEjecutiva($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    formBorrarFuncionEjecutiva($id,$conn);
 	  }
 	  if(isset($_POST['delete_funcion_ejecutiva'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        delFuncionEjecutiva($id,$conn);
+	    $id = mysqli_real_escape_string($conn,$_POST['id']);
+	    delFuncionEjecutiva($id,$conn);
 	  }
 	  // FIN SUBSECCION FUNCIONES EJECUTIVAS
 	  
@@ -638,10 +670,23 @@ $(document).ready(function(){
 	  // SECCION ESCALAS SINEP PLANTA PERMANENTE
 	  // =============================================================================== //
 	  if(isset($_POST['sinep_pp'])){
-        escalasSinepPP($conn);
+	    escalasSinepPP($conn);
 	  }
 	  if(isset($_POST['add_pp'])){
-        formAddSinepPP($conn);
+	    formAddSinepPP($conn);
+	  }
+	  if(isset($_POST['add_sinep_pp'])){
+	    $norma_regulatoria = mysqli_real_escape_string($conn,$_POST['norma_regulatoria']);
+	    $f_vigencia = mysqli_real_escape_string($conn,$_POST['f_entrada_vigencia']);
+	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
+	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
+	    $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+	    $grado = mysqli_real_escape_string($conn,$_POST['grado']);
+	    $agrupamiento = mysqli_real_escape_string($conn,$_POST['agrupamiento']);
+	    $valor_ur = mysqli_real_escape_string($conn,$_POST['valor_ur']);
+	    $sueldo_ur = mysqli_real_escape_string($conn,$_POST['sueldo_ur']);
+	    $dedicacion_funcional_ur = mysqli_real_escape_string($conn,$_POST['dedicacion_funcional_ur']);
+	    addSinepPP($norma_regulatoria,$f_vigencia,$mes,$anio,$nivel,$grado,$agrupamiento,$valor_ur,$sueldo_ur,$dedicacion_funcional_ur,$conn);
 	  }
 	  
 	  
@@ -689,6 +734,16 @@ $(document).ready(function(){
 	  
 	  
 	  //FIN SECCION ADICIONAL GRADO
+	  // =============================================================================== //
+	  
+	  // SECCION UNIDADES RETIBUTIVAS
+	  // =============================================================================== //
+	  if(isset($_POST['unidades_retributivas'])){
+	    unidadesRetributivas($conn);
+	  }
+	  
+	  
+	  // FIN SECCION UNIDADES RETIBUTIVAS
 	  // =============================================================================== //
 	  
 	  //seccion usuarios
@@ -847,7 +902,7 @@ $(document).ready(function(){
 					</div>
 
 					<div class="modal-body">
-						Â¿Desea eliminar este registro?
+						¿Desea eliminar este registro?
 					</div>
 
 					<div class="modal-footer">
@@ -894,13 +949,13 @@ $(document).ready(function(){
     <li><a data-toggle="tab" href="#menu4">
         <img class="img-reponsive img-rounded" src="../../icons/actions/bookmarks-organize.png" /> Licencia</a></li>
     <li><a data-toggle="tab" href="#menu5">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> CaracterÃ­sticas TÃ©cnicas</a></li>
+        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> Características Técnicas</a></li>
     </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h2>GestiÃ³n de DocumentaciÃ³n JurÃ­dica</h2>
-      <p align="center">AplicaciÃ³n destinada a la carga, administraciÃ³n y consulta de documentaciÃ³n jurÃ­dica, como asÃ­ tambiÃ©n a la administraciÃ³n de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la AdministraciÃ³n PÃºblica Nacional </p>
+      <h2>Gestión de Documentación Jurídica</h2>
+      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
     </div>
     
     <div id="menu1" class="tab-pane fade">
@@ -910,7 +965,7 @@ $(document).ready(function(){
     
     <div id="menu2" class="tab-pane fade">
       <h2>Sonia Boiarov</h2>
-      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento JurÃ­dico</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento Jurídico</p>
     </div>
     
     <div id="menu3" class="tab-pane fade">
@@ -926,7 +981,7 @@ $(document).ready(function(){
     </div>
     
     <div id="menu5" class="tab-pane fade">
-      <h2>TecnologÃ­a</h2>
+      <h2>Tecnología</h2>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> HTML 5</p>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> PHP 5 o superior</p>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> JavaScript</p>
