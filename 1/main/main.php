@@ -1,4 +1,6 @@
-<?php include "../../connection/connection.php"; 
+<?php 
+      
+      include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_users.php";
       include "../lib/lib_normas.php";
@@ -22,7 +24,7 @@
 	}
 	
 	if($varsession == null || $varsession = ''){
-        echo '<!DOCTYPE html>
+  echo '<!DOCTYPE html>
         <html lang="es">
         <head>
         <title>Gesdoju</title>
@@ -39,13 +41,15 @@
         die();
         echo '</body></html>';
 	}
+	
+	
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <title>Gesdoju</title>
-  <meta charset="utf-8">
+  <meta charset=utf-8? />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
   <?php skeleton(); ?>
@@ -740,6 +744,36 @@ $(document).ready(function(){
 	  // =============================================================================== //
 	  if(isset($_POST['unidades_retributivas'])){
 	    unidadesRetributivas($conn);
+	  }
+	  if(isset($_POST['add_ur'])){
+        formAddUR($conn);
+	  }
+	  if(isset($_POST['edit_ur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formEditUR($id,$conn);
+	  }
+	  if(isset($_POST['del_ur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        formBorrarUR($id,$conn);
+	  }
+	  if(isset($_POST['agregar_ur'])){
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $grado = mysqli_real_escape_string($conn,$_POST['grado']);
+        $sueldo_ur = mysqli_real_escape_string($conn,$_POST['sueldo_cant_ur']);
+        $df_ur = mysqli_real_escape_string($conn,$_POST['df_cant_ur']);
+        addUR($nivel,$grado,$sueldo_ur,$df_ur,$conn);
+	  }
+	  if(isset($_POST['delete_ur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        delUR($id,$conn);
+	  }
+	  if(isset($_POST['update_ur'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $nivel = mysqli_real_escape_string($conn,$_POST['nivel']);
+        $grado = mysqli_real_escape_string($conn,$_POST['grado']);
+        $sueldo_ur = mysqli_real_escape_string($conn,$_POST['sueldo_cant_ur']);
+        $df_ur = mysqli_real_escape_string($conn,$_POST['df_cant_ur']);
+        updateUR($id,$nivel,$grado,$sueldo_ur,$df_ur,$conn);
 	  }
 	  
 	  
