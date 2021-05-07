@@ -49,7 +49,7 @@
 <html lang="es">
 <head>
   <title>Gesdoju</title>
-  <meta charset=utf-8? />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
   <?php skeleton(); ?>
@@ -306,7 +306,12 @@ $(document).ready(function(){
 	
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos">
 	  <button type="submit" class="btn btn-default btn-sm" name="I">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a>
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
+	    
+    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Decisiones Administrativas">
+	  <button type="submit" class="btn btn-default btn-sm" name="dec_admin">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Dec. Admin.</button></a>
+    
       
       </div>
     </div>
@@ -557,6 +562,10 @@ $(document).ready(function(){
 	  }
 	  if(isset($_POST['I'])){
 	      $norma = "Memo";
+	      normativas($conn,$norma);
+	  }
+	  if(isset($_POST['dec_admin'])){
+	      $norma = "Dec. Admin.";
 	      normativas($conn,$norma);
 	  }
 	  // fin seccion consulta de normas

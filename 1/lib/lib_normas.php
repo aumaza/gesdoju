@@ -31,6 +31,7 @@ function newNorma($conn){
 		    <option value="Disposición">Disposición</option>
 		    <option value="Nota">Nota</option>
 		    <option value="Memo">Memo</option>
+		    <option value="Dec. Admin.">Desición Administrativa</option>
 		  </select>
 		</div> 
 		
@@ -161,6 +162,7 @@ function editNorma($id,$conn){
 		    <option value="Disposición" '.($fila['tipo_norma'] == "Disposición" ? "selected" : "").'>Disposición</option>
 		    <option value="Nota" '.($fila['tipo_norma'] == "Nota" ? "selected" : "").'>Nota</option>
 		    <option value="Memo" '.($fila['tipo_norma'] == "Memo" ? "selected" : "").'>Memo</option>
+		    <option value="Dec. Admin." '.($fila['tipo_norma'] == "Dec. Admin." ? "selected" : "").'>Decisión Administrativa</option>
 		  </select>
 		</div> 
 		

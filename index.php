@@ -50,7 +50,7 @@
 	$_SESSION['user'] = $user;
 	$_SESSION['pass'] = $pass1;
 	        
-	mysqli_select_db('gesdoju');
+	mysqli_select_db($conn,'gesdoju');
 	
 	$sql = "SELECT * FROM usuarios where user='$user' and password='$pass1' and role = 1";
 	$q = mysqli_query($conn,$sql);
