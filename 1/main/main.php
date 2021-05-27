@@ -1,5 +1,4 @@
-<?php 
-      
+<?php session_start();      
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_users.php";
@@ -13,7 +12,7 @@
       include "../lib/lib_adicional_grado.php";
       include "../lib/lib_unidades_retributivas.php";
 
-      session_start();
+      
         $varsession = $_SESSION['user'];
 	
 	$sql = "select nombre from usuarios where user = '$varsession'";
@@ -35,7 +34,7 @@
         echo '</head><body>';
         echo '<br><div class="container">
                 <div class="alert alert-danger" role="alert">';
-        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesiÃ³n a caducado. Por favor, inicie sesiÃ³n nuevamente</p>';
         echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
         echo "</div></div>";
         die();
@@ -49,7 +48,7 @@
 <html lang="es">
 <head>
   <title>Gesdoju</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
   <?php skeleton(); ?>
@@ -95,7 +94,7 @@
     function limitText(limitField, limitNum) {
        if (limitField.value.length > limitNum) {
           
-           alert("Ha ingresado más caracteres de los requeridos, deben ser: \n" + limitNum);
+           alert("Ha ingresado mï¿½s caracteres de los requeridos, deben ser: \n" + limitNum);
             limitField.value = limitField.value.substring(0, limitNum);
        }
        
@@ -115,10 +114,10 @@ function Numeros(string){
     //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
-             //Se añaden a la salida los caracteres validos
+             //Se aï¿½aden a la salida los caracteres vï¿½lidos
               out += string.charAt(i);
 	     }else{
-		alert("ATENCION - Sólo se permiten Números");
+		alert("ATENCION - SÃ³lo se permiten NÃºmeros");
 	     }
 	     }
 	
@@ -130,14 +129,14 @@ function Numeros(string){
 <script> 
 function Text(string){//validacion solo letras
     var out = '';
-    //Se añaden las letras validas
-    var filtro ="^[abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ- ]+$"; // Caracteres Válidos
+    //Se a?aden las letras validas
+    var filtro ="^[abcdefghijklmn?opqrstuvwxyzABCDEFGHIJKLMN?OPQRSTUVWXYZ- ]+$"; // Caracteres Vï¿½idos
   
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-		alert("ATENCION - Sólo se permite Texto");
+		alert("ATENCION - Sï¿½lo se permite Texto");
 	     }
 	     }
     return out;
@@ -211,7 +210,7 @@ $(document).ready(function(){
 <div class="panel-group">
     <div class="panel panel-default">
       <div class="panel-heading" align="center">
-        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</strong></h4>
+        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de EconomÃ­a de la NaciÃ³n - DirecciÃ³n de Presupuesto y EvaluaciÃ³n de Gastos en Personal</strong></h4>
         </div>
       </div>
       
@@ -228,7 +227,7 @@ $(document).ready(function(){
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
       
-      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gestión Documental Jurídica">
+      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gesti?n Documental Jur?dica">
 	<button type="button" class="btn btn-default navbar-btn">
 	  <img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
      </ul>
@@ -250,7 +249,7 @@ $(document).ready(function(){
       
       <ul class="nav navbar-nav navbar-right">
       
-	<a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> 
+	<a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar SesiÃ³n"> 
 	  <button class="btn btn-danger navbar-btn">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
       </ul>
@@ -276,43 +275,9 @@ $(document).ready(function(){
     <div id="collapse1" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Cargar Nueva Norma">
-	<button type="submit" class="btn btn-default btn-sm" name="A">
-	  <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Norma</button></a><hr>
-      
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
-	  <button type="submit" class="btn btn-default btn-sm" name="B">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button></a><hr>
-	
-        <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Leyes">
-	  <button type="submit" class="btn btn-default btn-sm" name="D">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Leyes</button></a><hr>
-        
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Decretos">
-	  <button type="submit" class="btn btn-default btn-sm" name="E">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Decretos</button></a><hr>
-	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Resoluciones">
-	  <button type="submit" class="btn btn-default btn-sm" name="F">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Resoluciones</button></a><hr>
-	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Disposiciones">
-	  <button type="submit" class="btn btn-default btn-sm" name="G">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Disposiciones</button></a><hr>
-	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Notas">
-	  <button type="submit" class="btn btn-default btn-sm" name="H">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Notas</button></a><hr>
-	
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Memos">
-	  <button type="submit" class="btn btn-default btn-sm" name="I">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Memos</button></a><hr>
+	<button type="submit" class="btn btn-default btn-xs btn-block" name="B" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button>
 	    
-    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar sólo Decisiones Administrativas">
-	  <button type="submit" class="btn btn-default btn-sm" name="dec_admin">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Dec. Admin.</button></a>
-    
-      
       </div>
     </div>
   </div>
@@ -327,13 +292,11 @@ $(document).ready(function(){
     <div id="collapse2" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Autoridades Superiores">
-        <button type="submit" class="btn btn-default btn-sm" name="a_s">
-            <img class="img-reponsive img-rounded" src="../../icons/status/meeting-participant.png" /> Autoridades Superiores</button></a><hr>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="a_s" data-toggle="tooltip" data-placement="right" title="Listar Autoridades Superiores">
+            <img class="img-reponsive img-rounded" src="../../icons/status/meeting-participant.png" /> Autoridades Superiores</button><hr>
      
-     <a href="#" data-toggle="tooltip" data-placement="right" title="Calcular Promedios en Remuneraciones">
-        <button type="submit" class="btn btn-default btn-sm" name="promedio_autoridades">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/office-chart-bar.png" /> Promedios</button></a>
+     <button type="submit" class="btn btn-default btn-xs btn-block" name="promedio_autoridades" data-toggle="tooltip" data-placement="right" title="Calcular Promedios en Remuneraciones">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/office-chart-bar.png" /> Promedios</button>
       
       </div>
     </div>
@@ -349,9 +312,8 @@ $(document).ready(function(){
     <div id="collapse3" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Escalas Salariales Planta Permanente">
-        <button type="submit" class="btn btn-default btn-sm" name="sinep_pp">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/format-list-ordered.png" /> SINEP Planta Permanente</button></a><hr>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="sinep_pp" data-toggle="tooltip" data-placement="right" title="Listar Escalas Salariales Planta Permanente">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/format-list-ordered.png" /> SINEP Planta Permanente</button><hr>
       
       </div>
     </div>
@@ -368,17 +330,14 @@ $(document).ready(function(){
     <div id="collapse8" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Funciones Ejecutivas">
-        <button type="submit" class="btn btn-default btn-sm" name="funciones_ejecutivas">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/quickopen-class.png" /> Funciones Ejecutivas</button></a><hr>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="funciones_ejecutivas" data-toggle="tooltip" data-placement="right" title="Listar Funciones Ejecutivas">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/quickopen-class.png" /> Funciones Ejecutivas</button><hr>
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Adicionales por Grado">
-        <button type="submit" class="btn btn-default btn-sm" name="adicional_grado">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Adicional Grado</button></a><hr>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="adicional_grado" data-toggle="tooltip" data-placement="right" title="Listar Adicionales por Grado">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Adicional Grado</button><hr>
       
-      <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Unidades Retributivas por Nivel y Grado">
-        <button type="submit" class="btn btn-default btn-sm" name="unidades_retributivas">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button></a><hr>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="unidades_retributivas" data-toggle="tooltip" data-placement="right" title="Listar Unidades Retributivas por Nivel y Grado">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button><hr>
       
       </div>
     </div>
@@ -393,7 +352,8 @@ $(document).ready(function(){
     </div>
     <div id="collapse7" class="panel-collapse collapse">
       <div class="panel-body">
-      <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Exlorardor de Archivos" target="_blank"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/places/user-home.png" /> Explorer</button></a>
+      
+      <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Exlorardor de Archivos" target="_blank"><button type="button" class="btn btn-default btn-xs btn-block"><img class="img-reponsive img-rounded" src="../../icons/places/user-home.png" /> Explorer</button></a>
       </div>
     </div>
   </div>
@@ -413,11 +373,13 @@ $(document).ready(function(){
                     </h4>
                     </div>
                     <div id="collapse6" class="panel-collapse collapse">
-                    <ul class="list-group">
+                    <div class="panel-body">
                     <br>
-                        <a href="main.php" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><button type="submit" class="btn btn-default btn-sm" name="back_up"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button></a><hr>
-                        <a href="main.php" data-toggle="tooltip" data-placement="right" title="Backup Base de Datos"><button type="submit" class="btn btn-default btn-sm" name="dump_base"><img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button></a><hr>
-                    </ul>
+                    
+                    <button type="submit" class="btn btn-default btn-xs btn-block" name="back_up" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button><hr>
+                    
+                    <button type="submit" class="btn btn-default btn-xs btn-block" name="dump_base" data-toggle="tooltip" data-placement="right" title="Backup Base de Datos"><img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button><hr>
+                    </div>
                 </div>
                 </div>
                 </div>';
@@ -434,7 +396,7 @@ $(document).ready(function(){
                     <div id="collapse4" class="panel-collapse collapse">
                     <div class="panel-body">
                     
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Organismos"><button type="submit" class="btn btn-default btn-sm" name="K"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button></a>
+                    <button type="submit" class="btn btn-default btn-xs btn-block" name="K" data-toggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
                     
                     </div>
                     </div>
@@ -450,7 +412,7 @@ $(document).ready(function(){
                     <div id="collapse5" class="panel-collapse collapse">
                     <div class="panel-body">
                     
-                    <a href="#" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><button type="submit" class="btn btn-default btn-sm" name="L"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button></a>
+                    <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button>
                     
                     </div>
                     </div>
@@ -472,7 +434,7 @@ $(document).ready(function(){
             <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
      <hr>
      <div class="alert alert-info">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
+        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - GestiÃ³n Documental JurÃºdica</strong>
      </div><hr>
      
       <?php
@@ -480,10 +442,10 @@ $(document).ready(function(){
       if($conn){
 	  
 	  // seccion ABM de normas
-	  if(isset($_POST['A'])){
+	  if(isset($_POST['nueva_norma'])){
 	    newNorma($conn);
 	  }
-	  if(isset($_POST['add_norma'])){
+	  if(isset($_POST['add_normativa'])){
         $nombre_norma = mysqli_real_escape_string($conn,$_POST['nombre_norma']);
         $n_norma = mysqli_real_escape_string($conn,$_POST['n_norma']);
         $tipo_norma = mysqli_real_escape_string($conn,$_POST['t_norma']);
@@ -494,8 +456,9 @@ $(document).ready(function(){
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        addNorma($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
-	  }
+        $file = basename($_FILES["file"]["name"]);
+    insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+    }
 	  if(isset($_POST['edit_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         editNorma($id,$conn);
@@ -540,38 +503,11 @@ $(document).ready(function(){
 	  if(isset($_POST['C'])){
 	    loadUser($conn,$nombre);
 	  }
-	  if(isset($_POST['D'])){
-	      $norma = "Ley";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['E'])){
-	      $norma = "Decreto";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['F'])){
-	      $norma = "Resolución";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['G'])){
-	      $norma = "Disposición";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['H'])){
-	      $norma = "Nota";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['I'])){
-	      $norma = "Memo";
-	      normativas($conn,$norma);
-	  }
-	  if(isset($_POST['dec_admin'])){
-	      $norma = "Dec. Admin.";
-	      normativas($conn,$norma);
-	  }
+	  
 	  // fin seccion consulta de normas
 	  // ============================================================================== //
 	  
-	  // sección AUTORIDADES SUPERIORES
+	  // secci?n AUTORIDADES SUPERIORES
 	  if(isset($_POST['a_s'])){
 	    autoridadesSuperiores($conn);
 	  }
@@ -631,7 +567,7 @@ $(document).ready(function(){
 	  }
 	    
 	  
-	  // fin sección AUTORIDADES SUPERIORES
+	  // fin secci?n AUTORIDADES SUPERIORES
 	  // =============================================================================== //
 	  
 	  // SECCION ESCALAS SALARIALES
@@ -930,7 +866,7 @@ $(document).ready(function(){
      </div>
  
   </div>
-</div><hr><br>
+</div><br>
 
 
 
@@ -945,7 +881,7 @@ $(document).ready(function(){
 					</div>
 
 					<div class="modal-body">
-						¿Desea eliminar este registro?
+						Desea eliminar este registro?
 					</div>
 
 					<div class="modal-footer">
@@ -963,6 +899,30 @@ $(document).ready(function(){
 				$('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
 			});
 		</script>
+		
+		<!-- script para insertar pedidos de cafeteria via web -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#add_normativa').click(function(){
+        var datos=$('#nueva_norma_ajax').serialize();
+        $.ajax({
+            type:"POST",
+            url:"../lib/insertar_normas.php",
+            data:datos,
+            success:function(r){
+                if(r == 1){
+                    alert("Normativa Agregada Exitosamente");
+                    location.href = "main.php";
+                    }else{
+                    alert("Hubo un problema al intentar Agregar la Normativa");
+                }
+            }
+        });
+
+        return false;
+    });
+});
+</script>
 		
 		<!-- END Modal -->
 		
@@ -992,13 +952,13 @@ $(document).ready(function(){
     <li><a data-toggle="tab" href="#menu4">
         <img class="img-reponsive img-rounded" src="../../icons/actions/bookmarks-organize.png" /> Licencia</a></li>
     <li><a data-toggle="tab" href="#menu5">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> Características Técnicas</a></li>
+        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> CaracterÃ­sticas TÃ©cnicas</a></li>
     </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h2>Gestión de Documentación Jurídica</h2>
-      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
+      <h2>GestiÃ³n de DocumentaciÃ³n JurÃ­dica</h2>
+      <p align="center">AplicaciÃ³n destinada a la carga, administraciÃ³n y consulta de documentaciÃ³n jurÃ­dica, como asÃ­ tambiÃ©n a la administraciÃ³n de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la AdministraciÃ³n PÃºblica Nacional </p>
     </div>
     
     <div id="menu1" class="tab-pane fade">
@@ -1008,7 +968,7 @@ $(document).ready(function(){
     
     <div id="menu2" class="tab-pane fade">
       <h2>Sonia Boiarov</h2>
-      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento Jurídico</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento JurÃ­dico</p>
     </div>
     
     <div id="menu3" class="tab-pane fade">
@@ -1024,7 +984,7 @@ $(document).ready(function(){
     </div>
     
     <div id="menu5" class="tab-pane fade">
-      <h2>Tecnología</h2>
+      <h2>TecnologÃ­a</h2>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> HTML 5</p>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> PHP 5 o superior</p>
       <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> JavaScript</p>

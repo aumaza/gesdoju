@@ -9,7 +9,7 @@ function newNorma($conn){
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Cargar Normativa</h2><hr>
-	        <form action="main.php" method="POST">
+	        <form action="#" method="POST" enctype="multipart/form-data">
 	        
 	        <div class="form-group">
 		  <label for="nombre">Nombre de la Norma</label>
@@ -31,7 +31,8 @@ function newNorma($conn){
 		    <option value="Disposición">Disposición</option>
 		    <option value="Nota">Nota</option>
 		    <option value="Memo">Memo</option>
-		    <option value="Dec. Admin.">Desición Administrativa</option>
+		    <option value="Dec. Admin.">Decisión Administrativa</option>
+		    <option value="Res. Conjunta">Resolución Conjunta</option>
 		  </select>
 		</div> 
 		
@@ -112,10 +113,15 @@ function newNorma($conn){
 		
 		<div class="form-group">
 		  <label for="pwd">Breve Descripción:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" placeholder="Ingrese una breve Descripción, recuerde que sólo se permiten 240 caracteres" required></textarea>
-		</div>
+		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="500" placeholder="Ingrese una breve Descripción, recuerde que sólo se permiten 500 caracteres" required></textarea>
+		</div><hr>
 		
-		<button type="submit" class="btn btn-success btn-block" name="add_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+        <div class="form-group">
+		  <label for="pwd">Seleccione Archivo a Subir:</label>
+          <input type="file" name="file" required>
+        </div><hr>
+		
+		<button type="submit"  class="btn btn-success btn-block" name="add_normativa"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
 	      </form> <br>
 	      
 	    </div>
@@ -163,6 +169,7 @@ function editNorma($id,$conn){
 		    <option value="Nota" '.($fila['tipo_norma'] == "Nota" ? "selected" : "").'>Nota</option>
 		    <option value="Memo" '.($fila['tipo_norma'] == "Memo" ? "selected" : "").'>Memo</option>
 		    <option value="Dec. Admin." '.($fila['tipo_norma'] == "Dec. Admin." ? "selected" : "").'>Decisión Administrativa</option>
+		    <option value="Res. Conjunta" '.($fila['tipo_norma'] == "Dec. Admin." ? "selected" : "").'>Resolución Conjunta</option>
 		  </select>
 		</div> 
 		
@@ -449,7 +456,7 @@ if($conn){
 			 }
 			 
 			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
-			 echo "<td align=center>".$fila['observaciones']."</td>";
+			 echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$fila['observaciones'].'">Pase el mouse sobre el link</td>';
 			 echo "<td align=center>".$fila['file_name']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
@@ -459,9 +466,9 @@ if($conn){
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>';
                     if($fila['file_name'] != ''){
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$fila[file_name].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$fila[file_name].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Leer Norma</button>';
                    }else{
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="No Existe Archivo cargado aún"><button type="button" class="btn btn-primary btn-sm disabled"><img src="../../icons/actions/layer-visible-off.png"  class="img-reponsive img-rounded"> Ver</button>';
+                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="No Existe Archivo cargado aún"><button type="button" class="btn btn-primary btn-sm disabled"><img src="../../icons/actions/layer-visible-off.png"  class="img-reponsive img-rounded"> Leer Norma</button>';
                    }
              echo '</form>';
              echo "</td>";
@@ -470,6 +477,9 @@ if($conn){
 
 		echo "</table>";
 		echo "<br>";
+		echo '<form <action="main.php" method="POST">
+                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+              </form><br>';
 		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
 		echo '</div>';
 		}else{
@@ -661,6 +671,72 @@ if(!empty($_FILES["file"]["name"])){
                           echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
                           echo "</div><hr>";
                 }
+
+}
+
+
+/*
+** insertar nueva norma en base de datos
+*/
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn){
+
+ 
+$targetDir = '../../uploads/';
+$fileName = $file;
+//$fileName = basename($_FILES["file"]["name"]);
+$targetFilePath = $targetDir . $fileName;
+
+$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+if(!empty($_FILES["file"]["name"])){
+    // Allow certain file formats
+    $allowTypes = array('pdf');
+    
+    if(in_array($fileType, $allowTypes)){
+    
+        // Upload file to server
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+         
+        
+        $sql = "INSERT INTO normas ".
+		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones,file_name,file_path)".
+		"VALUES ".
+      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs','$fileName','$targetFilePath')";
+        
+        mysqli_select_db($conn,'gesdoju');
+        $query = mysqli_query($conn,$sql);
+
+         
+            if($query){
+            
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Norma Guardada Exitosamente. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
+            echo "</div><hr>";
+            
+            }else{
+		  
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
+            echo "</div><hr>";
+            
+            } 
+            }else{
+			  echo '<div class="alert alert-warning" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong>';
+              echo "</div><hr>";
+              
+            }
+            }else{
+    
+			  echo '<div class="alert alert-danger" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: PDF son soportados.</strong>';
+			  echo "</div><hr>";
+            }
+            }else{
+                          echo '<div class="alert alert-info" role="alert">';
+                          echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
+                          echo "</div><hr>";
+            }
 
 }
 
