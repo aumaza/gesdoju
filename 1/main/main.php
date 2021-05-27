@@ -227,7 +227,7 @@ $(document).ready(function(){
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
       
-      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gesti?n Documental Jur?dica">
+      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gestión Documental Jurídica">
 	<button type="button" class="btn btn-default navbar-btn">
 	  <img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
      </ul>
@@ -434,7 +434,7 @@ $(document).ready(function(){
             <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
      <hr>
      <div class="alert alert-info">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurúdica</strong>
+        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
      </div><hr>
      
       <?php

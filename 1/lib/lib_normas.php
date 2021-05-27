@@ -410,7 +410,7 @@ if($conn){
         
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="container">
+	echo '<div class="container-fluid">
 	      <div class="alert alert-success">
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
 	      </div><br>';
@@ -457,7 +457,7 @@ if($conn){
 			 
 			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
 			 echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$fila['observaciones'].'">Pase el mouse sobre el link</td>';
-			 echo "<td align=center>".$fila['file_name']."</td>";
+			 echo "<td align=center>".$fila['file_name']."</a></td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
