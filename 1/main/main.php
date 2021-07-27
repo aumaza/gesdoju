@@ -11,6 +11,7 @@
       include "../lib/lib_escalas_sinep_pp.php";
       include "../lib/lib_adicional_grado.php";
       include "../lib/lib_unidades_retributivas.php";
+      include "../lib/lib_tipo_organismos.php";
 
       
         $varsession = $_SESSION['user'];
@@ -136,7 +137,7 @@ function Text(string){//validacion solo letras
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-		alert("ATENCION - S�lo se permite Texto");
+		alert("ATENCION - Sólo se permite Texto");
 	     }
 	     }
     return out;
@@ -264,23 +265,11 @@ $(document).ready(function(){
     <div class="col-sm-2 sidenav">
       <form action="main.php" method="POST">
 	
+	<button type="submit" class="btn btn-success btn-xs btn-block" name="B" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button><br>
+	
 	 <div class="panel-group" id="accordion">
-  <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-        Normativas</a>
-      </h4>
-    </div>
-    <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-	<button type="submit" class="btn btn-default btn-xs btn-block" name="B" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button>
-	    
-      </div>
-    </div>
-  </div>
+  
   
   <div class="panel panel-default" align="center">
     <div class="panel-heading">
@@ -338,6 +327,9 @@ $(document).ready(function(){
       
       <button type="submit" class="btn btn-default btn-xs btn-block" name="unidades_retributivas" data-toggle="tooltip" data-placement="right" title="Listar Unidades Retributivas por Nivel y Grado">
             <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button><hr>
+            
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="tipo_organismos" data-toggle="tooltip" data-placement="right" title="Listar los distintos tipos de Organismos">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Tipo Organismo</button>
       
       </div>
     </div>
@@ -433,10 +425,7 @@ $(document).ready(function(){
         <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
             <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
      <hr>
-     <div class="alert alert-info">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/help-feedback.png" /> <strong>Bienvenido/a</strong> <?php echo $nombre ?> a <strong>Gesdoju - Gestión Documental Jurídica</strong>
-     </div><hr>
-     
+          
       <?php
    
       if($conn){
@@ -454,10 +443,11 @@ $(document).ready(function(){
         $anio = mysqli_real_escape_string($conn,$_POST['anio']);
         $organismo = mysqli_real_escape_string($conn,$_POST['organismo']);
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
+        $clas_inst = mysqli_real_escape_string($conn,$_POST['clas_inst']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
         $file = basename($_FILES["file"]["name"]);
-    insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+    insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$clas_inst,$unidad_fisica,$obs,$file,$conn);
     }
 	  if(isset($_POST['edit_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -851,9 +841,43 @@ $(document).ready(function(){
 	
 	// fin seccion jurisdicciones
 	
+	// ============================ TIPO DE ORGANISMOS ========================= //
+	//LISTAR LOS TIPOS DE ORGANISMOS
+	if(isset($_POST['tipo_organismos'])){
+        tipoOrganismos($conn);
+	}
+	//FORMULARIO PARA AÑADIR NUEVO TIPO DE ORGANISMO
+	if(isset($_POST['add_tipo_org'])){
+        newTipoOrganismo($conn);
+	}
+	//FORMULARIO DE EDICION DE TIPO DE ORGANISMO
+	if(isset($_POST['edit_tipo_org'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        editTipoOrganismo($id,$conn);
+	}
+	//persistencia a base de datos
+	if(isset($_POST['add_tipo_organismo'])){
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        addTipoOrganismo($cod_org,$descripcion,$conn);
+	}
+	if(isset($_POST['update_tipo_organismo'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        updateTipoOrganismo($id,$cod_org,$descripcion,$conn);
+	}
+	
+	
+	
+	// ============================ FIN TIPO DE ORGANISMOS ========================= //
+	
 	}else{
 	  mysqli_error($conn);
 	}
+	
+	
+	
 	mysqli_close($conn);
       
    

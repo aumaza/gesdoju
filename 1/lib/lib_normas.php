@@ -101,9 +101,36 @@ function newNorma($conn){
                 }
 			}
 
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="sel1">Clasificación Institucional</label>
+		  <select class="form-control" name="clas_inst" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM tipo_organismo order by descripcion ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+                while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[cod_organismo].'">'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
 			mysqli_close($conn);
 		  
 		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="nombre">SAF</label>
+		  <input type="text" class="form-control" name="saf" maxlength="3" required>
 		</div>
 		
 		<div class="form-group">
@@ -238,6 +265,28 @@ function editNorma($id,$conn){
 			}
 
 			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+		
+		<div class="form-group">
+		  <label for="sel1">Jurisdicción</label>
+		  <select class="form-control" name="jurisdiccion" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM tipo_organismo order by descripcion ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+                while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[cod_organismo].'" '.("'.$fila[clas_inst].'" == "'.$valores[cod_organismo].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+				}
+                }
+			}
+
+			mysqli_close($conn);
 		  
 		 echo '</select>
 		</div>
@@ -417,7 +466,6 @@ if($conn){
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
@@ -436,7 +484,6 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['nombre_norma']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
@@ -678,7 +725,7 @@ if(!empty($_FILES["file"]["name"])){
 /*
 ** insertar nueva norma en base de datos
 */
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$clas_inst,$unidad_fisica,$obs,$file,$conn){
 
  
 $targetDir = '../../uploads/';
@@ -699,9 +746,9 @@ if(!empty($_FILES["file"]["name"])){
          
         
         $sql = "INSERT INTO normas ".
-		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones,file_name,file_path)".
+		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,clas_inst,unidad_fisica,observaciones,file_name,file_path)".
 		"VALUES ".
-      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs','$fileName','$targetFilePath')";
+      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo', '$clas_inst','$unidad_fisica','$obs','$fileName','$targetFilePath')";
         
         mysqli_select_db($conn,'gesdoju');
         $query = mysqli_query($conn,$sql);

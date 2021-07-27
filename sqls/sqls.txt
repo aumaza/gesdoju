@@ -125,6 +125,27 @@ total_ur int(11) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+#tabla tipo organismos
+create table tipo_organismo(
+id int(11) auto_increment primary key,
+cod_organismo varchar(2) not null,
+descripcion varchar(120) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla segmentacion_tematica
+create table segmentacion_tematica(
+id int(11) auto_increment primary key,
+clas_inst varchar(2) not null,
+jurisdiccion varchar(2) not null,
+saf varchar(3) not null,
+cod_sirhu varchar(2) not null,
+desc_organismo varchar(120) not null,
+reg_paritario varchar(100),
+esc_estatuto varchar(100),
+convenio varchar(100)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
 into table unidades_retributivas fields terminated by ',' enclosed by '"' lines terminated by '\n'
