@@ -106,32 +106,6 @@ function newNorma($conn){
 		 echo '</select>
 		</div>
 		
-		<div class="form-group">
-		  <label for="sel1">Clasificación Institucional</label>
-		  <select class="form-control" name="clas_inst" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM tipo_organismo order by descripcion ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
-
-		      if($res){
-                while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[cod_organismo].'">'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
-
-			mysqli_close($conn);
-		  
-		 echo '</select>
-		</div>
-		
-		<div class="form-group">
-		  <label for="nombre">SAF</label>
-		  <input type="text" class="form-control" name="saf" maxlength="3" required>
-		</div>
 		
 		<div class="form-group">
 		  <label for="nombre">Ubicación Física/Carpeta</label>
@@ -342,7 +316,83 @@ function formBorrarNorma($id,$conn){
 		<button type="submit" class="btn btn-success btn-block" name="delete_norma"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><hr>
 		<button type="submit" class="btn btn-danger btn-block" name="B"><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
 	      </form> 
-	      </div>
+	      </div><div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+            <img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /> Acerca de Gesdoju</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="container-fluid">
+            <ul class="nav nav-pills nav-justified">
+    <li class="active"><a data-toggle="tab" href="#home">
+        <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gesdoju</a></li>
+    <li><a data-toggle="tab" href="#menu1">
+        <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> Desarroladores</a></li>
+    <li><a data-toggle="tab" href="#menu2">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Colaboradores</a></li>
+    <li><a data-toggle="tab" href="#menu3">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/flag-green.png" /> Version</a></li>
+    <li><a data-toggle="tab" href="#menu4">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/bookmarks-organize.png" /> Licencia</a></li>
+    <li><a data-toggle="tab" href="#menu5">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> Características Técnicas</a></li>
+    </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h2>Gestión de Documentación Jurídica</h2>
+      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
+    </div>
+    
+    <div id="menu1" class="tab-pane fade">
+      <h2>Augusto Maza</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/run-build.png" /> Desarrollador Principal</p>
+    </div>
+    
+    <div id="menu2" class="tab-pane fade">
+      <h2>Sonia Boiarov</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento Jurídico</p>
+    </div>
+    
+    <div id="menu3" class="tab-pane fade">
+      <h2>1.0.0</h2>
+      <p>Version beta</p>
+      <p>2019-2021</p>
+    </div>
+    
+    <div id="menu4" class="tab-pane fade">
+      <h2>GNU GPL</h2>
+      <p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank"> Version 2</a></p>
+
+    </div>
+    
+    <div id="menu5" class="tab-pane fade">
+      <h2>Tecnología</h2>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> HTML 5</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> PHP 5 o superior</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> JavaScript</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> MariaDB 5 o superior</p>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> Bootstrap 3 (framework)</p>
+    </div>
+    
+  </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/window-close.png" /> Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 	    </div>
 	</div>';
 
@@ -525,7 +575,7 @@ if($conn){
 		echo "</table>";
 		echo "<br>";
 		echo '<form <action="main.php" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+                    <button type="submit" class="btn btn-success btn-sm" name="nueva_norma"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
               </form><br>';
 		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
 		echo '</div>';
@@ -725,7 +775,7 @@ if(!empty($_FILES["file"]["name"])){
 /*
 ** insertar nueva norma en base de datos
 */
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$clas_inst,$unidad_fisica,$obs,$file,$conn){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn){
 
  
 $targetDir = '../../uploads/';
@@ -746,9 +796,9 @@ if(!empty($_FILES["file"]["name"])){
          
         
         $sql = "INSERT INTO normas ".
-		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,clas_inst,unidad_fisica,observaciones,file_name,file_path)".
+		"(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones,file_name,file_path)".
 		"VALUES ".
-      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo', '$clas_inst','$unidad_fisica','$obs','$fileName','$targetFilePath')";
+      "('$nombre_norma','$n_norma','$tipo_norma','$foro_norma','$f_pub','$anio','$jurisdiccion','$organismo','$unidad_fisica','$obs','$fileName','$targetFilePath')";
         
         mysqli_select_db($conn,'gesdoju');
         $query = mysqli_query($conn,$sql);

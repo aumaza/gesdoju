@@ -1,4 +1,6 @@
-#!/usr/local/bin/bash
+//#!/usr/local/bin/bash
+#!/bin/bash
+
 chmod -R 777 uploads/
 echo "Permisos en uploads cambiados Exitosamente"
 chmod -R 777 backups/

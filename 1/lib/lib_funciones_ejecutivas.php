@@ -14,7 +14,7 @@ if($conn){
         
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="container">
+	echo '<div class="container-fluid">
 	      <div class="alert alert-success">
 	      <img src="../../icons/actions/quickopen-class.png"  class="img-reponsive img-rounded"> Funciones Ejecutivas
 	      </div><br>';

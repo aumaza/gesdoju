@@ -12,6 +12,7 @@
       include "../lib/lib_adicional_grado.php";
       include "../lib/lib_unidades_retributivas.php";
       include "../lib/lib_tipo_organismos.php";
+      include "../lib/lib_segmentacion_tematica.php";
 
       
         $varsession = $_SESSION['user'];
@@ -335,20 +336,25 @@ $(document).ready(function(){
     </div>
   </div>
   
+  
   <div class="panel panel-default" align="center">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
-        Explorador de Archivos</a>
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+        Segmentación Temática</a>
       </h4>
     </div>
-    <div id="collapse7" class="panel-collapse collapse">
+    <div id="collapse9" class="panel-collapse collapse">
       <div class="panel-body">
       
-      <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Exlorardor de Archivos" target="_blank"><button type="button" class="btn btn-default btn-xs btn-block"><img class="img-reponsive img-rounded" src="../../icons/places/user-home.png" /> Explorer</button></a>
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="segmentacion_tematica" data-toggle="tooltip" data-placement="right" title="Listar Segmentación Temática">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Segmentación Temática</button><hr>
+           
       </div>
     </div>
   </div>
+  
+    
   
 </div> 
 
@@ -388,7 +394,7 @@ $(document).ready(function(){
                     <div id="collapse4" class="panel-collapse collapse">
                     <div class="panel-body">
                     
-                    <button type="submit" class="btn btn-default btn-xs btn-block" name="K" data-toggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
+                    <button type="submit" class="btn btn-default btn-xs btn-block" name="K" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
                     
                     </div>
                     </div>
@@ -424,6 +430,8 @@ $(document).ready(function(){
       <!-- Trigger the modal with a button -->
         <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
             <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
+            
+        <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Sistema de Archivos de Gesdoju" target="_blank"><button type="button" class="btn btn-success navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button></a>
      <hr>
           
       <?php
@@ -443,12 +451,11 @@ $(document).ready(function(){
         $anio = mysqli_real_escape_string($conn,$_POST['anio']);
         $organismo = mysqli_real_escape_string($conn,$_POST['organismo']);
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-        $clas_inst = mysqli_real_escape_string($conn,$_POST['clas_inst']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
         $file = basename($_FILES["file"]["name"]);
-    insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$clas_inst,$unidad_fisica,$obs,$file,$conn);
-    }
+        insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+      }
 	  if(isset($_POST['edit_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         editNorma($id,$conn);
@@ -557,7 +564,7 @@ $(document).ready(function(){
 	  }
 	    
 	  
-	  // fin secci?n AUTORIDADES SUPERIORES
+	  // fin seccion AUTORIDADES SUPERIORES
 	  // =============================================================================== //
 	  
 	  // SECCION ESCALAS SALARIALES
@@ -872,6 +879,15 @@ $(document).ready(function(){
 	
 	// ============================ FIN TIPO DE ORGANISMOS ========================= //
 	
+	// ============================ SEGMENTACION TEMATICA ========================= //
+	if(isset($_POST['segmentacion_tematica'])){
+        segmentacionTematica($conn);
+	}
+	
+	
+	// ============================ FIN SEGMENTACION TEMATICA ========================= //
+	
+	
 	}else{
 	  mysqli_error($conn);
 	}
@@ -950,84 +966,8 @@ $(document).ready(function(){
 		
 		<!-- END Modal -->
 		
-		<!-- Modal 2 -->
-<div id="myModal2" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">
-            <img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /> Acerca de Gesdoju</h4>
-      </div>
-      <div class="modal-body">
-        
-        <div class="container-fluid">
-            <ul class="nav nav-pills nav-justified">
-    <li class="active"><a data-toggle="tab" href="#home">
-        <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gesdoju</a></li>
-    <li><a data-toggle="tab" href="#menu1">
-        <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> Desarroladores</a></li>
-    <li><a data-toggle="tab" href="#menu2">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Colaboradores</a></li>
-    <li><a data-toggle="tab" href="#menu3">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/flag-green.png" /> Version</a></li>
-    <li><a data-toggle="tab" href="#menu4">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/bookmarks-organize.png" /> Licencia</a></li>
-    <li><a data-toggle="tab" href="#menu5">
-        <img class="img-reponsive img-rounded" src="../../icons/actions/mail-mark-task.png" /> Características Técnicas</a></li>
-    </ul>
-
-  <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-      <h2>Gestión de Documentación Jurídica</h2>
-      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
-    </div>
-    
-    <div id="menu1" class="tab-pane fade">
-      <h2>Augusto Maza</h2>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/run-build.png" /> Desarrollador Principal</p>
-    </div>
-    
-    <div id="menu2" class="tab-pane fade">
-      <h2>Sonia Boiarov</h2>
-      <p><img class="img-reponsive img-rounded" src="../../icons/apps/akregator.png" /> Asesoramiento Jurídico</p>
-    </div>
-    
-    <div id="menu3" class="tab-pane fade">
-      <h2>1.0.0</h2>
-      <p>Version beta</p>
-      <p>2019-2021</p>
-    </div>
-    
-    <div id="menu4" class="tab-pane fade">
-      <h2>GNU GPL</h2>
-      <p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank"> Version 2</a></p>
-
-    </div>
-    
-    <div id="menu5" class="tab-pane fade">
-      <h2>Tecnología</h2>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> HTML 5</p>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> PHP 5 o superior</p>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> JavaScript</p>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> MariaDB 5 o superior</p>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/system-suspend-hibernate.png" /> Bootstrap 3 (framework)</p>
-    </div>
-    
-  </div>
-        </div>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/window-close.png" /> Cerrar</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<!-- Modal 2 -->
+<?php modal2(); ?>
 <!-- END Modal 2 -->
 
 </body>
