@@ -13,6 +13,7 @@
       include "../lib/lib_unidades_retributivas.php";
       include "../lib/lib_tipo_organismos.php";
       include "../lib/lib_segmentacion_tematica.php";
+      include "../lib/lib_paritarias.php";
 
       
         $varsession = $_SESSION['user'];
@@ -354,7 +355,22 @@ $(document).ready(function(){
     </div>
   </div>
   
-    
+    <div class="panel panel-default" align="center">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#paritarias">
+        Representación Paritarias</a>
+      </h4>
+    </div>
+    <div id="paritarias" class="panel-collapse collapse">
+      <div class="panel-body">
+      
+      <button type="submit" class="btn btn-default btn-xs btn-block" name="paritarias" data-toggle="tooltip" data-placement="right" title="Listar Representación en Paritarias">
+            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Paritarias</button><hr>
+           
+      </div>
+    </div>
+  </div>
   
 </div> 
 
@@ -887,6 +903,14 @@ $(document).ready(function(){
 	
 	// ============================ FIN SEGMENTACION TEMATICA ========================= //
 	
+	
+	// ============================ REPRESENTACION PARITARIAS ========================= //
+	if(isset($_POST['paritarias'])){
+        
+	}
+	
+	
+	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	
 	}else{
 	  mysqli_error($conn);

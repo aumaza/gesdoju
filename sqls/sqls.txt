@@ -164,6 +164,14 @@ cod_org varchar(2) not null,
 descripcion varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla representacion paritarias
+create table paritarias(
+id int(11) auto_increment primary key not null,
+
+
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
