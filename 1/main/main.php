@@ -19,7 +19,7 @@
         $varsession = $_SESSION['user'];
 	
 	$sql = "select nombre from usuarios where user = '$varsession'";
-	mysqli_select_db('gesdoju');
+	mysqli_select_db($conn,'gesdoju');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
 	      $nombre = $row['nombre'];

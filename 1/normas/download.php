@@ -7,7 +7,7 @@
 	
 	if($conn){
 	$sql = "SELECT nombre FROM usuarios where user = '$varsession'";
-	mysqli_select_db('siadcon');
+	mysqli_select_db($conn,'gesdoju');
         $retval = mysqli_query($conn,$sql);
         
         while($fila = mysqli_fetch_array($retval)){

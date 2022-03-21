@@ -6,7 +6,7 @@ function usuarios($conn){
 if($conn)
 {
 	$sql = "SELECT * FROM usuarios";
-    	mysqli_select_db('gesdoju');
+    	mysqli_select_db($conn,'gesdoju');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
