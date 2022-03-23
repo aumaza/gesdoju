@@ -33,6 +33,7 @@ function newNorma($conn){
 		    <option value="Memo">Memo</option>
 		    <option value="Decision Administrativa">Decisión Administrativa</option>
 		    <option value="Resolucion Conjunta">Resolución Conjunta</option>
+		    <option value="Convenio Colectivo">Convenio Colectivo</option>
 		  </select>
 		</div> 
 		
@@ -172,6 +173,7 @@ function editNorma($id,$conn){
 		    <option value="Memo" '.($fila['tipo_norma'] == "Memo" ? "selected" : "").'>Memo</option>
 		    <option value="Decision Administrativa" '.($fila['tipo_norma'] == "Decision Administrativa" ? "selected" : "").'>Decisión Administrativa</option>
 		    <option value="Resolucion Conjunta" '.($fila['tipo_norma'] == "Resolucion Conjunta" ? "selected" : "").'>Resolución Conjunta</option>
+		    <option value="Convenio Colectivo" '.($fila['tipo_norma'] == "Convenio Colectivo" ? "selected" : "").'>Convenio Colectivo</option>
 		  </select>
 		</div> 
 		
