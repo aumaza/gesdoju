@@ -23,8 +23,8 @@ function skeleton(){
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="/gesdoju/skeleton/js/jquery-3.5.1.min.js"></script>
 	<script src="/gesdoju/skeleton/js/jquery-3.4.1.min.js"></script>
 	<script src="/gesdoju/skeleton/js/bootstrap.min.js"></script>
 	

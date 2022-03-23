@@ -1,6 +1,8 @@
-<?php session_start();      
+<?php session_start(); 
+      ini_set('display_errors', 1);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
+      include "../lib/lib_main.php";
       include "../lib/lib_users.php";
       include "../lib/lib_normas.php";
       include "../lib/lib_system.php";
@@ -56,96 +58,10 @@
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
   <?php skeleton(); ?>
   
-  <!-- Data Table Script -->
-<script>
- $(document).ready(function(){
-      
-      $('#myTable').DataTable({
-        "order": [[1, "asc"]],
-        "responsive":     true,
-        "scrollY":        "300px",
-        "scrollX":        true,
-        "scrollCollapse": true,
-        "paging":         true,
-        "dom":  "Bfrtip",
-        "buttons":        [ 'colvis' ],
-        "fixedColumns": {
-            leftColumns: 2
-        },
-      "language":{
-        "lengthMenu": "Mostrar _MENU_ registros por pagina",
-        "info": "Mostrando pagina _PAGE_ de _PAGES_",
-        "infoEmpty": "No hay registros disponibles",
-        "infoFiltered": "(filtrada de _MAX_ registros)",
-        "loadingRecords": "Cargando...",
-        "processing":     "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords":    "No se encontraron registros coincidentes",
-        "paginate": {
-          "next":       "Siguiente",
-          "previous":   "Anterior"
-        },
-      }
-    });
-         
-    });
-  </script>
-  <!-- END Data Table Script -->
-  
-  
-  <script >
-    function limitText(limitField, limitNum) {
-       if (limitField.value.length > limitNum) {
-          
-           alert("Ha ingresado m�s caracteres de los requeridos, deben ser: \n" + limitNum);
-            limitField.value = limitField.value.substring(0, limitNum);
-       }
-       
-       if(limitField.value.lenght < limitNum){
-	  alert("Ha ingresado menos caracteres de los requeridos, deben ser:  \n"  + limitNum);
-            limitField.value = limitField.value.substring(0, limitNum);
-       }
-}
-</script>
-
-<script>
-function Numeros(string){
-//Solo numeros
-    var out = '';
-    var filtro = '1234567890';//Caracteres validos
-	
-    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){ 
-             //Se a�aden a la salida los caracteres v�lidos
-              out += string.charAt(i);
-	     }else{
-		alert("ATENCION - Sólo se permiten Números");
-	     }
-	     }
-	
-    //Retornar valor filtrado
-    return out;
-} 
-</script>
-
-<script> 
-function Text(string){//validacion solo letras
-    var out = '';
-    //Se a?aden las letras validas
-    var filtro ="^[abcdefghijklmn?opqrstuvwxyzABCDEFGHIJKLMN?OPQRSTUVWXYZ- ]+$"; // Caracteres V�idos
-  
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){ 
-	     out += string.charAt(i);
-	     }else{
-		alert("ATENCION - Sólo se permite Texto");
-	     }
-	     }
-    return out;
-}
-</script>
-
+    <script type="text/javascript" src="main.js"></script>
+    <script src="../lib/lib_normas.js"></script>
+    
+    
   <script>
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();   
@@ -211,244 +127,23 @@ $(document).ready(function(){
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
 <div class="panel-group">
-    <div class="panel panel-default">
-      <div class="panel-heading" align="center">
-        <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</strong></h4>
-        </div>
-      </div>
-      
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-     
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-      
-      <a href="main.php" data-toggle="tooltip" data-placement="bottom" title="Gestión Documental Jurídica">
-	<button type="button" class="btn btn-default navbar-btn">
-	  <img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> Home</button></a>
-     </ul>
-     <ul class="nav navbar-nav">
-     <form action="main.php" method="POST">
-      
-      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Datos Personales">
-	<button type="submit" name="C" class="btn btn-default navbar-btn">
-	  <img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> <?php echo $nombre ?></button></a>
-      <?php 
-      if($_SESSION['user'] == 'root'){
-      echo '<a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar Usuarios">
-	<button type="submit" name="J" class="btn btn-default navbar-btn">
-	  <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button></a>';
-      }
-      ?>
-      </form>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-      
-	<a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> 
-	  <button class="btn btn-danger navbar-btn">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
-      </ul>
-    </div>
-  </div>
-</nav>
+    
+        <!-- ENCABEZAD0  -->
+    <?php encabezado(); ?>
+    
+        <!-- NAVBAR  -->
+    <?php navBar($_SESSION['user'],$nombre); ?>
 
+        <!-- LEFT PANEL -->
+    <?php leftPanel($_SESSION['user']); ?>
 
   
-<div class="container-fluid">    
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <form action="main.php" method="POST">
-	
-	<button type="submit" class="btn btn-success btn-xs btn-block" name="B" data-toggle="tooltip" data-placement="right" title="Listar todas las Normas">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/kthesaurus.png" /> Normas</button><br>
-	
-	 <div class="panel-group" id="accordion">
-  
-  
-  <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-        Autoridades Superiores</a>
-      </h4>
-    </div>
-    <div id="collapse2" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="a_s" data-toggle="tooltip" data-placement="right" title="Listar Autoridades Superiores">
-            <img class="img-reponsive img-rounded" src="../../icons/status/meeting-participant.png" /> Autoridades Superiores</button><hr>
-     
-     <button type="submit" class="btn btn-default btn-xs btn-block" name="promedio_autoridades" data-toggle="tooltip" data-placement="right" title="Calcular Promedios en Remuneraciones">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/office-chart-bar.png" /> Promedios</button>
-      
-      </div>
-    </div>
-  </div>
-  
-  <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-        Escalas Salariales</a>
-      </h4>
-    </div>
-    <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="sinep_pp" data-toggle="tooltip" data-placement="right" title="Listar Escalas Salariales Planta Permanente">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/format-list-ordered.png" /> SINEP Planta Permanente</button><hr>
-      
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
-        Tablas Base</a>
-      </h4>
-    </div>
-    <div id="collapse8" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="funciones_ejecutivas" data-toggle="tooltip" data-placement="right" title="Listar Funciones Ejecutivas">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/quickopen-class.png" /> Funciones Ejecutivas</button><hr>
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="adicional_grado" data-toggle="tooltip" data-placement="right" title="Listar Adicionales por Grado">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Adicional Grado</button><hr>
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="unidades_retributivas" data-toggle="tooltip" data-placement="right" title="Listar Unidades Retributivas por Nivel y Grado">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button><hr>
-            
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="tipo_organismos" data-toggle="tooltip" data-placement="right" title="Listar los distintos tipos de Organismos">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Tipo Organismo</button>
-      
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
-        Segmentación Temática</a>
-      </h4>
-    </div>
-    <div id="collapse9" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="segmentacion_tematica" data-toggle="tooltip" data-placement="right" title="Listar Segmentación Temática">
-            <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Segmentación Temática</button><hr>
-           
-      </div>
-    </div>
-  </div>
-  
-    <div class="panel panel-default" align="center">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#paritarias">
-        Representación Paritarias</a>
-      </h4>
-    </div>
-    <div id="paritarias" class="panel-collapse collapse">
-      <div class="panel-body">
-      
-      <button type="submit" class="btn btn-default btn-xs btn-block" name="paritarias" data-toggle="tooltip" data-placement="right" title="Listar Representación en Paritarias">
-            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Paritarias</button><hr>
-           
-      </div>
-    </div>
-  </div>
-  
-</div> 
 
-  
-  <?php 
-	
-	if($_SESSION['user'] == 'root'){
-	
-        echo '<div class="panel-group">
-                <div class="panel panel-primary" align="center">
-                    <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse6">Mantenimiento</a>
-                    </h4>
-                    </div>
-                    <div id="collapse6" class="panel-collapse collapse">
-                    <div class="panel-body">
-                    <br>
-                    
-                    <button type="submit" class="btn btn-default btn-xs btn-block" name="back_up" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button><hr>
-                    
-                    <button type="submit" class="btn btn-default btn-xs btn-block" name="dump_base" data-toggle="tooltip" data-placement="right" title="Backup Base de Datos"><img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button><hr>
-                    </div>
-                </div>
-                </div>
-                </div>';
-                // fin seccion mantenimiento
-                
-        echo '<div class="panel-group" id="accordion">
-                <div class="panel panel-default" align="center">
-                    <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                        Organismos</a>
-                    </h4>
-                    </div>
-                    <div id="collapse4" class="panel-collapse collapse">
-                    <div class="panel-body">
-                    
-                    <button type="submit" class="btn btn-default btn-xs btn-block" name="K" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
-                    
-                    </div>
-                    </div>
-                </div>
-                
-                <div class="panel panel-default" align="center">
-                    <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                        Jurisdicciones</a>
-                    </h4>
-                    </div>
-                    <div id="collapse5" class="panel-collapse collapse">
-                    <div class="panel-body">
-                    
-                    <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button>
-                    
-                    </div>
-                    </div>
-                </div>
-              </div>';
-	
-	}
-	?>
-  
-  </form>
-</div> 
-	
+        <!-- CENTRAL PANEL -->
 	  <div class="col-sm-10 text-left"> 
-    <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/apps/clock.png" /> <?php echo "<strong>Hora Actual:</strong> " . date("H:i"); ?></button>
-      <?php setlocale(LC_ALL,"es_ES.UTF-8"); ?>
-      <button class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong>Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?></button>
-      <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
-            <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
-            
-        <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Sistema de Archivos de Gesdoju" target="_blank"><button type="button" class="btn btn-success navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button></a>
-     <hr>
+        
+            <!-- BOTONES INFORMATIVOS -->
+        <?php infoButttons(); ?>
           
       <?php
    
@@ -470,7 +165,28 @@ $(document).ready(function(){
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
         $file = basename($_FILES["file"]["name"]);
-        insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+        
+        $nombre_norma = quitarTildes($nombre_norma);
+        $obs = quitarTildes($obs);
+        
+        if(($nombre_norma == '') ||
+                ($n_norma == '') ||
+                    ($tipo_norma == '') ||
+                        ($foro_norma == '') ||
+                            ($f_pub == '') ||
+                                ($anio == '') ||
+                                    ($organismo == '') ||
+                                        ($jurisdiccion == '') ||
+                                            ($unidad_fisica == '') ||
+                                                ($obs == '') ||
+                                                    ($file == '')){
+            echo '<div class="alert alert-warning">
+                    <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hay Campos sin Completar!!.
+                    </div>';
+        
+        }else{
+            insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+      }
       }
 	  if(isset($_POST['edit_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -488,7 +204,28 @@ $(document).ready(function(){
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
-        updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+        
+        $nombre_norma = quitarTildes($nombre_norma);
+        $obs = quitarTildes($obs);
+        
+        if(($id == '') ||
+            ($nombre_norma == '') ||
+                ($n_norma == '') ||
+                    ($tipo_norma == '') ||
+                        ($foro_norma == '') ||
+                            ($f_pub == '') ||
+                                ($anio == '') ||
+                                    ($organismo == '') ||
+                                        ($jurisdiccion == '') ||
+                                            ($unidad_fisica == '') ||
+                                                ($obs == '')){
+            echo '<div class="alert alert-warning">
+                    <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hay Campos sin Completar!!.
+                    </div>';
+        
+        }else{
+            updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$jurisdiccion,$organismo,$unidad_fisica,$obs,$conn);
+	  }
 	  }
 	  if(isset($_POST['del_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -506,6 +243,10 @@ $(document).ready(function(){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $file = basename($_FILES["file"]["name"]);
         uploadPDF($id,$file,$conn);
+	  }
+	  if(isset($_POST['info_norma'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        infoNorma($id,$conn);
 	  }
 	  // fin seccion ABM de normas
 	  
@@ -916,9 +657,6 @@ $(document).ready(function(){
 	  mysqli_error($conn);
 	}
 	
-	
-	
-	mysqli_close($conn);
       
    
    
@@ -933,62 +671,6 @@ $(document).ready(function(){
 </div><br>
 
 
-
-<!-- Modal -->
-		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
-					</div>
-
-					<div class="modal-body">
-						Desea eliminar este registro?
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>
-						<a class="btn btn-danger btn-ok"><span class="glyphicon glyphicon-trash"></span> Borrar</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<script>
-			$('#confirm-delete').on('show.bs.modal', function(e) {
-				$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-				$('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-			});
-		</script>
-		
-		<!-- script para insertar pedidos de cafeteria via web -->
-<script type="text/javascript">
-$(document).ready(function(){
-    $('#add_normativa').click(function(){
-        var datos=$('#nueva_norma_ajax').serialize();
-        $.ajax({
-            type:"POST",
-            url:"../lib/insertar_normas.php",
-            data:datos,
-            success:function(r){
-                if(r == 1){
-                    alert("Normativa Agregada Exitosamente");
-                    location.href = "main.php";
-                    }else{
-                    alert("Hubo un problema al intentar Agregar la Normativa");
-                }
-            }
-        });
-
-        return false;
-    });
-});
-</script>
-		
-		<!-- END Modal -->
 		
 <!-- Modal 2 -->
 <?php modal2(); ?>
