@@ -124,7 +124,7 @@ $(document).ready(function(){
 </style>
  
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();">
 
 <div class="panel-group">
     
@@ -250,15 +250,28 @@ $(document).ready(function(){
 	  }
 	  // fin seccion ABM de normas
 	  
-	  // seccion consulta de normas
+	  // SECCION CONSULTA DE NORMAS
 	  if(isset($_POST['B'])){
 	    normas($conn);
       }
+      if(isset($_POST['busqueda_avanzada'])){
+        formAdvanceSearch();
+      }
+      if(isset($_POST['search'])){
+        $palabra_clave = mysqli_real_escape_string($conn,$_POST['palabra_clave']);
+        $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
+        $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
+        searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn);
+      }
+      
+      // FIN SECCION CONSULTA DE NORMAS
+	  
+	  // SECCION CARGAR USUARIOS
 	  if(isset($_POST['C'])){
 	    loadUser($conn,$nombre);
 	  }
 	  
-	  // fin seccion consulta de normas
+	  
 	  // ============================================================================== //
 	  
 	  // secci?n AUTORIDADES SUPERIORES
@@ -670,8 +683,8 @@ $(document).ready(function(){
   </div>
 </div><br>
 
+<script type="text/javascript" src="../lib/lib_normas.js"></script>
 
-		
 <!-- Modal 2 -->
 <?php modal2(); ?>
 <!-- END Modal 2 -->

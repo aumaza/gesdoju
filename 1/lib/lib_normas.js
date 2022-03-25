@@ -64,3 +64,19 @@ $(document).ready(function(){
         return false;
     });
 });
+
+
+
+/*
+** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA
+*/
+ var callEnable = function(x){
+            
+    if((x == 'palabra_clave') || 
+                (x == 'fecha_desde') ||
+                    (x == 'fecha_hasta')){
+                
+        document.getElementById(x).disabled = false;
+    
+    }
+}

@@ -254,7 +254,7 @@ function editNorma($id,$conn){
 		
 		<div class="form-group">
 		  <label for="pwd">Breve Descripción:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="240" required>'.$fila['observaciones'].'</textarea>
+		  <textarea class="form-control" id="observaciones" name="observaciones" required>'.$fila['observaciones'].'</textarea>
 		</div>
 		
 		<button type="submit" class="btn btn-success btn-block" name="editar_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button><hr>
@@ -427,7 +427,7 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-success">
+	      <div class="alert alert-info">
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
 	      </div><br>';
                   
@@ -456,13 +456,13 @@ if($conn){
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
-                    <button type="submit" class="btn btn-success btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
+                    <button type="submit" class="btn btn-info btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="top" title="Editar Datos de la Norma">
                         <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
                     
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma" data-toggle="tooltip" data-placement="top" title="Eliminar Registro">
                         <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>
@@ -473,7 +473,12 @@ if($conn){
 		echo "</table>";
 		echo "<br>";
 		echo '<form <action="main.php" method="POST">
-                    <button type="submit" class="btn btn-success btn-sm" name="nueva_norma"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma">
+                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
               </form><br>';
 		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
 		echo '</div>';
@@ -814,7 +819,8 @@ function quitarTildes($cadena){
                        "Ã‹", // 45
                        "A©", // 46
                        "Â°", // 47
-                       "A¡"); // 48
+                       "A¡", // 48
+                       "Aš"); // 49
     
     $allow = array ("a", // 1
                     "e", // 2
@@ -863,7 +869,8 @@ function quitarTildes($cadena){
                     "E", // 45
                     "e", // 46
                     "º", // 47
-                    "a"); // 48
+                    "a", // 48
+                    "U"); // 49
     
     $texto = str_replace($notAllow, $allow ,$cadena);
     
@@ -873,7 +880,6 @@ function quitarTildes($cadena){
 
 // INFORMACION EXTENDIDA
 function infoNorma($id,$conn){
-    
     
     $sql = "select * from normas where id = '$id'";
     mysqli_select_db($conn,'gesdoju');
@@ -904,11 +910,11 @@ function infoNorma($id,$conn){
     while($row_2 = mysqli_fetch_array($query_2)){
         $jur_descripcion = $row_2['descripcion'];
     }
-    
+        
     
     echo '<div class="container">
              <div class="panel-group">
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                     <a data-toggle="collapse" href="#collapse1">
@@ -933,7 +939,11 @@ function infoNorma($id,$conn){
                         <form action="main.php" method="POST">
                                 <button type="submit" class="btn btn-default btn-sm btn-block" name="B">
                                 <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Volver a Normas</button>
-                        </form><br>';
+                        </form><br>
+                        
+                        <a href="../lib/informes/print.php?file=print_informe_norma.php&id='.$id.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>';
                         
                         if($archivo == ''){
                         
@@ -958,6 +968,236 @@ function infoNorma($id,$conn){
             </div>
             </div>';
 }
+
+
+/*
+** FUNCION DE BUSQUEDA AVANZADA
+*/
+function formAdvanceSearch(){
+    
+    echo '<div class="container">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</div>
+            <div class="panel-body">
+            
+            <div class="row">
+             <div class="alert alert-info">
+                <p><img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> 
+                    <strong>Importante:</strong> Desde el botón <strong>Habilitar</strong> habilite el campo por el cual desea realizar la búsqueda. Puede habilitar ambos o solo uno.</p>
+             </div>
+            </div>
+            
+            <form action="#" method="POST">
+                <div class="form-group">
+                
+                <label for="palabra_clave">Palabra Clave:</label>
+                <input type="text" class="form-control" id="palabra_clave" placeholder="Ingrese alguna/s palabra/s que puedan estar contenidas en el campo Observaciones" name="palabra_clave" disabled><br>
+                <button type="button" class="btn btn-warning" onclick=callEnable("palabra_clave")>
+                    <img src="../../icons/status/object-unlocked.png"  class="img-reponsive img-rounded"> Habilitar</button>
+                </div><hr>
+                
+                <div class="form-group">
+                <label for="fecha">Fecha Publicación Desde:</label>
+                <input type="date" class="form-control" id="fecha_desde" name="fecha_desde" disabled><br>
+                <button type="button" class="btn btn-warning" onclick=callEnable("fecha_desde")>
+                    <img src="../../icons/status/object-unlocked.png"  class="img-reponsive img-rounded"> Habilitar</button>
+                </div><hr>
+                
+                <div class="form-group">
+                <label for="fecha">Fecha Publicación Hasta:</label>
+                <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta" disabled><br>
+                <button type="button" class="btn btn-warning" onclick=callEnable("fecha_hasta")>
+                    <img src="../../icons/status/object-unlocked.png"  class="img-reponsive img-rounded"> Habilitar</button>
+                </div><hr>
+                
+                <button type="submit" class="btn btn-default btn-block" name="search">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Buscar</button>
+            </form>
+            
+            </div>
+
+            </div>
+            </div>';
+}
+
+
+/*
+** RESULTADO DE BUSQUEDA AVANZADA
+*/
+function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
+
+    if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
+    
+        $sql = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta'";
+        mysqli_select_db($conn,'gesdoju');
+        $query = mysqli_query($conn,$sql);
+        
+        //mostramos fila x fila
+	$count = 0;
+	echo '<div class="container-fluid">
+	      <div class="alert alert-info">
+	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
+	      </div><br>';
+                  
+      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<thead>
+		    <th class='text-nowrap text-center'>Nombre Norma</th>
+		    <th class='text-nowrap text-center'>Nro. Norma</th>
+            <th class='text-nowrap text-center'>Tipo Norma</th>
+            <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>F. Publicación</th>
+            <th class='text-nowrap text-center'>Año Publicación</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($query)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['nombre_norma']."</td>";
+			 echo "<td align=center>".$fila['n_norma']."</td>";
+			 echo "<td align=center>".$fila['tipo_norma']."</td>";
+			 echo "<td align=center>".$fila['f_norma']."</td>";
+			 echo "<td align=center>".$fila['f_pub']."</td>";
+			 echo "<td align=center>".$fila['anio_pub']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '</td>';
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+              
+              <form action="#" method="POST">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
+              </form><br>';
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+		echo '</div>';
+    
+    }
+    
+    if(($palabra_clave != '') && ($fecha_desde == '') && ($fecha_hasta == '')){
+        
+        $sql_1 = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST ('+$palabra_clave' IN BOOLEAN MODE)";
+        mysqli_select_db($conn,'gesdoju');
+        $query_1 = mysqli_query($conn,$sql_1);
+        
+        //mostramos fila x fila
+	$count = 0;
+	echo '<div class="container-fluid">
+	      <div class="alert alert-info">
+	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
+	      </div><br>';
+                  
+      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<thead>
+		    <th class='text-nowrap text-center'>Nombre Norma</th>
+		    <th class='text-nowrap text-center'>Nro. Norma</th>
+            <th class='text-nowrap text-center'>Tipo Norma</th>
+            <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>F. Publicación</th>
+            <th class='text-nowrap text-center'>Año Publicación</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila_1 = mysqli_fetch_array($query_1)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila_1['nombre_norma']."</td>";
+			 echo "<td align=center>".$fila_1['n_norma']."</td>";
+			 echo "<td align=center>".$fila_1['tipo_norma']."</td>";
+			 echo "<td align=center>".$fila_1['f_norma']."</td>";
+			 echo "<td align=center>".$fila_1['f_pub']."</td>";
+			 echo "<td align=center>".$fila_1['anio_pub']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '</td>';
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+              
+              <form action="#" method="POST">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
+              </form><br>';
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+		echo '</div>';
+    
+    }
+    
+    if(($palabra_clave == '') && ($fecha_desde != '') && ($fecha_hasta != '')){
+    
+        $sql_2 = "SELECT * FROM normas WHERE f_pub between '$fecha_desde' and '$fecha_hasta'";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        
+        //mostramos fila x fila
+	$count = 0;
+	echo '<div class="container-fluid">
+	      <div class="alert alert-info">
+	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
+	      </div><br>';
+                  
+      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<thead>
+		    <th class='text-nowrap text-center'>Nombre Norma</th>
+		    <th class='text-nowrap text-center'>Nro. Norma</th>
+            <th class='text-nowrap text-center'>Tipo Norma</th>
+            <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>F. Publicación</th>
+            <th class='text-nowrap text-center'>Año Publicación</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila_2 = mysqli_fetch_array($query_2)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila_2['nombre_norma']."</td>";
+			 echo "<td align=center>".$fila_2['n_norma']."</td>";
+			 echo "<td align=center>".$fila_2['tipo_norma']."</td>";
+			 echo "<td align=center>".$fila_2['f_norma']."</td>";
+			 echo "<td align=center>".$fila_2['f_pub']."</td>";
+			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '</td>';
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+              
+              <form action="#" method="POST">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
+              </form><br>';
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+		echo '</div>';
+		
+		}
+
+}
+
+
 
 
 
