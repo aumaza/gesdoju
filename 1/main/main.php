@@ -16,6 +16,8 @@
       include "../lib/lib_tipo_organismos.php";
       include "../lib/lib_segmentacion_tematica.php";
       include "../lib/lib_paritarias.php";
+      include "../lib/lib_representantes.php";
+      include "../lib/lib_grupo_representante.php";
 
       
         $varsession = $_SESSION['user'];
@@ -666,6 +668,44 @@ $(document).ready(function(){
 	
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	
+	// ============================ REPRESENTANTES ========================= //
+	// se crea un representante
+	$representante = new Representantes();
+	
+	// LISTA TODOS LOS REPRESENTANTES
+	if(isset($_POST['representantes'])){
+        $representante->listarRepresentantes($representante,$conn);
+	}
+	if(isset($_POST['nuevo_representante'])){
+        $representante->formAltaRepresentante();
+	}
+	if(isset($_POST['editar_representante'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $representante->formEditRepresentante($id,$conn);
+	}
+	
+	// ============================ FIN REPRESENTANTES ========================= //
+	
+	
+	// ============================ GRUPO REPRESENTANTE ========================= //
+	// se crea el objeto grupo
+	$grupo = new Grupo();
+	
+	// LISTAR TODOS LOS GRUPOS
+	if(isset($_POST['grupos'])){
+        $grupo->listarGrupos($grupo,$conn);
+	}
+	if(isset($_POST['nuevo_grupo'])){
+        $grupo->formAltaGrupo($conn);
+	}
+	if(isset($_POST['editar_grupo'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $grupo->formEditGrupo($id,$conn);
+	}
+	
+	
+	// ============================ FIN GRUPO REPRESENTANTE ========================= //
+	
 	}else{
 	  mysqli_error($conn);
 	}
@@ -684,6 +724,8 @@ $(document).ready(function(){
 </div><br>
 
 <script type="text/javascript" src="../lib/lib_normas.js"></script>
+<script type="text/javascript" src="../lib/lib_representantes.js"></script>
+<script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

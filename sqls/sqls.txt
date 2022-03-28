@@ -145,6 +145,19 @@ esc_estatuto varchar(100),
 convenio varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#TABLA REPRESENTANTES
+create table representantes(
+id int(11) auto_increment primary key,
+nombre_representante varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#TABLA GRUPOS REPRESENTANTES
+create table grupo_representantes(
+id int(11) auto_increment primary key,
+nombre_grupo varchar(100) not null,
+representantes set('MARINA PELLONI','MAXIMO CAMOGLI','GABRIELA KEIENBURG','PAULA VARELA','SONIA BOIAROV') not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 

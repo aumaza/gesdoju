@@ -1068,7 +1068,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               
@@ -1124,7 +1124,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               
@@ -1180,7 +1180,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print.php?file=print_informe_busqueda.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               

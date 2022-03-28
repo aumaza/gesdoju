@@ -156,7 +156,7 @@ function leftPanel($varsession){
                 <div class="panel-body">
                 
                 <button type="submit" class="btn btn-default btn-xs btn-block" name="segmentacion_tematica" data-toggle="tooltip" data-placement="right" title="Listar Segmentación Temática">
-                        <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Segmentación Temática</button><hr>
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Segmentación Temática</button>
                     
                 </div>
                 </div>
@@ -172,8 +172,10 @@ function leftPanel($varsession){
                 <div id="paritarias" class="panel-collapse collapse">
                 <div class="panel-body">
                 
-                <button type="submit" class="btn btn-default btn-xs btn-block" name="paritarias" data-toggle="tooltip" data-placement="right" title="Listar Representación en Paritarias">
+                <button type="submit" class="btn btn-default btn-xs btn-block" name="paritarias" data-toggle="tooltip" data-placement="right" title="Listar Seguimiento Paritarias">
                         <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Paritarias</button><hr>
+                <button type="submit" class="btn btn-default btn-xs btn-block" name="representantes" data-toggle="tooltip" data-placement="right" title="Listar Representantes">
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Representantes</button>
                     
                 </div>
                 </div>
