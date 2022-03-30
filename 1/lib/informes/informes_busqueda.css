@@ -54,6 +54,7 @@ margin-right: auto;
 }
 
 #normas th {
+  border: 1px solid grey;
   padding-top: 18px;
   padding-bottom: 18px;
   text-align: center;

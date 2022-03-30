@@ -31,6 +31,7 @@
 	}
 
 	$archivo = basename($_GET['file_name']);
+ 	$tipo_archivo = $_GET['tipo_archivo'];
 	
 
 //Si la variable archivo que pasamos por URL no esta 
@@ -38,7 +39,8 @@
 if($archivo){
 //if (!isset($_GET['file_name']) || empty($_GET['file_name'])) {
    
-   $path = '../../uploads/'.$archivo;
+   $path_1 = '../../uploads/'.$archivo;
+   $path_2 = '../../actas_comision/'.$archivo;
   
   
 //Utilizamos basename por seguridad, devuelve el 
@@ -47,15 +49,32 @@ if($archivo){
 
 //$path = 'uploads/tabs'.$file;
 
-if (is_file($path))
-{
-   header('Content-Type: application/force-download');
-   header('Content-Disposition: attachment; filename='.$archivo);
-   header('Content-Transfer-Encoding: binary');
-   header('Content-Length: '.filesize($path));
+if($tipo_archivo == 1){
 
-   readfile($path);
+    if (is_file($path_1)){
+
+        header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$archivo);
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: '.filesize($path_1));
+        readfile($path_1);
+    }
+    
 }
+
+if($tipo_archivo == 2){
+
+    if (is_file($path_2)){
+
+        header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$archivo);
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: '.filesize($path_2));
+        readfile($path_2);
+    }
+
+}
+
 }else{
     echo '<html><head>';
 	  skeleton();

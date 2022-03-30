@@ -597,9 +597,18 @@ function selectFile($id){
 	      <div class="col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                <strong>Seleccione el Archivo a Subir:</strong><br>
+                <strong>Seleccione el Archivo a Subir:</strong><hr>
                 <form action="main.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="'.$id.'">
+                
+                <div class="form-group">
+                <label for="tipo_archivo">Tipo Archivo:</label>
+                <select class="form-control" id="tipo_archivo" name="tipo_archivo">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="1">Norma</option>
+                    <option value="2">Acta Comisión</option>
+                </select>
+                </div><hr>
                 
                 <input type="file" name="file"><br>
                 <button type="submit" name="upload"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
@@ -618,15 +627,19 @@ function selectFile($id){
 ** Funcion para subir pdf
 */
 
-function uploadPDF($id,$file,$conn){
+function uploadPDF($id,$file,$tipo_archivo,$conn){
 
   // File upload path
-$targetDir = '../../uploads/';
+$targetDir_1 = '../../uploads/';
+$targetDir_2 = '../../actas_comision/';
 $fileName = $file;
 //$fileName = basename($_FILES["file"]["name"]);
-$targetFilePath = $targetDir . $fileName;
 
-$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+if($tipo_archivo == 1){
+
+$targetFilePath_1 = $targetDir_1 . $fileName;
+
+$fileType = pathinfo($targetFilePath_1,PATHINFO_EXTENSION);
 
 if(!empty($_FILES["file"]["name"])){
     // Allow certain file formats
@@ -635,12 +648,12 @@ if(!empty($_FILES["file"]["name"])){
     if(in_array($fileType, $allowTypes)){
     
         // Upload file to server
-        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath_1)){
            
             
             // Insert image file name into database
            
-           $sql = "update normas set file_path = '$targetFilePath', file_name = '$fileName' where id = '$id'";
+           $sql = "update normas set file_path = '$targetFilePath_1', file_name = '$fileName' where id = '$id'";
            mysqli_select_db($conn,'gesdoju');
 	    $insert = mysqli_query($conn,$sql);
          
@@ -671,6 +684,65 @@ if(!empty($_FILES["file"]["name"])){
                           echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
                           echo "</div><hr>";
                 }
+                
+}
+
+if($tipo_archivo == 2){
+
+    $targetFilePath_2 = $targetDir_2 . $fileName;
+
+$fileType = pathinfo($targetFilePath_2,PATHINFO_EXTENSION);
+
+if(!empty($_FILES["file"]["name"])){
+    // Allow certain file formats
+    $allowTypes = array('pdf','doc','docx','odt','txt');
+    
+    if(in_array($fileType, $allowTypes)){
+    
+        // Upload file to server
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath_2)){
+           
+            
+            // Insert image file name into database
+           
+           $sql = "update representacion_paritarias set file_path = '$targetFilePath_2', file_name = '$fileName' where id = '$id'";
+           mysqli_select_db($conn,'gesdoju');
+	    $insert = mysqli_query($conn,$sql);
+         
+            if($insert){
+            
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Base de Datos Actualizada. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
+                          echo "</div><hr>";
+            }else{
+		  
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
+                          echo "</div><hr>";
+            } 
+            }else{
+			  echo '<div class="alert alert-warning" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong>';
+                          echo "</div><hr>";
+                }
+                }else{
+    
+			  echo '<div class="alert alert-danger" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: PDF, DOC, DOCX, ODT, TXT son soportados.</strong>';
+			  echo "</div><hr>";
+                }
+                }else{
+                          echo '<div class="alert alert-info" role="alert">';
+                          echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
+                          echo "</div><hr>";
+                }
+    
+
+
+
+
+
+}
 
 }
 
@@ -957,7 +1029,7 @@ function infoNorma($id,$conn){
                               </form>';
                         
                         }else{
-                            echo '<a href="../normas/download.php?file_name='.$archivo.'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$archivo.'">
+                            echo '<a href="../normas/download.php?file_name='.$archivo.'&tipo_archivo=1" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$archivo.'">
                                     <button type="button" class="btn btn-default btn-sm btn-block">
                                         <img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
                         }

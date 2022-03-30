@@ -40,6 +40,9 @@ file_name varchar(100),
 file_path varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+# change to fulltext for make search
+ALTER TABLE normas ADD FULLTEXT (observaciones);
+
 #tabla autoridades_superiores
 create table autoridades_superiores (
 id int(11) auto_increment primary key,
@@ -155,8 +158,22 @@ nombre_representante varchar(100) not null
 create table grupo_representantes(
 id int(11) auto_increment primary key,
 nombre_grupo varchar(100) not null,
-representantes set('MARINA PELLONI','MAXIMO CAMOGLI','GABRIELA KEIENBURG','PAULA VARELA','SONIA BOIAROV') not null
+representantes set('MARINA PELLONI','MAXIMO CAMOGLI','GABRIELA KEIENBURG','PAULA VARELA','SONIA BOIAROV','') not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#TABLA REPRESENTACION PARITARIAS
+create table representacion_paritarias(
+id int(11) auto_increment primary key,
+grupo_representantes varchar(70) not null,
+tipo_representacion enum('Negociacion','Interpretacion') not null,
+fecha_reunion date not null,
+file_name varchar(400),
+file_path varchar(400),
+resumen_reunion text
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# change to fulltext for make search
+ALTER TABLE representacion_paritarias ADD FULLTEXT (resumen_reunion);
 
 
 #subir csv unidades retributivas
@@ -176,19 +193,6 @@ id int(11) auto_increment primary key,
 cod_org varchar(2) not null,
 descripcion varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#tabla representacion paritarias
-create table paritarias(
-id int(11) auto_increment primary key not null,
-
-
-
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
-
 
 #subir csv organismos
 load data local infile '/var/www/html/gesdoju/sqls/organismos.csv' 

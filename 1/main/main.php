@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -58,72 +58,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
+  <link rel="stylesheet" href="main.css" >
   <?php skeleton(); ?>
   
     <script type="text/javascript" src="main.js"></script>
     <script src="../lib/lib_normas.js"></script>
-    
-    
-  <script>
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
-});
-</script>
-  
-  
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: auto;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-      height: auto;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
 
-    .avatar {
-  vertical-align: middle;
-  horizontal-align: right;
-  width: 60px;
-  height: 60px;
-  border-radius: 60%;
-}
-.affix {
-    top: 0;
-    width: 100%;
-    z-index: 9999 !important;
-  }
-
-  .affix ~ .container-fluid {
-    position: relative;
-    padding-top: 70px;
-  }
-
-</style>
  
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();">
@@ -243,8 +183,9 @@ $(document).ready(function(){
 	  }
 	  if(isset($_POST['upload'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $tipo_archivo = mysqli_real_escape_string($conn,$_POST['tipo_archivo']);
         $file = basename($_FILES["file"]["name"]);
-        uploadPDF($id,$file,$conn);
+        uploadPDF($id,$file,$tipo_archivo,$conn);
 	  }
 	  if(isset($_POST['info_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -276,7 +217,7 @@ $(document).ready(function(){
 	  
 	  // ============================================================================== //
 	  
-	  // secci?n AUTORIDADES SUPERIORES
+	  // SECCION AUTORIDADES SUPERIORES
 	  if(isset($_POST['a_s'])){
 	    autoridadesSuperiores($conn);
 	  }
@@ -336,7 +277,7 @@ $(document).ready(function(){
 	  }
 	    
 	  
-	  // fin seccion AUTORIDADES SUPERIORES
+	  // FIN SECCION AUTORIDADES SUPERIORES
 	  // =============================================================================== //
 	  
 	  // SECCION ESCALAS SALARIALES
@@ -494,7 +435,7 @@ $(document).ready(function(){
 	  // FIN SECCION UNIDADES RETIBUTIVAS
 	  // =============================================================================== //
 	  
-	  //seccion usuarios
+	  //SECCION USUARIOS
 	  if(isset($_POST['J'])){
 	      usuarios($conn);
 	}
@@ -537,18 +478,18 @@ $(document).ready(function(){
        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
        updatePass($id,$pass1,$pass2,$conn);	
 	}
-	// fin seccion usuarios
+	// FIN SECCION USUARIOS
 	
-	// seccion mantenimiento
+	// SECCION MANTENIMIENTO
 	if(isset($_POST['back_up'])){
         backup();
 	}
 	if(isset($_POST['dump_base'])){
         dumpMysql($conn);
 	}
-	//fin seccion mantenimiento
+	// FIN SECCION MANTENIMIENTO
 	
-	// seccion organismos
+	// SECCION ORGANISMOS
 	if(isset($_POST['K'])){
        organismos($conn); 
 	}
@@ -582,9 +523,9 @@ $(document).ready(function(){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         delOrganismo($id,$conn);
 	}
-	// fin seccion organismos
+	// FIN SECCION ORGANISMOS
 	
-	// seccion jurisdicciones
+	// SECCION JURIDISDICCIONES
 	if(isset($_POST['L'])){
         jurisdicciones($conn);
 	}
@@ -618,7 +559,7 @@ $(document).ready(function(){
         delJurisdiccion($id,$conn);
 	}
 	
-	// fin seccion jurisdicciones
+	// FIN SECCION JURIDISDICCIONES
 	
 	// ============================ TIPO DE ORGANISMOS ========================= //
 	//LISTAR LOS TIPOS DE ORGANISMOS
@@ -661,10 +602,28 @@ $(document).ready(function(){
 	
 	
 	// ============================ REPRESENTACION PARITARIAS ========================= //
-	if(isset($_POST['paritarias'])){
-        
-	}
+	// se crea el objeto
+	$paritaria = new Paritarias();
 	
+	if(isset($_POST['paritarias'])){
+        $paritaria->listarParitarias($paritaria,$conn);        
+	}
+	if(isset($_POST['nueva_paritaria'])){
+        $paritaria->formAltaParitaria($conn);
+	}
+	if(isset($_POST['info_paritaria'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $paritaria->infoParitaria($paritaria,$id,$conn);
+	}
+	if(isset($_POST['busqueda_paritarias'])){
+        $paritaria->formAdvanceSearchParitarias($conn);
+	}
+	if(isset($_POST['search_paritaria'])){
+        $grupo_representante = mysqli_real_escape_string($conn,$_POST['grupo_representante']);
+        $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
+        $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);        
+        $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn);
+	}
 	
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	
@@ -683,6 +642,7 @@ $(document).ready(function(){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $representante->formEditRepresentante($id,$conn);
 	}
+	
 	
 	// ============================ FIN REPRESENTANTES ========================= //
 	
@@ -726,6 +686,7 @@ $(document).ready(function(){
 <script type="text/javascript" src="../lib/lib_normas.js"></script>
 <script type="text/javascript" src="../lib/lib_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
+<script type="text/javascript" src="../lib/lib_paritarias.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

@@ -99,3 +99,11 @@ function nobackbutton(){
     }
     
 }
+
+
+/*
+** MUESTRA TOOLTIP
+*/
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
