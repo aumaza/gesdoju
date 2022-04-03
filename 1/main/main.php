@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -435,7 +435,8 @@
 	  // FIN SECCION UNIDADES RETIBUTIVAS
 	  // =============================================================================== //
 	  
-	  //SECCION USUARIOS
+	  //SECCION USUARIOS //
+	  // =============================================================================== //
 	  if(isset($_POST['J'])){
 	      usuarios($conn);
 	}
@@ -478,54 +479,48 @@
        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
        updatePass($id,$pass1,$pass2,$conn);	
 	}
-	// FIN SECCION USUARIOS
+	// FIN SECCION USUARIOS //
+	// =============================================================================== //
 	
-	// SECCION MANTENIMIENTO
+	// SECCION MANTENIMIENTO //
+	// =============================================================================== //
 	if(isset($_POST['back_up'])){
         backup();
 	}
 	if(isset($_POST['dump_base'])){
         dumpMysql($conn);
 	}
-	// FIN SECCION MANTENIMIENTO
+	// FIN SECCION MANTENIMIENTO //
+	// =============================================================================== //
 	
-	// SECCION ORGANISMOS
-	if(isset($_POST['K'])){
-       organismos($conn); 
+	// SECCION ORGANISMOS //
+	// =============================================================================== //
+	// SE CREO EL OBJETO ORGoNISMO
+	$my_organismo = new Organismos();
+	
+	if(isset($_POST['listar_organismos'])){
+       $my_organismo->listarOrganismos($my_organismo,$conn); 
 	}
 	if(isset($_POST['add_org'])){
-       newOrganismo($conn);
-	}
-	if(isset($_POST['add_organismo'])){
-        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
-        $cod_org = strtoupper($cod_org);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        $descripcion = strtoupper($descripcion);
-        addOrganismo($cod_org,$descripcion,$conn);
+       $my_organismo->newOrganismo($conn);
 	}
 	if(isset($_POST['edit_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formEditOrganismo($id,$conn);
-	}
-	if(isset($_POST['updateOrg'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
-        $cod_org = strtoupper($cod_org);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        $descripcion = strtoupper($descripcion);
-        updateOrganismo($id,$cod_org,$descripcion,$conn);
+        $my_organismo->formEditOrganismo($id,$my_organismo,$conn);
 	}
 	if(isset($_POST['del_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formBorrarOrganismo($id,$conn);
+        $my_organismo->formBorrarOrganismo($id,$my_organismo,$conn);
 	}
 	if(isset($_POST['delete_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        delOrganismo($id,$conn);
+        $my_organismo->delOrganismo($id,$conn);
 	}
-	// FIN SECCION ORGANISMOS
+	// FIN SECCION ORGANISMOS //
+	// =============================================================================== //
 	
-	// SECCION JURIDISDICCIONES
+	// SECCION JURIDISDICCIONES //
+	// =============================================================================== //
 	if(isset($_POST['L'])){
         jurisdicciones($conn);
 	}
@@ -559,7 +554,8 @@
         delJurisdiccion($id,$conn);
 	}
 	
-	// FIN SECCION JURIDISDICCIONES
+	// FIN SECCION JURIDISDICCIONES //
+	// =============================================================================== //
 	
 	// ============================ TIPO DE ORGANISMOS ========================= //
 	//LISTAR LOS TIPOS DE ORGANISMOS
@@ -687,6 +683,7 @@
 <script type="text/javascript" src="../lib/lib_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_paritarias.js"></script>
+<script type="text/javascript" src="../lib/lib_organismos.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

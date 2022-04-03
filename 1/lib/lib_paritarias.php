@@ -11,7 +11,7 @@ class Paritarias{
     private $resumen_reunion = '';
     
     // CONSTRUCTOR DESPARAMETRIZADO
-    function __contructor(){
+    function __constructor(){
         $this->grupo_representantes = '';
         $this->tipo_representacion = '';
         $this->fecha_reunion = '';

@@ -217,7 +217,7 @@ function leftPanel($varsession){
                                 <div id="collapse4" class="panel-collapse collapse">
                                 <div class="panel-body">
                                 
-                                <button type="submit" class="btn btn-default btn-xs btn-block" name="K" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="listar_organismos" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
                                 
                                 </div>
                                 </div>
