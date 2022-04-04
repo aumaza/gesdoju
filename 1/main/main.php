@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -521,37 +521,26 @@
 	
 	// SECCION JURIDISDICCIONES //
 	// =============================================================================== //
+	// SE CREA EL OBJETO
+	$my_jurisdiccion = new Jurisdicciones();
+	
 	if(isset($_POST['L'])){
-        jurisdicciones($conn);
+        $my_jurisdiccion->listarJurisdicciones($my_jurisdiccion,$conn);
 	}
 	if(isset($_POST['add_jur'])){
-        newJurisdiccion($conn);
-	}
-	if(isset($_POST['add_jurisdiccion'])){
-        $cod_jur = mysqli_real_escape_string($conn,$_POST['cod_jur']);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        $descripcion = strtoupper($descripcion);
-        add_jurisdiccion($cod_jur,$descripcion,$conn);
+        $my_jurisdiccion->newJurisdiccion($conn);
 	}
 	if(isset($_POST['edit_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formEditJurisdiccion($id,$conn);
-	}
-	if(isset($_POST['updateJur'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $cod_jur = mysqli_real_escape_string($conn,$_POST['cod_jur']);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        $descripcion = strtoupper($descripcion);
-        updateJurisdiccion($id,$cod_jur,$descripcion,$conn);
-	
+        $my_jurisdiccion->formEditJurisdiccion($my_jurisdiccion,$id,$conn);
 	}
 	if(isset($_POST['del_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formBorrarJurisdiccion($id,$conn);
+        $my_jurisdiccion->formBorrarJurisdiccion($my_jurisdiccion,$id,$conn);
 	}
 	if(isset($_POST['delete_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        delJurisdiccion($id,$conn);
+        $my_jurisdiccion->delJurisdiccion($id,$conn);
 	}
 	
 	// FIN SECCION JURIDISDICCIONES //
@@ -684,6 +673,7 @@
 <script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_paritarias.js"></script>
 <script type="text/javascript" src="../lib/lib_organismos.js"></script>
+<script type="text/javascript" src="../lib/lib_jurisdicciones.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>
