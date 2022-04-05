@@ -563,16 +563,6 @@
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $my_tipo_organismo->editTipoOrganismo($my_tipo_organismo,$id,$conn);
 	}
-	/*
-	if(isset($_POST['update_tipo_organismo'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        updateTipoOrganismo($id,$cod_org,$descripcion,$conn);
-	}*/
-	
-	
-	
 	// ============================ FIN TIPO DE ORGANISMOS ========================= //
 	
 	// ============================ SEGMENTACION TEMATICA ========================= //
