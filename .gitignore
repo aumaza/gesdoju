@@ -1,0 +1,9 @@
+uploads/*
+documentos/*
+logs/*
+actas_comision/*
+backups/*
+sqls/*
+connection/*
+dump_data_base.sh
+config_allow.sh

@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -29,7 +29,7 @@
 	      $nombre = $row['nombre'];
 	}
 	
-	if($varsession == null || $varsession = ''){
+	if($varsession == null || $varsession == ''){
   echo '<!DOCTYPE html>
         <html lang="es">
         <head>
@@ -547,31 +547,29 @@
 	// =============================================================================== //
 	
 	// ============================ TIPO DE ORGANISMOS ========================= //
+	// SE CREA EL OBJETO
+	$my_tipo_organismo = new TipoOrganismos();
+
 	//LISTAR LOS TIPOS DE ORGANISMOS
 	if(isset($_POST['tipo_organismos'])){
-        tipoOrganismos($conn);
+        $my_tipo_organismo->listarTipoOrganismos($my_tipo_organismo,$conn);
 	}
 	//FORMULARIO PARA AÑADIR NUEVO TIPO DE ORGANISMO
 	if(isset($_POST['add_tipo_org'])){
-        newTipoOrganismo($conn);
+        $my_tipo_organismo->newTipoOrganismo();
 	}
 	//FORMULARIO DE EDICION DE TIPO DE ORGANISMO
 	if(isset($_POST['edit_tipo_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        editTipoOrganismo($id,$conn);
+        $my_tipo_organismo->editTipoOrganismo($my_tipo_organismo,$id,$conn);
 	}
-	//persistencia a base de datos
-	if(isset($_POST['add_tipo_organismo'])){
-        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        addTipoOrganismo($cod_org,$descripcion,$conn);
-	}
+	/*
 	if(isset($_POST['update_tipo_organismo'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
         $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
         updateTipoOrganismo($id,$cod_org,$descripcion,$conn);
-	}
+	}*/
 	
 	
 	
@@ -674,6 +672,7 @@
 <script type="text/javascript" src="../lib/lib_paritarias.js"></script>
 <script type="text/javascript" src="../lib/lib_organismos.js"></script>
 <script type="text/javascript" src="../lib/lib_jurisdicciones.js"></script>
+<script type="text/javascript" src="../lib/lib_tipo_organismos.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

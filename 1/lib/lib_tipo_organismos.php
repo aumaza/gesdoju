@@ -1,102 +1,137 @@
 <?php
 
-// ====================================== LISTADOS ====================================== //
+class TipoOrganismos{
+
+	// DEFINICION DE VARIABLES / PROPIEDADES
+	private $cod_organismo = '';
+	private $descripcion = '';
+
+	// CONSTRUCTOR DESPARAMETRIZADO
+	function __construct(){
+		$this->cod_organismo = '';
+		$this->descripcion = '';
+	}
+
+	// SETTERS
+	private function set_cod_organismo($var){
+		$this->cod_organismo = $var;
+	}
+
+	private function set_descripcion($var){
+		$this->descripcion = $var;
+	}
+
+	// GETTERS
+	private function get_cod_organismo($var){
+		return $this->cod_organismo = $var;
+	}
+
+	private function get_descripcion($var){
+		return $this->descripcion = $var;
+	}
+
+	// METODOS
+
+	// ====================================== LISTADOS ====================================== //
 /*
 ** funcion para listar tipo de organismos
 */
-function tipoOrganismos($conn){
+public function listarTipoOrganismos($my_tipo_organismo,$conn){
 
-if($conn){
+	if($conn){
+		
+		$sql = "SELECT * FROM tipo_organismo";
+		mysqli_select_db($conn,'gesdoju');
+		$resultado = mysqli_query($conn,$sql);
+			
+		//mostramos fila x fila
+		$count = 0;
+		echo '<div class="container">
+			  <div class="alert alert-success">
+			  <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Clasificación de Organismos
+			  </div><br>';
+					  
+		  echo "<table class='display compact' style='width:100%' id='myTable'>";
+		  echo "<thead>
+				<th class='text-nowrap text-center'>Código Clasificación</th>
+				<th class='text-nowrap text-center'>Clasificación</th>
+				<th>&nbsp;</th>
+				</thead>";
 	
-	$sql = "SELECT * FROM tipo_organismo";
-    mysqli_select_db($conn,'gesdoju');
-    $resultado = mysqli_query($conn,$sql);
-        
-	//mostramos fila x fila
-	$count = 0;
-	echo '<div class="container">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Clasificación de Organismos
-	      </div><br>';
-                  
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
-      echo "<thead>
-		    <th class='text-nowrap text-center'>Código Clasificación</th>
-		    <th class='text-nowrap text-center'>Clasificación</th>
-            <th>&nbsp;</th>
-            </thead>";
+	
+		while($fila = mysqli_fetch_array($resultado)){
+				  // Listado normal
+				 echo "<tr>";
+				 echo "<td align=center>".$my_tipo_organismo->get_cod_organismo($fila['cod_organismo'])."</td>";
+				 echo '<td align=center>'.$my_tipo_organismo->get_descripcion($fila['descripcion']).'</td>';
+				 echo "<td class='text-nowrap'>";
+				 echo '<form <action="main.php" method="POST">
+						<input type="hidden" name="id" value="'.$fila['id'].'">
+										 
+						<button type="submit" class="btn btn-success btn-sm" name="edit_tipo_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Tipo de Organismo">
+						<img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+						
+						<button type="submit" class="btn btn-danger btn-sm" name="del_tipo_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+						<img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
+						
+				 echo '</form>';
+				 echo "</td>";
+				 $count++;
+			}
+	
+			echo "</table>";
+			echo "<br>";
+			echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+			echo '<form <action="main.php" method="POST">
+						<button type="submit" class="btn btn-default btn-sm" name="add_tipo_org"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Clasificación</button>
+						</form>';
+			echo '</div>';
+			}else{
+			  echo 'Connection Failure...';
+			}
+	
+		mysqli_close($conn);
+	
+	}
 
 
-	while($fila = mysqli_fetch_array($resultado)){
-			  // Listado normal
-			 echo "<tr>";
-			 echo "<td align=center>".$fila['cod_organismo']."</td>";
-			 echo '<td align=center>'.$fila['descripcion'].'</td>';
-			 echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
-                    <input type="hidden" name="id" value="'.$fila['id'].'">
-                                     
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos del Tipo de Organismo"><button type="submit" class="btn btn-success btn-sm" name="edit_tipo_org"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_tipo_org"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
-                    
-             echo '</form>';
-             echo "</td>";
-			 $count++;
-		}
-
-		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
-		echo '<form <action="main.php" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="add_tipo_org"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Clasificación</button>
-                    </form>';
-		echo '</div>';
-		}else{
-		  echo 'Connection Failure...';
-		}
-
-    mysqli_close($conn);
-
-}
-
-
-// ====================================== FORMULARIOS ====================================== //
+	// ====================================== FORMULARIOS ====================================== //
 
 /*
 ** funcion que carga el formulario para carga de organismos
 */
-function newTipoOrganismo($conn){
+public function newTipoOrganismo(){
 
-   echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Cargar Nueva Clasificación de Organismo</h2><hr>
-	        <form action="main.php" method="POST">
-	        
-	        <div class="form-group">
-            <label for="nombre">Código</label>
-            <input type="text" class="form-control" id="nombre" name="cod_org"  maxlength="2" placeholder="Ingrese el código de clasificación" required>
-            </div><hr>
-	        
-	        <div class="form-group">
-		  <label for="nombre">Clasificación</label>
-		  <input type="text" class="form-control" id="nombre" name="descripcion"  maxlength="120" placeholder="Ingrese la clasificación de tipo de organismo" required>
-		</div><hr>
-		
-		<button type="submit" class="btn btn-success btn-block" name="add_tipo_organismo"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-	      </form> <br>
-	      
-	    </div>
-	    </div>
-	</div>';
+	echo '<div class="container">
+		 <div class="row">
+		 <div class="col-sm-8">
+		   <h2>Cargar Nueva Clasificación de Organismo</h2><hr>
+			 <form id="fr_add_new_tipo_organismo_ajax" method="POST">
+			 
+			 <div class="form-group">
+			 <label for="cod_tipo_org">Código</label>
+			 <input type="text" class="form-control" id="cod_tipo_org" name="cod_tipo_org"  maxlength="2" placeholder="Ingrese el código de clasificación" required>
+			 </div><hr>
+			 
+			 <div class="form-group">
+		   <label for="descripcion">Clasificación</label>
+		   <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese la clasificación de tipo de organismo" required>
+		 </div><hr>
+		 
+		 <button type="submit" class="btn btn-success btn-block" id="add_tipo_organismo" name="add_tipo_organismo">
+		 <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		   </form> <br>
+		   
+		 </div>
+		 </div>
+	 </div>';
+ 
+ }
 
-}
-
-
-/*
+ /*
 ** funcion que carga el formulario para editar carga de organismos
 */
-function editTipoOrganismo($id,$conn){
+public function editTipoOrganismo($my_tipo_organismo,$id,$conn){
     
     $sql = "select * from tipo_organismo where id = '$id'";
     mysqli_select_db($conn,'gesdoju');
@@ -111,20 +146,21 @@ function editTipoOrganismo($id,$conn){
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Editar Clasificación de Organismo</h2><hr>
-	        <form action="main.php" method="POST">
+	        <form id="fr_update_tipo_organismo_ajax" method="POST">
 	        <input type="hidden" name="id" value="'.$id.'">
 	        
 	        <div class="form-group">
-            <label for="nombre">Código</label>
-            <input type="text" class="form-control" id="nombre" name="cod_org"  maxlength="2" value="'.$cod.'" required>
+            <label for="cod_tipo_org">Código</label>
+            <input type="text" class="form-control" id="cod_tipo_organismo" name="cod_tipo_org"  maxlength="2" value="'.$my_tipo_organismo->get_cod_organismo($cod).'" required readonly>
             </div><hr>
 	        
 	        <div class="form-group">
-		  <label for="nombre">Clasificación</label>
-		  <input type="text" class="form-control" id="nombre" name="descripcion"  maxlength="120" value="'.$descripcion.'" required>
+		  <label for="descripcion">Clasificación</label>
+		  <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" value="'.$my_tipo_organismo->get_descripcion($descripcion).'" required>
 		</div><hr>
 		
-		<button type="submit" class="btn btn-success btn-block" name="update_tipo_organismo"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		<button type="submit" class="btn btn-success btn-block" id="update_tipo_organismo" name="update_tipo_organismo">
+		<img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
 	      </form> <br>
 	      
 	    </div>
@@ -134,16 +170,14 @@ function editTipoOrganismo($id,$conn){
 }
 
 
-
-
 // ====================================== PERSISTENCIA ====================================== //
 
 /*
 ** funcion que agrega Organismos a la base de datos
 */
-function addTipoOrganismo($cod_org,$descripcion,$conn){
+public function addTipoOrganismo($my_tipo_organismo,$cod_tipo_org,$descripcion,$conn){
 
-    $sql = "select cod_organismo, descripcion from tipo_organismo where cod_organismo = '$cod_org' or descripcion = '$descripcion'";
+    $sql = "select cod_organismo, descripcion from tipo_organismo where cod_organismo = '$cod_tipo_org' or descripcion = '$descripcion'";
     mysqli_select_db($conn,'gesdoju');
     $query = mysqli_query($conn,$sql);
     $rows = mysqli_num_rows($query);
@@ -151,39 +185,23 @@ function addTipoOrganismo($cod_org,$descripcion,$conn){
     if($rows == 0){
             
             $consulta = "INSERT INTO tipo_organismo".
-            "(cod_organismo,descripcion)".
-            "VALUES ".
-        "('$cod_org','$descripcion')";
+            			"(cod_organismo,
+						  descripcion)".
+            			"VALUES ".
+        				"($my_tipo_organismo->set_cod_organismo('$cod_tipo_org'),
+						  $my_tipo_organismo->set_descripcion('$descripcion'))";
+
         mysqli_select_db($conn,'gesdoju');
         $resp = mysqli_query($conn,$consulta);
             
             if($resp){
-            echo "<br>";
-		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" alert-dismissible">
-		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Registro Agregado Satisfactoriamente.';
-		    echo "</div>";
-		    echo "</div>";
+            echo 1; // registro insertado con exito
     }else{
-			    echo "<br>";
-			    echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Agregar el Registro. '  .mysqli_error($conn);
-			    echo "</div>";
-			    echo "</div>";
+			    echo -1; // hubo un problema al insertar el registro
 		    }
 		    }else{
 		    
-                echo "<br>";
-			    echo '<div class="container">';
-			     echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Ya existe registro de esa Clasificación de Organismo. Verifique el Código o la Descripción del mismo. No puede haber dos Clasificaciones con la misma Descripción o Código';
-			    echo "</div>";
-			    echo "</div>";
-			    exit;
+                echo 4; // registro existente
 		    
 		    }
 
@@ -193,31 +211,23 @@ function addTipoOrganismo($cod_org,$descripcion,$conn){
 /*
 ** funcion actualizar registro de tipo de organismos
 */
-function updateTipoOrganismo($id,$cod_org,$descripcion,$conn){
+public function updateTipoOrganismo($my_tipo_organismo,$id,$cod_org,$descripcion,$conn){
 
-        $sql = "update tipo_organismo set cod_organismo = '$cod_org', descripcion = '$descripcion' where id = '$id'";
-        mysqli_select_db($conn,'gesdoju');
-        $query = mysqli_query($conn,$sql);
-        
-        if($query){
-            echo "<br>";
-		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" alert-dismissible">
-		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Registro Actualizado Satisfactoriamente.';
-		    echo "</div>";
-		    echo "</div>";
-        }else{
-                    echo "<br>";
-                    echo '<div class="container">';
-                    echo '<div class="alert alert-warning" alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-                    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Actualizar el Registro. '  .mysqli_error($conn);
-                    echo "</div>";
-                    echo "</div>";
-                }
+	$sql = "update tipo_organismo set cod_organismo = $my_tipo_organismo->set_cod_organismo('$cod_org'), descripcion = $my_tipo_organismo->set_descripcion('$descripcion') where id = '$id'";
+	mysqli_select_db($conn,'gesdoju');
+	$query = mysqli_query($conn,$sql);
+	
+	if($query){
+		echo 1; // registro actualizado con exito
+	}else{
+		echo -1; // hubo un problema al actualizar el registro
+	}
 
 
 }
+
+
+} // FIN DE LA CLASE
+
 
 ?>
