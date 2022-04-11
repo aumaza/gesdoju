@@ -4,7 +4,7 @@
            
       if($conn){
       //creamos el objeto
-      $seg_tem = new SegmentacionTematica();
+      $segmentacion = new SegmentacionTematica();
       
       // captura de datos
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -12,12 +12,12 @@
         $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
         $saf = mysqli_real_escape_string($conn,$_POST['saf']);
         $cod_sirhu = mysqli_real_escape_string($conn,$_POST['cod_sirhu']);
-        $desc_org = mysqli_real_escape_string($conn,$_POST['desc_org']);
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
         $reg_paritario = mysqli_real_escape_string($conn,$_POST['reg_paritario']);
         $regimen_laboral = mysqli_real_escape_string($conn,$_POST['reg_laboral']);
-        $cod_estatuto = mysqli_real_escape_string($conn,$_POST['cod_estatuto']);
+        $esc_estatuto = mysqli_real_escape_string($conn,$_POST['esc_estatuto']);
         $convenio = mysqli_real_escape_string($conn,$_POST['convenio']);
-        $ub_fis = mysqli_real_escape_string($conn,$_POST['ub_fis']);
+        $ub_fis = mysqli_real_escape_string($conn,$_POST['ubicacion_fisica']);
         
       
                   
@@ -27,16 +27,16 @@
             ($jurisdiccion == '') ||
                 ($saf == '') ||
                     ($cod_sirhu == '') ||
-                        ($desc_org == '') ||
+                        ($cod_org == '') ||
                             ($reg_paritario == '') ||
                                 ($regimen_laboral == '') ||
-                                    ($cod_estatuto == '') ||
+                                    ($esc_estatuto == '') ||
                                         ($convenio == '') ||
                                             ($ub_fis == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $seg_tem->updateSegmentacion($id,$seg_tem,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$desc_org,$reg_paritario,$regimen_laboral,$cod_estatuto,$convenio,$ub_fis,$conn);
+        $segmentacion->updateSegmentacion($id,$segmentacion,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$cod_org,$reg_paritario,$regimen_laboral,$esc_estatuto,$convenio,$ub_fis,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion

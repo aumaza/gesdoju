@@ -566,11 +566,27 @@
 	// ============================ FIN TIPO DE ORGANISMOS ========================= //
 	
 	// ============================ SEGMENTACION TEMATICA ========================= //
+	// SE INICIALIZA EL OBJETO
+	$segmentacion = new SegmentacionTematica();
+	
 	if(isset($_POST['segmentacion_tematica'])){
-        segmentacionTematica($conn);
+        $segmentacion->listarSegmentacionTematica($segmentacion,$conn);
 	}
-	
-	
+	if(isset($_POST['nueva_segmentacion'])){
+        $segmentacion->formNewSegmentacion($conn);
+	}
+	if(isset($_POST['edit_segmentacion'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $segmentacion->formEditSegmentacion($id,$conn,$dbase);
+	}
+	if(isset($_POST['del_segmentacion'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $segmentacion->formBorrarSegmentacion($id,$conn,$dbase);
+	}
+	if(isset($_POST['info_segmentacion'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $segmentacion->infoSegmentacion($segmentacion,$id,$conn,$dbase);
+	}
 	// ============================ FIN SEGMENTACION TEMATICA ========================= //
 	
 	
@@ -597,7 +613,7 @@
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);        
         $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn);
 	}
-	
+		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	
 	// ============================ REPRESENTANTES ========================= //
@@ -663,6 +679,7 @@
 <script type="text/javascript" src="../lib/lib_organismos.js"></script>
 <script type="text/javascript" src="../lib/lib_jurisdicciones.js"></script>
 <script type="text/javascript" src="../lib/lib_tipo_organismos.js"></script>
+<script type="text/javascript" src="../lib/lib_segmentacion_tematica.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

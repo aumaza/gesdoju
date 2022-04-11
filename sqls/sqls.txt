@@ -142,10 +142,12 @@ clas_inst varchar(2) not null,
 jurisdiccion varchar(2) not null,
 saf varchar(3) not null,
 cod_sirhu varchar(2) not null,
-desc_organismo varchar(120) not null,
+cod_org varchar(2) not null,
 reg_paritario varchar(100),
+reg_laboral varchar(100),
 esc_estatuto varchar(100),
-convenio varchar(100)
+convenio varchar(100),
+ubicacion_fisica varchar(50)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #TABLA REPRESENTANTES
