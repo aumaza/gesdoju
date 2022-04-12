@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -586,6 +586,13 @@
 	if(isset($_POST['info_segmentacion'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $segmentacion->infoSegmentacion($segmentacion,$id,$conn,$dbase);
+	}
+	if(isset($_POST['busqueda_avanzada_segmentacion'])){
+        $segmentacion->formAdvanceSearchSegmentacion($conn,$dbase);
+	}
+	if(isset($_POST['search_segmentacion'])){
+        $clas_inst = mysqli_real_escape_string($conn,$_POST['clas_inst']);
+        $segmentacion->searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase);
 	}
 	// ============================ FIN SEGMENTACION TEMATICA ========================= //
 	

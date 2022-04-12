@@ -150,6 +150,11 @@ convenio varchar(100),
 ubicacion_fisica varchar(50)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#subir csv segmentacion_tematica
+load data local infile '/mnt/sdb1/Documents/Proyecto_Gesdoju/segmentacion_tematica.csv' 
+into table segmentacion_tematica fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines
+(clas_inst,jurisdiccion,saf,cod_sirhu,cod_org,reg_paritario,reg_laboral,esc_estatuto,convenio,ubicacion_fisica);
+
 #TABLA REPRESENTANTES
 create table representantes(
 id int(11) auto_increment primary key,

@@ -161,6 +161,10 @@ if($conn){
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="nueva_segmentacion">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Registro</button>
+                        
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada_segmentacion">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
                     </form>';
 		echo '</div>';
 		}else{
@@ -467,6 +471,144 @@ public function formBorrarSegmentacion($id,$conn,$dbase){
 	    </div>
 	</div>';
 
+}
+
+/*
+** FUNCION DE BUSQUEDA AVANZADA
+*/
+function formAdvanceSearchSegmentacion($conn,$dbase){
+    
+    echo '<div class="container">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada Segmentación Temática</div>
+            <div class="panel-body">
+            
+                        
+            <form action="#" method="POST">
+                <div class="form-group">
+                
+                <div class="form-group">
+                <label for="clas_inst">Clasificación Institucional</label>
+                <select class="form-control" id="clas_inst" name="clas_inst" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM tipo_organismo order by cod_organismo ASC";
+                    mysqli_select_db($conn,$dbase);
+                    $res = mysqli_query($conn,$query);
+
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores['cod_organismo'].'">'.$valores['cod_organismo'].' - '.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
+
+                    mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+                
+                <button type="submit" class="btn btn-default btn-block" name="search_segmentacion">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Buscar</button>
+            </form>
+            
+            </div>
+
+            </div>
+            </div>';
+}
+
+
+/*
+** RESULTADO DE BUSQUEDA AVANZADA
+*/
+function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
+
+   
+    
+        $sql = "SELECT * FROM segmentacion_tematica where clas_inst = '$clas_inst'";
+        mysqli_select_db($conn,$dbase);
+        $query = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($query);
+        
+        //mostramos fila x fila
+	$count = 0;
+	echo '<div class="container-fluid">
+	      <div class="alert alert-info">
+	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
+	      </div><br>';
+                  
+      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<thead>
+		    <th class='text-nowrap text-center'>Clasificación Institucional</th>
+		    <th class='text-nowrap text-center'>Jurisdicción</th>
+            <th class='text-nowrap text-center'>SAF</th>
+            <th class='text-nowrap text-center'>SIRHU</th>
+            <th class='text-nowrap text-center'>Organismo</th>
+            <th class='text-nowrap text-center'>Régimen Paritario</th>
+            <th class='text-nowrap text-center'>Régimen Laboral</th>
+            <th class='text-nowrap text-center'>Escalafon / Estatuto</th>
+            <th class='text-nowrap text-center'>Convenio</th>
+            <th class='text-nowrap text-center'>Ubicacion Física / Bibliorato</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($query)){
+			  // Listado normal
+			 echo "<tr>";
+			 $sql_1 = "select descripcion from tipo_organismo where cod_organismo = '$clas_inst'";
+			 $query_1 = mysqli_query($conn,$sql_1);
+			 $row_1 = mysqli_fetch_assoc($query_1);
+			 {
+			 echo "<td align=center>".$row_1['descripcion']."</td>";
+			 }
+			 
+			 $sql_2 = "select descripcion from jurisdicciones where cod_jur = '$fila[jurisdiccion]'";
+			 $query_2 = mysqli_query($conn,$sql_2);
+			 $row_2 = mysqli_fetch_assoc($query_2);
+			 {
+			 echo "<td align=center>".$row_2['descripcion']."</td>";
+			 }
+			 
+			 echo "<td align=center>".$fila['saf']."</td>";
+			 echo "<td align=center>".$fila['cod_sirhu']."</td>";
+			 
+			 $sql_3 = "select descripcion from organismos where cod_org = '$fila[cod_org]'";
+			 $query_3 = mysqli_query($conn,$sql_3);
+			 $row_3 = mysqli_fetch_assoc($query_3);
+			 {
+			 echo "<td align=center>".$row_3['descripcion']."</td>";
+			 }
+			 
+			 echo "<td align=center>".$fila['reg_paritario']."</td>";
+			 echo "<td align=center>".$fila['reg_laboral']."</td>";
+			 echo "<td align=center>".$fila['esc_estatuto']."</td>";
+			 echo "<td align=center>".$fila['convenio']."</td>";
+			 echo "<td align=center>".$fila['ubicacion_fisica']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '</td>';
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<a href="../lib/informes/print_search_officio.php?file=print_table_info_segmentacion.php&clas_inst='.$clas_inst.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+              
+              <form action="#" method="POST">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada_segmentacion">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
+              </form><br>';
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+		echo '</div>';
+    
+    
 }
 
     // ====================================================== INFORMES ======================================================= //
