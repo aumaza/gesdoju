@@ -138,7 +138,13 @@ function leftPanel($varsession){
                         <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Unidades Retributivas</button><hr>
                         
                 <button type="submit" class="btn btn-default btn-xs btn-block" name="tipo_organismos" data-toggle="tooltip" data-placement="right" title="Listar los distintos tipos de Organismos">
-                        <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Tipo Organismo</button>
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Tipo Organismo</button><hr>
+                
+                <button type="submit" class="btn btn-default btn-xs btn-block" name="tipo_normas" data-toggle="tooltip" data-placement="right" title="Listar los distintos tipos de Normas">
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/code-class.png" /> Tipo Normas</button><hr>
+                
+                <button type="submit" class="btn btn-default btn-xs btn-block" name="ambito_normas" data-toggle="tooltip" data-placement="right" title="Listar los distintos Ambitos de Normas">
+                        <img class="img-reponsive img-rounded" src="../../icons/categories/applications-education-university.png" /> Ambitos Normas</button>
                 
                 </div>
                 </div>

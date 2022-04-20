@@ -19,37 +19,51 @@ function newNorma($conn){
 	        <div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
 		  <input type="text" class="form-control" id="n_norma" name="n_norma"  maxlength="25" placeholder="00000" required>
-		</div>
+		</div>';
 		
-		<div class="form-group">
-		  <label for="sel1">Tipo de Norma:</label>
-		  <select class="form-control" id="t_norma" name="t_norma">
-		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Ley">Ley</option>
-		    <option value="Decreto">Decreto</option>
-		    <option value="Resolucion">Resolución</option>
-		    <option value="Disposicion">Disposición</option>
-		    <option value="Nota">Nota</option>
-		    <option value="Memo">Memo</option>
-		    <option value="Decision Administrativa">Decisión Administrativa</option>
-		    <option value="Resolucion Conjunta">Resolución Conjunta</option>
-		    <option value="Convenio Colectivo">Convenio Colectivo</option>
-		  </select>
-		</div> 
 		
-		<div class="form-group">
-		  <label for="sel1">Ambito de la Norma:</label>
-		  <select class="form-control" id="foro_norma" name="foro_norma">
-		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Comercial">Comercial</option>
-		    <option value="Laboral">Laboral</option>
-		    <option value="Civil">Civil</option>
-		    <option value="Penal">Penal</option>
-		    <option value="Salarial">Salarial</option>
-		    <option value="Estructura">Estructura Organizativa</option>
-		    <option value="Presupuesto">Presupuesto</option>
-		    <option value="Carrera">Carrera</option>
-		    </select>
+		echo '<div class="form-group">
+		  <label for="t_norma">Tipo de Norma</label>
+		  <select class="form-control" id="t_norma" name="t_norma" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM tipo_norma order by id ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+            </div>
+		
+		 <div class="form-group">
+		  <label for="a_norma">Ambito de la Norma</label>
+		  <select class="form-control" id="foro_norma" name="foro_norma" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM ambito_norma order by id ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
 		</div>
 		
 		<div class="form-group">
@@ -154,42 +168,55 @@ function editNorma($id,$conn){
 	        <div class="form-group">
 		  <label for="nombre">Nombre de la Norma</label>
 		  <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" required>
-		</div>
+		</div>';
 	        
-	        <div class="form-group">
+	      echo '<div class="form-group">
 		  <label for="nombre">Nro de Norma</label>
 		  <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" required>
 		</div>
 		
 		<div class="form-group">
-		  <label for="sel1">Tipo de Norma:</label>
-		  <select class="form-control" name="t_norma">
-		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Ley" '.($fila['tipo_norma'] == "Ley" ? "selected" : ""). '>Ley</option>
-		    <option value="Decreto" '.($fila['tipo_norma'] == "Decreto" ? "selected" : "").'>Decreto</option>
-		    <option value="Resolucion" '.($fila['tipo_norma'] == "Resolucion" ? "selected" : "").'>Resolución</option>
-		    <option value="Disposicion" '.($fila['tipo_norma'] == "Disposicion" ? "selected" : "").'>Disposición</option>
-		    <option value="Nota" '.($fila['tipo_norma'] == "Nota" ? "selected" : "").'>Nota</option>
-		    <option value="Memo" '.($fila['tipo_norma'] == "Memo" ? "selected" : "").'>Memo</option>
-		    <option value="Decision Administrativa" '.($fila['tipo_norma'] == "Decision Administrativa" ? "selected" : "").'>Decisión Administrativa</option>
-		    <option value="Resolucion Conjunta" '.($fila['tipo_norma'] == "Resolucion Conjunta" ? "selected" : "").'>Resolución Conjunta</option>
-		    <option value="Convenio Colectivo" '.($fila['tipo_norma'] == "Convenio Colectivo" ? "selected" : "").'>Convenio Colectivo</option>
-		  </select>
-		</div> 
+		  <label for="t_norma">Tipo de Norma</label>
+		  <select class="form-control" id="t_norma" name="t_norma" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM tipo_norma order by id ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while ($valores = mysqli_fetch_array($res)){
+				  echo '<option value="'.$valores[descripcion].'" '.("'.$fila[tipo_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		echo '</select>
+            </div>
 		
-		<div class="form-group">
-		  <label for="sel1">Ambito de la Norma:</label>
-		  <select class="form-control" name="foro_norma">
-		    <option value="" disabled selected>Seleccionar</option>
-		    <option value="Comercial" '.($fila['f_norma'] == "Comercial" ? "selected" : ""). '>Comercial</option>
-		    <option value="Laboral" '.($fila['f_norma'] == "Laboral" ? "selected" : ""). '>Laboral</option>
-		    <option value="Civil" '.($fila['f_norma'] == "Civil" ? "selected" : ""). '>Civil</option>
-		    <option value="Penal" '.($fila['f_norma'] == "Penal" ? "selected" : ""). '>Penal</option>
-		    <option value="Salarial" '.($fila['f_norma'] == "Salarial" ? "selected" : ""). '>Salarial</option>
-		    <option value="Estructura" '.($fila['f_norma'] == "Estructura" ? "selected" : ""). '>Estructura Organizativa</option>
-		    <option value="Presupuesto" '.($fila['f_norma'] == "Presupuesto" ? "selected" : ""). '>Presupuesto</option>
-		    <option value="Carrera" '.($fila['f_norma'] == "Carrera" ? "selected" : ""). '>Carrera</option>
-		    </select>
+		 <div class="form-group">
+		  <label for="a_norma">Ambito de la Norma</label>
+		  <select class="form-control" id="foro_norma" name="foro_norma" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+		      $query = "SELECT * FROM ambito_norma order by id ASC";
+		      mysqli_select_db($conn,'gesdoju');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res){
+				  while ($valores = mysqli_fetch_array($res)){
+				echo '<option value="'.$valores[descripcion].'" '.("'.$fila[f_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+			    }
+                }
+			}
+
+			//mysqli_close($conn);
+		  
+		echo '</select>
 		</div>
 		
 		<div class="form-group">

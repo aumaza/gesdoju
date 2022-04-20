@@ -2,26 +2,23 @@
 // GUARDA NUEVO REGISTRO //
 
 /*
-** GUARDA NUEVO REGISTRO DE GRUPO
+** GUARDA NUEVO REGISTRO DE ORGANISMO
 */
 
 $(document).ready(function(){
-    $('#add_new_paritaria').click(function(){
+    $('#add_tipo_norma').click(function(){
         
-        var datos = $('#fr_add_new_paritaria_ajax').serialize();
+        var datos = $('#fr_add_new_tipo_norma_ajax').serialize();
         
         $.ajax({
             type:"POST",
-            url:"../lib/nueva_paritaria.php",
+            url:"../lib/tipo_norma/nuevo_tipo_norma.php",
             data:datos,
             success:function(r){
                 if(r == 1){
                     alert("Registro Guardado Exitosamente!!");
-                    $('#grupo_representante').val('');
-                    $('#tipo_representacion').val('');
-                    $('#fecha_reunion').val('');
-                    $('#resumen_reunion').val('');
-                    $('#grupo_representante').focus('');
+                    $('#descripcion').val('');
+                    $('#descripcion').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar guardar el registro");
@@ -30,12 +27,9 @@ $(document).ready(function(){
                     alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 4){
-                    alert("Error. Representante Existente!!");
-                    $('#grupo_representante').val('');
-                    $('#tipo_representacion').val('');
-                    $('#fecha_reunion').val('');
-                    $('#resumen_reunion').val('');
-                    $('#grupo_representante').focus('');
+                    alert("Error. Tipo Norma Existente!!");
+                    $('#descripcion').val('');
+                    $('#descripcion').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
                     alert("Error de conexion dentro de la funcion principal!!");                    
@@ -49,18 +43,5 @@ $(document).ready(function(){
         return false;
     
 });
-});  
+});
  
-/*
-** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA
-*/
- var callEnableParitaria = function(x){
-            
-    if((x == 'grupo_representante') || 
-                (x == 'fecha_desde') ||
-                    (x == 'fecha_hasta')){
-                
-        document.getElementById(x).disabled = false;
-    
-    }
-}

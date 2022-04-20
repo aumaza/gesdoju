@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -18,6 +18,8 @@
       include "../lib/lib_paritarias.php";
       include "../lib/lib_representantes.php";
       include "../lib/lib_grupo_representante.php";
+      include "../lib/tipo_norma/lib_tipo_norma.php";
+      include "../lib/ambito_norma/lib_ambito_norma.php";
 
       
         $varsession = $_SESSION['user'];
@@ -662,6 +664,33 @@
 	
 	// ============================ FIN GRUPO REPRESENTANTE ========================= //
 	
+	// ============================ SECCION TIPO DE NORMA ========================= //
+	// se crea el objeto
+	$obj_tipo_norma = new TipoNorma();
+	
+	if(isset($_POST['tipo_normas'])){
+        $obj_tipo_norma->listarTipoNorma($obj_tipo_norma,$conn,$dbase);
+	}
+	if(isset($_POST['nuevo_tipo_norma'])){
+        $obj_tipo_norma->newTipoNorma();
+	}
+	
+	
+	// ============================ FIN SECCION TIPO DE NORMA ========================= //
+	
+	// ============================ SECCION AMBITO DE NORMA ========================= //
+	// se crea el objeto
+	$obj_ambito_norma = new AmbitoNorma();
+	
+	if(isset($_POST['ambito_normas'])){
+        $obj_ambito_norma->listarAmbitoNorma($obj_ambito_norma,$conn,$dbase);
+	}
+	if(isset($_POST['nuevo_ambito_norma'])){
+        $obj_ambito_norma->newAmbitoNorma();
+	}
+	
+	// ============================ FIN SECCION AMBITO DE NORMA ========================= //
+	
 	}else{
 	  mysqli_error($conn);
 	}
@@ -687,6 +716,8 @@
 <script type="text/javascript" src="../lib/lib_jurisdicciones.js"></script>
 <script type="text/javascript" src="../lib/lib_tipo_organismos.js"></script>
 <script type="text/javascript" src="../lib/lib_segmentacion_tematica.js"></script>
+<script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
+<script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

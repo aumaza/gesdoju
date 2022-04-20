@@ -1,4 +1,4 @@
-//#!/usr/local/bin/bash
+#!/usr/local/bin/bash
 #!/bin/bash
 
 chmod -R 777 uploads/

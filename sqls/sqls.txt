@@ -182,6 +182,17 @@ resumen_reunion text
 # change to fulltext for make search
 ALTER TABLE representacion_paritarias ADD FULLTEXT (resumen_reunion);
 
+#tipo de norma
+create table tipo_norma(
+id int(11) auto_increment primary key,
+descripcion varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla ambito de la norma
+create table ambito_norma(
+id int(11) auto_increment primary key,
+descripcion varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
