@@ -41,6 +41,7 @@ if($archivo){
    
    $path_1 = '../../uploads/'.$archivo;
    $path_2 = '../../actas_comision/'.$archivo;
+   $path_3 = '../lib/normas/'.$archivo;
   
   
 //Utilizamos basename por seguridad, devuelve el 
@@ -73,6 +74,18 @@ if($tipo_archivo == 2){
         readfile($path_2);
     }
 
+}
+
+if($archivo == 'normas.csv'){
+
+    if(is_file($path_3)){
+
+        header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$archivo);
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: '.filesize($path_3));
+        readfile($path_3);
+    }
 }
 
 }else{

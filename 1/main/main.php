@@ -4,7 +4,7 @@
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
       include "../lib/lib_users.php";
-      include "../lib/lib_normas.php";
+      include "../lib/normas/lib_normas.php";
       include "../lib/lib_system.php";
       include "../lib/lib_organismos.php";
       include "../lib/lib_jurisdicciones.php";
@@ -193,6 +193,13 @@
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         infoNorma($id,$conn);
 	  }
+	  if(isset($_POST['subir_archivo'])){
+        formSubirArchivo();
+	  }
+	  
+	  
+	  // llama a modal info sobre el archivo a subir de normas
+	  modalInfoFile();
 	  // fin seccion ABM de normas
 	  
 	  // SECCION CONSULTA DE NORMAS
@@ -708,7 +715,7 @@
   </div>
 </div><br>
 
-<script type="text/javascript" src="../lib/lib_normas.js"></script>
+<script type="text/javascript" src="../lib/normas/lib_normas.js"></script>
 <script type="text/javascript" src="../lib/lib_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
 <script type="text/javascript" src="../lib/lib_paritarias.js"></script>
