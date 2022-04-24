@@ -6,20 +6,21 @@
       include "../lib/lib_users.php";
       include "../lib/normas/lib_normas.php";
       include "../lib/lib_system.php";
-      include "../lib/lib_organismos.php";
-      include "../lib/lib_jurisdicciones.php";
+      include "../lib/organismos/lib_organismos.php";
+      include "../lib/jurisdicciones/lib_jurisdicciones.php";
       include "../lib/lib_autoridades_superiores.php";
       include "../lib/lib_funciones_ejecutivas.php";
       include "../lib/lib_escalas_sinep_pp.php";
       include "../lib/lib_adicional_grado.php";
       include "../lib/lib_unidades_retributivas.php";
-      include "../lib/lib_tipo_organismos.php";
-      include "../lib/lib_segmentacion_tematica.php";
-      include "../lib/lib_paritarias.php";
-      include "../lib/lib_representantes.php";
-      include "../lib/lib_grupo_representante.php";
+      include "../lib/tipo_organismo/lib_tipo_organismos.php";
+      include "../lib/segmentacion_tematica/lib_segmentacion_tematica.php";
+      include "../lib/paritarias/lib_paritarias.php";
+      include "../lib/representantes/lib_representantes.php";
+      include "../lib/grupo_representantes/lib_grupo_representante.php";
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
+      include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
 
       
         $varsession = $_SESSION['user'];
@@ -64,7 +65,7 @@
   <?php skeleton(); ?>
   
     <script type="text/javascript" src="main.js"></script>
-    <script src="../lib/lib_normas.js"></script>
+   
 
  
 </head>
@@ -198,8 +199,6 @@
 	  }
 	  
 	  
-	  // llama a modal info sobre el archivo a subir de normas
-	  modalInfoFile();
 	  // fin seccion ABM de normas
 	  
 	  // SECCION CONSULTA DE NORMAS
@@ -215,8 +214,30 @@
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
         searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn);
       }
-      
       // FIN SECCION CONSULTA DE NORMAS
+      
+      // ============================================================================== //
+      // SECCION NORMAS VINCULADAS
+      // SE CREA EL OBJETO
+      $obj_norma_vinculada = new NormasVinculadas();
+      
+      if(isset($_POST['add_normas_vinculadas'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $obj_norma_vinculada->formAltaVincularNormas($id,$conn,$dbase);
+      }
+      if(isset($_POST['add_nueva_norma_vinculada'])){
+        $id_norma = mysqli_real_escape_string($conn,$_POST['id']);
+        $norma = mysqli_real_escape_string($conn,$_POST['norma']);
+        $files[] = array($_FILES["files"]["name"]);
+        $obj_norma_vinculada->addNormasVinculadas($obj_norma_vinculada,$id_norma,$norma,$files,$conn,$dbase);     
+      }
+      if(isset($_POST['ver_normas_vinculadas'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $obj_norma_vinculada->listarNormasVinculadas($id,$conn,$dbase);
+      }
+      
+      
+      // FIN SECCION NORMAS VINCULADAS
 	  
 	  // SECCION CARGAR USUARIOS
 	  if(isset($_POST['C'])){
@@ -716,13 +737,13 @@
 </div><br>
 
 <script type="text/javascript" src="../lib/normas/lib_normas.js"></script>
-<script type="text/javascript" src="../lib/lib_representantes.js"></script>
-<script type="text/javascript" src="../lib/lib_grupo_representantes.js"></script>
-<script type="text/javascript" src="../lib/lib_paritarias.js"></script>
-<script type="text/javascript" src="../lib/lib_organismos.js"></script>
-<script type="text/javascript" src="../lib/lib_jurisdicciones.js"></script>
-<script type="text/javascript" src="../lib/lib_tipo_organismos.js"></script>
-<script type="text/javascript" src="../lib/lib_segmentacion_tematica.js"></script>
+<script type="text/javascript" src="../lib/representantes/lib_representantes.js"></script>
+<script type="text/javascript" src="../lib/grupo_representantes/lib_grupo_representantes.js"></script>
+<script type="text/javascript" src="../lib/paritarias/lib_paritarias.js"></script>
+<script type="text/javascript" src="../lib/organismos/lib_organismos.js"></script>
+<script type="text/javascript" src="../lib/jurisdicciones/lib_jurisdicciones.js"></script>
+<script type="text/javascript" src="../lib/tipo_organismo/lib_tipo_organismos.js"></script>
+<script type="text/javascript" src="../lib/segmentacion_tematica/lib_segmentacion_tematica.js"></script>
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 

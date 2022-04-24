@@ -1,27 +1,27 @@
-<?php include "../../connection/connection.php";
-      include "lib_jurisdicciones.php";
+<?php include "../../../connection/connection.php";
+      include "lib_organismos.php";
       
            
       if($conn){
       //creamos el objeto
-      $my_jurisdiccion = new Jurisdicciones();
+      $my_organismo = new Organismos();
       
       // captura de datos
-        $cod_jur = mysqli_real_escape_string($conn,$_POST['cod_jur']);
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
         $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
         
       
       // pasar a mayusculas
-      $cod_jur = strtoupper($cod_jur);
+      $cod_org = strtoupper($cod_org);
       $descripcion = strtoupper($descripcion);
             
       // se verifica que los datos no estén vacios
-      if(($cod_jur == '') ||
+      if(($cod_org == '') ||
             ($descripcion == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $my_jurisdiccion->addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn);
+        $my_organismo->addOrganismo($cod_org,$my_organismo,$descripcion,$conn);
     }
     }else{
         echo 13; //error de conexion

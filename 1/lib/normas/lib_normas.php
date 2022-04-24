@@ -508,9 +508,6 @@ if($conn){
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada" data-toggle="tooltip" data-placement="top" title="Búsqueda Avanzada de Registros">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="subir_archivo" data-toggle="tooltip" data-placement="top" title="Cargar Normativas desde Archivo CSV">
-                    <img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir Archivo</button>
-                    
               </form><br>';
 		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
 		echo '</div>';
@@ -521,97 +518,6 @@ if($conn){
     mysqli_close($conn);
 
 }
-
-
-function normativas($conn,$norma){
-
-if($conn){
-	
-	$sql = "SELECT * FROM normas where tipo_norma = '$norma'";
-    	mysqli_select_db($conn,'gesdoju');
-    	$resultado = mysqli_query($conn,$sql);
-	//mostramos fila x fila
-	$count = 0;
-	echo '<div class="container">
-	      <div class="alert alert-success">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Tipo de Norma: '.$norma.'
-	      </div><br>';
-	
-            echo "<table class='display compact' style='width:100%' id='myTable'>";
-              echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
-		    <th class='text-nowrap text-center'>Nombre Norma</th>
-		    <th class='text-nowrap text-center'>Nro. Norma</th>
-            <th class='text-nowrap text-center'>Tipo Norma</th>
-            <th class='text-nowrap text-center'>Ambito</th>
-            <th class='text-nowrap text-center'>F. Publicación</th>
-            <th class='text-nowrap text-center'>Año Publicación</th>
-            <th class='text-nowrap text-center'>Organismo</th>
-            <th class='text-nowrap text-center'>Jurisdicción</th>
-            <th class='text-nowrap text-center'>Unidad Física</th>
-            <th class='text-nowrap text-center'>Descripción</th>
-            <th class='text-nowrap text-center'>Archivo</th>
-            <th>&nbsp;</th>
-            </thead>";
-
-
-	while($fila = mysqli_fetch_array($resultado)){
-			  // Listado normal
-			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
-			 echo "<td align=center>".$fila['nombre_norma']."</td>";
-			 echo "<td align=center>".$fila['n_norma']."</td>";
-			 echo "<td align=center>".$fila['tipo_norma']."</td>";
-			 echo "<td align=center>".$fila['f_norma']."</td>";
-			 echo "<td align=center>".$fila['f_pub']."</td>";
-			 echo "<td align=center>".$fila['anio_pub']."</td>";
-			 $mysql = "select * from organismos where cod_org = '$fila[organismo]'";
-			 $res = mysqli_query($conn,$mysql);
-			 while($row = mysqli_fetch_array($res)){
-			 echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$row['descripcion'].'">'.$fila['organismo'].'</td>';
-			 }
-			 
-			 $query = "select * from jurisdicciones where cod_jur = '$fila[jurisdiccion]'";
-			 $resp = mysqli_query($conn,$query);
-			 while($linea = mysqli_fetch_array($resp)){
-             echo '<td align=center><a href="#" data-toggle="tooltip" data-placement="left" title="'.$linea['descripcion'].'">'.$fila['jurisdiccion'].'</td>';			 
-			 }
-			 echo "<td align=center>".$fila['unidad_fisica']."</td>";
-			 echo "<td align=center>".$fila['observaciones']."</td>";
-			 echo "<td align=center>".$fila['file_name']."</td>";
-			 echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
-                    <input type="hidden" name="id" value="'.$fila['id'].'">
-                    <input type="hidden" name="file_name" value="'.$fila['file_name'].'">
-                    
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma"><button type="submit" class="btn btn-success btn-sm" name="edit_norma"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_norma"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Subir Archivo PDF de la Norma"><button type="submit" class="btn btn-warning btn-sm" name="upload_file"><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>';
-                   if($fila['file_name'] != ''){
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$fila[file_name].'"><button type="button" class="btn btn-primary btn-sm"><img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
-                   }else{
-                   echo '<a href="../normas/download.php?file_name='.$fila['file_name'].'" data-toggle="tooltip" data-placement="left" title="No Existe Archivo cargado aún"><button type="button" class="btn btn-primary btn-sm disabled"><img src="../../icons/actions/layer-visible-off.png"  class="img-reponsive img-rounded"> Ver</button>';
-                   }
-             echo '</form>';
-			 echo "</td>";
-			 $count++;
-		}
-
-		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
-		echo '</div>';
-		}else{
-		  echo 'Connection Failure...';
-		}
-
-    mysqli_close($conn);
-
-
-}
-
-
-
 
 
 /*
@@ -989,6 +895,10 @@ function infoNorma($id,$conn){
     mysqli_select_db($conn,'gesdoju');
     $query = mysqli_query($conn,$sql);
     
+    $sql_3 = "select * from normas_vinculadas where id_norma_principal = '$id'";
+    $query_3 = mysqli_query($conn,$sql_3);
+    $rows = mysqli_num_rows($query_3);
+    
     while($row = mysqli_fetch_array($query)){
         $nombre_norma = $row['nombre_norma'];
         $n_norma = $row['n_norma'];
@@ -1041,11 +951,31 @@ function infoNorma($id,$conn){
                     <div class="panel-footer">
                         
                         <form action="main.php" method="POST">
+                            <input type="hidden" name="id" value="'.$id.'" >
+                            
                                 <button type="submit" class="btn btn-default btn-sm btn-block" name="B">
                                 <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Volver a Normas</button>
-                        </form><br>
+                                
+                                <button type="submit" class="btn btn-default btn-sm btn-block" name="add_normas_vinculadas">
+                                <img src="../../icons/actions/document-new.png"  class="img-reponsive img-rounded"> Agredar Normas Vinculadas</button>
+                                
+                        </form>';
+                                
+                              if($rows == 1){
+                                                             
+                               echo '<form action="#" method="POST">
+                                        <input type="hidden" name="id" value="'.$id.'" >
+                                        
+                                        <button type="submit" class="btn btn-default btn-sm btn-block" name="ver_normas_vinculadas">
+                                        <img src="../../icons/emblems/image-stack.png"  class="img-reponsive img-rounded"> Ver Normas Vinculadas</button>
+                                    
+                                    </form>';
+                              
+                              }  
+                                
                         
-                        <a href="../lib/informes/print.php?file=print_informe_norma.php&id='.$id.'" target="_blank">
+                        
+                        echo '<a href="../lib/informes/print.php?file=print_informe_norma.php&id='.$id.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>';
                         
@@ -1300,245 +1230,6 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 		}
 
 }
-
- // ======================================================= SUBIDA DE ARCHIVOS ============================================= //
-
-/*
-** funcion para subir archivo csv
-*/
-
-function upload_file($norma_file,$conn,$dbase){
-	
-	$targetDir = '../../uploads/';
-	$fileName = $norma_file;
-	$targetFilePath = $targetDir . $fileName;
-	$destinationPath = '../../files/';
-
-	$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-	
-	
-	if($conn){
-	
-	if(!empty($_FILES["file"]["name"])){
-   
-   // Allow certain file formats
-    $allowTypes = array('csv');
-    
-    if(in_array($fileType, $allowTypes)){
-    
-        // Upload file to server
-        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
-        
-		echo '<div class="alert alert-success" role="alert">';
-		echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/success-img.png" alt="Avatar" class="avatar" ><strong>El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
-                echo "</div><hr>";
-                
-                }else{
-		echo '<div class="alert alert-warning" role="alert">';
-		echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/think-img.png" alt="Avatar" class="avatar" ><strong> Ups. Hubo un error subiendo el Archivo.</strong>';
-                echo "</div><hr>";
-                    
-                }
-                }else{
-	    echo '<div class="alert alert-danger" role="alert">';
-	    echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/aircraft-crash64-img.png" alt="Avatar" class="avatar" ><strong> Ups, solo archivos con extensión: CSV son soportados.</strong>';
-	    echo "</div><hr>";
-            
-           }
-           
-          
-	   $archivo = fopen($fileName, "r");
-            // Insert image file name into database
-            
-            while (($data = fgetcsv($archivo, 1000, ",")) !== FALSE) {
-		
-                    $sql = "INSERT INTO normas ".
-                            "(nombre_norma,
-                              n_norma,
-                              tipo_norma,
-                              f_norma,
-                              f_pub,
-                              anio_pub,
-                              jurisdiccion,
-                              organismo,
-                              unidad_fisica,
-                              observaciones)".
-                            "VALUES ".
-                            "('$data[0]',
-                              '$data[1]',
-                              '$data[2]',
-                              '$data[3]',
-                              '$data[4]',
-                              '$data[5]',
-                              '$data[6]',
-                              '$data[7]',
-                              '$data[8]',
-                              '$data[9]')";
-                
-                    //echo $sql;
-                    mysqli_select_db($conn,$dbase);
-                    $res = mysqli_query($conn,$sql);
-		
-           }
-                 //$res = mysqli_query($conn,$sql);
-                 fclose($archivo);
-             
-	      
-	     if($res){
-            
-			  echo '<div class="alert alert-success" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/success-img.png" alt="Avatar" class="avatar" ><strong> Base de Datos                        Actualizada correctamente</strong>';
-                          echo "</div><hr>";
-                          //copy($fileName, "$destinationPath/$fileName");
-                          unlink($fileName);
-                                          
-            }else{
-			  echo mysqli_error($conn);
-			  echo '<div class="alert alert-danger" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/think-img.png" alt="Avatar" class="avatar" ><strong>No se ha podido Actualizar la base de datos. </strong></h1>';
-                          echo "</div><hr>";
-                          
-                
-            }
-           
-          
-                      
-        
-        }else{
-			  echo '<div class="alert alert-info" role="alert">';
-                          echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../img/refresh-img.png" alt="Avatar" class="avatar" ><strong> Por favor, seleccione al archivo a subir.</strong>';
-                          echo "</div><hr>";
-                          
-}
-}else{
-
-  mysqli_error($conn);
-}
-
-
-}
-
-/*
-** FORMULARIO DE SUBIDA DE ARCHIVO
-*/
-function formSubirArchivo(){
-
-    echo '<div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    
-                    <div class="panel panel-success" >
-                        <div class="panel-heading"><span class="pull-center ">
-                            <img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir Archivo
-                        </div><br>
-            
-            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#infoUpLoad" data-toggle="tooltip" data-placement="top" title="Información importante sobre el formato y tabulado del archivo a subir para evitar errores">
-                <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Importante</button><hr>
-                          
-            <form action="../lib/normas/upload_file.php" method="POST" enctype="multipart/form-data">
-	  
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <strong>Seleccione el Archivo a Subir:</strong><br>
-                            <input type="file" name="file" class="btn btn-default"><br>
-                        <button type="submit" class="btn btn-warning navbar-btn" name="up_normas_file">
-                            <span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
-                    </div>
-                </div>
-            </form>
-                
-                </div>
-            </div>
-        </div>';
-
-}
-
-
-/*
-** MODAL INFORMACION SOBRE ARCHIVO DE NORMAS A SUBIR
-*/
-function modalInfoFile(){
-
-    echo '<div id="infoUpLoad" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h1 class="modal-title">Importante</h1>
-                </div>
-                <div class="modal-body">
-                     <div class="list-group">
-                        <a href="#" class="list-group-item active">
-                            <img src="../../icons/actions/bookmark-new-list.png"  class="img-reponsive img-rounded"> 
-                                <strong>Pautas a tener en cuenta sobre el archivo a subir</strong></a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> El archivo debe tener extensión CSV</a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> El archivo CSV debe tener 10 columnas</a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> El orden y nombre de las columnas debe ser el siguiente:<br>
-                            <strong>Nombre Norma / Nro. Norma / Tipo Norma / Foro Norma / Fecha Publicación / Año / Jurisdicción / Organismo / Ubicación Fisica / Resumen</strong></a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> Dentro de los campos <strong>Resúmen</strong> y <strong>Nombre Norma</strong>, no deben contener comas (,) o puntos y coma (;) ya que en los archivos CSV cada campo está separado por comas. Si dentro de un campo se encuentra con comas la aplicación entenderá que es el fin de un campo y el comienzo de otro, con lo cual se producirán errores en la carga del archivo.</a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> En los campos <strong>Jurisdicción</strong> y <strong>Organismo</strong>, se debe poner el código de los mismos y no su descripción, ya que la tabla estará esperando la cantidad de dos caracteres.</a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> En el campo <strong>Fecha Publicación</strong> la misma se debe ingresar con el siguiente formato:<br> AAAA-MM-DD. Ejemplo: 2022-05-15</a>
-                            
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> En el campo <strong>Año</strong> se debe ingresar con el siguiente formato: AAAA. Ejemplo: 1990</a>
-                            
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> Cuando finalice con la creación del archivo CSV. Debe posicionarse en la primera fila, y desde Excel seleccionar ocultar fila, y guarde el archivo. Esto hace que al procesar la información no tome la cabecera de cada campo.</a>
-                        
-                        <a href="#" class="list-group-item">
-                            <img src="../../icons/actions/rating.png"  class="img-reponsive img-rounded"> Si no posee un archivo formateado para subir Normas aquí le dejamos el link de descarga de uno.</a><br>
-                            
-                            <a href="../normas/download.php?file_name=normas.csv" data-toggle="tooltip" data-placement="left" title="Descargar Archivo CSV limpio">
-                                <button type="button" class="btn btn-default btn-sm"><img src="../../icons/actions/system-log-out.png"  class="img-reponsive img-rounded"> Descargar</button></a>
-                        
-                        </div> 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
-                </div>
-
-            </div>
-            </div>';
-
-
-}
-
-function readArchivo($norma_file){
-
-    $count = 0;
-    $archivo = fopen($norma_file, "r"); 
-    $datos[] = array();
-    
-
-    while (($datos = fgetcsv($archivo, 1000, ",")) !== FALSE) {
-        /*$numero = count($datos);
-        echo "<p> $datos <br /></p>\n";
-        $count++;*/
-        var_dump($datos);
-        
-    }
-    
-  var_dump($archivo);
-    
-    fclose($archivo);
-}
-
-
 
 
 

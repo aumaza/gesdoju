@@ -32,6 +32,7 @@
 
 	$archivo = basename($_GET['file_name']);
  	$tipo_archivo = $_GET['tipo_archivo'];
+ 	$path = $_GET['path'];
 	
 
 //Si la variable archivo que pasamos por URL no esta 
@@ -42,6 +43,7 @@ if($archivo){
    $path_1 = '../../uploads/'.$archivo;
    $path_2 = '../../actas_comision/'.$archivo;
    $path_3 = '../lib/normas/'.$archivo;
+   $path_4 = $path.'/'.$archivo;
   
   
 //Utilizamos basename por seguridad, devuelve el 
@@ -85,6 +87,19 @@ if($archivo == 'normas.csv'){
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: '.filesize($path_3));
         readfile($path_3);
+    }
+}
+
+if(($path != '') && ($archivo != '')){
+
+    if(is_file($path_4)){
+        
+        header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$archivo);
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: '.filesize($path_4));
+        readfile($path_4);
+    
     }
 }
 

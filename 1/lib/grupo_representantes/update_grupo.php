@@ -1,4 +1,4 @@
-<?php include "../../connection/connection.php";
+<?php include "../../../connection/connection.php";
       include "lib_grupo_representante.php";
       
            
@@ -19,7 +19,7 @@
                    echo 5; // hay campos vacios
                     
     }else{
-       $grupo->delIntegrante($id,$grupo,$rep,$conn);        
+       $grupo->updateGrupo($id,$grupo,$rep,$conn);        
     }
     }else{
         echo 13; //error de conexion

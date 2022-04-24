@@ -194,6 +194,13 @@ id int(11) auto_increment primary key,
 descripcion varchar(100) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla normas vinculadas
+create table normas_vinculadas(
+id int(11) auto_increment primary key,
+id_norma_principal int(11) not null,
+path_name varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
 into table unidades_retributivas fields terminated by ',' enclosed by '"' lines terminated by '\n'
@@ -216,3 +223,8 @@ descripcion varchar(90) not null
 load data local infile '/var/www/html/gesdoju/sqls/organismos.csv' 
 into table organismos fields terminated by ',' enclosed by '"' lines terminated by '\n'
 (cod_org,descripcion);
+
+#subir csv normas
+load data local infile '/mnt/sdb1/Documents/Proyecto_Gesdoju/file.csv' 
+into table normas fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones);

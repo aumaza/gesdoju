@@ -1,4 +1,4 @@
-<?php include "../../connection/connection.php";
+<?php include "../../../connection/connection.php";
       include "lib_organismos.php";
       
            
@@ -7,21 +7,22 @@
       $my_organismo = new Organismos();
       
       // captura de datos
-        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
-        $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
-        
-      
+      $id = mysqli_real_escape_string($conn,$_POST['id']);
+      $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+      $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+           
       // pasar a mayusculas
       $cod_org = strtoupper($cod_org);
       $descripcion = strtoupper($descripcion);
             
       // se verifica que los datos no estén vacios
       if(($cod_org == '') ||
-            ($descripcion == '')){
+            ($descripcion == '') ||
+                ($id == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $my_organismo->addOrganismo($cod_org,$my_organismo,$descripcion,$conn);
+        $my_organismo->updateOrganismo($id,$my_organismo,$cod_org,$descripcion,$conn);
     }
     }else{
         echo 13; //error de conexion

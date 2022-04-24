@@ -531,7 +531,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
         $sql = "SELECT * FROM segmentacion_tematica where clas_inst = '$clas_inst'";
         mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($query);
+        //$row = mysqli_fetch_assoc($query);
         
         //mostramos fila x fila
 	$count = 0;
