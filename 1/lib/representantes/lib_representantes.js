@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nuevo_representante.php",
+            url:"../lib/representantes/nuevo_representante.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -61,7 +61,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_representante.php",
+            url:"../lib/representantes/update_representante.php",
             data:datos,
             success:function(r){
                 if(r == 1){

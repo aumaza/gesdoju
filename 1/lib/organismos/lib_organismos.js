@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nuevo_organismo.php",
+            url:"../lib/organismos/nuevo_organismo.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -59,7 +59,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_organismo.php",
+            url:"../lib/organismos/update_organismo.php",
             data:datos,
             success:function(r){
                 if(r == 1){

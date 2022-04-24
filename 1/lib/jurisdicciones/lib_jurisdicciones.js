@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nueva_jurisdiccion.php",
+            url:"../lib/jurisdicciones/nueva_jurisdiccion.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -59,7 +59,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_jurisdiccion.php",
+            url:"../lib/jurisdicciones/update_jurisdiccion.php",
             data:datos,
             success:function(r){
                 if(r == 1){

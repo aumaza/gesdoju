@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nuevo_grupo.php",
+            url:"../lib/grupo_representantes/nuevo_grupo.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -63,7 +63,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_grupo.php",
+            url:"../lib/grupo_representantes/update_grupo.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -102,7 +102,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/delete_integrante.php",
+            url:"../lib/grupo_representantes/delete_integrante.php",
             data:datos,
             success:function(r){
                 if(r == 1){

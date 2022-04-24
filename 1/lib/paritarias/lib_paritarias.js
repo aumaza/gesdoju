@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nueva_paritaria.php",
+            url:"../lib/paritarias/nueva_paritaria.php",
             data:datos,
             success:function(r){
                 if(r == 1){

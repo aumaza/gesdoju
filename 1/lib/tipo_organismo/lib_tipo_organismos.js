@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nuevo_tipo_organismo.php",
+            url:"../lib/tipo_organismo/nuevo_tipo_organismo.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -58,7 +58,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_tipo_organismo.php",
+            url:"../lib/tipo_organismo/update_tipo_organismo.php",
             data:datos,
             success:function(r){
                 if(r == 1){

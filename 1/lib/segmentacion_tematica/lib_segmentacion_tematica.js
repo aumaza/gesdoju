@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/nueva_segmentacion.php",
+            url:"../lib/segmentancion_tematica/nueva_segmentacion.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -64,7 +64,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/update_segmentacion.php",
+            url:"../lib/segmentacion_tematica/update_segmentacion.php",
             data:datos,
             success:function(r){
                 if(r == 1){
@@ -102,7 +102,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/delete_segmentacion.php",
+            url:"../lib/segmentacion_tematica/delete_segmentacion.php",
             data:datos,
             success:function(r){
                 if(r == 1){
