@@ -132,10 +132,19 @@ function newNorma($conn){
 		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" required></textarea>
 		</div><hr>
 		
+		<hr>
         <div class="form-group">
-		  <label for="pwd">Seleccione Archivo a Subir:</label>
+		  <label for="pwd">Seleccione Archivo a Subir de la Norma Principal:</label>
           <input type="file" name="file" id="file">
-        </div><hr>
+        </div>
+        <hr>
+        
+        <div class="form-group">
+		  <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas:</label>
+          <input type="file" name="files[]" id="files" multiple="" >
+        </div>
+        <hr>
+        
 		
 		<button type="submit" class="btn btn-success btn-block" name="add_normativa">
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
@@ -688,9 +697,19 @@ if(!empty($_FILES["file"]["name"])){
 /*
 ** insertar nueva norma en base de datos
 */
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$connd,$dbase){
+    
+    mysqli_select_db($conn,$dbase);
+    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma'";
+    $query_1 = mysqli_query($conn,$sql_1);    
+    $rows = mysqli_num_rows($query_1);
 
- 
+$norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+
+if($rows == 0){
+
+$norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+
 $targetDir = '../../uploads/';
 $fileName = $file;
 //$fileName = basename($_FILES["file"]["name"]);
@@ -735,7 +754,7 @@ if(!empty($_FILES["file"]["name"])){
                   '$fileName',
                   '$targetFilePath')";
         
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
 
          
@@ -743,9 +762,11 @@ if(!empty($_FILES["file"]["name"])){
             
 			  echo '<div class="alert alert-success" role="alert">
                     <h1 class="panel-title text-left" contenteditable="true">
-                        <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Norma Guardada Exitosamente. El Archivo '.$fileName. ' se ha subido correctamente..</strong></h1><hr>
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Norma Guardada Exitosamente. El Archivo '.$fileName. ' se ha subido correctamente..</strong></h1><hr>';
+                        
+                        normasViculadas($norma,$files,$conn,$dbase);
                     
-                    <form action="main.php" method="POST">
+            echo '<form action="main.php" method="POST">
                         <button type="submit" class="btn btn-success btn-sm" name="nueva_norma">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Continuar Cargando</button>
                     </form>
@@ -776,8 +797,104 @@ if(!empty($_FILES["file"]["name"])){
                           echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
                           echo "</div><hr>";
             }
-
+    
+    }else{
+        
+        echo '<div class="alert alert-warning" role="alert">
+			  <h1 class="panel-title text-left" contenteditable="true">
+			  <img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> La Norma ya se encuentra cargada</strong>
+			  </div><hr>';
+    
+    }
+    
 }
+
+/*
+** FUNCION PARA GURDAR NORMAS VINCULADAS
+*/
+function normasViculadas($norma,$files,$conn,$dbase){
+
+    $carpeta = '../../documentos/'.$norma; 
+			
+        if(!file_exists($carpeta)){
+            
+            mkdir($carpeta) or die("Hubo un error al crear el directorio de almacenamiento");
+            chmod($carpeta,0777);
+		
+    
+    
+        foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
+		//condicional si el fichero existe
+		
+		if($_FILES["files"]["name"][$key]){
+			
+			// Nombres de archivos temporales
+			$archivonombre = $_FILES["files"]["name"][$key]; 
+			$fuente = $_FILES["files"]["tmp_name"][$key]; 
+			
+						
+			$dir = opendir($carpeta);
+			$target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+			
+	
+			if(move_uploaded_file($fuente, $target_path)){	
+				
+                        echo '<div class="container">
+                                <div class="row">
+                                <div class="col-sm-8">
+                                <div class="alert alert-success" role="alert">
+                                <h1 class="panel-title text-left" contenteditable="true"></h1>
+                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
+                                <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
+                                </div></div></div></div>';
+            }else{	
+                        echo '<div class="container">
+                                <div class="row">
+                                <div class="col-sm-8">
+                                <div class="alert alert-warning" role="alert">
+                                <h1 class="panel-title text-left" contenteditable="true"></h1>
+                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
+                                <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
+                                </div></div></div></div>';
+			}
+			closedir($dir); //Cerramos la conexion con la carpeta destino
+		}
+	}
+	
+	$sql = "INSERT INTO normas_vinculadas ".
+            "(id_norma_principal,
+              path_name)".
+            "VALUES ".
+            "($obj_norma_vinculada->set_id_norma_principal('$id_norma'),
+              $obj_norma_vinculada->set_path_name('$carpeta'))";
+        
+        mysqli_select_db($conn,$dbase);
+        $query = mysqli_query($conn,$sql);
+        
+        if($query){
+        
+            echo ' <div class="container">
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <div class="alert alert-success" role="alert">
+                    <h1 class="panel-title text-left" contenteditable="true"></h1>
+                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
+                        <strong> Base de Datos Actualizada correctamente..</strong></p>
+                 </div></div></div></div>';
+        }else{
+        
+            echo '<div class="container">
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <div class="alert alert-danger" role="alert">
+                    <h1 class="panel-title text-left" contenteditable="true"></h1>
+                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
+                    <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
+			     </div></div></div></div>';
+        }
+    
+    }
+} // FIN DE FUNCION
 
 
 function quitarTildes($cadena){
