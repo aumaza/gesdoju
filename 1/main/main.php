@@ -129,7 +129,7 @@
         
         }else{
 
-            $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$conn,$dbase);
+            $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase);
                                     
             if($respuesta == 1){
                 $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
@@ -218,6 +218,7 @@
         formSubirArchivo();
 	  }
 	  
+	  modalVerificarNorma($conn,$dbase);
 	  // fin seccion ABM de normas
 	  // ============================================================================== //
 	  //============================= SECCION NORMAS VINCULADAS ======================= //
@@ -604,7 +605,7 @@
 
 	//LISTAR LOS TIPOS DE ORGANISMOS
 	if(isset($_POST['tipo_organismos'])){
-        $my_tipo_organismo->listarTipoOrganismos($my_tipo_organismo,$conn);
+        $my_tipo_organismo->listarTipoOrganismos($my_tipo_organismo,$conn,$dbase);
 	}
 	//FORMULARIO PARA AÑADIR NUEVO TIPO DE ORGANISMO
 	if(isset($_POST['add_tipo_org'])){
@@ -765,7 +766,7 @@
 <script type="text/javascript" src="../lib/paritarias/lib_paritarias.js"></script>
 <script type="text/javascript" src="../lib/organismos/lib_organismos.js"></script>
 <script type="text/javascript" src="../lib/jurisdicciones/lib_jurisdicciones.js"></script>
-<script type="text/javascript" src="../lib/tipo_organismos/lib_tipo_organismos.js"></script>
+<script type="text/javascript" src="../lib/tipo_organismo/lib_tipo_organismos.js"></script>
 <script type="text/javascript" src="../lib/segmentacion_tematica/lib_segmentacion_tematica.js"></script>
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>

@@ -36,12 +36,12 @@ class TipoOrganismos{
 /*
 ** funcion para listar tipo de organismos
 */
-public function listarTipoOrganismos($my_tipo_organismo,$conn){
+public function listarTipoOrganismos($my_tipo_organismo,$conn,$dbase){
 
 	if($conn){
 		
 		$sql = "SELECT * FROM tipo_organismo";
-		mysqli_select_db($conn,'gesdoju');
+		mysqli_select_db($conn,$dbase);
 		$resultado = mysqli_query($conn,$sql);
 			
 		//mostramos fila x fila
@@ -65,7 +65,7 @@ public function listarTipoOrganismos($my_tipo_organismo,$conn){
 				 echo "<td align=center>".$my_tipo_organismo->get_cod_organismo($fila['cod_organismo'])."</td>";
 				 echo '<td align=center>'.$my_tipo_organismo->get_descripcion($fila['descripcion']).'</td>';
 				 echo "<td class='text-nowrap'>";
-				 echo '<form <action="main.php" method="POST">
+				 echo '<form action="#" method="POST">
 						<input type="hidden" name="id" value="'.$fila['id'].'">
 										 
 						<button type="submit" class="btn btn-success btn-sm" name="edit_tipo_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Tipo de Organismo">

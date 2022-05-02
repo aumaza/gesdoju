@@ -1,7 +1,7 @@
 <?php session_start();
         
-        include "../../connection/connection.php";
-        include "../lib/lib_normas.php";
+        include "../../../connection/connection.php";
+        include "lib_normas.php";
         
                 
         if($conn){
@@ -17,6 +17,7 @@
             $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
             $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
             $file = basename($_FILES["file"]["name"]);
+            $files[] = array($_FILES["files"]["name"]);
             
             $nombre_norma = quitarTilde($nombre_norma);
             $obs = quitarTilde($obs);
@@ -30,16 +31,35 @@
                                     ($organismo == '') ||
                                         ($jurisdiccion == '') ||
                                             ($unidad_fisica == '') ||
-                                                ($obs == '') ||
-                                                    ($file == '')){
+                                                ($obs == '')){
                 echo 3; // campos vacios
             }else{
             
-                insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
-                //insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_forma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+                $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase);
+                
+                if($respuesta == 1){
+                    $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+                    normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
+                }
+                if($respuesta == 2){
+                    echo '<script> alert("Sólo se ha subido el Archivo"); </script>';
+                }
+                if($respuesta == 3){
+                    echo '<script> alert("Contáctese con el Administrador para cambiar permisos del directorio de destino"); </script>';
+                }
+                if($respuesta == 4){
+                    echo '<script> alert("Sólo se permiten Archivos PDF"); </script>';  
+                }
+                if($respuesta == 5){
+                    echo '<script> alert("No ha Seleccionado Archivos aún"); </script>';  
+                }
+                if($respuesta == 6){
+                    echo '<script> alert("La Norma ya se encuentra ingresada"); </script>';  
+                }
+                
             }
         }else{
-            echo 'Database connection error ' .mysqli_error($conn);
+            echo 13; // error de conexion
         }
   
 ?>

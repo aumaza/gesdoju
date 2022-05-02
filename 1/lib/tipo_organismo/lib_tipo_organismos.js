@@ -1,8 +1,8 @@
-// ESTRUCTURA TABLE
+// ESTRUCTURA TABLE TIPO ORGANISMO
 
  $(document).ready(function(){
       
-      var table = $('#tipoOrganismoTable').DataTable({
+      $('#tipoOrganismoTable').DataTable({
         "order": [[0, "asc"]],
         "responsive":     true,
         "scrollY":        "300px",
@@ -11,6 +11,7 @@
         "paging":         true,
         "dom":  "Bfrtip",
         buttons: [
+            
             {
                 extend: 'excel',
                 text: 'Export Excel',
@@ -30,25 +31,26 @@
                 exportOptions: { columns: ':visible',}
             },
             {
-                extend: 'print',
+                extend: 'print', 
                 text: 'Imprimir',
                 customize: function ( win ) {
                     $(win.document.body)
                         .css( 'font-size', '8pt' );
-                        
+                                                
  
                     $(win.document.body).find( 'table' )
                         .addClass( 'compact' )
                         .css( 'font-size', 'inherit' );
                 },
-                messageTop: 'Listado de Tipo de Organismos',
+                messageTop: 'Listado Tipo Organismo',
                 autoPrint: false,
                 exportOptions: {
                     columns: ':visible',
                 }
                 
             },
-            'colvis'
+            
+              'colvis'
         ],
         columnDefs: [ {
             targets: -1,
@@ -70,9 +72,9 @@
         },
       }
     });
-        table.buttons().container()
-        .appendTo( '#tipoOrganismoTable_wrapper .col-sm-6:eq(0)' );
+         
     });
+
 
 
 

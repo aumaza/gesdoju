@@ -41,7 +41,11 @@ file_path varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # change to fulltext for make search
+# pasara saber como fue creada la tabla ejecutar
+SHOW CREATE TABLE normas
+# para eliminar un index determinada ejecutar
 alter table normas drop index observaciones;
+# para determinar varias columnas de busquedas
 ALTER TABLE normas ADD FULLTEXT index_combinado (nombre_norma,f_norma,observaciones);
 
 #tabla autoridades_superiores

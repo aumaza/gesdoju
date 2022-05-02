@@ -223,6 +223,47 @@ $(document).ready(function(){
 });
 
 
+// CONSULTAR NORMA
+$(document).ready(function(){
+    $('#consultar_norma').click(function(){
+        //var datos=$('#fr_nueva_norma_ajax').serialize();
+        var datos = $('#fr_consultar_norma_ajax').serialize();
+         
+         
+         $.ajax({
+            type:"POST",
+            url:"../lib/normas/consultar_norma.php",
+            data:datos,
+            success:function(r){
+                if(r == 1){
+                    alert("La Norma aún no ha sido cargada a la Base de datos");
+                     console.log(datos);
+                    }else if(r == -1){
+                        alert("Hubo un problema al intentar realizar la consulta");
+                        console.log(datos);
+                    }
+                    else if(r == 3){
+                        alert("Hay campos sin completar!!");
+                        console.log(datos);
+                    }
+                    else if(r == 2){
+                        alert("Norma Existente en la base de datos");
+                        console.log(datos);
+                    }
+                    else if(r == 7){
+                        alert("No hay conexion a la base de datos");
+                        console.log(datos);
+                    }
+                   
+            },
+            
+        });
+
+        return false;
+    });
+});
+
+
 
 /*
 ** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA

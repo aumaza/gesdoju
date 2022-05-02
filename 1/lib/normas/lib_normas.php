@@ -9,6 +9,11 @@ function newNorma($conn){
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Cargar Normativa</h2><hr>
+            
+            <h4>Verificar si Existe Norma a Cargar</h4>
+            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#verificarNormaModal">Verificar</button>
+	      
+            <hr>
 	        <form action="#" method="POST" enctype="multipart/form-data">
 	        
 	        <div class="form-group">
@@ -133,20 +138,23 @@ function newNorma($conn){
 		</div><hr>
 		
 		<hr>
+		<div class="alert alert-success">
         <div class="form-group">
 		  <label for="pwd">Seleccione Archivo a Subir de la Norma Principal:</label>
           <input type="file" name="file" id="file">
 
-        </div><hr>
-
+        </div></div><hr>
+        
+        <div class="alert alert-success">
         <div class="form-group">
 		  <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas:</label>
           <input type="file" name="files[]" id="files" multiple="" >
         </div>
+        </div>
         <hr>
 
 		
-		<button type="submit" class="btn btn-success btn-block" name="add_normativa">
+		<button type="submit" class="btn btn-default btn-block" name="add_normativa">
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
 	      </form> <br>
 	      
@@ -694,7 +702,7 @@ if(!empty($_FILES["file"]["name"])){
 ** insertar nueva norma en base de datos
 */
 
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$connd,$dbase){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase){
     
 
     mysqli_select_db($conn,$dbase);
@@ -1361,6 +1369,98 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 
 }
 
+
+/*
+** CARGA MODAL DE VERIFICACION SI EXISTE NORMA
+*/
+function modalVerificarNorma($conn,$dbase){
+    
+    echo '<div class="modal fade" id="verificarNormaModal" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Verificar Norma a Cargar</h4>
+                </div>
+                <div class="modal-body">
+                <p>Ingrese los Datos de la norma sobre la que desea consultar.</p><hr>
+                
+                    <form id="fr_consultar_norma_ajax" method="POST">
+                        
+                        <div class="form-group">
+                            <label for="nombre">Nro de Norma</label>
+                            <input type="text" class="form-control" id="nro_norma" name="nro_norma"  maxlength="25" placeholder="00000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="t_norma">Tipo de Norma</label>
+                            <select class="form-control" id="tipo_norma" name="tipo_norma" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM tipo_norma order by id ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                                </div><hr>
+                                
+                        <button type="submit" class="btn btn-default btn-block" id="consultar_norma">
+                            <img src="../../icons/actions/view-filter.png"  class="img-reponsive img-rounded"> Consultar</button>
+                        
+                    </form>
+                
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <img src="../../icons/actions/window-close.png"  class="img-reponsive img-rounded"> Cerrar</button>
+                </div>
+            </div>
+            
+            </div>
+        </div>';
+
+}
+
+
+/*
+** FUNCION QUE REALIZA CONSULTA SI EXISTE O NO LA NORMA YA CARGADA
+*/
+function consultarNorma($nro_norma,$tipo_norma,$conn,$dbase){
+    
+    $sql = "select n_norma, tipo_norma from normas where n_norma = '$nro_norma' and tipo_norma = '$tipo_norma'";
+    mysqli_select_db($conn,$dbase);
+    $query = mysqli_query($conn,$sql);
+        
+    if($query){
+        
+        $rows = mysqli_num_rows($query);
+        
+        if($rows == 0){
+        
+            echo 1; // norma inexistente
+        
+        }
+        if($rows > 0){
+            
+            echo 2; // norma existente
+        }
+    }else{
+        echo -1; // hubo un problema para realizar la consulta
+    }
+
+}
 
 
 ?>
