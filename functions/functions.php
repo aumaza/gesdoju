@@ -13,11 +13,17 @@ function skeleton(){
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/scrolling-nav.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/fontawesome.css">
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/fontawesome.min.css" >
-	<link rel="stylesheet" href="/gesdoju/skeleton/css/jquery.dataTables.min.css" >
+	
 	<link rel="stylesheet" href="/gesdoju/skeleton/Chart.js/Chart.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/Chart.js/Chart.css" >
+	
+	<link rel="stylesheet" href="/gesdoju/skeleton/css/jquery.dataTables.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/dataTables/buttons.dataTables.min.css" >
+	<link rel="stylesheet" href="/gesdoju/skeleton/css/buttons.dataTables.min.css" >
+	<link rel="stylesheet" href="/gesdoju/skeleton/css/buttons.bootstrap.min.css" >
+	<link rel="stylesheet" href="/gesdoju/skeleton/css/jquery.dataTables-1.11.5.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/dataTables/fixedColumns.dataTables.min.css" >
+	
 	
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -30,12 +36,19 @@ function skeleton(){
 	
 	<script src="/gesdoju/skeleton/js/jquery.dataTables.min.js"></script>
 	<script src="/gesdoju/skeleton/dataTables/DataTables/js/jquery.dataTables1.min.js"></script>
-	<script src="/gesdoju/skeleton/dataTables/DataTables/js/buttons.colVis.min.js"></script>
 	<script src="/gesdoju/skeleton/dataTables/DataTables/js/dataTables.fixedColumns.min.js"></script>
+	
 	<script src="/gesdoju/skeleton/js/dataTables.editor.min.js"></script>
 	<script src="/gesdoju/skeleton/js/dataTables.select.min.js"></script>
 	<script src="/gesdoju/skeleton/js/dataTables.buttons.min.js"></script>
+	<script src="/gesdoju/skeleton/dataTables/DataTables/js/buttons.colVis.min.js"></script>
 	
+	<script src="/gesdoju/skeleton/js/jszip.min.js"></script>
+	<script src="/gesdoju/skeleton/js/pdfmake.min.js"></script>
+	<script src="/gesdoju/skeleton/js/vfs_fonts.js"></script>
+	<script src="/gesdoju/skeleton/js/buttons.html5.min.js"></script>
+	<script src="/gesdoju/skeleton/js/buttons.bootstrap.min.js"></script>
+	<script src="/gesdoju/skeleton/js/buttons.print.min.js"></script>
 	
 	<script src="/gesdoju/skeleton/Chart.js/Chart.min.js"></script>
 	<script src="/gesdoju/skeleton/Chart.js/Chart.bundle.min.js"></script>

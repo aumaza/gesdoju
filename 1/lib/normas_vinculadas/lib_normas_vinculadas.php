@@ -232,9 +232,7 @@ public function listarNormasVinculadas($id,$conn,$dbase){
                      <div class="list-group">';
                         
                         for($i = 0; $i < $count; $i++){
-                           
-                           echo '<a class="list-group-item" href="../normas/download.php?file_name='.$list[$i].'&path='.$path.'" >'.$list[$i].'</a>';
-                            //echo '<a class="list-group-item" href="'.$path.$list[$i].'" >'.$list[$i].'</a>';
+                            echo '<a class="list-group-item" href="../normas/download.php?file_name='.$list[$i].'&path='.$path.'" >'.($i+1). ' - ' .$list[$i].'</a>';
                         }       
                         
           echo '</div>

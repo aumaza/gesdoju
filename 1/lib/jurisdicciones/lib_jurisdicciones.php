@@ -51,7 +51,7 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 			  <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Jurisdicciones
 			  </div><br>';
 					  
-		  echo "<table class='display compact' style='width:100%' id='myTable'>";
+		  echo "<table class='display compact' style='width:100%' id='jurisdiccionesTable'>";
 		  echo "<thead>
 				<th class='text-nowrap text-center'>Código Jurisdicción</th>
 				<th class='text-nowrap text-center'>Jurisdicción</th>

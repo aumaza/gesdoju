@@ -41,7 +41,8 @@ file_path varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # change to fulltext for make search
-ALTER TABLE normas ADD FULLTEXT (observaciones);
+alter table normas drop index observaciones;
+ALTER TABLE normas ADD FULLTEXT index_combinado (nombre_norma,f_norma,observaciones);
 
 #tabla autoridades_superiores
 create table autoridades_superiores (

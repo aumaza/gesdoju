@@ -16,7 +16,6 @@ if($conn)
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nombre</th>
             <th class='text-nowrap text-center'>Usuario</th>
             <th class='text-nowrap text-center'>Email</th>
@@ -28,7 +27,6 @@ if($conn)
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['nombre']."</td>";
 			 echo "<td align=center>".$fila['user']."</td>";
 			 echo "<td align=center>".$fila['email']."</td>";
@@ -37,8 +35,11 @@ if($conn)
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">';
                     if($fila['user'] != 'root'){
-                     echo '<button type="submit" class="btn btn-danger btn-sm" name="del_user"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
-                     <button type="submit" class="btn btn-warning btn-sm" name="allow_user"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Cambiar Permisos</button>';
+                     echo '<button type="submit" class="btn btn-danger btn-sm" name="del_user">
+                            <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                          
+                          <button type="submit" class="btn btn-warning btn-sm" name="allow_user">
+                            <img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Cambiar Permisos</button>';
                      }
              echo '</form>';
 			 echo "</td>";
@@ -362,9 +363,9 @@ if($conn){
 	
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
-		    <th class='text-nowrap text-center'>Nombre</th>
+                    <th class='text-nowrap text-center'>Nombre</th>
                     <th class='text-nowrap text-center'>Usuario</th>
+                    <th class='text-nowrap text-center'>Acciones</th>
                     <th>&nbsp;</th>
                     </thead>";
 
@@ -372,13 +373,13 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['nombre']."</td>";
 			 echo "<td align=center>".$fila['user']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">';
-                    echo '<button type="submit" class="btn btn-primary btn-sm" name="pass_user"><img src="../../icons/actions/view-refresh.png"  class="img-reponsive img-rounded"> Cambiar Password</button>
+                    echo '<button type="submit" class="btn btn-default btn-block" name="pass_user">
+                            <img src="../../icons/actions/view-refresh.png"  class="img-reponsive img-rounded"> Cambiar Password</button>
              </form></td>';
 			 $count++;
 		}

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /*
 ** Funcion alta de norma
@@ -136,6 +136,13 @@ function newNorma($conn){
 		  <label for="pwd">Seleccione Archivo a Subir:</label>
           <input type="file" name="file" id="file">
         </div><hr>
+        
+        
+        <div class="form-group">
+		  <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas:</label>
+          <input type="file" name="files[]" id="files" multiple="" >
+        </div>
+        <hr>
 		
 		<button type="submit" class="btn btn-success btn-block" name="add_normativa">
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
@@ -460,7 +467,7 @@ if($conn){
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='normasTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
@@ -688,8 +695,15 @@ if(!empty($_FILES["file"]["name"])){
 /*
 ** insertar nueva norma en base de datos
 */
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$conn,$dbase){
 
+    mysqli_select_db($conn,$dbase);
+    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma'";
+    $query_1 = mysqli_query($conn,$sql_1);    
+    $rows = mysqli_num_rows($query_1);
+
+
+if($rows == 0){
  
 $targetDir = '../../uploads/';
 $fileName = $file;
@@ -735,49 +749,140 @@ if(!empty($_FILES["file"]["name"])){
                   '$fileName',
                   '$targetFilePath')";
         
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
 
          
             if($query){
             
-			  echo '<div class="alert alert-success" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true">
-                        <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Norma Guardada Exitosamente. El Archivo '.$fileName. ' se ha subido correctamente..</strong></h1><hr>
-                    
-                    <form action="main.php" method="POST">
-                        <button type="submit" class="btn btn-success btn-sm" name="nueva_norma">
-                        <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Continuar Cargando</button>
-                    </form>
-                    <div><hr>';
-              
+			    return 1; // sea actualizo la base  y subio bien el archivo
               
             }else{
 		  
-			  echo '<div class="alert alert-success" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
-            echo "</div><hr>";
+			   return 2; // solo se subio el archivo
             
             } 
             }else{
-			  echo '<div class="alert alert-warning" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong>';
-              echo "</div><hr>";
+			              
+              return 3; // verificar permisos del directorio
               
             }
             }else{
     
-			  echo '<div class="alert alert-danger" role="alert">';
-			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: PDF son soportados.</strong>';
-			  echo "</div><hr>";
+			  return 4; // solo archivos pdf
             }
             }else{
-                          echo '<div class="alert alert-info" role="alert">';
-                          echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
-                          echo "</div><hr>";
+                return 5; // no ha seleccionado archivos
             }
+            
+}else{
+   return 6; // la norma ya se encuentra ingresada
+}
 
 }
+
+
+/*
+** FUNCION PARA GURDAR NORMAS VINCULADAS
+*/
+function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
+
+    $sql_1 = "select id from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma'";
+    mysqli_select_db($conn,$dbase);
+    $query_1 = mysqli_query($conn,$sql_1);
+    while($row = mysqli_fetch_array($query_1)){
+        $id = $row['id'];
+    }
+    
+    $id = intVal($id);
+    
+    $carpeta = '../../documentos/'.$norma; 
+			
+        if(!file_exists($carpeta)){
+            
+            mkdir($carpeta) or die("Hubo un error al crear el directorio de almacenamiento");
+            chmod($carpeta,0777);
+		
+    
+    
+        foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
+		//condicional si el fichero existe
+		
+		if($_FILES["files"]["name"][$key]){
+			
+			// Nombres de archivos temporales
+			$archivonombre = $_FILES["files"]["name"][$key]; 
+			$fuente = $_FILES["files"]["tmp_name"][$key]; 
+			
+						
+			$dir = opendir($carpeta);
+			$target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+			
+	
+			if(move_uploaded_file($fuente, $target_path)){	
+				
+                        echo '<div class="container">
+                                <div class="row">
+                                <div class="col-sm-8">
+                                <div class="alert alert-success" role="alert">
+                                <h1 class="panel-title text-left" contenteditable="true"></h1>
+                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
+                                <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
+                                </div></div></div></div>';
+            }else{	
+                        echo '<div class="container">
+                                <div class="row">
+                                <div class="col-sm-8">
+                                <div class="alert alert-warning" role="alert">
+                                <h1 class="panel-title text-left" contenteditable="true"></h1>
+                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
+                                <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
+                                </div></div></div></div>';
+			}
+			closedir($dir); //Cerramos la conexion con la carpeta destino
+		}
+	}
+	
+	$sql = "INSERT INTO normas_vinculadas ".
+            "(id_norma_principal,
+              path_name)".
+            "VALUES ".
+            "('$id',
+              '$carpeta')";
+        
+        mysqli_select_db($conn,$dbase);
+        $query = mysqli_query($conn,$sql);
+        
+        if($query){
+        
+            echo ' <div class="container">
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <div class="alert alert-success" role="alert">
+                    <h1 class="panel-title text-left" contenteditable="true"></h1>
+                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
+                        <strong> Base de Datos Actualizada correctamente..</strong></p><hr>
+                        
+                  <form action="main.php" method="POST">
+                        <button type="submit" class="btn btn-success btn-sm" name="nueva_norma">
+                        <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Continuar Cargando</button>
+                    </form>
+                    
+                 </div></div></div></div>';
+        }else{
+        
+            echo '<div class="container">
+                    <div class="row">
+                    <div class="col-sm-8">
+                    <div class="alert alert-danger" role="alert">
+                    <h1 class="panel-title text-left" contenteditable="true"></h1>
+                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
+                    <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
+			     </div></div></div></div>';
+        }
+    
+    }
+} // FIN DE FUNCION
 
 
 function quitarTildes($cadena){
@@ -935,7 +1040,7 @@ function infoNorma($id,$conn){
                         <img class="img-reponsive img-rounded" src="../../icons/actions/arrow-down-double.png" /> Información Extendida</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse">
+                <div id="collapse1" class="panel-collapse collapse in">
                     <ul class="list-group">
                     <li class="list-group-item"><strong>Nombre de la Norma:</strong> '.$nombre_norma.'</li>
                     <li class="list-group-item"><strong>Número de la Norma:</strong> '.$n_norma.'</li>
@@ -946,7 +1051,7 @@ function infoNorma($id,$conn){
                     <li class="list-group-item"><strong>Organismo:</strong> '.$org_descripcion.'</li>
                     <li class="list-group-item"><strong>Jurisdicción:</strong> '.$jur_descripcion.'</li>
                     <li class="list-group-item"><strong>Ubicación / Bibliorato:</strong> '.$unidad_fisica.'</li>
-                    <li class="list-group-item"><strong>Onservaciones:</strong> '.$obs.'</li>
+                    <li class="list-group-item"><strong>Observaciones:</strong> '.$obs.'</li>
                     </ul>
                     <div class="panel-footer">
                         
@@ -1063,7 +1168,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 
     if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
-        $sql = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta'";
+        $sql = "SELECT * FROM normas WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta'";
         mysqli_select_db($conn,'gesdoju');
         $query = mysqli_query($conn,$sql);
         
@@ -1074,7 +1179,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
@@ -1096,7 +1201,14 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '</td>';
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila['id'].'">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                        <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
+                                        
+                </form>
+                </td>';
 			 $count++;
 		}
 
@@ -1119,7 +1231,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
     
     if(($palabra_clave != '') && ($fecha_desde == '') && ($fecha_hasta == '')){
         
-        $sql_1 = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST ('+$palabra_clave' IN BOOLEAN MODE)";
+        $sql_1 = "SELECT * FROM normas WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST ('+$palabra_clave' IN BOOLEAN MODE)";
         mysqli_select_db($conn,'gesdoju');
         $query_1 = mysqli_query($conn,$sql_1);
         
@@ -1130,7 +1242,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
@@ -1152,7 +1264,14 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 			 echo "<td align=center>".$fila_1['f_pub']."</td>";
 			 echo "<td align=center>".$fila_1['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '</td>';
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila_1['id'].'">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                        <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
+                                        
+                </form>
+                </td>';
 			 $count++;
 		}
 
@@ -1186,7 +1305,7 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
@@ -1208,7 +1327,14 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 			 echo "<td align=center>".$fila_2['f_pub']."</td>";
 			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '</td>';
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila_2['id'].'">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                        <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
+                                        
+                </form>
+                </td>';
 			 $count++;
 		}
 

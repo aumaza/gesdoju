@@ -21,7 +21,6 @@ if($conn){
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Nivel</th>
 		    <th class='text-nowrap text-center'>Cantidad UR</th>
             <th class='text-nowrap text-center'>Valor UR</th>
@@ -37,7 +36,6 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
 			 echo "<td align=center>".$fila['nivel']."</td>";
 			 echo "<td align=center>".$fila['cant_ur']."</td>";
 			 echo "<td align=center><strong>$</strong>".$fila['valor_ur']."</td>";

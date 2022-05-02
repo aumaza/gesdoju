@@ -3,17 +3,41 @@
  $(document).ready(function(){
       
       $('#myTable').DataTable({
-        "order": [[1, "asc"]],
+        "order": [[0, "asc"]],
         "responsive":     true,
         "scrollY":        "300px",
         "scrollX":        true,
         "scrollCollapse": true,
         "paging":         true,
         "dom":  "Bfrtip",
-        "buttons":        [ 'colvis' ],
-        "fixedColumns": {
-            leftColumns: 2
-        },
+        buttons: [
+            {
+                extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '8pt' )
+                        .prepend(
+                            '<img src="../../img/justice.jpg" style="position:absolute; top:0; left:0;" />'
+                        );
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                },
+                messageTop: 'This print was produced using the Print button for DataTables',
+                autoPrint: false,
+                exportOptions: {
+                    columns: ':visible',
+                }
+            },
+                
+            'colvis'
+        ],
+        columnDefs: [ {
+            targets: -1,
+            visible: false
+        } ],
+        "fixedColumns": true,
       "language":{
         "lengthMenu": "Mostrar _MENU_ registros por pagina",
         "info": "Mostrando pagina _PAGE_ de _PAGES_",

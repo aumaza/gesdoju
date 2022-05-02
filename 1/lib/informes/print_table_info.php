@@ -49,8 +49,8 @@
     <p class="p-center">Ministerio de Economía de la Nación</p>
     <p class="p-center">Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
     <hr>
-    <h1 align="center">Normas</H1>
-    <h3 align="center">Informe Búsqueda Avanzada</h3>
+    <h1 align="center">Normas / Informe Búsqueda Avanzada</H1>
+    <h3 align="center">Criterio de Búsqueda: <?php echo $palabra_clave; ?></h3>
     
    
    </div>
@@ -65,7 +65,7 @@
         // EVALUA QUE LAS TRES VARIABLES NO SEAN NULAS 
         if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
-        $sql = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta' order by f_pub ASC";
+        $sql = "SELECT * FROM normas WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta' order by f_pub ASC";
         mysqli_select_db($conn,'gesdoju');
         $query = mysqli_query($conn,$sql);
         $count = 0;
@@ -107,7 +107,7 @@
     	// EVALUA QUE NO SEA NULA SOLO "PABRA CLAVE"
     	if(($palabra_clave != '') && ($fecha_desde == '') && ($fecha_hasta == '')){
         
-        $sql_1 = "SELECT * FROM normas WHERE MATCH(observaciones) AGAINST ('+$palabra_clave' IN BOOLEAN MODE) order by f_pub ASC";
+        $sql_1 = "SELECT * FROM normas WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST ('+$palabra_clave' IN BOOLEAN MODE) order by f_pub ASC";
         mysqli_select_db($conn,'gesdoju');
         $query_1 = mysqli_query($conn,$sql_1);
         $count  = 0;

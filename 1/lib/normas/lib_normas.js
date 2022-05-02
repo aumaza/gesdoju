@@ -1,3 +1,160 @@
+// ESTRUCTURA TABLE NORMAS BUSQUEDA AVANZADA
+
+ $(document).ready(function(){
+      
+      $('#normasAdvanceSearchTable').DataTable({
+        "order": [[0, "asc"]],
+        "responsive":     true,
+        "scrollY":        "300px",
+        "scrollX":        true,
+        "scrollCollapse": true,
+        "paging":         true,
+        "dom":  "Bfrtip",
+        buttons: [
+            
+            {
+                extend: 'excel',
+                text: 'Export Excel',
+                messageTop: 'Normas - Búsqueda Avanzada',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'csv',
+                text: 'Export CSV',
+                messageTop: 'Normas - Búsqueda Avanzada',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'pdf',
+                text: 'Export PDF',
+                messageTop: 'Normas - Búsqueda Avanzada',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'print', 
+                text: 'Imprimir',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '8pt' );
+                                                
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                },
+                messageTop: 'Normas - Búsqueda Avanzada',
+                autoPrint: false,
+                exportOptions: {
+                    columns: ':visible',
+                }
+                
+            },
+            
+              'colvis'
+        ],
+        columnDefs: [ {
+            targets: -1,
+            visible: false
+        } ],
+        "fixedColumns": true,
+      "language":{
+        "lengthMenu": "Mostrar _MENU_ registros por pagina",
+        "info": "Mostrando pagina _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "infoFiltered": "(filtrada de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+          "next":       "Siguiente",
+          "previous":   "Anterior"
+        },
+      }
+    });
+         
+    });
+
+// ESTRUCTURA TABLE NORMAS BASE
+
+ $(document).ready(function(){
+      
+      $('#normasTable').DataTable({
+        "order": [[0, "asc"]],
+        "responsive":     true,
+        "scrollY":        "300px",
+        "scrollX":        true,
+        "scrollCollapse": true,
+        "paging":         true,
+        "dom":  "Bfrtip",
+        buttons: [
+            
+            {
+                extend: 'excel',
+                text: 'Export Excel',
+                messageTop: 'Listado de Normas',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'csv',
+                text: 'Export CSV',
+                messageTop: 'Listado de Normas',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'pdf',
+                text: 'Export PDF',
+                messageTop: 'Listado de Normas',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'print', 
+                text: 'Imprimir',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '8pt' );
+                                                
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                },
+                messageTop: 'Listado de Normas',
+                autoPrint: false,
+                exportOptions: {
+                    columns: ':visible',
+                }
+                
+            },
+            
+              'colvis'
+        ],
+        columnDefs: [ {
+            targets: -1,
+            visible: false
+        } ],
+        "fixedColumns": true,
+      "language":{
+        "lengthMenu": "Mostrar _MENU_ registros por pagina",
+        "info": "Mostrando pagina _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "infoFiltered": "(filtrada de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+          "next":       "Siguiente",
+          "previous":   "Anterior"
+        },
+      }
+    });
+         
+    });
+
+
+
+
 // INSERTAR NUEVO REGISTRO EN NORMAS
 $(document).ready(function(){
     $('#add_normativa').click(function(){

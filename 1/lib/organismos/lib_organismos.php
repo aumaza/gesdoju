@@ -51,7 +51,7 @@ if($conn){
 	      <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Organismos
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='organismosTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Código Organismo</th>
 		    <th class='text-nowrap text-center'>Organismo</th>

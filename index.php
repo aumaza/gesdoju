@@ -8,7 +8,7 @@
 <html lang="es">
 
 <head>
-
+  <title>GESDO [ Gestión Documental ]</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" href="icons/apps/accessories-dictionary.png" />
@@ -33,7 +33,7 @@
 
   
     <div class="container text-center">
-      <h1>Gestión Documental Jurídica</h1>
+      <h1>GESDO [ Gestión Documental ]</h1>
      </div><br>
    <div class="container">
    <div class="main">

@@ -118,7 +118,7 @@ if($conn){
 	      <img src="../../icons/actions/code-class.png"  class="img-reponsive img-rounded"> Segmentación Temática
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='myTable'>";
+      echo "<table class='display compact' style='width:100%' id='segmentacionTematicaTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Clasificación Institucional</th>
 		    <th class='text-nowrap text-center'>Jurisdicción</th>

@@ -1,5 +1,5 @@
 <?php session_start(); 
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -36,7 +36,7 @@
   echo '<!DOCTYPE html>
         <html lang="es">
         <head>
-        <title>Gesdoju</title>
+        <title>GESDO [ Gestión Documental ]</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />';
@@ -57,14 +57,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Gesdoju</title>
+  <title>GESDO [ Gestión Documental ]</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
   <link rel="stylesheet" href="main.css" >
   <?php skeleton(); ?>
   
-    <script type="text/javascript" src="main.js"></script>
+    
    
 
  
@@ -110,6 +110,7 @@
         $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
         $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
         $file = basename($_FILES["file"]["name"]);
+        $files[] = array($_FILES["files"]["name"]);
         
         $nombre_norma = quitarTildes($nombre_norma);
         $obs = quitarTildes($obs);
@@ -130,7 +131,28 @@
                     </div>';
         
         }else{
-            insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn);
+            $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$conn,$dbase);
+                                    
+            if($respuesta == 1){
+                $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+                normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
+            }
+            if($respuesta == 2){
+                echo '<script> alert("Sólo se ha subido el Archivo"); </script>';
+            }
+            if($respuesta == 3){
+                echo '<script> alert("Contáctese con el Administrador para cambiar permisos del directorio de destino"); </script>';
+            }
+            if($respuesta == 4){
+              echo '<script> alert("Sólo se permiten Archivos PDF"); </script>';  
+            }
+            if($respuesta == 5){
+              echo '<script> alert("No ha Seleccionado Archivos aún"); </script>';  
+            }
+            if($respuesta == 6){
+              echo '<script> alert("La Norma ya se encuentra ingresada"); </script>';  
+            }
+            
       }
       }
 	  if(isset($_POST['edit_norma'])){
@@ -736,6 +758,7 @@
   </div>
 </div><br>
 
+<script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="../lib/normas/lib_normas.js"></script>
 <script type="text/javascript" src="../lib/representantes/lib_representantes.js"></script>
 <script type="text/javascript" src="../lib/grupo_representantes/lib_grupo_representantes.js"></script>

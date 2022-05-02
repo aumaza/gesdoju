@@ -53,7 +53,7 @@ class Grupo{
                         <div class="panel-body">
                         <div class="table-responsive"><br>';
                         
-                        echo "<table class='display compact' style='width:100%' id='myTable'>";
+                        echo "<table class='display compact' style='width:100%' id='grupoRepresentantesTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>Nombre Grupo</th>
                         <th class='text-nowrap text-center'>Integrantes</th>

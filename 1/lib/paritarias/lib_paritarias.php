@@ -95,7 +95,7 @@ class Paritarias{
                         <div class="panel-body">
                         <div class="table-responsive"><br>';
                         
-                        echo "<table class='display compact' style='width:100%' id='myTable'>";
+                        echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>Grupo Encargado</th>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
