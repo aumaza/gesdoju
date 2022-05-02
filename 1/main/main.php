@@ -20,6 +20,7 @@
       include "../lib/grupo_representantes/lib_grupo_representante.php";
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
+      include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
 
       
         $varsession = $_SESSION['user'];
@@ -217,9 +218,32 @@
         formSubirArchivo();
 	  }
 	  
-	  
-	 
 	  // fin seccion ABM de normas
+	  // ============================================================================== //
+	  //============================= SECCION NORMAS VINCULADAS ======================= //
+	  // SE CREA EL OBJETO
+	  $obj_norma_vinculada = new NormasVinculadas();
+	  
+	  if(isset($_POST['add_normas_vinculadas'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $obj_norma_vinculada->formAltaVincularNormas($id,$conn,$dbase);
+	  }
+	  if(isset($_POST['add_nueva_norma_vinculada'])){
+        $id_norma = mysqli_real_escape_string($conn,$_POST['id']);
+        $norma = mysqli_real_escape_string($conn,$_POST['norma']);
+        $files[] = array($_FILES["files"]["name"]);
+        $obj_norma_vinculada->addNormasVinculadas($obj_norma_vinculada,$id_norma,$norma,$files,$conn,$dbase);
+	  }
+	  if(isset($_POST['ver_normas_vinculadas'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $obj_norma_vinculada->listarNormasVinculadas($id,$conn,$dbase);
+	  }
+	  
+	  
+	  // ============================ FIN SECCION NORMAS VINCULADAS =================== //
+	  // ============================================================================== //
+	 
+	  
 	  
 	  // SECCION CONSULTA DE NORMAS
 	  if(isset($_POST['B'])){
