@@ -20,7 +20,6 @@
       include "../lib/grupo_representantes/lib_grupo_representante.php";
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
-      include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
 
       
         $varsession = $_SESSION['user'];
@@ -64,9 +63,6 @@
   <link rel="stylesheet" href="main.css" >
   <?php skeleton(); ?>
   
-    
-   
-
  
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();">
@@ -131,6 +127,7 @@
                     </div>';
         
         }else{
+
             $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$conn,$dbase);
                                     
             if($respuesta == 1){
@@ -152,7 +149,7 @@
             if($respuesta == 6){
               echo '<script> alert("La Norma ya se encuentra ingresada"); </script>';  
             }
-            
+
       }
       }
 	  if(isset($_POST['edit_norma'])){
@@ -221,6 +218,7 @@
 	  }
 	  
 	  
+	 
 	  // fin seccion ABM de normas
 	  
 	  // SECCION CONSULTA DE NORMAS
@@ -236,30 +234,8 @@
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
         searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn);
       }
+      
       // FIN SECCION CONSULTA DE NORMAS
-      
-      // ============================================================================== //
-      // SECCION NORMAS VINCULADAS
-      // SE CREA EL OBJETO
-      $obj_norma_vinculada = new NormasVinculadas();
-      
-      if(isset($_POST['add_normas_vinculadas'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $obj_norma_vinculada->formAltaVincularNormas($id,$conn,$dbase);
-      }
-      if(isset($_POST['add_nueva_norma_vinculada'])){
-        $id_norma = mysqli_real_escape_string($conn,$_POST['id']);
-        $norma = mysqli_real_escape_string($conn,$_POST['norma']);
-        $files[] = array($_FILES["files"]["name"]);
-        $obj_norma_vinculada->addNormasVinculadas($obj_norma_vinculada,$id_norma,$norma,$files,$conn,$dbase);     
-      }
-      if(isset($_POST['ver_normas_vinculadas'])){
-        $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $obj_norma_vinculada->listarNormasVinculadas($id,$conn,$dbase);
-      }
-      
-      
-      // FIN SECCION NORMAS VINCULADAS
 	  
 	  // SECCION CARGAR USUARIOS
 	  if(isset($_POST['C'])){
@@ -765,7 +741,7 @@
 <script type="text/javascript" src="../lib/paritarias/lib_paritarias.js"></script>
 <script type="text/javascript" src="../lib/organismos/lib_organismos.js"></script>
 <script type="text/javascript" src="../lib/jurisdicciones/lib_jurisdicciones.js"></script>
-<script type="text/javascript" src="../lib/tipo_organismo/lib_tipo_organismos.js"></script>
+<script type="text/javascript" src="../lib/tipo_organismos/lib_tipo_organismos.js"></script>
 <script type="text/javascript" src="../lib/segmentacion_tematica/lib_segmentacion_tematica.js"></script>
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>

@@ -132,17 +132,19 @@ function newNorma($conn){
 		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" required></textarea>
 		</div><hr>
 		
+		<hr>
         <div class="form-group">
-		  <label for="pwd">Seleccione Archivo a Subir:</label>
+		  <label for="pwd">Seleccione Archivo a Subir de la Norma Principal:</label>
           <input type="file" name="file" id="file">
+
         </div><hr>
-        
-        
+
         <div class="form-group">
 		  <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas:</label>
           <input type="file" name="files[]" id="files" multiple="" >
         </div>
         <hr>
+
 		
 		<button type="submit" class="btn btn-success btn-block" name="add_normativa">
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
@@ -683,10 +685,6 @@ if(!empty($_FILES["file"]["name"])){
                 }
     
 
-
-
-
-
 }
 
 }
@@ -695,7 +693,9 @@ if(!empty($_FILES["file"]["name"])){
 /*
 ** insertar nueva norma en base de datos
 */
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$conn,$dbase){
+
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$files,$connd,$dbase){
+    
 
     mysqli_select_db($conn,$dbase);
     $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma'";
@@ -703,8 +703,10 @@ function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
     $rows = mysqli_num_rows($query_1);
 
 
+
 if($rows == 0){
- 
+
+
 $targetDir = '../../uploads/';
 $fileName = $file;
 //$fileName = basename($_FILES["file"]["name"]);
@@ -755,8 +757,10 @@ if(!empty($_FILES["file"]["name"])){
          
             if($query){
             
+
 			    return 1; // sea actualizo la base  y subio bien el archivo
-              
+        
+                       
             }else{
 		  
 			   return 2; // solo se subio el archivo
@@ -774,11 +778,11 @@ if(!empty($_FILES["file"]["name"])){
             }else{
                 return 5; // no ha seleccionado archivos
             }
+
             
 }else{
    return 6; // la norma ya se encuentra ingresada
 }
-
 }
 
 
