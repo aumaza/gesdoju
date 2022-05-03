@@ -14,7 +14,7 @@ function newNorma($conn){
             <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#verificarNormaModal">Verificar</button>
 	      
             <hr>
-	        <form action="#" method="POST" enctype="multipart/form-data">
+	        <form id="fr_nueva_norma_ajax" method="POST" enctype="multipart/form-data">
 	        
 	        <div class="form-group">
 		  <label for="nombre">Nombre de la Norma</label>
@@ -154,7 +154,7 @@ function newNorma($conn){
         <hr>
 
 		
-		<button type="submit" class="btn btn-default btn-block" name="add_normativa">
+		<button type="submit" class="btn btn-default btn-block" id="add_normativa" >
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
 	      </form> <br>
 	      
@@ -710,7 +710,7 @@ function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
     $query_1 = mysqli_query($conn,$sql_1);    
     $rows = mysqli_num_rows($query_1);
 
-
+   
 
 if($rows == 0){
 
@@ -728,9 +728,9 @@ if(!empty($_FILES["file"]["name"])){
     
     if(in_array($fileType, $allowTypes)){
     
-        // Upload file to server
+       // Upload file to server
         if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
-         
+        
         
         $sql = "INSERT INTO normas ".
                 "(nombre_norma,
@@ -773,7 +773,7 @@ if(!empty($_FILES["file"]["name"])){
 		  
 			   return 2; // solo se subio el archivo
             
-            } 
+            }
             }else{
 			              
               return 3; // verificar permisos del directorio
@@ -786,8 +786,7 @@ if(!empty($_FILES["file"]["name"])){
             }else{
                 return 5; // no ha seleccionado archivos
             }
-
-            
+         
 }else{
    return 6; // la norma ya se encuentra ingresada
 }
@@ -833,23 +832,25 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
 	
 			if(move_uploaded_file($fuente, $target_path)){	
 				
-                        echo '<div class="container">
+				echo 8; // base actualizada correctamente y archivos subidos correctamente
+                        /*echo '<div class="container">
                                 <div class="row">
                                 <div class="col-sm-8">
                                 <div class="alert alert-success" role="alert">
                                 <h1 class="panel-title text-left" contenteditable="true"></h1>
                                 <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
                                 <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
-                                </div></div></div></div>';
+                                </div></div></div></div>';*/
             }else{	
-                        echo '<div class="container">
+                        echo 9; // hubo un problema al subir los archivos
+                        /*echo '<div class="container">
                                 <div class="row">
                                 <div class="col-sm-8">
                                 <div class="alert alert-warning" role="alert">
                                 <h1 class="panel-title text-left" contenteditable="true"></h1>
                                 <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
                                 <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
-                                </div></div></div></div>';
+                                </div></div></div></div>';*/
 			}
 			closedir($dir); //Cerramos la conexion con la carpeta destino
 		}
@@ -867,7 +868,8 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
         
         if($query){
         
-            echo ' <div class="container">
+            echo 1; // normas insertadas correctamente
+            /*echo ' <div class="container">
                     <div class="row">
                     <div class="col-sm-8">
                     <div class="alert alert-success" role="alert">
@@ -880,17 +882,18 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Continuar Cargando</button>
                     </form>
                     
-                 </div></div></div></div>';
+                 </div></div></div></div>';*/
         }else{
         
-            echo '<div class="container">
+            echo -1; // hubo un problema al intentar actualizar la base de datos de normas vinculadas
+           /* echo '<div class="container">
                     <div class="row">
                     <div class="col-sm-8">
                     <div class="alert alert-danger" role="alert">
                     <h1 class="panel-title text-left" contenteditable="true"></h1>
                     <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
                     <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
-			     </div></div></div></div>';
+			     </div></div></div></div>';*/
         }
     
     }

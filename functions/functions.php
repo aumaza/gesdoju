@@ -31,7 +31,6 @@ function skeleton(){
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     
     <script src="/gesdoju/skeleton/js/jquery-3.5.1.min.js"></script>
-	<script src="/gesdoju/skeleton/js/jquery-3.4.1.min.js"></script>
 	<script src="/gesdoju/skeleton/js/bootstrap.min.js"></script>
 	
 	<script src="/gesdoju/skeleton/js/jquery.dataTables.min.js"></script>
