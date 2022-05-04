@@ -1,5 +1,5 @@
-<?php   include "../../../connection/connection.php";
-        include "lib_normas.php";
+<?php   include "../../connection/connection.php";
+        include "../lib/normas/lib_normas.php";
         
                 
         if($conn){
@@ -36,9 +36,8 @@
                 $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase);
                 
                 if($respuesta === 1){
-                     echo 15;
-                    //$norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
-                    //normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
+                    $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+                    normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
                 }
                 if($respuesta === 2){
                     echo '<script> alert("Sólo se ha subido el Archivo"); </script>';

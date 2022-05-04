@@ -819,42 +819,23 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
         foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
 		//condicional si el fichero existe
 		
-		if($_FILES["files"]["name"][$key]){
-			
-			// Nombres de archivos temporales
-			$archivonombre = $_FILES["files"]["name"][$key]; 
-			$fuente = $_FILES["files"]["tmp_name"][$key]; 
-			
-						
-			$dir = opendir($carpeta);
-			$target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
-			
-	
-			if(move_uploaded_file($fuente, $target_path)){	
-				
-				echo 8; // base actualizada correctamente y archivos subidos correctamente
-                        /*echo '<div class="container">
-                                <div class="row">
-                                <div class="col-sm-8">
-                                <div class="alert alert-success" role="alert">
-                                <h1 class="panel-title text-left" contenteditable="true"></h1>
-                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
-                                <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
-                                </div></div></div></div>';*/
-            }else{	
-                        echo 9; // hubo un problema al subir los archivos
-                        /*echo '<div class="container">
-                                <div class="row">
-                                <div class="col-sm-8">
-                                <div class="alert alert-warning" role="alert">
-                                <h1 class="panel-title text-left" contenteditable="true"></h1>
-                                <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
-                                <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
-                                </div></div></div></div>';*/
-			}
-			closedir($dir); //Cerramos la conexion con la carpeta destino
-		}
-	}
+            if($_FILES["files"]["name"][$key]){
+                
+                // Nombres de archivos temporales
+                $archivonombre = $_FILES["files"]["name"][$key]; 
+                $fuente = $_FILES["files"]["tmp_name"][$key]; 
+                
+                            
+                $dir = opendir($carpeta);
+                $target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+                
+        
+                move_uploaded_file($fuente, $target_path);
+                    
+                    
+                closedir($dir); //Cerramos la conexion con la carpeta destino
+            }
+        }
 	
 	$sql = "INSERT INTO normas_vinculadas ".
             "(id_norma_principal,
@@ -869,31 +850,9 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
         if($query){
         
             echo 1; // normas insertadas correctamente
-            /*echo ' <div class="container">
-                    <div class="row">
-                    <div class="col-sm-8">
-                    <div class="alert alert-success" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true"></h1>
-                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
-                        <strong> Base de Datos Actualizada correctamente..</strong></p><hr>
-                        
-                  <form action="main.php" method="POST">
-                        <button type="submit" class="btn btn-success btn-sm" name="nueva_norma">
-                        <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Continuar Cargando</button>
-                    </form>
-                    
-                 </div></div></div></div>';*/
+            
         }else{
-        
-            echo -1; // hubo un problema al intentar actualizar la base de datos de normas vinculadas
-           /* echo '<div class="container">
-                    <div class="row">
-                    <div class="col-sm-8">
-                    <div class="alert alert-danger" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true"></h1>
-                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
-                    <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
-			     </div></div></div></div>';*/
+           echo -1; // hubo un problema al intentar actualizar la base de datos de normas vinculadas
         }
     
     }

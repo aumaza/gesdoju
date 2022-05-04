@@ -199,7 +199,7 @@ $(document).ready(function(){
          jQuery.ajax({
             type:"POST",
             method:"POST",
-            url:"../lib/normas/insertar_normas.php",
+            url:"../main/insertar_normas.php",
             data: formData,
             cache: false,
             processData: false,
@@ -240,7 +240,7 @@ $(document).ready(function(){
                         //console.log(formData);
                     }
                     else if(r == 8){
-                        alert("Norma Prinicipal y Vinculadas Guardadas Exitosamente");
+                        alert("Norma Prinicipal Guardada en Base y Normas Vinculadas solo Guardadas en directorio");
                         //console.log(formData);
                     }
                     else if(r == 9){
