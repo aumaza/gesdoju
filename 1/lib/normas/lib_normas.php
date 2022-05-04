@@ -5,157 +5,188 @@
 */
 function newNorma($conn){
 
-      echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Cargar Normativa</h2><hr>
+      echo '<div class="container-fluid">
+            <div class="row">
+            <div class="col-sm-8">
+            <h2>Cargar Normativa</h2><hr>
             
-            <h4>Verificar si Existe Norma a Cargar</h4>
-            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#verificarNormaModal">Verificar</button>
-	      
-            <hr>
+           
+                <h4>Verificar si Existe Norma a Cargar</h4>
+                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#verificarNormaModal">Verificar</button><hr>
+                
+                <div class="col-sm-12">
+                    <div class="alert alert-info">
+                    <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
+                        <strong>Los campos con asteriscos son obligatorios</strong>
+                    </div>
+                </div>
+                
 	        <form id="fr_nueva_norma_ajax" method="POST" enctype="multipart/form-data">
 	        
-	        <div class="form-group">
-		  <label for="nombre">Nombre de la Norma</label>
-		  <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" required>
-		</div>
+	        <div class="col-sm-3">
 	        
-	        <div class="form-group">
-		  <label for="nombre">Nro de Norma</label>
-		  <input type="text" class="form-control" id="n_norma" name="n_norma"  maxlength="25" placeholder="00000" required>
-		</div>';
+                <div class="form-group">
+                    <label for="nombre">Nombre de la Norma (*)</label>
+                    <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" oninput="Text(this.value);" required>
+                </div>
+	        
+                <div class="form-group">
+                    <label for="nombre">Nro de Norma (*)</label>
+                    <input type="text" class="form-control" id="n_norma" name="n_norma"  maxlength="25" placeholder="00000" oninput="Numeros(this.value);" required>
+                </div>
+		
+            </div>';
 		
 		
-		echo '<div class="form-group">
-		  <label for="t_norma">Tipo de Norma</label>
-		  <select class="form-control" id="t_norma" name="t_norma" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM tipo_norma order by id ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+		
+		echo '<div class="col-sm-3">
+            
+                <div class="form-group">
+                <label for="t_norma">Tipo de Norma (*)</label>
+                <select class="form-control" id="t_norma" name="t_norma" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM tipo_norma order by id ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
 
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
 
-			//mysqli_close($conn);
-		  
-		 echo '</select>
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                      </div>
+		
+                        <div class="form-group">
+                        <label for="a_norma">Ambito de la Norma (*)</label>
+                        <select class="form-control" id="foro_norma" name="foro_norma" required>
+                        <option value="" disabled selected>Seleccionar</option>';
+                            
+                            if($conn){
+                            $query = "SELECT * FROM ambito_norma order by id ASC";
+                            mysqli_select_db($conn,'gesdoju');
+                            $res = mysqli_query($conn,$query);
+
+                            if($res){
+                                while ($valores = mysqli_fetch_array($res)){
+                                echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+                                }
+                                }
+                            }
+
+                            //mysqli_close($conn);
+                        
+                        echo '</select>
+                        </div>
+                    </div>
+		
+		<div class="col-sm-3">
+		
+            <div class="form-group">
+            <label for="pwd">Fecha Publicación (*)</label>
+            <input type="date" class="form-control" id="f_pub" name="f_pub" required>
             </div>
 		
-		 <div class="form-group">
-		  <label for="a_norma">Ambito de la Norma</label>
-		  <select class="form-control" id="foro_norma" name="foro_norma" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM ambito_norma order by id ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
-
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
-
-			//mysqli_close($conn);
-		  
-		 echo '</select>
-		</div>
-		
-		<div class="form-group">
-		  <label for="pwd">Fecha Publicación:</label>
-		  <input type="date" class="form-control" id="f_pub" name="f_pub" required>
-		</div>
-		
-		<div class="form-group">
-		  <label for="pwd">Año:</label>
-		  <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" maxlength="4" required>
+            <div class="form-group">
+            <label for="pwd">Año (*)</label>
+            <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" maxlength="4" oninput="Numeros(this.value);" required>
+            </div>
 		</div>';
 		
 		  
-        echo '<div class="form-group">
-		  <label for="sel1">Organismos</label>
-		  <select class="form-control" id="organismo" name="organismo" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM organismos order by descripcion ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+        echo '<div class="col-sm-3">
+                <div class="form-group">
+                <label for="sel1">Organismos (*)</label>
+                <select class="form-control" id="organismo" name="organismo" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM organismos order by descripcion ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
 
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[cod_org].'">'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[cod_org].'">'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
 
-			//mysqli_close($conn);
-		  
-		 echo '</select>
-		</div>
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
 		
-		<div class="form-group">
-		  <label for="sel1">Jurisdicción</label>
-		  <select class="form-control" id="jurisdiccion" name="jurisdiccion" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+                <div class="form-group">
+                <label for="sel1">Jurisdicción (*)</label>
+                <select class="form-control" id="jurisdiccion" name="jurisdiccion" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
 
-		      if($res){
-                while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[cod_jur].'">'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[cod_jur].'">'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
 
-			//mysqli_close($conn);
-		  
-		 echo '</select>
-		</div>
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+            </div>
 		
+		<div class="col-sm-6">
 		
-		<div class="form-group">
-		  <label for="nombre">Ubicación Física/Carpeta</label>
-		  <input type="text" class="form-control" id="ub_fis" name="ub_fis" required>
-		</div>
+            <div class="form-group">
+            <label for="nombre">Ubicación Física/Carpeta (*)</label>
+            <input type="text" class="form-control" id="ub_fis" name="ub_fis" oninput="alfaNum(this.value);" required>
+            </div>
+            
+            <div class="form-group">
+            <label for="pwd">Breve Descripción (*)</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción"             oninput="alfaNum(this.value);" required></textarea>
+            </div>
+        </div>
 		
-		<div class="form-group">
-		  <label for="pwd">Breve Descripción:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" required></textarea>
-		</div><hr>
-		
-		<hr>
-		<div class="alert alert-success">
-        <div class="form-group">
-		  <label for="pwd">Seleccione Archivo a Subir de la Norma Principal:</label>
-          <input type="file" name="file" id="file">
+		<div class="col-sm-6">
+            <p align="center"><strong>Archivos a Subir</strong></p>
+            <div class="alert alert-success">
+            <div class="form-group">
+            <label for="pwd">Seleccione Archivo a Subir de la Norma Principal (*)</label>
+            <input type="file" name="file" id="file">
 
-        </div></div><hr>
+            </div></div>
+            
+            <div class="alert alert-success">
+            <div class="form-group">
+            <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas (*)</label>
+            <input type="file" name="files[]" id="files" multiple="" >
+            </div>
+            </div>
+        </div>
         
-        <div class="alert alert-success">
-        <div class="form-group">
-		  <label for="pwd">Seleccione Archivo a Subir de las Normas Vinculadas:</label>
-          <input type="file" name="files[]" id="files" multiple="" >
+        <div class="col-sm-12">
+            <div class="alert alert-info">
+            <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
+                <strong>Antes de presionar el botón Guardar, verifique que los datos son los correctos.</strong>
+            </div>
         </div>
-        </div>
-        <hr>
 
-		
-		<button type="submit" class="btn btn-default btn-block" id="add_normativa" >
-            <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		<div class="col-sm-12">
+            <button type="submit" class="btn btn-default btn-block" id="add_normativa" >
+                <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+        </div>
 	      </form> <br>
 	      
 	    </div>
@@ -175,134 +206,172 @@ function editNorma($id,$conn){
       $res = mysqli_query($conn,$sql);
       $fila = mysqli_fetch_assoc($res);
 
-      echo '<div class="container">
+      echo '<div class="container-fluid">
 	    <div class="row">
 	    <div class="col-sm-8">
 	      <h2>Editar Normativa</h2><hr>
+                
+                <div class="col-sm-12">
+                    <div class="alert alert-info">
+                    <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
+                        <strong>Los campos con asteriscos son obligatorios</strong>
+                    </div>
+                </div>
+	      
 	        <form action="main.php" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
 	        
-	        <div class="form-group">
-		  <label for="nombre">Nombre de la Norma</label>
-		  <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" required>
-		</div>';
+	         <div class="col-sm-3">
+                
+                <div class="form-group">
+                <label for="nombre">Nombre de la Norma (*)</label>
+                <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" oninput="Text(this.value);" required readonly>
+                </div>
 	        
-	      echo '<div class="form-group">
-		  <label for="nombre">Nro de Norma</label>
-		  <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" required>
-		</div>
+                <div class="form-group">
+                <label for="nombre">Nro de Norma (*)</label>
+                <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" oninput="Numeros(this.value);" required readonly>
+                </div>
 		
-		<div class="form-group">
-		  <label for="t_norma">Tipo de Norma</label>
-		  <select class="form-control" id="t_norma" name="t_norma" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM tipo_norma order by id ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
-
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				  echo '<option value="'.$valores[descripcion].'" '.("'.$fila[tipo_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
-			    }
-                }
-			}
-
-			//mysqli_close($conn);
-		  
-		echo '</select>
             </div>
 		
-		 <div class="form-group">
-		  <label for="a_norma">Ambito de la Norma</label>
-		  <select class="form-control" id="foro_norma" name="foro_norma" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM ambito_norma order by id ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+		<div class="col-sm-3">
+		
+            <div class="form-group">
+            <label for="t_norma">Tipo de Norma (*)</label>
+            <select class="form-control" id="t_norma" name="t_norma" required>
+            <option value="" disabled selected>Seleccionar</option>';
+                
+                if($conn){
+                $query = "SELECT * FROM tipo_norma order by id ASC";
+                mysqli_select_db($conn,'gesdoju');
+                $res = mysqli_query($conn,$query);
 
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[descripcion].'" '.("'.$fila[f_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
-			    }
+                if($res){
+                    while ($valores = mysqli_fetch_array($res)){
+                    echo '<option value="'.$valores[descripcion].'" '.("'.$fila[tipo_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                    }
+                    }
                 }
-			}
 
-			//mysqli_close($conn);
-		  
-		echo '</select>
-		</div>
+                //mysqli_close($conn);
+            
+            echo '</select>
+                </div>
 		
-		<div class="form-group">
-		  <label for="pwd">Fecha Publicación:</label>
-		  <input type="date" class="form-control" id="f_pub" name="f_pub" value="'.$fila['f_pub'].'" required>
-		</div>
+                <div class="form-group">
+                <label for="a_norma">Ambito de la Norma (*)</label>
+                <select class="form-control" id="foro_norma" name="foro_norma" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM ambito_norma order by id ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
+
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[descripcion].'" '.("'.$fila[f_norma].'" == "'.$valores[descripcion].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
+
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+        </div>
 		
-		<div class="form-group">
-		  <label for="pwd">Año:</label>
-		  <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" maxlength="4" required>
+		
+		<div class="col-sm-3">
+		
+            <div class="form-group">
+            <label for="pwd">Fecha Publicación (*)</label>
+            <input type="date" class="form-control" id="f_pub" name="f_pub" value="'.$fila['f_pub'].'" required>
+            </div>
+            
+            <div class="form-group">
+            <label for="pwd">Año (*)</label>
+            <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" maxlength="4" oninput="Numeros(this.value);" required>
+            </div>
 		</div>';
 		
-		echo '<div class="form-group">
-		  <label for="sel1">Organismos</label>
-		  <select class="form-control" name="organismo" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM organismos order by descripcion ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+		echo '<div class="col-sm-3">
+            
+                <div class="form-group">
+                <label for="sel1">Organismos (*)</label>
+                <select class="form-control" name="organismo" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM organismos order by descripcion ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
 
-		      if($res){
-				  while($valores = mysqli_fetch_array($res)){
-               echo '<option value="'.$valores[cod_org].'" '.("'.$fila[organismo].'" == "'.$valores[cod_org].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
-				}
-                }
-			}
+                    if($res){
+                        while($valores = mysqli_fetch_array($res)){
+                    echo '<option value="'.$valores[cod_org].'" '.("'.$fila[organismo].'" == "'.$valores[cod_org].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
 
-			//mysqli_close($conn);
-		  
-		 echo '</select>
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+		
+                <div class="form-group">
+                <label for="sel1">Jurisdicción (*)</label>
+                <select class="form-control" name="jurisdiccion" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
+
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[cod_jur].'" '.("'.$fila[jurisdiccion].'" == "'.$valores[cod_jur].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
+
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+            </div>
+		
+		<div class="col-sm-12">
+		
+            <div class="form-group">
+            <label for="nombre">Ubicación Física/Carpeta (*)</label>
+            <input type="text" class="form-control" name="ub_fis" value="'.$fila['unidad_fisica'].'" oninput="alfaNum(this.value);" required>
+            </div>
+            
+            <div class="form-group">
+            <label for="pwd">Breve Descripción (*)</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" oninput="alfaNum(this.value);" required>'.$fila['observaciones'].'</textarea>
+            </div>
+		
 		</div>
 		
-		<div class="form-group">
-		  <label for="sel1">Jurisdicción</label>
-		  <select class="form-control" name="jurisdiccion" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM jurisdicciones order by descripcion ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
-
-		      if($res){
-                while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[cod_jur].'" '.("'.$fila[jurisdiccion].'" == "'.$valores[cod_jur].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
-				}
-                }
-			}
-
-			//mysqli_close($conn);
-		  
-		 echo '</select>
+		<div class="col-sm-12">
+            <div class="alert alert-info">
+            <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
+                <strong>Antes de presionar el botón Guardar, verifique que los datos son los correctos.</strong>
+            </div>
+        </div>
+		
+		<div class="col-sm-12"><hr>
+		
+            <button type="submit" class="btn btn-default btn-block" name="editar_norma">
+                <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button><hr>
+            <button type="submit" class="btn btn-danger btn-block" name="B">
+                <img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
+		
 		</div>
-		
-		
-		<div class="form-group">
-		  <label for="nombre">Ubicación Física/Carpeta</label>
-		  <input type="text" class="form-control" name="ub_fis" value="'.$fila['unidad_fisica'].'" required>
-		</div>
-		
-		<div class="form-group">
-		  <label for="pwd">Breve Descripción:</label>
-		  <textarea class="form-control" id="observaciones" name="observaciones" required>'.$fila['observaciones'].'</textarea>
-		</div>
-		
-		<button type="submit" class="btn btn-success btn-block" name="editar_norma"><img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button><hr>
-		<button type="submit" class="btn btn-danger btn-block" name="B"><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
 	    </form><hr> 
 	    
 	    </div>
@@ -706,7 +775,7 @@ function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
     
 
     mysqli_select_db($conn,$dbase);
-    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma'";
+    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma' and organismo = '$organismo'";
     $query_1 = mysqli_query($conn,$sql_1);    
     $rows = mysqli_num_rows($query_1);
 
@@ -787,10 +856,12 @@ if(!empty($_FILES["file"]["name"])){
                 return 5; // no ha seleccionado archivos
             }
          
-}else{
+}
+
+else if($rows == 1){
    return 6; // la norma ya se encuentra ingresada
 }
-}
+} // FIN DE LA FUNCION
 
 
 /*
@@ -1353,7 +1424,7 @@ function modalVerificarNorma($conn,$dbase){
                         
                         <div class="form-group">
                             <label for="nombre">Nro de Norma</label>
-                            <input type="text" class="form-control" id="nro_norma" name="nro_norma"  maxlength="25" placeholder="00000" required>
+                            <input type="text" class="form-control" id="nro_norma" name="nro_norma"  maxlength="25" placeholder="00000" oninput="Numeros(this.value);" required>
                         </div>
                         
                         <div class="form-group">

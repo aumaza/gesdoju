@@ -223,33 +223,34 @@ $(document).ready(function(){
                         alert("Hubo un problema al intentar Agregar el registro");
                         //console.log(formData);
                     }
-                    else if(r == 3){
-                        alert("Hay campos sin completar!!");
-                        console.log(values);
-                    }
                     else if(r == 2){
-                        alert("Verifique los permisos del directorio destino del archivo a subir");
+                        alert("Solo se ha subido el archivo de la norma sin impactar en la base de datos");
                        // console.log(formData);
                     }
-                    else if(r == 5){
+                    else if(r == 3){
+                        alert("Contáctese con el Administrador ya que el directorio de destino no posee permisos de Escritura");
+                        console.log(values);
+                    }
+                    else if(r == 4){
                         alert("Sólo se permiten archivos PDF");
                         //console.log(formData);
                     }
-                    else if(r == 7){
+                    else if(r == 5){
                         alert("Aún no ha seleccionado el archivo a subir");
                         //console.log(formData);
                     }
-                    else if(r == 8){
-                        alert("Norma Prinicipal Guardada en Base y Normas Vinculadas solo Guardadas en directorio");
+                    else if(r == 6){
+                        alert("Ya existe La norma en la base de datos");
                         //console.log(formData);
                     }
-                    else if(r == 9){
-                        alert("Contáctese con el Administrador ya que el directorio de destino no posee permisos de Escritura");
+                    
+                    else if(r == 13){
+                        alert("Error de Conexion");
                         //console.log(formData);
                     }
                     else if(r == 15){
-                        alert("Estoy aca");
-                        console.log(formData);
+                        alert("Hay campos sin completar!!");
+                        console.log(values);
                     }
                     
                     
@@ -319,4 +320,57 @@ $(document).ready(function(){
         document.getElementById(x).disabled = false;
     
     }
+}
+
+
+// CAPTURA DE CARACTERES NUMERICOS
+function Numeros(string){
+//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){ 
+             //Se a�aden a la salida los caracteres v�lidos
+              out += string.charAt(i);
+	     }else{
+		alert("ATENCION - Sólo se permiten Números");
+	     }
+	     }
+	
+    //Retornar valor filtrado
+    return out;
+}
+
+// CAPTURA DE CARACTERES ALFABETICOS
+function Text(string){//validacion solo letras
+    var out = '';
+    //Se a?aden las letras validas
+    var filtro ="^[abcdefghijklmn?opqrstuvwxyzABCDEFGHIJKLMN?OPQRSTUVWXYZ- ]+$"; // Caracteres V�idos
+  
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){ 
+	     out += string.charAt(i);
+	     }else{
+		alert("ATENCION - Sólo se permite Texto");
+	     }
+	     }
+    return out;
+}
+
+// CAPTURA DE CARACTERES ALFA-NUMERICOS
+function alfaNum(string){//validacion solo letras
+    var out = '';
+    //Se añaden los caracteres válidos
+    var filtro ="^[1234567890abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-/()¿? ]+$"; // Caracteres Validos
+  
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){ 
+	     out += string.charAt(i);
+	     }else{
+		alert("ATENCION - Ha tipeado caracteres no Válidos");
+	     }
+	     }
+    return out;
 }

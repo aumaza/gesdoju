@@ -30,34 +30,32 @@
                                         ($jurisdiccion == '') ||
                                             ($unidad_fisica == '') ||
                                                 ($obs == '')){
-                echo 3; // campos vacios
+                echo 15; // campos vacios
             }else{
               
                 $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase);
                 
-                if($respuesta === 1){
-                    $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
-                    normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
-                }
-                if($respuesta === 2){
-                    echo '<script> alert("Sólo se ha subido el Archivo"); </script>';
-                }
-                if($respuesta === 3){
-                    echo '<script> alert("Contáctese con el Administrador para cambiar permisos del directorio de destino"); </script>';
-                }
-                if($respuesta === 4){
-                    echo '<script> alert("Sólo se permiten Archivos PDF"); </script>';  
-                }
-                if($respuesta === 5){
-                    echo '<script> alert("No ha Seleccionado Archivos aún"); </script>';  
-                }
-                if($respuesta === 6){
-                    echo '<script> alert("La Norma ya se encuentra ingresada"); </script>';  
-                }
-                if($respuesta === 15){
-                    echo '<script> alert("Estoy Aca"); </script>';  
-                }
+                switch($respuesta){
                 
+                    case 1: $norma = $tipo_norma.'_'.$n_norma.'_'.$anio;
+                            normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase);
+                            break;
+                    
+                    case 2: echo 2; // Sólo se ha subido el Archivo
+                            break;
+                    
+                    case 3: echo 3; // Contáctese con el Administrador para cambiar permisos del directorio de destino
+                            break;
+                            
+                    case 4: echo 4; // Sólo se permiten Archivos PDF
+                            break;
+                    
+                    case 5: echo 5; // No ha Seleccionado Archivos aún;
+                            break;
+                            
+                    case 6: echo 6; // La Norma ya se encuentra ingresada
+                            break;
+                }
             }
         }else{
             echo 13; // error de conexion

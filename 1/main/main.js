@@ -71,43 +71,6 @@ function limitText(limitField, limitNum) {
        }
 }
 
-// CAPTURA DE CARACTERES NUMERICOS
-function Numeros(string){
-//Solo numeros
-    var out = '';
-    var filtro = '1234567890';//Caracteres validos
-	
-    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){ 
-             //Se a�aden a la salida los caracteres v�lidos
-              out += string.charAt(i);
-	     }else{
-		alert("ATENCION - Sólo se permiten Números");
-	     }
-	     }
-	
-    //Retornar valor filtrado
-    return out;
-}
-
-
-// CAPTURA DE CARACTERES ALFABETICOS
-function Text(string){//validacion solo letras
-    var out = '';
-    //Se a?aden las letras validas
-    var filtro ="^[abcdefghijklmn?opqrstuvwxyzABCDEFGHIJKLMN?OPQRSTUVWXYZ- ]+$"; // Caracteres V�idos
-  
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){ 
-	     out += string.charAt(i);
-	     }else{
-		alert("ATENCION - Sólo se permite Texto");
-	     }
-	     }
-    return out;
-}
-
 
 
 /*
