@@ -625,14 +625,14 @@
 	
 	// LISTA TODOS LOS REPRESENTANTES
 	if(isset($_POST['representantes'])){
-        $representante->listarRepresentantes($representante,$conn);
+        $representante->listarRepresentantes($representante,$conn,$dbase);
 	}
 	if(isset($_POST['nuevo_representante'])){
         $representante->formAltaRepresentante();
 	}
 	if(isset($_POST['editar_representante'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $representante->formEditRepresentante($id,$conn);
+        $representante->formEditRepresentante($id,$conn,$dbase);
 	}
 	
 	
@@ -645,14 +645,14 @@
 	
 	// LISTAR TODOS LOS GRUPOS
 	if(isset($_POST['grupos'])){
-        $grupo->listarGrupos($grupo,$conn);
+        $grupo->listarGrupos($grupo,$conn,$dbase);
 	}
 	if(isset($_POST['nuevo_grupo'])){
-        $grupo->formAltaGrupo($conn);
+        $grupo->formAltaGrupo($conn,$dbase);
 	}
 	if(isset($_POST['editar_grupo'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $grupo->formEditGrupo($id,$conn);
+        $grupo->formEditGrupo($id,$conn,$dbase);
 	}
 	
 	

@@ -3,12 +3,18 @@
 class Grupo{
     
     private $nombre_grupo = '';
-    private $representante = '';
+    private $representante_titular = '';
+    private $representante_suplente = '';
+    private $primer_asesor = '';
+    private $segundo_asesor = '';
     
     // CONSTRUCTOR DESPARAMETRIZADO
     private function __constructor(){
         $this->nombre_grupo = '';
-        $this->representante = '';
+        $this->representante_titular = '';
+        $this->representante_suplente = '';
+        $this->primer_asesor = '';
+        $this->segundo_asesor = '';
     }
     
     // SETTERS
@@ -16,8 +22,20 @@ class Grupo{
         $this->nombre_grupo = $var;
     }
     
-    private function set_representante($var){
-        $this->representante = $var;
+    private function set_representante_titular($var){
+        $this->representante_titular = $var;
+    }
+    
+    private function set_representante_suplente($var){
+        $this->representante_suplente = $var;
+    }
+    
+    private function set_primer_asesor($var){
+        $this->primer_asesor = $var;
+    }
+    
+    private function set_segundo_asesor($var){
+        $this->segundo_asesor = $var;
     }
     
     // GETTERS
@@ -25,8 +43,20 @@ class Grupo{
         return $this->nombre_grupo = $var;
     }
     
-    private function get_representante($var){
-        return $this->representante = $var;
+    private function get_representante_titular($var){
+        return $this->representante_titular = $var;
+    }
+    
+    private function get_representante_suplente($var){
+        return $this->representante_suplente = $var;
+    }
+    
+    private function get_primer_asesor($var){
+        return $this->primer_asesor = $var;
+    }
+    
+    private function get_segundo_asesor($var){
+        return $this->segundo_asesor = $var;
     }
 
 
@@ -35,14 +65,14 @@ class Grupo{
     /*
     ** LISTAR GRUPOS
     */
-    public function listarGrupos($grupo,$conn){
+    public function listarGrupos($grupo,$conn,$dbase){
 
     
                 if($conn){
                 
                 
                 $sql = "select * from grupo_representantes";
-                mysqli_select_db($conn,'gesdoju');
+                mysqli_select_db($conn,$dbase);
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
@@ -56,7 +86,10 @@ class Grupo{
                         echo "<table class='display compact' style='width:100%' id='grupoRepresentantesTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>Nombre Grupo</th>
-                        <th class='text-nowrap text-center'>Integrantes</th>
+                        <th class='text-nowrap text-center'>Titular</th>
+                        <th class='text-nowrap text-center'>Suplente</th>
+                        <th class='text-nowrap text-center'>Primer Asesor</th>
+                        <th class='text-nowrap text-center'>Segundo Asesor</th>
                         <th>&nbsp;</th>
                         </thead>";
 
@@ -65,7 +98,10 @@ class Grupo{
                         // Listado normal
                         echo "<tr>";
                         echo "<td align=center>".$grupo->get_nombre_grupo($fila['nombre_grupo'])."</td>";
-                        echo "<td align=center>".$grupo->get_representante($fila['representantes'])."</td>";
+                        echo "<td align=center>".$grupo->get_representante_titular($fila['representante_titular'])."</td>";
+                        echo "<td align=center>".$grupo->get_representante_suplente($fila['representante_suplente'])."</td>";
+                        echo "<td align=center>".$grupo->get_primer_asesor($fila['primer_asesor'])."</td>";
+                        echo "<td align=center>".$grupo->get_segundo_asesor($fila['segundo_asesor'])."</td>";
                         echo "<td class='text-nowrap'>";
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
@@ -102,7 +138,7 @@ class Grupo{
 ** FORMULARIO DE CARGA DE UN NUEVO GRUPO
 */
 
-    public function formAltaGrupo($conn){
+    public function formAltaGrupo($conn,$dbase){
     
         echo '<div class="container">
             <div class="panel panel-info">
@@ -118,7 +154,7 @@ class Grupo{
                 <div class="row">
                     <div class="col-sm-6">
                     
-                    <hr><p><strong>Importante:</strong> Al dar de alta un grupo como mínimo debe tener un integrante, luego podrá editar el grupo añadiendo o quitando integrantes del mismo</p><hr>
+                    <hr><p><strong>Importante:</strong> Al dar de alta un grupo como mínimo debe tener dos integrante, luego podrá editar el grupo añadiendo o quitando integrantes del mismo</p><hr>
                                           
                         <div class="form-group">
                             <label for="nombre_grupo">Nombre Grupo:</label>
@@ -126,18 +162,83 @@ class Grupo{
                         </div>
                         
                         <div class="form-group">
-                            <label for="representantes">Representantes</label>
-                            <select class="form-control" id="representante" name="representante" required>
+                            <label for="representante_titular">Representante Titular</label>
+                            <select class="form-control" id="representante_titular" name="representante_titular" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
-                                $query = "SELECT nombre_representante FROM representantes order by nombre_representante ASC";
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
                                 mysqli_select_db($conn,'gesdoju');
                                 $res = mysqli_query($conn,$query);
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores[nombre_representante].'">'.$valores[nombre_representante].'</option>';
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="representante_suplente">Representante Suplente</label>
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="primer_asesor">Primer Asesor</label>
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" >
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="segundo_asesor">Segundo Asesor</label>
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" >
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
                                     }
                                     }
                                 }
@@ -164,10 +265,10 @@ class Grupo{
 ** FORMULARIO DE EDICION DE UN GRUPO
 */
 
-    public function formEditGrupo($id,$conn){
+    public function formEditGrupo($id,$conn,$dbase){
     
         $sql = "select * from grupo_representantes where id = '$id'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
     
@@ -205,19 +306,86 @@ class Grupo{
                             <input type="text" class="form-control" id="nombre_grupo" placeholder="Ingrese el Nombre descriptivo para el grupo de representantes" name="nombre_grupo" value="'.$row['nombre_grupo'].'" readonly required>
                         </div>
                         
+                        
                         <div class="form-group">
-                            <label for="representantes">Representantes</label>
-                            <select class="form-control" id="representante" name="representante" required>
+                            <label for="representante_titular">Representante Titular</label>
+                            <select class="form-control" id="representante_titular" name="representante_titular" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
-                                $query = "SELECT nombre_representante FROM representantes order by nombre_representante ASC";
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
                                 mysqli_select_db($conn,'gesdoju');
                                 $res = mysqli_query($conn,$query);
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores[nombre_representante].'">'.$valores[nombre_representante].'</option>';
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="representante_suplente">Representante Suplente</label>
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="primer_asesor">Primer Asesor</label>
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" >
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    }
+                                    }
+                                }
+
+                                mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="segundo_asesor">Segundo Asesor</label>
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" >
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM representantes order by nombre_representante ASC";
+                                mysqli_select_db($conn,'gesdoju');
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
                                     }
                                     }
                                 }

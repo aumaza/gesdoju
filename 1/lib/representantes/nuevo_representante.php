@@ -8,16 +8,18 @@
       
       // captura de datos
       $nombre_representante = mysqli_real_escape_string($conn,$_POST['nombre_representante']);
+      $dni_representante = mysqli_real_escape_string($conn,$_POST['dni_representante']);
            
       // pasar a mayusculas
       $nombre_representante = strtoupper($nombre_representante);
             
       // se verifica que los datos no estén vacios
-      if(($nombre_representante == '')){
+      if(($nombre_representante == '') ||
+            ($dni_representante == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $representante->addRepresentante($representante,$nombre_representante,$conn);
+        $representante->addRepresentante($representante,$nombre_representante,$dni_representante,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion

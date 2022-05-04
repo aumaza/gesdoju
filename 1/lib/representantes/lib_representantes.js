@@ -94,6 +94,7 @@ $(document).ready(function(){
                 if(r == 1){
                     alert("Registro Guardado Exitosamente!!");
                     $('#nombre_representante').val('');
+                    $('#dni_representante').val('');
                     $('#nombre_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
@@ -105,6 +106,7 @@ $(document).ready(function(){
                 }else if(r == 4){
                     alert("Error. Representante Existente!!");
                     $('#nombre_representante').val('');
+                    $('#dni_representante').val('');
                     $('#nombre_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){

@@ -4,11 +4,14 @@ class Representantes{
 
     // VARIABLES
     private $nombre_representante = '';
+    private $dni_representante = '';
     
     // CONSTRUCTOR DESPARAMETRIZADO
     function __constructor(){
         
         $this->nombre_representante = '';
+        $this->dni_representante = '';
+        
     }
     
     // setters
@@ -16,9 +19,17 @@ class Representantes{
         $this->nombre_representante = $var;
     }
     
+    private function set_dni_representante($var){
+        $this->dni_representante = $var;
+    }
+    
     // getters
     private function get_nombre_representante($var){
         return $this->nombre_representante = $var;
+    }
+    
+    private function get_dni_representante($var){
+        return $this->dni_representante = $var;
     }
 
     // METODOS
@@ -26,14 +37,14 @@ class Representantes{
     /*
     ** LISTAR REPRESENTANTES
     */
-    public function listarRepresentantes($representante,$conn){
+    public function listarRepresentantes($representante,$conn,$dbase){
 
     
                 if($conn){
                 
                 
                 $sql = "select * from representantes";
-                mysqli_select_db($conn,'gesdoju');
+                mysqli_select_db($conn,$dbase);
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
@@ -46,6 +57,7 @@ class Representantes{
                         
                         echo "<table class='display compact' style='width:100%' id='representantesTable'>";
                         echo "<thead>
+                        <th class='text-nowrap text-center'>DNI Representante</th>
                         <th class='text-nowrap text-center'>Nombre Representante</th>
                         <th>&nbsp;</th>
                         </thead>";
@@ -54,6 +66,7 @@ class Representantes{
                 while($fila = mysqli_fetch_array($query)){
                         // Listado normal
                         echo "<tr>";
+                        echo "<td align=center>".$representante->get_dni_representante($fila['dni_representante'])."</td>";
                         echo "<td align=center>".$representante->get_nombre_representante($fila['nombre_representante'])."</td>";
                         echo "<td class='text-nowrap'>";
                         echo '<form action="#" method="POST">
@@ -108,10 +121,14 @@ class Representantes{
                 <div class="row">
                     <div class="col-sm-6">
                     
-                                          
+                        <div class="form-group">
+                            <label for="dni_representante">DNI Representante:</label>
+                            <input type="text" class="form-control" id="dni_representante" maxlength="8" placeholder="Ingrese el DNI del Representante" name="dni_representante" oninput="Numeros(this.value);" required>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="nombre_representante">Nombre y Apellido:</label>
-                            <input type="text" class="form-control" id="nombre_representante" placeholder="Ingrese el Nombre y Apellido del representante a agregar" name="nombre_representante" required>
+                            <input type="text" class="form-control" id="nombre_representante" placeholder="Ingrese el Nombre y Apellido del representante a agregar" name="nombre_representante" oninput="Text(this.value);" required>
                         </div>
                         
                     </div>
@@ -131,10 +148,10 @@ class Representantes{
 ** FORMULARIO DE EDICION DE UN REPRESENTANTE
 */
 
-    public function formEditRepresentante($id,$conn){
+    public function formEditRepresentante($id,$conn,$dbase){
     
-        $sql = "select nombre_representante from representantes where id = '$id'";
-        mysqli_select_db($conn,'gesdoju');
+        $sql = "select * from representantes where id = '$id'";
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
     
@@ -152,7 +169,11 @@ class Representantes{
                 <div class="row">
                     <div class="col-sm-6">
                     
-                                          
+                        <div class="form-group">
+                            <label for="dni_representante">DNI Representante:</label>
+                            <input type="text" class="form-control" id="dni_representante" maxlength="8" placeholder="Ingrese el DNI del Representante" name="dni_representante" value="'.$row['dni_representante'].'" required>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="nombre_representante">Nombre y Apellido:</label>
                             <input type="text" class="form-control" id="nombre_representante" placeholder="Ingrese el Nombre y Apellido del representante a agregar" name="nombre_representante" value="'.$row['nombre_representante'].'" required>
@@ -174,11 +195,11 @@ class Representantes{
 /*
 ** PERSISTENCIA A BASE DE NUEVO REPRESENTANTE
 */
-    public function addRepresentante($representante,$nombre_representante,$conn){
+    public function addRepresentante($representante,$nombre_representante,$dni_representante,$conn,$dbase){
     
         if($conn){
         
-            mysqli_select_db($conn,'gesdoju');
+            mysqli_select_db($conn,$dbase);
             $sql = "select * from representantes where nombre_representante = '$nombre_representante'";
             $query = mysqli_query($conn,$sql);
         
@@ -189,9 +210,11 @@ class Representantes{
                 if($rows == 0){
                     
                     $sql_2 = "INSERT INTO representantes ".
-                    "(nombre_representante)".
+                    "(dni_representante,
+                      nombre_representante)".
                     "VALUES ".
-                    "($representante->set_nombre_representante('$nombre_representante'))";
+                    "($representante->set_dni_representante('$dni_representante'),
+                      $representante->set_nombre_representante('$nombre_representante'))";
                     
                     $query_2 = mysqli_query($conn,$sql_2);
                         
@@ -217,12 +240,12 @@ class Representantes{
 ** ACTUALIZA REGISTRO EN BASE
 */
     
-    public function updateRepresentante($id,$representante,$nombre_representante,$conn){
+    public function updateRepresentante($id,$representante,$nombre_representante,$dni_representante,$conn,$dbase){
     
         if($conn){
 
-            $sql = "update representantes set nombre_representante = $representante->set_nombre_representante('$nombre_representante') where id = '$id'";
-            mysqli_select_db($conn,'gesdoju');
+            $sql = "update representantes set nombre_representante = $representante->set_nombre_representante('$nombre_representante'), dni_representante = $representante->set_dni_representante('$dni_representante') where id = '$id'";
+            mysqli_select_db($conn,$dbase);
             $query = mysqli_query($conn,$sql);
             
             if($query){
