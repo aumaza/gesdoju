@@ -163,7 +163,7 @@ class Grupo{
                         
                         <div class="form-group">
                             <label for="representante_titular">Representante Titular</label>
-                            <select class="form-control" id="representante_titular" name="representante_titular" required>
+                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -184,7 +184,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="representante_suplente">Representante Suplente</label>
-                            <select class="form-control" id="representante_suplente" name="representante_suplente" required>
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -206,7 +206,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="primer_asesor">Primer Asesor</label>
-                            <select class="form-control" id="primer_asesor" name="primer_asesor" >
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -228,7 +228,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="segundo_asesor">Segundo Asesor</label>
-                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" >
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){

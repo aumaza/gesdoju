@@ -598,23 +598,23 @@
 	$paritaria = new Paritarias();
 	
 	if(isset($_POST['paritarias'])){
-        $paritaria->listarParitarias($paritaria,$conn);        
+        $paritaria->listarParitarias($paritaria,$conn,$dbase);        
 	}
 	if(isset($_POST['nueva_paritaria'])){
-        $paritaria->formAltaParitaria($conn);
+        $paritaria->formAltaParitaria($conn,$dbase);
 	}
 	if(isset($_POST['info_paritaria'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $paritaria->infoParitaria($paritaria,$id,$conn);
+        $paritaria->infoParitaria($paritaria,$id,$conn,$dbase);
 	}
 	if(isset($_POST['busqueda_paritarias'])){
-        $paritaria->formAdvanceSearchParitarias($conn);
+        $paritaria->formAdvanceSearchParitarias($conn,$dbase);
 	}
 	if(isset($_POST['search_paritaria'])){
         $grupo_representante = mysqli_real_escape_string($conn,$_POST['grupo_representante']);
         $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);        
-        $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn);
+        $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn,$dbase);
 	}
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //

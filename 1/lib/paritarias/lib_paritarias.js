@@ -96,6 +96,7 @@ $(document).ready(function(){
                     alert("Registro Guardado Exitosamente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
+                    $('#organismo').val('');
                     $('#fecha_reunion').val('');
                     $('#resumen_reunion').val('');
                     $('#grupo_representante').focus('');
@@ -110,6 +111,7 @@ $(document).ready(function(){
                     alert("Error. Representante Existente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
+                    $('#organismo').val('');
                     $('#fecha_reunion').val('');
                     $('#resumen_reunion').val('');
                     $('#grupo_representante').focus('');

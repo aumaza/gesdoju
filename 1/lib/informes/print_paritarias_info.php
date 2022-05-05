@@ -19,7 +19,7 @@
 	}
 	
         //CAPTURA LAS VARIABLES
-        $grupo_representante = $_GET['palabra_clave'];
+        $grupo_representante = $_GET['grupo_representante'];
         $fecha_desde = $_GET['fecha_desde'];
         $fecha_hasta = $_GET['fecha_hasta'];
 	
@@ -63,10 +63,10 @@
        if($conn){
        
         // EVALUA QUE LAS TRES VARIABLES NO SEAN NULAS 
-        if(($grupo_presentante != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
+        if(($grupo_representante != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
         $sql = "SELECT * FROM representacion_paritarias WHERE grupo_representantes = '$grupo_representante' and fecha_reunion between '$fecha_desde' and '$fecha_hasta'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
         $count = 0;
         
@@ -74,6 +74,7 @@
                     <tr>
                         <th>Grupo Representante</th>
                         <th>Tipo Representación</th>
+                        <th>Organismo</th>
                         <th>Fecha Reunión</th>
                         <th>Resúmen Reunión</th>
                     </tr>';
@@ -83,6 +84,7 @@
                     echo "<tr>";
                     echo "<td>".$row['grupo_representantes']."</td>";
                     echo "<td>".$row['tipo_representacion']."</td>";
+                    echo "<td>".$row['organismo']."</td>";
                     echo "<td>".$row['fecha_reunion']."</td>";
                     echo "<td width='560'>".$row['resumen_reunion']."</td></tr>";
                     $count++;
@@ -98,7 +100,7 @@
     	if(($grupo_representante != '') && ($fecha_desde == '') && ($fecha_hasta == '')){
         
         $sql_1 = "SELECT * FROM representacion_paritarias WHERE grupo_representantes = '$grupo_representante'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query_1 = mysqli_query($conn,$sql_1);
         $count  = 0;
         
@@ -106,6 +108,7 @@
                     <tr>
                         <th>Grupo Representante</th>
                         <th>Tipo Representación</th>
+                        <th>Organismo</th>
                         <th>Fecha Reunión</th>
                         <th>Resúmen Reunión</th>
                     </tr>';
@@ -115,6 +118,7 @@
                     echo "<tr>";
                     echo "<td>".$row_1['grupo_representantes']."</td>";
                     echo "<td>".$row_1['tipo_representacion']."</td>";
+                    echo "<td>".$row_1['organismo']."</td>";
                     echo "<td>".$row_1['fecha_reunion']."</td>";
                     echo "<td width='560'>".$row_1['resumen_reunion']."</td></tr>";
                     $count++;
@@ -129,7 +133,7 @@
         if(($grupo_representante == '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
         $sql_2 = "SELECT * FROM representacion_paritarias WHERE fecha_reunion between '$fecha_desde' and '$fecha_hasta'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query_2 = mysqli_query($conn,$sql_2);
         $count = 0;
         
@@ -137,6 +141,7 @@
                     <tr>
                         <th>Grupo Representante</th>
                         <th>Tipo Representación</th>
+                        <th>Organismo</th>
                         <th>Fecha Reunión</th>
                         <th>Resúmen Reunión</th>
                     </tr>';
@@ -146,6 +151,7 @@
                     echo "<tr>";
                     echo "<td>".$row_2['grupo_representantes']."</td>";
                     echo "<td>".$row_2['tipo_representacion']."</td>";
+                    echo "<td>".$row_2['organismo']."</td>";
                     echo "<td>".$row_2['fecha_reunion']."</td>";
                     echo "<td width='560'>".$row_2['resumen_reunion']."</td></tr>";
                     $count++;

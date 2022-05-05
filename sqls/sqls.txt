@@ -182,6 +182,7 @@ create table representacion_paritarias(
 id int(11) auto_increment primary key,
 grupo_representantes varchar(70) not null,
 tipo_representacion enum('Negociacion','Interpretacion') not null,
+organismo varchar(150) not null,
 fecha_reunion date not null,
 file_name varchar(400),
 file_path varchar(400),

@@ -5,15 +5,17 @@ class Paritarias{
     // VARIABLES DE LA CLASE
     private $grupo_representantes = '';
     private $tipo_representacion = '';
+    private $organismo = '';
     private $fecha_reunion = '';
     private $file_name = '';
     private $file_path = '';
     private $resumen_reunion = '';
     
     // CONSTRUCTOR DESPARAMETRIZADO
-    function __constructor(){
+    function __construct(){
         $this->grupo_representantes = '';
         $this->tipo_representacion = '';
+        $this->organismo = '';
         $this->fecha_reunion = '';
         $this->file_name = '';
         $this->file_path = '';
@@ -27,6 +29,10 @@ class Paritarias{
     
     private function set_tipo_representancion($var){
         $this->tipo_representacion = $var;
+    }
+    
+    private function set_organismo($var){
+        $this->organismo = $var;
     }
     
     private function set_fecha_reunion($var){
@@ -55,6 +61,10 @@ class Paritarias{
         return $this->tipo_representacion = $var;
     }
     
+    private function get_organismo($var){
+        return $this->organismo = $var;
+    }
+    
     private function get_fecha_reunion($var){
         return $this->fecha_reunion = $var;
     }
@@ -77,14 +87,14 @@ class Paritarias{
     /*
     ** LISTAR GRUPOS
     */
-    public function listarParitarias($paritaria,$conn){
+    public function listarParitarias($paritaria,$conn,$dbase){
 
     
                 if($conn){
                 
                 
                 $sql = "select * from representacion_paritarias";
-                mysqli_select_db($conn,'gesdoju');
+                mysqli_select_db($conn,$dbase);
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
@@ -100,6 +110,7 @@ class Paritarias{
                         <th class='text-nowrap text-center'>Grupo Encargado</th>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
                         <th class='text-nowrap text-center'>Fecha Reunión</th>
+                        <th class='text-nowrap text-center'>Organismo</th>
                         <th>&nbsp;</th>
                         </thead>";
 
@@ -110,6 +121,7 @@ class Paritarias{
                         echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
                         echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
                         echo "<td align=center>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
                         echo "<td class='text-nowrap'>";
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
@@ -148,7 +160,7 @@ class Paritarias{
 ** FORMULARIO DE CARGA DE UN NUEVO REGISTRO
 */
 
-    public function formAltaParitaria($conn){
+    public function formAltaParitaria($conn,$dbase){
     
         echo '<div class="container">
             <div class="panel panel-info">
@@ -171,7 +183,7 @@ class Paritarias{
                                 
                                 if($conn){
                                 $query = "SELECT nombre_grupo FROM grupo_representantes order by nombre_grupo ASC";
-                                mysqli_select_db($conn,'gesdoju');
+                                mysqli_select_db($conn,$dbase);
                                 $res = mysqli_query($conn,$query);
 
                                 if($res){
@@ -181,7 +193,7 @@ class Paritarias{
                                     }
                                 }
 
-                                mysqli_close($conn);
+                                //mysqli_close($conn);
                             
                             echo '</select>
                             </div>
@@ -196,13 +208,35 @@ class Paritarias{
                         </div>
                         
                         <div class="form-group">
+                            <label for="organismo">Organismo</label>
+                            <select class="form-control" id="organismo" name="organismo" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM organismos order by descripcion ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+                                    }
+                                    }
+                                }
+
+                                mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                        
+                        <div class="form-group">
                             <label for="fecha_reunion">Fecha Reunión:</label>
                             <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="resumen_reunion">Resumen Reunión:</label>
-                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required></textarea>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" oninput="alfaNum(this.value);" placeholder="Ingrese un breve Resúmen de la Reunión" required></textarea>
                         </div>
                         
                         
@@ -220,24 +254,28 @@ class Paritarias{
     
     
     // INFORMACION EXTENDIDA
-    public function infoParitaria($paritaria,$id,$conn){
+    public function infoParitaria($paritaria,$id,$conn,$dbase){
     
     $sql = "select * from representacion_paritarias where id = '$id'";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $query = mysqli_query($conn,$sql);
     
     while($row = mysqli_fetch_array($query)){
         $grupo_representantes = $row['grupo_representantes'];
         $tipo_representacion = $row['tipo_representacion'];
+        $organismo = $row['organismo'];
         $fecha_reunion = $row['fecha_reunion'];
         $resumen_reunion = $row['resumen_reunion'];
         $archivo = $row['file_name'];
     }
     
-    $sql_1 = "select representantes from grupo_representantes where nombre_grupo = '$grupo_representantes'";
+    $sql_1 = "select * from grupo_representantes where nombre_grupo = '$grupo_representantes'";
     $query_1 = mysqli_query($conn,$sql_1);
     while($row_1 = mysqli_fetch_array($query_1)){
-        $representantes = $row_1['representantes'];
+        $rep_titular = $row_1['representante_titular'];
+        $rep_suplente = $row_1['representante_suplente'];
+        $asesor_1 = $row_1['primer_asesor'];
+        $asesor_2 = $row_1['segundo_asesor'];
     }
     
     echo '<div class="container">
@@ -249,11 +287,17 @@ class Paritarias{
                         <img class="img-reponsive img-rounded" src="../../icons/actions/arrow-down-double.png" /> Información Extendida</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse">
+                <div id="collapse1" class="panel-collapse collapse-in">
                     <ul class="list-group">
                     <li class="list-group-item"><strong>Grupo:</strong> '.$paritaria->get_grupo_representantes($grupo_representantes).'</li>
-                    <li class="list-group-item"><strong>Integrantes:</strong> '.$representantes.'</li>
-                    <li class="list-group-item"><strong>Tipo Representacion:</strong> '.$paritaria->get_tipo_representacion($tipo_representacion).'</li>
+                    <li class="list-group-item"><strong>Representante Titular:</strong> '.$rep_titular.'</li>
+                    <li class="list-group-item"><strong>Representante Suplente:</strong> '.$rep_suplente.'</li>';
+                    if(($asesor_1 != '') && ($asesor_2 != '')){
+                    echo '<li class="list-group-item"><strong>Primer Asesor:</strong> '.$asesor_1.'</li>
+                          <li class="list-group-item"><strong>Segundo Asesor:</strong> '.$asesor_2.'</li>';
+                    }
+              echo '<li class="list-group-item"><strong>Tipo Representacion:</strong> '.$paritaria->get_tipo_representacion($tipo_representacion).'</li>
+                    <li class="list-group-item"><strong>Organismo:</strong> '.$paritaria->get_organismo($organismo).'</li>
                     <li class="list-group-item"><strong>Fecha Reunión:</strong> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
                     <li class="list-group-item"><strong>Resúmen Reunión:</strong> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
                     </ul>
@@ -296,7 +340,7 @@ class Paritarias{
 /*
 ** FUNCION DE BUSQUEDA AVANZADA
 */
-public function formAdvanceSearchParitarias($conn){
+public function formAdvanceSearchParitarias($conn,$dbase){
     
     echo '<div class="container">
             <div class="panel panel-default">
@@ -322,7 +366,7 @@ public function formAdvanceSearchParitarias($conn){
                                 
                                 if($conn){
                                 $query = "SELECT nombre_grupo FROM grupo_representantes order by nombre_grupo ASC";
-                                mysqli_select_db($conn,'gesdoju');
+                                mysqli_select_db($conn,$dbase);
                                 $res = mysqli_query($conn,$query);
 
                                 if($res){
@@ -367,12 +411,12 @@ public function formAdvanceSearchParitarias($conn){
 /*
 ** RESULTADO DE BUSQUEDA AVANZADA
 */
-public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn){
+public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn,$dbase){
 
     if(($grupo_representante != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
         $sql = "SELECT * FROM representacion_paritarias WHERE grupo_representantes = '$grupo_representante' and fecha_reunion between '$fecha_desde' and '$fecha_hasta'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
         
         //mostramos fila x fila
@@ -406,7 +450,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print_search.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               
@@ -424,7 +468,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     if(($grupo_representante != '') && ($fecha_desde == '') && ($fecha_hasta == '')){
         
         $sql_1 = "SELECT * FROM representacion_paritarias WHERE grupo_representantes = '$grupo_representante'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query_1 = mysqli_query($conn,$sql_1);
         
         //mostramos fila x fila
@@ -458,7 +502,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print_search.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               
@@ -476,7 +520,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     if(($grupo_representante == '') && ($fecha_desde != '') && ($fecha_hasta != '')){
     
         $sql_2 = "SELECT * FROM representacion_paritarias WHERE fecha_reunion between '$fecha_desde' and '$fecha_hasta'";
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $query_2 = mysqli_query($conn,$sql_2);
         
         //mostramos fila x fila
@@ -510,7 +554,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 
 		echo "</table>";
 		echo "<br>";
-		echo '<a href="../lib/informes/print_search.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
+		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
               
@@ -532,20 +576,22 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 /*
 ** PERSISTENCIA A BASE DE NUEVA PARITARIA
 */
-    public function addParitaria($paritaria,$grupo_representante,$tipo_representacion,$fecha_reunion,$resumen_reunion,$conn){
+    public function addParitaria($paritaria,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
     
         if($conn){
         
-            mysqli_select_db($conn,'gesdoju');
+            mysqli_select_db($conn,$dbase);
                                 
                     $sql = "INSERT INTO representacion_paritarias ".
                     "(grupo_representantes,
                       tipo_representacion,
+                      organismo,
                       fecha_reunion,
                       resumen_reunion)".
                     "VALUES ".
                     "($paritaria->set_grupo_representantes('$grupo_representante'),
                       $paritaria->set_tipo_representacion('$tipo_representacion'),
+                      $paritaria->set_organismo('$organismo'),
                       $paritaria->set_fecha_reunion('$fecha_reunion'),
                       $paritaria->set_resumen_reunion('$resumen_reunion'))";
                     

@@ -82,23 +82,34 @@
     while($row = mysqli_fetch_array($query)){
         $grupo_representantes = $row['grupo_representantes'];
         $tipo_representacion = $row['tipo_representacion'];
+        $organismo = $row['organismo'];
         $fecha_reunion = $row['fecha_reunion'];
         $resumen_reunion = $row['resumen_reunion'];
         $archivo = $row['file_name'];
     }
     
-    $sql_1 = "select representantes from grupo_representantes where nombre_grupo = '$grupo_representantes'";
+    $sql_1 = "select * from grupo_representantes where nombre_grupo = '$grupo_representantes'";
     $query_1 = mysqli_query($conn,$sql_1);
     while($row_1 = mysqli_fetch_array($query_1)){
-        $representantes = $row_1['representantes'];
+        $rep_titular = $row_1['representante_titular'];
+        $rep_suplente = $row_1['representante_suplente'];
+        $asesor_1 = $row_1['primer_asesor'];
+        $asesor_2 = $row_1['segundo_asesor'];
     }
        
        
     echo '<div class="row">
             
             <p class="p-justify"><strong>Grupo:</strong> '.$grupo_representantes.'</p><hr>
-            <p class="p-justify"><strong>Integrantes:</strong> '.$representantes.'</p><hr>
-            <p class="p-justify"><strong>Tipo Representación</strong>: '.$tipo_representacion.'</p><hr>
+            <p class="p-center"><strong>Integrantes</strong></p><hr>
+            <p class="p-justify"><strong>Representante Titular:</strong> '.$rep_titular.'</p>
+            <p class="p-justify"><strong>Representante Suplente:</strong> '.$rep_suplente.'</p>';
+            if(($asesor_1 != '') && ($asesor_2 != '')){
+            echo '<p class="p-justify"><strong>Primer Asesor:</strong> '.$asesor_1.'</p>
+                  <p class="p-justify"><strong>Segundo Asesor:</strong> '.$asesor_2.'</p>';
+            }
+      echo '<hr><p class="p-justify"><strong>Tipo Representación</strong>: '.$tipo_representacion.'</p><hr>
+            <p class="p-justify"><strong>Organismo</strong>: '.$organismo.'</p><hr>
             <p class="p-justify"><strong>Fecha Reunión</strong>: '.$fecha_reunion.'</p><hr>
             <p class="p-justify"><strong>Resumen Reunión</strong>: '.$resumen_reunion.'</p><hr>
             
