@@ -106,7 +106,7 @@
         
         echo '<table id="normas">
                     <tr>
-                        <th>Grupo Representante</th>
+                        <th>Integrantes</th>
                         <th>Tipo Representación</th>
                         <th>Organismo</th>
                         <th>Fecha Reunión</th>
@@ -116,7 +116,11 @@
         while($row_1 = mysqli_fetch_array($query_1)){
             
                     echo "<tr>";
-                    echo "<td>".$row_1['grupo_representantes']."</td>";
+                    $mysql = "select * from grupo_representantes where nombre_grupo = '$grupo_representante'";
+                    $myquery = mysqli_query($conn,$mysql);
+                    while($fila = mysqli_fetch_array($myquery)){
+                    echo "<td>".'Titular: '.$fila['representante_titular'].'<hr>Suplente: '.$fila['representante_suplente']."</td>";
+                    }
                     echo "<td>".$row_1['tipo_representacion']."</td>";
                     echo "<td>".$row_1['organismo']."</td>";
                     echo "<td>".$row_1['fecha_reunion']."</td>";
