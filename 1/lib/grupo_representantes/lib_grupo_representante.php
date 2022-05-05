@@ -158,7 +158,7 @@ class Grupo{
                                           
                         <div class="form-group">
                             <label for="nombre_grupo">Nombre Grupo:</label>
-                            <input type="text" class="form-control" id="nombre_grupo" placeholder="Ingrese el Nombre descriptivo para el grupo de representantes" name="nombre_grupo" required>
+                            <input type="text" class="form-control" id="nombre_grupo" placeholder="Ingrese el Nombre descriptivo para el grupo de representantes" name="nombre_grupo" oninput="alfaNum(this.value);" required>
                         </div>
                         
                         <div class="form-group">
@@ -290,17 +290,12 @@ class Grupo{
                     <div class="panel panel-default">
                         <div class="panel-body">
                                 <p align="justify"><img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" />
-                                    <strong>Importante:</strong> Puede agregar tantos representantes como hay en el listado. Si añade un representante que ya se encuentra en el grupo, no tomará el cambio ya que se estarían repitiendo.
-                                    Si desea quitar un integrante del grupo, seleccione el integrante del listado y presione el botón <strong>Quitar Integrante</strong></p>
+                                    <strong>Importante:</strong> Puede agregar tantos representantes como hay en el listado. Si añade un representante que ya se encuentra en el grupo, no tomará el cambio ya que se estarían repitiendo.</p>
+                                    
                         </div>
                     </div><hr>
                            
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <p><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Este grupo ya cuenta con el/los integrantes: '.$row['representantes'].'</p>
-                            </div>
-                        </div><hr>
-                        
+                                                
                         <div class="form-group">
                             <label for="nombre_grupo">Nombre Grupo:</label>
                             <input type="text" class="form-control" id="nombre_grupo" placeholder="Ingrese el Nombre descriptivo para el grupo de representantes" name="nombre_grupo" value="'.$row['nombre_grupo'].'" readonly required>
@@ -309,7 +304,7 @@ class Grupo{
                         
                         <div class="form-group">
                             <label for="representante_titular">Representante Titular</label>
-                            <select class="form-control" id="representante_titular" name="representante_titular" required>
+                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect(this.value);" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -319,19 +314,21 @@ class Grupo{
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                        echo '<option value="'.$valores['dni_representante'].' - '.$valores['nombre_representante'].'" 
+                                                '.(strcmp($row[representante_titular],$valores[dni_representante].' - '.$valores[nombre_representante]) == 0 ? "selected" : "").'>
+                                                    '.$valores['dni_representante'].' - '.$valores['nombre_representante'].'</option>';
                                     }
                                     }
                                 }
 
-                                mysqli_close($conn);
+                                //mysqli_close($conn);
                             
                             echo '</select>
                             </div>
                             
                             <div class="form-group">
                             <label for="representante_suplente">Representante Suplente</label>
-                            <select class="form-control" id="representante_suplente" name="representante_suplente" required>
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect(this.value);" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -341,19 +338,21 @@ class Grupo{
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores['nombre_representante'].'" 
+                                                '.(strcmp($row[representante_suplente],$valores[dni_representante].' - '.$valores[nombre_representante]) == 0 ? "selected" : "").'>
+                                                    '.$valores['dni_representante'].' - '.$valores['nombre_representante'].'</option>';
                                     }
                                     }
                                 }
 
-                                mysqli_close($conn);
+                                //mysqli_close($conn);
                             
                             echo '</select>
                             </div>
                             
                             <div class="form-group">
                             <label for="primer_asesor">Primer Asesor</label>
-                            <select class="form-control" id="primer_asesor" name="primer_asesor" >
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -363,19 +362,21 @@ class Grupo{
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores['nombre_representante'].'" 
+                                                '.(strcmp($row[primer_asesor],$valores[dni_representante].' - '.$valores[nombre_representante]) == 0 ? "selected" : "").'>
+                                                    '.$valores['dni_representante'].' - '.$valores['nombre_representante'].'</option>';
                                     }
                                     }
                                 }
 
-                                mysqli_close($conn);
+                                //mysqli_close($conn);
                             
                             echo '</select>
                             </div>
                             
                             <div class="form-group">
                             <label for="segundo_asesor">Segundo Asesor</label>
-                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" >
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect(this.value);" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -385,7 +386,9 @@ class Grupo{
 
                                 if($res){
                                     while ($valores = mysqli_fetch_array($res)){
-                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores[nombre_representante].'">'.$valores['dni_representante'].' - '.$valores[nombre_representante].'</option>';
+                                    echo '<option value="'.$valores['dni_representante'].' - '.$valores['nombre_representante'].'" 
+                                                '.(strcmp($row[segundo_asesor],$valores[dni_representante].' - '.$valores[nombre_representante]) == 0 ? "selected" : "").'>
+                                                    '.$valores['dni_representante'].' - '.$valores['nombre_representante'].'</option>';
                                     }
                                     }
                                 }
@@ -400,10 +403,7 @@ class Grupo{
                 </div><hr>
                 
                 <button type="submit" class="btn btn-default btn-block" id="update_grupo" name="update_grupo">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar Integrante</button>
-                
-                <button type="submit" class="btn btn-default btn-block" id="delete_integrante" name="delete_integrante">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-remove.png" /> Quitar Integrante</button>
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Actualizar</button>
                 
             </form>
            
@@ -415,11 +415,11 @@ class Grupo{
 /*
 ** PERSISTENCIA A BASE DE NUEVO GRUPO
 */
-    public function addGrupo($grupo,$nombre_grupo,$rep,$conn){
+    public function addGrupo($grupo,$nombre_grupo,$rep_titular,$rep_suplente,$asesor_1,$asesor_2,$conn,$dbase){
     
         if($conn){
         
-            mysqli_select_db($conn,'gesdoju');
+            mysqli_select_db($conn,$dbase);
             $sql = "select * from grupo_representantes where nombre_grupo = '$nombre_grupo'";
             $query = mysqli_query($conn,$sql);
         
@@ -431,10 +431,16 @@ class Grupo{
                     
                     $sql_2 = "INSERT INTO grupo_representantes ".
                     "(nombre_grupo,
-                      representantes)".
+                      representante_titular,
+                      representante_suplente,
+                      primer_asesor,
+                      segundo_asesor)".
                     "VALUES ".
                     "($grupo->set_nombre_grupo('$nombre_grupo'),
-                      $grupo->set_representante('$rep'))";
+                      $grupo->set_representante_titular('$rep_titular'),
+                      $grupo->set_representante_suplente('$rep_suplente'),
+                      $grupo->set_primer_asesor('$asesor_1'),
+                      $grupo->set_segundo_asesor('$asesor_2'))";
                     
                     $query_2 = mysqli_query($conn,$sql_2);
                         
@@ -461,12 +467,19 @@ class Grupo{
 ** ACTUALIZA REGISTRO EN BASE
 */
     
-    public function updateGrupo($id,$grupo,$rep,$conn){
+    public function updateGrupo($id,$grupo,$nombre_grupo,$rep_titular,$rep_suplente,$asesor_1,$asesor_2,$conn,$dbase){
     
         if($conn){
 
-            $sql = "update grupo_representantes set representantes = CONCAT(representantes,$grupo->set_representante(',$rep')) where id = '$id'";
-            mysqli_select_db($conn,'gesdoju');
+            $sql = "update grupo_representantes set 
+                    nombre_grupo = $grupo->set_nombre_grupo('$nombre_grupo'),
+                    representante_titular = $grupo->set_representante_titular('$rep_titular'),
+                    representante_suplente = $grupo->set_representante_suplente('$rep_suplente'),
+                    primer_asesor = $grupo->set_primer_asesor('$asesor_1'),
+                    segundo_asesor = $grupo->set_segundo_asesor('$asesor_2')
+                    where id = '$id'";
+                    
+            mysqli_select_db($conn,$dbase);
             $query = mysqli_query($conn,$sql);
             
             if($query){

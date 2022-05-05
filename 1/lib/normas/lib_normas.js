@@ -363,7 +363,7 @@ function Text(string){//validacion solo letras
 function alfaNum(string){//validacion solo letras
     var out = '';
     //Se añaden los caracteres válidos
-    var filtro ="^[1234567890abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-/()¿? ]+$"; // Caracteres Validos
+    var filtro ="^[1234567890abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-/()¿?_ ]+$"; // Caracteres Validos
   
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 

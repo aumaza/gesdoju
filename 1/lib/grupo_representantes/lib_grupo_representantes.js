@@ -93,7 +93,10 @@ $(document).ready(function(){
                 if(r == 1){
                     alert("Registro Guardado Exitosamente!!");
                     $('#nombre_grupo').val('');
-                    $('#representante').val('');
+                    $('#representante_titular').val('');
+                    $('#representante_suplente').val('');
+                    $('#primer_asesor').val('');
+                    $('#segundo_asesor').val('');
                     $('#nombre_grupo').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
@@ -105,7 +108,10 @@ $(document).ready(function(){
                 }else if(r == 4){
                     alert("Error. Representante Existente!!");
                     $('#nombre_grupo').val('');
-                    $('#representante').val('');
+                    $('#representante_titular').val('');
+                    $('#representante_suplente').val('');
+                    $('#primer_asesor').val('');
+                    $('#segundo_asesor').val('');
                     $('#nombre_grupo').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
@@ -143,8 +149,7 @@ $(document).ready(function(){
             success:function(r){
                 if(r == 1){
                     alert("Registro Actualizado Exitosamente!!");
-                    $('#representante').val('');
-                    $('#representante').focus('');
+                    window.location.href="main.php";
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
@@ -203,3 +208,33 @@ $(document).ready(function(){
     
 });
 });
+
+/*
+** compara selectores si hay dos iguales
+*/
+function compareSelect(string){
+    
+    var rep_titular = document.getElementById('representante_titular').value;
+    var rep_suplente = document.getElementById('representante_suplente').value;
+    var asesor_1 = document.getElementById('primer_asesor').value;
+    var asesor_2 = document.getElementById('segundo_asesor').value;
+    
+    console.log(rep_titular);
+     console.log(rep_suplente);
+      console.log(asesor_1);
+       console.log(asesor_2);
+    
+    if((rep_titular == string) && (asesor_1 == string) || (rep_titular == string) && (rep_suplente == string) || (rep_titular == string) || (rep_suplente == string)){
+        
+            if(confirm('Un mismo representante no puede ser Titular, Suplente y Asesor. Desea Reseleccionar?') == true){
+                
+                $('#representante_titular').val('');
+                $('#representante_suplente').val('');
+                $('#primer_asesor').val('');
+                $('#segundo_asesor').val('');
+            }else{
+                alert('Puede Continuar...');
+            }
+    }
+        
+}
