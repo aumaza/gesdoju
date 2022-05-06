@@ -135,7 +135,7 @@ class Paritarias{
                     }
 
                     echo "</table>";
-                    echo "<br>";
+                    echo "<hr>";
                     echo '<form action="#" method="POST">
                             
                             <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="right" title="Agregar Informe de Paritaria">
@@ -143,6 +143,10 @@ class Paritarias{
                             
                             <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="right" title="Búsqueda Avanzada sobre Paritarias">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/system-search.png" /> Búsqueda Avanzada</button>
+                            
+                            <button type="submit" class="btn btn-default btn-sm" name="calendario_paritarias" data-toggle="tooltip" data-placement="right" title="Calendario de Paritarias">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-month.png" /> Calendario Paritarias</button>
+                                
                         </form><br>';
                     echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
                     echo '</div></div>';
@@ -610,6 +614,91 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     } // end funcion
 
     
+    public function calendarioParitarias($conn,$dbase){
+        
+        
+        $meses = array(0 => "",
+                       1 => "Enero",
+                       2 => "Febrero",
+                       3 => "Marzo",
+                       4 => "Abril",
+                       5 => "Mayo",
+                       6 => "Junio",
+                       7 => "Julio",
+                       8 => "Agosto",
+                       9 => "Septiembre",
+                       10 => "Octubre",
+                       11 => "Noviembre",
+                       12 => "Diciembre");
+        
+        $diaSem = array(0 => "",
+                        1 => "Lúnes",
+                        2 => "Martes",
+                        3 => "Miércoles",
+                        4 => "Jueves",
+                        5 => "Viernes",
+                        6 => "Sábado",
+                        7 => "Domingo");
+        
+        $mes = date("n");
+        setlocale(LC_ALL,"es_ES.UTF-8");
+        $MES = strftime('%B',$MES);
+        $anio = date("Y");
+        $semana = 1;
+        $dia = date('j');
+               
+        for($i = 1; $i <= date('t'); $i++){
+        
+                $diaSemana = date('N', strtotime(date('Y-m').'-'.$i));
+                $calendario[$semana][$diaSemana] = $i;
+                
+                if($diaSemana == 7){
+                        $semana++;
+                }
+            }
+
+        echo "<div>
+                <table class='table table-bordered'>
+                    <thead>
+                    
+                    <h1> $MES  de  $anio </h1>
+                    <tr>
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[1] &nbsp;</td>
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[2] &nbsp;</td>   
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[3] &nbsp;</td>   
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[4] &nbsp;</td>   
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[5] &nbsp;</td>   
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[6] &nbsp;</td>   
+                        <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[7] &nbsp;</td>   
+                        </tr>
+                    </thead>
+                        <tbody>";
+                        
+                        foreach ($calendario as $dias){
+                        
+                            echo "<tr onclick='modalCargaFecha();'>";
+                                for($i = 1; $i <= 7; $i++){
+                                    
+                                    if($dias[$i] == $dia){
+                                        echo "<td align=center  id='fecha' style='background-color:#FFA07A; color: white;' >".$dias[$i]."</td>";
+                                    }else if($i == 7){
+                                        echo "<td align=center id='fecha' style='background-color: #FF5733; color: white;' >".$dias[$i]."</td>";
+                                    }
+                                    else{
+                                        echo "<td align=center id='fecha' >".$dias[$i]."</td>";
+                                    }
+                                }
+                
+                            echo "</tr>";
+                        }
+                    
+                    echo "</tbody>
+                            </table> 
+                            <br/>
+                            </div>";
+
+    
+    } // FIN FUNCION
 
     
     

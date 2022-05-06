@@ -143,3 +143,16 @@ $(document).ready(function(){
     
     }
 }
+
+
+/*
+** FUNCION QUE CARGA MODAL
+*/
+function modalCargaFecha(){
+    
+    var fecha = document.getElementById('fecha').innerHTML;
+    fecha = toString(fecha);
+    
+    alert(fecha);
+    
+}

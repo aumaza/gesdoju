@@ -217,6 +217,8 @@ $(document).ready(function(){
                      $('#jurisdiccion').val('');
                      $('#ub_fis').val('');
                      $('#observaciones').val('');
+                     $('#file').val('');
+                     $('#files').val('');
                      $('#nombre_norma').focus();
                     console.log(values);
                     }else if(r == -1){

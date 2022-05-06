@@ -1,5 +1,7 @@
 <?php session_start(); 
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
+      error_reporting(E_ALL ^ E_NOTICE);
+      
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
       include "../lib/lib_main.php";
@@ -615,6 +617,9 @@
         $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);        
         $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn,$dbase);
+	}
+	if(isset($_POST['calendario_paritarias'])){
+        $paritaria->calendarioParitarias($conn,$dbase);
 	}
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
