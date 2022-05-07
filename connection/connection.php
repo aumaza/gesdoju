@@ -1,7 +1,7 @@
 <?php
 
-//$dbhost = 'slackzone.ddns.net';
-$dbhost = 'localhost';
+$dbhost = 'slackzone.ddns.net';
+//$dbhost = 'localhost';
 $dbuser = 'root';
 //$dbuser = 'gesdoju';
 $dbpass = 'slack142';
