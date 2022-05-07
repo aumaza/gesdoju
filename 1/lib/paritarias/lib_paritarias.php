@@ -617,20 +617,6 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     public function calendarioParitarias($conn,$dbase){
         
         
-        $meses = array(0 => "",
-                       1 => "Enero",
-                       2 => "Febrero",
-                       3 => "Marzo",
-                       4 => "Abril",
-                       5 => "Mayo",
-                       6 => "Junio",
-                       7 => "Julio",
-                       8 => "Agosto",
-                       9 => "Septiembre",
-                       10 => "Octubre",
-                       11 => "Noviembre",
-                       12 => "Diciembre");
-        
         $diaSem = array(0 => "",
                         1 => "Lúnes",
                         2 => "Martes",
@@ -641,12 +627,29 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                         7 => "Domingo");
         
         $mes = date("n");
-        setlocale(LC_ALL,"es_ES.UTF-8");
-        $MES = strftime('%B',$MES);
         $anio = date("Y");
         $semana = 1;
         $dia = date('j');
-               
+        
+       switch($mes){
+        
+            case '01': $mi_mes = 'Enero'; break;
+            case '02': $mi_mes = 'Febrero'; break;
+            case '03': $mi_mes = 'Marzo'; break;
+            case '04': $mi_mes = 'Abril'; break;
+            case '05': $mi_mes = 'Mayo'; break;
+            case '06': $mi_mes = 'Junio'; break;
+            case '07': $mi_mes = 'Julio'; break;
+            case '08': $mi_mes = 'Agosto'; break;
+            case '09': $mi_mes = 'Septiembre'; break;
+            case '10': $mi_mes = 'Octubre'; break;
+            case '11': $mi_mes = 'Noviembre'; break;
+            case '12': $mi_mes = 'Diciembre'; break;
+        }
+        
+       
+        
+        
         for($i = 1; $i <= date('t'); $i++){
         
                 $diaSemana = date('N', strtotime(date('Y-m').'-'.$i));
@@ -658,10 +661,11 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
             }
 
         echo "<div>
-                <table class='table table-bordered'>
+                <table class='table table-bordered' id='calendar-table'>
                     <thead>
                     
-                    <h1> $MES  de  $anio </h1>
+                    <h1>Año: $anio </h1>
+                    <h2>Mes: $mi_mes </h2>
                     <tr>
                         <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[1] &nbsp;</td>
                         <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[2] &nbsp;</td>   
@@ -676,16 +680,19 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                         
                         foreach ($calendario as $dias){
                         
-                            echo "<tr onclick='modalCargaFecha();'>";
+                            echo "<tr>";
                                 for($i = 1; $i <= 7; $i++){
                                     
                                     if($dias[$i] == $dia){
-                                        echo "<td align=center  id='fecha' style='background-color:#FFA07A; color: white;' >".$dias[$i]."</td>";
+                                        echo "<td align=center  style='background-color:#FFA07A; color: white;' >".$dias[$i]."</td>";
                                     }else if($i == 7){
-                                        echo "<td align=center id='fecha' style='background-color: #FF5733; color: white;' >".$dias[$i]."</td>";
+                                        echo "<td align=center style='background-color: #FF5733; color: white;'>".$dias[$i]."</td>";
+                                    }
+                                    else if($dias[$i] == ''){
+                                        echo "<td align=center style='background-color:  #d5dbdb; color: white;'>".$dias[$i]."</td>";
                                     }
                                     else{
-                                        echo "<td align=center id='fecha' >".$dias[$i]."</td>";
+                                         echo "<td align=center>".$dias[$i]."</td>";
                                     }
                                 }
                 

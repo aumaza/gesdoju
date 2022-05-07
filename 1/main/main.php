@@ -1,6 +1,6 @@
 <?php session_start(); 
-      ini_set('display_errors', 1);
-      error_reporting(E_ALL ^ E_NOTICE);
+      ini_set('display_errors', 0);
+      //error_reporting(E_ALL ^ E_NOTICE);
       
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -23,7 +23,7 @@
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
-
+  
       
         $varsession = $_SESSION['user'];
 	
@@ -619,7 +619,7 @@
         $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn,$dbase);
 	}
 	if(isset($_POST['calendario_paritarias'])){
-        $paritaria->calendarioParitarias($conn,$dbase);
+      $paritaria->calendarioParitarias($conn,$dbase);
 	}
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
@@ -690,6 +690,8 @@
 	
 	// ============================ FIN SECCION AMBITO DE NORMA ========================= //
 	
+	
+	
 	}else{
 	  mysqli_error($conn);
 	}
@@ -718,6 +720,7 @@
 <script type="text/javascript" src="../lib/segmentacion_tematica/lib_segmentacion_tematica.js"></script>
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
+
 
 <!-- Modal 2 -->
 <?php modal2(); ?>

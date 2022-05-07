@@ -146,7 +146,7 @@ function newNorma($conn){
                 </div>
             </div>
 		
-		<div class="col-sm-6">
+		<div class="col-sm-12">
 		
             <div class="form-group">
             <label for="nombre">Ubicación Física/Carpeta (*)</label>
@@ -155,11 +155,11 @@ function newNorma($conn){
             
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción"             oninput="alfaNum(this.value);" required></textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" oninput="alfaNum(this.value);" required></textarea>
             </div>
         </div>
 		
-		<div class="col-sm-6">
+		<div class="col-sm-12">
             <p align="center"><strong>Archivos a Subir</strong></p>
             <div class="alert alert-success">
             <div class="form-group">

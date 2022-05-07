@@ -156,3 +156,18 @@ function modalCargaFecha(){
     alert(fecha);
     
 }
+
+$(document).ready(function(){
+$('body #calendar-table').on('click', 'td', function(){
+    
+        var dia = $(this).text();
+                        
+    if(dia == ''){
+        alert('Ha seleccionado un casillero sin fecha');
+    }else{
+        alert('Día seleccionado: ' + dia);
+    }
+      
+    
+})
+});

@@ -24,8 +24,6 @@ function skeleton(){
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/jquery.dataTables-1.11.5.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/dataTables/fixedColumns.dataTables.min.css" >
 	
-	
-	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
