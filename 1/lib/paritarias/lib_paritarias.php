@@ -626,33 +626,82 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                         6 => "Sábado",
                         7 => "Domingo");
         
-        $mes = date("n");
-        $anio = date("Y");
+        //$nuevo_anio = '<input type="text" id="nuevo_anio" >';
+              
+        $mes = date('n');
+        $anio = date('Y');
+        $miAnio = intVal($anio);
         $semana = 1;
         $dia = date('j');
         
        switch($mes){
         
-            case '01': $mi_mes = 'Enero'; break;
-            case '02': $mi_mes = 'Febrero'; break;
-            case '03': $mi_mes = 'Marzo'; break;
-            case '04': $mi_mes = 'Abril'; break;
-            case '05': $mi_mes = 'Mayo'; break;
-            case '06': $mi_mes = 'Junio'; break;
-            case '07': $mi_mes = 'Julio'; break;
-            case '08': $mi_mes = 'Agosto'; break;
-            case '09': $mi_mes = 'Septiembre'; break;
-            case '10': $mi_mes = 'Octubre'; break;
-            case '11': $mi_mes = 'Noviembre'; break;
-            case '12': $mi_mes = 'Diciembre'; break;
+            case '01': $mi_mes = 'Enero';
+                        $cant_dias = 31; break;
+                        
+            case '02': $mi_mes = 'Febrero'; 
+                        if($miAnio % 4 != 0){
+                            $cant_dias = 28;
+                        }else if($miAnio % 4 == 0){
+                            $cant_dias = 29;
+                        }
+                        break;
+                        
+            case '03': $mi_mes = 'Marzo';  
+                        $cant_dias = 31; break;
+            case '04': $mi_mes = 'Abril'; 
+                        $cant_dias = 30; break;
+            case '05': $mi_mes = 'Mayo'; 
+                        $cant_dias = 31; break;
+            case '06': $mi_mes = 'Junio';
+                        $cant_dias = 30; break;
+            case '07': $mi_mes = 'Julio';
+                        $cant_dias = 31; break;
+            case '08': $mi_mes = 'Agosto';
+                        $cant_dias = 31; break;
+            case '09': $mi_mes = 'Septiembre';
+                        $cant_dias = 30; break;
+            case '10': $mi_mes = 'Octubre';
+                        $cant_dias = 31; break;
+            case '11': $mi_mes = 'Noviembre';
+                        $cant_dias = 30; break;
+            case '12': $mi_mes = 'Diciembre';
+                        $cant_dias = 31; break;
         }
         
+       echo "<div class='col-sm-4' align='center'>
+                    
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>
+                                <input type='hidden' id='anio' name='anio' value='$anio'>
+                                <input type='hidden' id='mes' name='mes' value='$mes'>
+                                
+                                <button type='button' class='btn btn-default btn-sm' id='restar_anio' data-toggle='tooltip' data-placement='left' title='Año Anterior' >
+                                <img src='../../icons/actions/go-previous-view.png'  class='img-reponsive img-rounded'></button> 
+                                <input type='text' style='text-align:center;' id='nuevo_anio' value='$anio' readonly>
+                                
+                                <button type='button' class='btn btn-default btn-sm' id='sumar_anio' data-toggle='tooltip' data-placement='right' title='Año Siguiente'>
+                                <img src='../../icons/actions/go-next-view.png'  class='img-reponsive img-rounded'></button>
+                                </div>
+                        </div>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>
+                            <button type='button' class='btn btn-default btn-sm' id='restar_mes' name='restar_mes' data-toggle='tooltip' data-placement='left' title='Mes Anterior'>
+                                <img src='../../icons/actions/go-previous-view.png' class='img-reponsive img-rounded'></button> 
+                                <input type='text' style='text-align:center;' id='nuevo_mes' value='$mi_mes' readonly>
+                                
+                                <button type='button' class='btn btn-default btn-sm' id='sumar_mes' name='sumar_mes' data-toggle='tooltip' data-placement='right' title='Mes Siguiente'>
+                                <img src='../../icons/actions/go-next-view.png'  class='img-reponsive img-rounded'></button>
+                            </div>
+                        </div>
+                     
+                        <br>
+                    </div>";
        
         
+        for($i = 1; $i <= $cant_dias; $i++){
         
-        for($i = 1; $i <= date('t'); $i++){
-        
-                $diaSemana = date('N', strtotime(date('Y-m').'-'.$i));
+                $diaSemana = date('N', strtotime(date(''.$anio.'-'.$mes.'').'-'.$i));
                 $calendario[$semana][$diaSemana] = $i;
                 
                 if($diaSemana == 7){
@@ -664,8 +713,6 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                 <table class='table table-bordered' id='calendar-table'>
                     <thead>
                     
-                    <h1>Año: $anio </h1>
-                    <h2>Mes: $mi_mes </h2>
                     <tr>
                         <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[1] &nbsp;</td>
                         <td class='text-nowrap text-center' style='background-color:#454545; color: white;'> $diaSem[2] &nbsp;</td>   
@@ -707,7 +754,13 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     
     } // FIN FUNCION
 
+    public function sumarAnio($anio){
+            return $anio + 1;
+    }
     
+    public function restarAnio($anio){
+        return $anio - 1;
+    }
     
     
 } // FIN DE LA CLASE

@@ -130,6 +130,75 @@ $(document).ready(function(){
 });
 });  
  
+
+// ====================================================================================== //
+// 
+
+/*
+** restar año
+*/
+
+$(document).ready(function(){
+    
+    $('#restar_anio').click(function(){
+        
+        
+        var anio = document.getElementById('anio').value;
+        var nuevo_anio = parseInt(anio) - 1;
+              
+        console.log(nuevo_anio);
+        $("#nuevo_anio").val(nuevo_anio);
+});
+});
+
+/*
+** sumar año
+*/
+
+$(document).ready(function(){
+    
+    $('#sumar_anio').click(function(){
+        
+        var anio = document.getElementById('anio').value;
+        var nuevo_anio = parseInt(anio) + 1;
+       //alert('El año es: ' + nuevo_anio);
+        console.log(nuevo_anio);
+        $("#nuevo_anio").val(nuevo_anio);
+});
+});
+
+/*
+** restar mes
+*/
+
+$(document).ready(function(){
+    
+    $('#restar_mes').click(function(){
+        
+       var mes = document.getElementById('mes').value;
+       var nuevo_mes = parseInt(mes) - 1;
+       //alert('El mes es: ' + nuevo_mes);
+       console.log(nuevo_mes);
+    
+});
+});
+
+/*
+** sumar mes
+*/
+
+$(document).ready(function(){
+    
+    $('#sumar_mes').click(function(){
+        
+        var mes = document.getElementById('mes').value;
+        var nuevo_mes = parseInt(mes) + 1;
+        //alert('El mes es: ' + nuevo_mes);
+        console.log(nuevo_mes);
+    
+});
+});
+
 /*
 ** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA
 */

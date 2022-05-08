@@ -132,11 +132,23 @@ if($conn){
 	while($row = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$segmentacion->get_clas_inst($row['clas_inst'])."</td>";
-			 echo "<td align=center>".$segmentacion->get_jurisdiccion($row['jurisdiccion'])."</td>";
+			 $sql_1 = "select descripcion from tipo_organismo where cod_organismo = '$row[clas_inst]'";
+			 $query_1 = mysqli_query($conn,$sql_1);
+			 while($row_1 = mysqli_fetch_array($query_1)){
+                echo "<td align=center>".$segmentacion->get_clas_inst($row_1['descripcion'])."</td>";
+			 }
+			 $sql_2 = "select descripcion from jurisdicciones where cod_jur = '$row[jurisdiccion]'";
+			 $query_2 = mysqli_query($conn,$sql_2);
+			 while($row_2 = mysqli_fetch_array($query_2)){
+                echo "<td align=center>".$segmentacion->get_jurisdiccion($row_2['descripcion'])."</td>";
+			 }
 			 echo "<td align=center>".$segmentacion->get_saf($row['saf'])."</td>";
 			 echo "<td align=center>".$segmentacion->get_cod_sirhu($row['cod_sirhu'])."</td>";
-			 echo "<td align=center>".$segmentacion->get_cod_org($row['cod_org'])."</td>";
+			 $sql_3 = "select descripcion from organismos where cod_org = '$row[cod_org]'";
+			 $query_3 = mysqli_query($conn,$sql_3);
+			 while($row_3 = mysqli_fetch_array($query_3)){
+                echo "<td align=center>".$segmentacion->get_cod_org($row_3['descripcion'])."</td>";
+			 }
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$row['id'].'">

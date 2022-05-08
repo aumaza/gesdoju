@@ -181,7 +181,7 @@
     
     <page_footer> 
     <div class="row">
-         <h1><strong>Cantidad de Registros Encontrados:</strong> <?php echo $count; ?></h1>
+         <p><strong>Cantidad de Registros Encontrados:</strong> <?php echo $count; ?></p>
     </div>
     </page_footer>
     
