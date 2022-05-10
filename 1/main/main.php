@@ -35,6 +35,12 @@
 	      $nombre = $row['nombre'];
 	}
 	
+    
+    if($_GET['nuevo_anio'] != ''){
+        $nuevo_anio = $_GET['nuevo_anio'];    
+    }
+    echo $nuevo_anio;
+	
 	if($varsession == null || $varsession == ''){
   echo '<!DOCTYPE html>
         <html lang="es">
@@ -93,6 +99,7 @@
       <?php
    
       if($conn){
+	  
 	  
 	  // seccion ABM de normas
 	  if(isset($_POST['nueva_norma'])){
@@ -621,7 +628,7 @@
 	}
 	if(isset($_POST['calendario_paritarias'])){
       $paritaria->calendarioParitarias($conn,$dbase);
-	}
+    }
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	

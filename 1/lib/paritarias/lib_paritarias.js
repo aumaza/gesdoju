@@ -138,66 +138,70 @@ $(document).ready(function(){
 ** restar año
 */
 
-$(document).ready(function(){
+function restarAnio(value){
+   
+    var anio = parseInt(value);
+    var nuevo_anio = anio - 1;
+    document.getElementById('nuevo_anio').innerHTML = nuevo_anio;
+    console.log(nuevo_anio);
     
-    $('#restar_anio').click(function(){
-        
-        
-        var anio = document.getElementById('anio').value;
-        var nuevo_anio = parseInt(anio) - 1;
-              
-        console.log(nuevo_anio);
-        $("#nuevo_anio").val(nuevo_anio);
-});
-});
+}
 
 /*
 ** sumar año
 */
-
-$(document).ready(function(){
+function sumarAnio(value){
     
-    $('#sumar_anio').click(function(){
-        
-        var anio = document.getElementById('anio').value;
-        var nuevo_anio = parseInt(anio) + 1;
-       //alert('El año es: ' + nuevo_anio);
-        console.log(nuevo_anio);
-        $("#nuevo_anio").val(nuevo_anio);
-});
-});
-
+    var anio = parseInt(value);
+    var nuevo_anio = anio + 1;
+    document.getElementById('nuevo_anio').innerHTML = nuevo_anio;
+    console.log(nuevo_anio);
+    
+}
 /*
 ** restar mes
 */
-
-$(document).ready(function(){
+function restarMes(value){
     
-    $('#restar_mes').click(function(){
-        
-       var mes = document.getElementById('mes').value;
-       var nuevo_mes = parseInt(mes) - 1;
-       //alert('El mes es: ' + nuevo_mes);
-       console.log(nuevo_mes);
+    var mes = parseInt(value);
+    var nuevo_mes = mes - 1;
+    document.getElementById('nuevo_mes').innerHTML = nuevo_mes;
+    console.log(nuevo_mes);
     
-});
-});
+}
 
 /*
 ** sumar mes
 */
 
-$(document).ready(function(){
+function sumarMes(value){
     
-    $('#sumar_mes').click(function(){
-        
-        var mes = document.getElementById('mes').value;
-        var nuevo_mes = parseInt(mes) + 1;
-        //alert('El mes es: ' + nuevo_mes);
-        console.log(nuevo_mes);
+    var mes = parseInt(value);
+    var nuevo_mes = mes + 1;
+    document.getElementById('nuevo_mes').innerHTML = nuevo_mes;
+    console.log(nuevo_mes);
     
-});
-});
+}
+
+function cambiarAnio(value){
+    
+    var anio = parseInt(value);
+    document.getElementById('nuevo_anio').innerHTML = anio;
+    window.location.href = window.location.href +"?nuevo_anio=" + anio;
+    console.log(anio);
+    
+    
+}
+
+function cambiarMes(value){
+    
+    var mes = parseInt(value);
+    document.getElementById('nuevo_mes').innerHTML = mes;
+    window.location.href = window.location.href + "?nuevo_mes=" + mes;
+    console.log(mes);
+    
+}
+
 
 /*
 ** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA
