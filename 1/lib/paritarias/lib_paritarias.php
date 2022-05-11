@@ -617,7 +617,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     public function calendarioParitarias($conn,$dbase){
         
         
-        $diaSem = array(0 => "",
+       $diaSem = array(0 => "",
                         1 => "Lúnes",
                         2 => "Martes",
                         3 => "Miércoles",
@@ -625,57 +625,16 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                         5 => "Viernes",
                         6 => "Sábado",
                         7 => "Domingo");
+       
         
-           
-        $mes = date('n');
-        $anio = date('Y');
-        $miAnio = intVal($anio);
+        
         $semana = 1;
         $dia = date('j');
-        
-        $nuevo_anio = '<script> document.writeln(anio); </script>';
-        $nuevo_mes = '<script> document.write(mes); </script>';
-       
-      
-        
-            switch($mes){
-                
-                case '01': $mi_mes = 'Enero';
-                            $cant_dias = 31; break;
-                                
-                case '02': $mi_mes = 'Febrero'; 
-                           if($miAnio % 4 != 0){
-                               $cant_dias = 28;
-                           }else if($miAnio % 4 == 0){
-                               $cant_dias = 29;
-                           }
-                             break;
-                                
-                case '03': $mi_mes = 'Marzo';  
-                            $cant_dias = 31; break;
-                case '04': $mi_mes = 'Abril'; 
-                            $cant_dias = 30; break;
-                case '05': $mi_mes = 'Mayo'; 
-                            $cant_dias = 31; break;
-                case '06': $mi_mes = 'Junio';
-                            $cant_dias = 30; break;
-                case '07': $mi_mes = 'Julio';
-                            $cant_dias = 31; break;
-                case '08': $mi_mes = 'Agosto';
-                            $cant_dias = 31; break;
-                case '09': $mi_mes = 'Septiembre';
-                            $cant_dias = 30; break;
-                case '10': $mi_mes = 'Octubre';
-                            $cant_dias = 31; break;
-                case '11': $mi_mes = 'Noviembre';
-                            $cant_dias = 30; break;
-                case '12': $mi_mes = 'Diciembre';
-                            $cant_dias = 31; break;
-                }   
+        $mes = date('m');
+        $anio = date('Y');
         
         
-        
-       echo "<div class='col-sm-4' align='center'>
+        echo "<div class='col-sm-4' align='center'>
                     
                         <div class='panel panel-default'>
                             <div class='panel-heading'>
@@ -718,6 +677,54 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                         <br>
                     </div>";
        
+        $nuevo_anio = '<div id="nuevo_anio" ></div>';
+        $n_anio = strVal($nuevo_anio);
+        
+        $nuevo_mes = '<div id="nuevo_mes"></div>';
+        $n_mes = strVal($nuevo_mes);
+        
+        echo $n_anio;
+        echo $n_mes;
+        
+            
+            $miAnio = intVal($anio);
+            
+            
+            switch($mes){
+                
+                case '01': $mi_mes = 'Enero';
+                            $cant_dias = 31; break;
+                                
+                case '02': $mi_mes = 'Febrero'; 
+                           if($miAnio % 4 != 0){
+                               $cant_dias = 28;
+                           }else if($miAnio % 4 == 0){
+                               $cant_dias = 29;
+                           }
+                             break;
+                                
+                case '03': $mi_mes = 'Marzo';  
+                            $cant_dias = 31; break;
+                case '04': $mi_mes = 'Abril'; 
+                            $cant_dias = 30; break;
+                case '05': $mi_mes = 'Mayo'; 
+                            $cant_dias = 31; break;
+                case '06': $mi_mes = 'Junio';
+                            $cant_dias = 30; break;
+                case '07': $mi_mes = 'Julio';
+                            $cant_dias = 31; break;
+                case '08': $mi_mes = 'Agosto';
+                            $cant_dias = 31; break;
+                case '09': $mi_mes = 'Septiembre';
+                            $cant_dias = 30; break;
+                case '10': $mi_mes = 'Octubre';
+                            $cant_dias = 31; break;
+                case '11': $mi_mes = 'Noviembre';
+                            $cant_dias = 30; break;
+                case '12': $mi_mes = 'Diciembre';
+                            $cant_dias = 31; break;
+                }   
+        
         
         
             for($i = 1; $i <= $cant_dias; $i++){
@@ -730,20 +737,19 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                     }
             }
         
+        
+        
             
 
         echo "<div>
+        
                 <table class='table table-bordered' id='calendar-table'>
                     <thead>
-                   
+                    
                     <tr>";
-                    if(($nuevo_anio == '') || ($nuevo_mes == '')){
                         echo "<th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=2>Año: $anio </th>
                                 <th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=5>Mes $mi_mes</th>";
-                    }else{
-                        echo "<th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=2>Año: <div id='nuevo_anio' readonly /> </th>
-                                <th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=5>Mes: <div id='nuevo_mes' readonly /></th>";
-                    }
+                    
               echo "</tr>
                     
                     <tr>
@@ -783,7 +789,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                             </table> 
                             <br/>
                             </div>";
-
+        
     
     } // FIN FUNCION
 

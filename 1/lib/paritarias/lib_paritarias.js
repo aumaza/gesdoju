@@ -185,20 +185,17 @@ function sumarMes(value){
 
 function cambiarAnio(value){
     
-    var anio = parseInt(value);
-    document.getElementById('nuevo_anio').innerHTML = anio;
-    //document.getElementById('mi_anio').value = anio;
-    //window.location.href = window.location.href +"?nuevo_anio=" + anio;
-    console.log(anio);
+    //var anio = parseInt(value);
+    document.getElementById('nuevo_anio').innerText = value;
+    console.log(value);
   
 }
 
 function cambiarMes(value){
     
-    var mes = parseInt(value);
-    document.getElementById('nuevo_mes').innerHTML = mes;
-    window.location.href = window.location.href + "?nuevo_mes=" + mes;
-    console.log(mes);
+    //var mes = parseInt(value);
+    document.getElementById('nuevo_mes').innerText = value;
+    console.log(value);
     
 }
 
