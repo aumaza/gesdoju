@@ -187,10 +187,10 @@ function cambiarAnio(value){
     
     var anio = parseInt(value);
     document.getElementById('nuevo_anio').innerHTML = anio;
-    window.location.href = window.location.href +"?nuevo_anio=" + anio;
+    //document.getElementById('mi_anio').value = anio;
+    //window.location.href = window.location.href +"?nuevo_anio=" + anio;
     console.log(anio);
-    
-    
+  
 }
 
 function cambiarMes(value){

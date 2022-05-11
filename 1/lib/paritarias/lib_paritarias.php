@@ -633,13 +633,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         $semana = 1;
         $dia = date('j');
         
-        $nuevo_anio = '<script> document.write(anio) </script>';
-        $nuevo_mes = '<script> document.write(mes) </script>';
-        
-       /* if(isset($_GET['nuevo_anio']) || isset($_GET['nuevo_mes'])){
-            $cambio_anio = $_GET['nuevo_anio'];
-            $cambio_mes = $_GET['nuevo_mes'];
-        }*/
+        $nuevo_anio = '<script> document.writeln(anio); </script>';
+        $nuevo_mes = '<script> document.write(mes); </script>';
+       
+      
         
             switch($mes){
                 

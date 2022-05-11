@@ -35,12 +35,8 @@
 	      $nombre = $row['nombre'];
 	}
 	
+   
     
-    if($_GET['nuevo_anio'] != ''){
-        $nuevo_anio = $_GET['nuevo_anio'];    
-    }
-    echo $nuevo_anio;
-	
 	if($varsession == null || $varsession == ''){
   echo '<!DOCTYPE html>
         <html lang="es">
@@ -76,6 +72,7 @@
  
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();">
+
 
 <div class="panel-group">
     
