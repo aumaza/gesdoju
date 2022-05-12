@@ -258,19 +258,19 @@ function leftPanel($varsession){
 // BOTONES INFORMATIVOS
 function infoButttons(){
 
-        echo '<button class="btn btn-default navbar-btn">
+        echo '<button type="button" class="btn btn-default navbar-btn">
                 <img class="img-reponsive img-rounded" src="../../icons/apps/clock.png" /><strong>Hora Actual:</strong>'.date("H:i").'</button>';
             setlocale(LC_ALL,"es_ES.UTF-8");
             
-        echo '<button class="btn btn-default navbar-btn">
+        echo '<button type="button" class="btn btn-default navbar-btn">
                 <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /><strong>Fecha Actual:</strong>'.strftime("%d de %b de %Y").'</button>';
             
         echo '<button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
                     <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
                     
-                <a href="../explorer/index.php" data-toggle="tooltip" data-placement="right" title="Ir al Sistema de Archivos de Gesdoju" target="_blank"><button type="button" class="btn btn-success navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button></a>
+                <a href="../explorer/index.php" data-toggle="tooltip" data-placement="top" title="Ir al Sistema de Archivos de Gesdoju" target="_blank"><button type="button" class="btn btn-success navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button></a>
         
-                <a href="../fmanager/ft2.php" data-toggle="tooltip" data-placement="right" title="Ir al File Manager de Administrador" target="_blank">
+                <a href="../fmanager/ft2.php" data-toggle="tooltip" data-placement="top" title="Ir al File Manager de Administrador" target="_blank">
                     <button type="button" class="btn btn-default navbar-btn">
                         <img class="img-reponsive img-rounded" src="../../icons/status/meeting-chair.png" /> Admin Explorer</button></a><hr>';
 

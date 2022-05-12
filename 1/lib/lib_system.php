@@ -50,15 +50,6 @@ function dumpMysql($conn){
 
     if($conn){
     
-    /*$dbname = "gesdoju-";
-    $file = $dbname . date("d-m-Y") . '.sql';
-    $dump = "mysqldump --user=root --password=slack142 gesdoju > $file";
-    //$dump = "mysqldump --user=gesdoju --password=gesdoju gesdoju > $file";
-	$command = system($dump);
-	chmod($file, 0777);
-		
-        copy($file, "../../sqls/$file");
-        unlink($file);*/
         shell_exec('../../dump_data_base.sh');
          echo '<div class="alert alert-success" role="alert">';
         echo '<h1 class="panel-title text-left" contenteditable="true"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"><strong> Dump Successfully!!!</strong></h1>';
