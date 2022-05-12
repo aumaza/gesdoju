@@ -12,7 +12,6 @@
             $anio = mysqli_real_escape_string($conn,$_POST['anio']);
             $organismo = mysqli_real_escape_string($conn,$_POST['organismo']);
             $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-            $unidad_fisica = mysqli_real_escape_string($conn,$_POST['ub_fis']);
             $obs = mysqli_real_escape_string($conn,$_POST['observaciones']);
             $file = basename($_FILES["file"]["name"]);
             $files[] = array($_FILES["files"]["name"]);
@@ -28,12 +27,11 @@
                                 ($anio == '') ||
                                     ($organismo == '') ||
                                         ($jurisdiccion == '') ||
-                                            ($unidad_fisica == '') ||
-                                                ($obs == '')){
+                                            ($obs == '')){
                 echo 15; // campos vacios
             }else{
               
-                $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase);
+                $respuesta = insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$obs,$file,$conn,$dbase);
                 
                 switch($respuesta){
                 

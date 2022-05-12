@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -502,22 +502,22 @@
 	$my_organismo = new Organismos();
 	
 	if(isset($_POST['listar_organismos'])){
-       $my_organismo->listarOrganismos($my_organismo,$conn); 
+       $my_organismo->listarOrganismos($my_organismo,$conn,$dbase); 
 	}
 	if(isset($_POST['add_org'])){
        $my_organismo->newOrganismo($conn);
 	}
 	if(isset($_POST['edit_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_organismo->formEditOrganismo($id,$my_organismo,$conn);
+        $my_organismo->formEditOrganismo($id,$my_organismo,$conn,$dbase);
 	}
 	if(isset($_POST['del_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_organismo->formBorrarOrganismo($id,$my_organismo,$conn);
+        $my_organismo->formBorrarOrganismo($id,$my_organismo,$conn,$dbase);
 	}
 	if(isset($_POST['delete_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_organismo->delOrganismo($id,$conn);
+        $my_organismo->delOrganismo($id,$conn,$dbase);
 	}
 	// FIN SECCION ORGANISMOS //
 	// =============================================================================== //

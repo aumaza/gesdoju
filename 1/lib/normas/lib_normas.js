@@ -169,7 +169,6 @@ $(document).ready(function(){
         const anio = document.querySelector('#anio');
         const organismo = document.querySelector('#organismo');
         const jurisdiccion = document.querySelector('#jurisdiccion');
-        const ub_fis = document.querySelector('#ub_fis');
         const observaciones = document.querySelector('#observaciones');
         const file = document.querySelector('#file');
         const files = document.querySelector('#files');
@@ -188,7 +187,6 @@ $(document).ready(function(){
         formData.append('organismo', organismo.value);
         formData.append('jurisdiccion', jurisdiccion.value);
         formData.append('observaciones', observaciones.value);
-        formData.append('ub_fis', ub_fis.value);
         formData.append('file', file.value[0]);
         
         Array.from(files).forEach(file => {
@@ -215,7 +213,6 @@ $(document).ready(function(){
                      $('#anio').val('');
                      $('#organismo').val('');
                      $('#jurisdiccion').val('');
-                     $('#ub_fis').val('');
                      $('#observaciones').val('');
                      $('#file').val('');
                      $('#files').val('');
@@ -282,6 +279,10 @@ $(document).ready(function(){
             success:function(r){
                 if(r == 1){
                     alert("La Norma aún no ha sido cargada a la Base de datos");
+                    $('#nro_norma').val('');
+                    $('#anio').val('');
+                    $('#tipo_norma').val('');
+                    $('#nro_norma').focus('');
                      console.log(datos);
                     }else if(r == -1){
                         alert("Hubo un problema al intentar realizar la consulta");
@@ -293,6 +294,10 @@ $(document).ready(function(){
                     }
                     else if(r == 2){
                         alert("Norma Existente en la base de datos");
+                        $('#nro_norma').val('');
+                        $('#anio').val('');
+                        $('#tipo_norma').val('');
+                        $('#nro_norma').focus('');
                         console.log(datos);
                     }
                     else if(r == 7){
@@ -337,7 +342,8 @@ function Numeros(string){
              //Se a�aden a la salida los caracteres v�lidos
               out += string.charAt(i);
 	     }else{
-		alert("ATENCION - Sólo se permiten Números");
+            alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " )");
+            document.clear();
 	     }
 	     }
 	
@@ -351,13 +357,15 @@ function Text(string){//validacion solo letras
     //Se a?aden las letras validas
     var filtro ="^[abcdefghijklmn?opqrstuvwxyzABCDEFGHIJKLMN?OPQRSTUVWXYZ- ]+$"; // Caracteres V�idos
   
-    for (var i=0; i<string.length; i++){
+    for (var i = 0; i <string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-		alert("ATENCION - Sólo se permite Texto");
-	     }
-	     }
+            alert("ATENCION - Sólo se permite Texto. Y Usted ingresó este caracter: "  + "( " + string + " )");
+                    
+        }
+            
+    }
     return out;
 }
 
@@ -365,14 +373,19 @@ function Text(string){//validacion solo letras
 function alfaNum(string){//validacion solo letras
     var out = '';
     //Se añaden los caracteres válidos
-    var filtro ="^[1234567890abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-/()¿?_ ]+$"; // Caracteres Validos
-  
+    var filtro ="^[1234567890abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-/()¿?_., ]+$"; // Caracteres Validos
+    
+    
+    
     for (var i=0; i<string.length; i++){
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-		alert("ATENCION - Ha tipeado caracteres no Válidos");
-	     }
+            alert("ATENCION - Ha tipeado caracteres no Válidos. Este es el caracter ingresado que no se permite: " + "( " + string + " )");
+               
+        }
 	     }
     return out;
 }
+
+

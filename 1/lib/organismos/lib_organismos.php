@@ -5,12 +5,14 @@ class Organismos{
     // DEFINICIÓN DE PROPIEDADES / VARIABLES
     private $cod_org = '';
     private $descripcion = '';
+    private $ubicacion_fisica = '';
     
     
     // CONSTRUCTOR DESPARAMETRIZADO
-    function __constructor(){
+    function __construct(){
         $this->cod_org = '';
         $this->descripcion = '';
+        $this->ubicacion_fisica = '';
     }
     
     // SETTERS
@@ -22,6 +24,10 @@ class Organismos{
         $this->descripcion = $var;
     }
     
+    private function set_ubicacion_fisica($var){
+        $this->ubicacion_fisica = $var;
+    }
+    
     // GETTERS
     private function get_cod_org($var){
         return $this->cod_org = $var;
@@ -31,17 +37,21 @@ class Organismos{
         return $this->descripcion = $var;
     }
     
+    private function get_ubicacion_fisica($var){
+        return $this->ubicacion_fisica = $var;
+    }
+    
     // METODOS
 
 /*
 ** funcion para listar organismos
 */
-public function listarOrganismos($my_organismo,$conn){
+public function listarOrganismos($my_organismo,$conn,$dbase){
 
 if($conn){
 	
 	$sql = "SELECT * FROM organismos";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $resultado = mysqli_query($conn,$sql);
         
 	//mostramos fila x fila
@@ -55,6 +65,7 @@ if($conn){
       echo "<thead>
 		    <th class='text-nowrap text-center'>Código Organismo</th>
 		    <th class='text-nowrap text-center'>Organismo</th>
+		    <th class='text-nowrap text-center'>Ubicación Física / Bibliorato</th>
             <th>&nbsp;</th>
             </thead>";
 
@@ -64,6 +75,7 @@ if($conn){
 			 echo "<tr>";
 			 echo "<td align=center>".$my_organismo->get_cod_org($fila['cod_org'])."</td>";
 			 echo '<td align=center>'.$my_organismo->get_descripcion($fila['descripcion']).'</td>';
+			 echo '<td align=center>'.$my_organismo->get_ubicacion_fisica($fila['ubicacion_fisica']).'</td>';
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
@@ -111,9 +123,14 @@ public function newOrganismo($conn){
             </div><hr>
 	        
 	        <div class="form-group">
-		  <label for="nombre">Organismo</label>
-		  <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese el Nombre del Organismo" required>
-		</div><hr>
+            <label for="nombre">Organismo</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese el Nombre del Organismo" required>
+            </div><hr>
+            
+            <div class="form-group">
+            <label for="ubicacion_fisica">Ubicacion Física / Bibliorato</label>
+            <input type="text" class="form-control" id="ubicacion_fisica" name="ubicacion_fisica"  placeholder="Ingrese el Número o descripcion del bibliorato donde se ubicará el contenido papel" required>
+            </div><hr>
 		
 		<button type="submit" class="btn btn-success btn-block" id="add_organismo" name="add_organismo">
 		<img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
@@ -129,14 +146,15 @@ public function newOrganismo($conn){
 /*
 ** funcion editar Organismo
 */
-public function formEditOrganismo($id,$my_organismo,$conn){
+public function formEditOrganismo($id,$my_organismo,$conn,$dbase){
 
   $sql = "select * from organismos where id = '$id'";
-  mysqli_select_db($conn,'gesdoju');
+  mysqli_select_db($conn,$dbase);
   $query = mysqli_query($conn,$sql);
   while($fila = mysqli_fetch_array($query)){
         $cod_org = $fila['cod_org'];
         $descripcion = $fila['descripcion'];
+        $ubicacion_fisica = $fila['ubicacion_fisica'];
         }
        
        echo '<div class="container">
@@ -156,7 +174,12 @@ public function formEditOrganismo($id,$my_organismo,$conn){
             
             <div class="form-group">
                 <label for="email">Descripción:</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$my_organismo->get_descripcion($descripcion).'">
+                <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$my_organismo->get_descripcion($descripcion).'" required>
+            </div><hr>
+            
+            <div class="form-group">
+            <label for="ubicacion_fisica">Ubicacion Física / Bibliorato</label>
+            <input type="text" class="form-control" id="ubicacion_fisica" name="ubicacion_fisica"  value="'.$my_organismo->get_ubicacion_fisica($ubicacion_fisica).'" required>
             </div><hr>
             
             <button type="submit" class="btn btn-success btn-block" id="update_organismo" name="update_organismo">Aceptar</button>
@@ -174,10 +197,10 @@ public function formEditOrganismo($id,$my_organismo,$conn){
 /*
 ** Funcion carga formulario de eliminacion de registro
 */
-public function formBorrarOrganismo($id,$my_organismo,$conn){
+public function formBorrarOrganismo($id,$my_organismo,$conn,$dbase){
     
     $sql = "select * from organismos where id = '$id'";
-      mysqli_select_db($conn,'gesdoju');
+      mysqli_select_db($conn,$dbase);
       $res = mysqli_query($conn,$sql);
       $fila = mysqli_fetch_assoc($res);
 
@@ -215,10 +238,10 @@ public function formBorrarOrganismo($id,$my_organismo,$conn){
 /*
 ** funcion que agrega Organismos a la base de datos
 */
-public function addOrganismo($cod_org,$my_organismo,$descripcion,$conn){
+public function addOrganismo($cod_org,$my_organismo,$descripcion,$ubicacion_fisica,$conn,$dbase){
 
     $sql = "select cod_org, descripcion from organismos where cod_org = '$cod_org' or descripcion = '$descripcion'";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $query = mysqli_query($conn,$sql);
     $rows = mysqli_num_rows($query);
           
@@ -226,10 +249,12 @@ public function addOrganismo($cod_org,$my_organismo,$descripcion,$conn){
             
             $consulta = "INSERT INTO organismos".
                         "(cod_org,
-                          descripcion)".
+                          descripcion,
+                          ubicacion_fisica)".
                         "VALUES ".
                         "($my_organismo->set_cod_org('$cod_org'),
-                          $my_organismo->set_descripcion('$descripcion'))";
+                          $my_organismo->set_descripcion('$descripcion'),
+                          $my_organismo->set_ubicacion_fisica('$ubicacion_fisica'))";
         
         mysqli_select_db($conn,'gesdoju');
         $resp = mysqli_query($conn,$consulta);
@@ -248,10 +273,15 @@ public function addOrganismo($cod_org,$my_organismo,$descripcion,$conn){
 /*
 ** funcion actualizar registro de organismos
 */
-public function updateOrganismo($id,$my_organismo,$cod_org,$descripcion,$conn){
+public function updateOrganismo($id,$my_organismo,$cod_org,$descripcion,$ubicacion_fisica,$conn,$dbase){
 
-        $sql = "update organismos set cod_org = $my_organismo->set_cod_org('$cod_org'), descripcion = $my_organismo->set_descripcion('$descripcion') where id = '$id'";
-        mysqli_select_db($conn,'gesdoju');
+        $sql = "update organismos set 
+                cod_org = $my_organismo->set_cod_org('$cod_org'), 
+                descripcion = $my_organismo->set_descripcion('$descripcion'), 
+                ubicacion_fisica = $my_organismo->set_ubicacion_fisica('$ubicacion_fisica')
+                where id = '$id'";
+                
+        mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
         
         if($query){
@@ -268,10 +298,10 @@ public function updateOrganismo($id,$my_organismo,$cod_org,$descripcion,$conn){
 ** Función para eliminar un registro de la tabla organismos
 */
 
-public function delOrganismo($id,$conn){
+public function delOrganismo($id,$conn,$dbase){
 
 		
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$sql = "delete from organismos where id = '$id'";
            
 	$res = mysqli_query($conn,$sql);

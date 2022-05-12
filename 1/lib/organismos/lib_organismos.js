@@ -95,6 +95,7 @@ $(document).ready(function(){
                     alert("Registro Guardado Exitosamente!!");
                     $('#cod_org').val('');
                     $('#descripcion').val('');
+                    $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
@@ -107,6 +108,7 @@ $(document).ready(function(){
                     alert("Error. Organismo Existente!!");
                     $('#cod_org').val('');
                     $('#descripcion').val('');
+                    $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){

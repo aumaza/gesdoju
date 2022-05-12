@@ -147,12 +147,7 @@ function newNorma($conn){
             </div>
 		
 		<div class="col-sm-12">
-		
-            <div class="form-group">
-            <label for="nombre">Ubicación Física/Carpeta (*)</label>
-            <input type="text" class="form-control" id="ub_fis" name="ub_fis" oninput="alfaNum(this.value);" required>
-            </div>
-            
+		    
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
             <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" oninput="alfaNum(this.value);" required></textarea>
@@ -284,7 +279,7 @@ function editNorma($id,$conn){
 		
 		
 		<div class="col-sm-3">
-		
+            
             <div class="form-group">
             <label for="pwd">Fecha Publicación (*)</label>
             <input type="date" class="form-control" id="f_pub" name="f_pub" value="'.$fila['f_pub'].'" required>
@@ -470,8 +465,8 @@ function updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
                     f_pub = '$f_pub', 
                     anio_pub = '$anio', 
                     jurisdiccion = '$jurisdiccion', 
-                    organismo = '$organismo', 
-                    unidad_fisica = '$unidad_fisica', 
+                    organismo = '$organismo',
+                    unidad_fisica = '$unidad_fisica',
                     observaciones = '$obs' 
                     where id = '$id'";
            
@@ -544,7 +539,17 @@ if($conn){
 	echo '<div class="container-fluid">
 	      <div class="alert alert-info">
 	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
-	      </div><br>';
+	      </div>
+	      
+	      <form <action="main.php" method="POST">
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma" data-toggle="tooltip" data-placement="top" title="Agregar una Nueva Norma">
+                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+                    
+                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada" data-toggle="tooltip" data-placement="top" title="Búsqueda Avanzada de Registros">
+                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
+                    
+        </form><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='normasTable'>";
       echo "<thead>
@@ -587,14 +592,6 @@ if($conn){
 
 		echo "</table>";
 		echo "<br>";
-		echo '<form <action="main.php" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma" data-toggle="tooltip" data-placement="top" title="Agregar una Nueva Norma">
-                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
-                    
-                    <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada" data-toggle="tooltip" data-placement="top" title="Búsqueda Avanzada de Registros">
-                    <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
-                    
-              </form><br>';
 		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
 		echo '</div>';
 		}else{
@@ -771,15 +768,23 @@ if(!empty($_FILES["file"]["name"])){
 ** insertar nueva norma en base de datos
 */
 
-function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$unidad_fisica,$obs,$file,$conn,$dbase){
+function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$obs,$file,$conn,$dbase){
     
 
     mysqli_select_db($conn,$dbase);
-    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma' and organismo = '$organismo'";
+    $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma' and organismo = '$organismo' and anio_pub = '$anio'";
     $query_1 = mysqli_query($conn,$sql_1);    
     $rows = mysqli_num_rows($query_1);
 
+   $sql_2 = "select ubicacion_fisica from organismos where cod_org = '$organismo'";
+   $query_2 = mysqli_query($conn,$sql_2);
+   while($row_2 = mysqli_fetch_array($query_2)){
+        $ubicacion_fisica = $row_2['ubicacion_fisica'];
+   }
    
+   if($ubicacion_fisica == ''){
+        $ubicacion_fisica = 'N/D';
+   }
 
 if($rows == 0){
 
@@ -823,7 +828,7 @@ if(!empty($_FILES["file"]["name"])){
                   '$anio',
                   '$jurisdiccion',
                   '$organismo',
-                  '$unidad_fisica',
+                  '$ubicacion_fisica',
                   '$obs',
                   '$fileName',
                   '$targetFilePath')";
@@ -1428,6 +1433,11 @@ function modalVerificarNorma($conn,$dbase){
                         </div>
                         
                         <div class="form-group">
+                            <label for="anio">Año Publicación</label>
+                            <input type="text" class="form-control" id="anio" name="anio"  maxlength="4" placeholder="AAAA" oninput="Numeros(this.value);" required>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="t_norma">Tipo de Norma</label>
                             <select class="form-control" id="tipo_norma" name="tipo_norma" required>
                             <option value="" disabled selected>Seleccionar</option>';
@@ -1470,9 +1480,9 @@ function modalVerificarNorma($conn,$dbase){
 /*
 ** FUNCION QUE REALIZA CONSULTA SI EXISTE O NO LA NORMA YA CARGADA
 */
-function consultarNorma($nro_norma,$tipo_norma,$conn,$dbase){
+function consultarNorma($nro_norma,$tipo_norma,$anio,$conn,$dbase){
     
-    $sql = "select n_norma, tipo_norma from normas where n_norma = '$nro_norma' and tipo_norma = '$tipo_norma'";
+    $sql = "select n_norma, tipo_norma, anio_pub from normas where n_norma = '$nro_norma' and tipo_norma = '$tipo_norma' and anio_pub = '$anio'";
     mysqli_select_db($conn,$dbase);
     $query = mysqli_query($conn,$sql);
         

@@ -9,6 +9,7 @@
       // captura de datos
         $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
         $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+        $ubicacion_fisica = mysqli_real_escape_string($conn,$_POST['ubicacion_fisica']);
         
       
       // pasar a mayusculas
@@ -17,11 +18,12 @@
             
       // se verifica que los datos no estén vacios
       if(($cod_org == '') ||
-            ($descripcion == '')){
+            ($descripcion == '') ||
+                ($ubicacion_fisica == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $my_organismo->addOrganismo($cod_org,$my_organismo,$descripcion,$conn);
+        $my_organismo->addOrganismo($cod_org,$my_organismo,$descripcion,$ubicacion_fisica,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion
