@@ -194,12 +194,22 @@ if($conn){
 */
 public function formNewSegmentacion($conn){
 
-      echo '<div class="container">
+      echo '<div class="container-fluid">
 	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Cargar Segmentacion Temática</h2><hr>
+	    <div class="col-sm-10">
+	    
+	    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Cargar Segmentacion Temática</h2>
+            </div>
+        
+        <div class="panel-body">
+            
 	        <form id="fr_add_new_segmentacion_ajax" method="POST">
-	        
+	    
+	    
+	    <div class="col-sm-4">
+        
 	        <div class="form-group">
 		  <label for="clas_inst">Clasificación Institucional</label>
 		  <select class="form-control" id="clas_inst" name="clas_inst" required>
@@ -243,44 +253,59 @@ public function formNewSegmentacion($conn){
 		  
 		 echo '</select>
 		</div>
-	        
-	        
+        
+        </div>
+        
+        
+      
+	    <div class="col-sm-4">
+	    
 	        <div class="form-group">
-		  <label for="saf">SAF:</label>
-		  <input type="text" class="form-control" id="saf" name="saf"  maxlength="3" required>
-		</div>
+            <label for="saf">SAF:</label>
+            <input type="text" class="form-control" id="saf" name="saf"  maxlength="3" required>
+            </div>
 		
-		 <div class="form-group">
-		  <label for="cod_sirhu">Código SIRHU:</label>
-		  <input type="text" class="form-control" id="cod_sirhu" name="cod_sirhu"  maxlength="2" required>
-		</div>
+            <div class="form-group">
+            <label for="cod_sirhu">Código SIRHU:</label>
+            <input type="text" class="form-control" id="cod_sirhu" name="cod_sirhu"  maxlength="2" required>
+            </div>
 		
-		<div class="form-group">
-		  <label for="cod_org">Organismos</label>
-		  <select class="form-control" id="cod_org" name="cod_org" required>
-		  <option value="" disabled selected>Seleccionar</option>';
-		    
-		    if($conn){
-		      $query = "SELECT * FROM organismos order by cod_org ASC";
-		      mysqli_select_db($conn,'gesdoju');
-		      $res = mysqli_query($conn,$query);
+		</div>
+        
+		
+		
+	    <div class="col-sm-4">
+		
+                <div class="form-group">
+                <label for="cod_org">Organismos</label>
+                <select class="form-control" id="cod_org" name="cod_org" required>
+                <option value="" disabled selected>Seleccionar</option>';
+                    
+                    if($conn){
+                    $query = "SELECT * FROM organismos order by cod_org ASC";
+                    mysqli_select_db($conn,'gesdoju');
+                    $res = mysqli_query($conn,$query);
 
-		      if($res){
-				  while ($valores = mysqli_fetch_array($res)){
-				echo '<option value="'.$valores[cod_org].'">'.$valores[cod_org].' - '.$valores[descripcion].'</option>';
-			    }
-                }
-			}
+                    if($res){
+                        while ($valores = mysqli_fetch_array($res)){
+                        echo '<option value="'.$valores[cod_org].'">'.$valores[cod_org].' - '.$valores[descripcion].'</option>';
+                        }
+                        }
+                    }
 
-			//mysqli_close($conn);
-		  
-		 echo '</select>
-		</div>
+                    //mysqli_close($conn);
+                
+                echo '</select>
+                </div>
+                
+                <div class="form-group">
+                <label for="reg_paritario">Régimen Paritario:</label>
+                <input type="text" class="form-control" id="reg_paritario" name="reg_paritario" required>
+                </div>
 		
-		<div class="form-group">
-		  <label for="reg_paritario">Régimen Paritario:</label>
-		  <input type="text" class="form-control" id="reg_paritario" name="reg_paritario" required>
 		</div>
+        
+		<div class="col-sm-6">
 		
 		<div class="form-group">
 		  <label for="reg_laboral">Régimen Laboral:</label>
@@ -292,6 +317,10 @@ public function formNewSegmentacion($conn){
 		  <input type="text" class="form-control" id="esc_estatuto" name="esc_estatuto" required>
 		</div>
 		
+		</div>
+		
+		<div class="col-sm-6">
+		
 		<div class="form-group">
 		  <label for="convenio">Convenio:</label>
 		  <input type="text" class="form-control" id="convenio" name="convenio" required>
@@ -302,13 +331,18 @@ public function formNewSegmentacion($conn){
 		  <input type="text" class="form-control" id="ubicacion_fisica" name="ubicacion_fisica" required>
 		</div>
 		
+		</div>
 		
-		<button type="submit" class="btn btn-success btn-block" id="add_segmentacion" name="add_segmentacion">
-            <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-	      </form> <br>
+		 
+            <button type="submit" class="btn btn-default btn-block" id="add_segmentacion" name="add_segmentacion">
+                <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+        
+	      </form>
+	     
 	      
 	    </div>
 	    </div>
+	</div>
 	</div>';
 
 }
@@ -324,13 +358,22 @@ public function formEditSegmentacion($id,$conn,$dbase){
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
         
-      echo '<div class="container">
+      echo '<div class="container-fluid">
 	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Editar Segmentacion Temática</h2><hr>
+	    <div class="col-sm-10">
+	    
+	      <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Editar Segmentacion Temática</h2>
+            </div>
+        
+        <div class="panel-body">
+        
 	        <form id="fr_update_segmentacion_ajax" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$id.'" >
-	        
+	       
+        <div class="col-sm-4">
+        
 	        <div class="form-group">
 		  <label for="clas_inst">Clasificación Institucional</label>
 		  <select class="form-control" id="clas_inst" name="clas_inst" required>
@@ -374,7 +417,9 @@ public function formEditSegmentacion($id,$conn,$dbase){
 		  
 		 echo '</select>
 		</div>
-	        
+	    </div>
+	    
+	    <div class="col-sm-4">
 	        
 	        <div class="form-group">
 		  <label for="saf">SAF:</label>
@@ -385,6 +430,10 @@ public function formEditSegmentacion($id,$conn,$dbase){
 		  <label for="cod_sirhu">Código SIRHU:</label>
 		  <input type="text" class="form-control" id="cod_sirhu" name="cod_sirhu"  maxlength="2" value="'.$row['cod_sirhu'].'" required>
 		</div>
+		
+		</div>
+		
+		<div class="col-sm-4">
 		
 		<div class="form-group">
 		  <label for="cod_org">Organismos</label>
@@ -413,6 +462,10 @@ public function formEditSegmentacion($id,$conn,$dbase){
 		  <input type="text" class="form-control" id="reg_paritario" name="reg_paritario" value="'.$row['reg_paritario'].'" required>
 		</div>
 		
+		</div>
+		
+		<div class="col-sm-6">
+		
 		<div class="form-group">
 		  <label for="reg_laboral">Régimen Laboral:</label>
 		  <input type="text" class="form-control" id="reg_laboral" name="reg_laboral" value="'.$row['reg_laboral'].'" required>
@@ -422,6 +475,10 @@ public function formEditSegmentacion($id,$conn,$dbase){
 		  <label for="esc_estatuto">Escalafón / Estatuto:</label>
 		  <input type="text" class="form-control" id="esc_estatuto" name="esc_estatuto" value="'.$row['esc_estatuto'].'" required>
 		</div>
+		
+		</div>
+		
+		<div class="col-sm-6">
 		
 		<div class="form-group">
 		  <label for="convenio">Convenio:</label>
@@ -433,10 +490,12 @@ public function formEditSegmentacion($id,$conn,$dbase){
 		  <input type="text" class="form-control" id="ubicacion_fisica" name="ubicacion_fisica" value="'.$row['ubicacion_fisica'].'" required>
 		</div>
 		
+		</div>
 		
-		<button type="submit" class="btn btn-success btn-block" id="update_segmentacion" name="update_segmentacion">
+		<button type="submit" class="btn btn-default btn-block" id="update_segmentacion" name="update_segmentacion">
             <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-	      </form> <br>
+	      </form>
+        </div>
 	      
 	    </div>
 	    </div>
