@@ -2,7 +2,7 @@
 
  $(document).ready(function(){
       
-      $('#segmentacionTematicaTable').DataTable({
+      $('#segmentacionTable').DataTable({
         "order": [[0, "asc"]],
         "responsive":     true,
         "scrollY":        "300px",

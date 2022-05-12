@@ -95,7 +95,7 @@
         $descripcion_jurisdiccion = $row_2['descripcion'];
     }
     
-    $sql_3 = "select descripcion from organismos where cod_org = '$row[cod_org]'";
+    $sql_3 = "select descripcion from organismos where cod_org = '$row[desc_organismo]'";
     $query_3 = mysqli_query($conn,$sql_3);
     while($row_3 = mysqli_fetch_assoc($query_3)){
         $descripcion_organismo = $row_3['descripcion'];
@@ -110,10 +110,10 @@
             <p class="p-justify"><strong>Código SIRHU</strong>: '.$row[cod_sirhu].'</p><hr>
             <p class="p-justify"><strong>Organismo</strong>: '.$descripcion_organismo.'</p><hr>
             <p class="p-justify"><strong>Régimen Paritario</strong>: '.$row[reg_paritario].'</p><hr>
-            <p class="p-justify"><strong>Régimen Laboral</strong>: '.$row[reg_laboral].'</p><hr>
+            <p class="p-justify"><strong>Régimen Laboral</strong>: '.$row[regimen_laboral].'</p><hr>
             <p class="p-justify"><strong>Escalafón / Estatuto</strong>: '.$row[esc_estatuto].'</p><hr>
             <p class="p-justify"><strong>Convenio</strong>: '.$row[convenio].'</p><hr>
-            <p class="p-justify"><strong>Ubicación / Bibliorato</strong>: '.$row[ubicacion_fisica].'</p><hr>
+            <p class="p-justify"><strong>Ubicación / Bibliorato</strong>: '.$row[ubicacion_fis].'</p><hr>
             
            
             </div>';

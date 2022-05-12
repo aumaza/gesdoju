@@ -118,7 +118,7 @@ if($conn){
 	      <img src="../../icons/actions/code-class.png"  class="img-reponsive img-rounded"> Segmentación Temática
 	      </div><br>';
                   
-      echo "<table class='display compact' style='width:100%' id='segmentacionTematicaTable'>";
+      echo "<table class='display compact' style='width:100%' id='segmentacionTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Clasificación Institucional</th>
 		    <th class='text-nowrap text-center'>Jurisdicción</th>
@@ -144,10 +144,10 @@ if($conn){
 			 }
 			 echo "<td align=center>".$segmentacion->get_saf($row['saf'])."</td>";
 			 echo "<td align=center>".$segmentacion->get_cod_sirhu($row['cod_sirhu'])."</td>";
-			 $sql_3 = "select descripcion from organismos where cod_org = '$row[cod_org]'";
+			 $sql_3 = "select descripcion from organismos where cod_org = '$row[desc_organismo]'";
 			 $query_3 = mysqli_query($conn,$sql_3);
 			 while($row_3 = mysqli_fetch_array($query_3)){
-                echo "<td align=center>".$segmentacion->get_cod_org($row_3['descripcion'])."</td>";
+                echo "<td align=center>".$row_3['descripcion']."</td>";
 			 }
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
@@ -588,7 +588,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
 			 echo "<td align=center>".$fila['saf']."</td>";
 			 echo "<td align=center>".$fila['cod_sirhu']."</td>";
 			 
-			 $sql_3 = "select descripcion from organismos where cod_org = '$fila[cod_org]'";
+			 $sql_3 = "select descripcion from organismos where cod_org = '$fila[desc_organismo]'";
 			 $query_3 = mysqli_query($conn,$sql_3);
 			 $row_3 = mysqli_fetch_assoc($query_3);
 			 {
@@ -596,10 +596,10 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
 			 }
 			 
 			 echo "<td align=center>".$fila['reg_paritario']."</td>";
-			 echo "<td align=center>".$fila['reg_laboral']."</td>";
+			 echo "<td align=center>".$fila['regimen_laboral']."</td>";
 			 echo "<td align=center>".$fila['esc_estatuto']."</td>";
 			 echo "<td align=center>".$fila['convenio']."</td>";
-			 echo "<td align=center>".$fila['ubicacion_fisica']."</td>";
+			 echo "<td align=center>".$fila['ubicacion_fis']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '</td>';
 			 $count++;
@@ -650,7 +650,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
         $descripcion_jurisdiccion = $row_2['descripcion'];
     }
     
-    $sql_3 = "select descripcion from organismos where cod_org = '$row[cod_org]'";
+    $sql_3 = "select descripcion from organismos where cod_org = '$row[desc_organismo]'";
     $query_3 = mysqli_query($conn,$sql_3);
     while($row_3 = mysqli_fetch_assoc($query_3)){
         $descripcion_organismo = $row_3['descripcion'];
@@ -665,7 +665,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
                         <img class="img-reponsive img-rounded" src="../../icons/actions/arrow-down-double.png" /> Información Extendida Segmentación Temática</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse">
+                <div id="collapse1" class="panel-collapse collapse-in">
                     <ul class="list-group">
                     <li class="list-group-item"><strong>Clasificación Institucional:</strong> '.$segmentacion->get_clas_inst($descripcion_tipo_organismo).'</li>
                     <li class="list-group-item"><strong>Jurisdicción:</strong> '.$segmentacion->get_jurisdiccion($descripcion_jurisdiccion).'</li>
@@ -673,10 +673,10 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
                     <li class="list-group-item"><strong>Código SIRHU:</strong> '.$segmentacion->get_cod_sirhu($row['cod_sirhu']).'</li>
                     <li class="list-group-item"><strong>Organismo:</strong> '.$segmentacion->get_cod_org($descripcion_organismo).'</li>
                     <li class="list-group-item"><strong>Régimen Paritario:</strong> '.$segmentacion->get_reg_paritario($row['reg_paritario']).'</li>
-                    <li class="list-group-item"><strong>Régimen Laboral:</strong> '.$segmentacion->get_reg_laboral($row['reg_laboral']).'</li>
+                    <li class="list-group-item"><strong>Régimen Laboral:</strong> '.$segmentacion->get_reg_laboral($row['regimen_laboral']).'</li>
                     <li class="list-group-item"><strong>Código / Estatuto:</strong> '.$segmentacion->get_esc_estatuto($row['esc_estatuto']).'</li>
                     <li class="list-group-item"><strong>Convenio:</strong> '.$segmentacion->get_convenio($row['convenio']).'</li>
-                    <li class="list-group-item"><strong>Ubicación Física / Bibliorato:</strong> '.$segmentacion->get_ubicacion_fisica($row['ubicacion_fisica']).'</li>
+                    <li class="list-group-item"><strong>Ubicación Física / Bibliorato:</strong> '.$segmentacion->get_ubicacion_fisica($row['ubicacion_fis']).'</li>
                     </ul>
                     <div class="panel-footer">
                         

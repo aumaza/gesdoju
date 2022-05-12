@@ -103,7 +103,7 @@
                     echo "<td>".$fila['saf']."</td>";
                     echo "<td>".$fila['cod_sirhu']."</td>";
                     
-                    $sql_3 = "select descripcion from organismos where cod_org = '$fila[cod_org]'";
+                    $sql_3 = "select descripcion from organismos where cod_org = '$fila[desc_organismo]'";
                     $query_3 = mysqli_query($conn,$sql_3);
                     $row_3 = mysqli_fetch_assoc($query_3);
                     {
@@ -111,7 +111,7 @@
                     }
                     
                     echo "<td>".$fila['reg_paritario']."</td>";
-                    echo "<td>".$fila['reg_laboral']."</td>";
+                    echo "<td>".$fila['regimen_laboral']."</td>";
                     echo "<td>".$fila['esc_estauto']."</td>";
                     echo "<td>".$fila['convenio']."</td></tr>";
                     $count++;
