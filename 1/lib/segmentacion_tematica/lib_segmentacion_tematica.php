@@ -334,7 +334,7 @@ public function formNewSegmentacion($conn){
 		</div>
 		
 		 
-            <button type="submit" class="btn btn-default btn-block" id="add_segmentacion" name="add_segmentacion">
+            <button type="submit" class="btn btn-default btn-block" id="add_segmentacion" >
                 <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
         
 	      </form>
@@ -761,11 +761,11 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
 /*
 ** CARGA DE REGISTRO A BASES
 */
-public function addSegmentacion($segmentacion,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$cod_org,$reg_paritario,$regimen_laboral,$cod_estatuto,$convenio,$ub_fis,$conn){
+public function addSegmentacion($segmentacion,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$cod_org,$reg_paritario,$regimen_laboral,$cod_estatuto,$convenio,$ub_fis,$conn,$dbase){
     
     if($conn){
         
-            mysqli_select_db($conn,'gesdoju');
+            mysqli_select_db($conn,$dbase);
                                 
                     $sql = "INSERT INTO segmentacion_tematica ".
                            "(clas_inst,

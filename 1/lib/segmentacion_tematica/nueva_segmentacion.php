@@ -34,7 +34,7 @@
                    echo 5; // hay campos vacios
                     
     }else{
-        $segmentacion->addSegmentacion($segmentacion,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$cod_org,$reg_paritario,$regimen_laboral,$cod_estatuto,$convenio,$ub_fis,$conn);
+        $segmentacion->addSegmentacion($segmentacion,$clas_inst,$jurisdiccion,$saf,$cod_sirhu,$cod_org,$reg_paritario,$regimen_laboral,$cod_estatuto,$convenio,$ub_fis,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion

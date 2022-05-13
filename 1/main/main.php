@@ -491,7 +491,7 @@
         backup();
 	}
 	if(isset($_POST['dump_base'])){
-        dumpMysql($conn);
+        dumpMysql($conn,$dbase);
 	}
 	// FIN SECCION MANTENIMIENTO //
 	// =============================================================================== //

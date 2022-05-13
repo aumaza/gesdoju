@@ -90,7 +90,7 @@ $(document).ready(function(){
         
         $.ajax({
             type:"POST",
-            url:"../lib/segmentancion_tematica/nueva_segmentacion.php",
+            url:"../lib/segmentacion_tematica/nueva_segmentacion.php",
             data:datos,
             success:function(r){
                 if(r == 1){

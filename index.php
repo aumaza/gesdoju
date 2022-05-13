@@ -2,6 +2,7 @@
       include "functions/functions.php";
       include "1/lib/lib_system.php";
       
+      
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +40,7 @@
    <div class="main">
   
    <?php
-         
+                 
          if($conn){
          
 	  if(isset($_POST['A'])){
@@ -84,7 +85,8 @@
 
 				if(strcmp($_SESSION["user"], 'root') == 0){
                 
-                logs($_SESSION["user"]);
+                write_visita($_SESSION["user"]);
+                //logs($_SESSION["user"],$ip_add);
 				echo "<br>";
 				echo '<div class="alert alert-success" role="alert">';
 				echo '<button class="btn btn-success">
@@ -97,7 +99,9 @@
   				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
 				
 			}else{
-				logs($_SESSION["user"]);
+				
+				write_visita($_SESSION["user"]);
+				//logs($_SESSION["user"],$ip_add);
 				echo '<div class="alert alert-success" role="alert">';
 				echo '<button class="btn btn-success">
 				      <span class="spinner-border spinner-border-sm"></span>
