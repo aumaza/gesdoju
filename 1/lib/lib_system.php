@@ -184,7 +184,7 @@ function dumpMysql($conn,$dbase){
         $fecha = date('d-m-Y');
         $salida = $dbase.'-'.$fecha.'.sql';
         
-        $dump = "mysqldump --user='root' --password='slack142' --host='slackzone.ddns.net' $dbase > $salida";
+        $dump = "mysqldump --user='gesdoju' --password='gesdoju' --host='localhost' $dbase > $salida";
         system($dump);
         
         if(is_file($salida)){
