@@ -94,7 +94,7 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Guardado Exitosamente!!");
+                    bootbox.alert("Registro Guardado Exitosamente!!");
                     $('#clas_inst').val('');
                     $('#jurisdiccion').val('');
                     $('#saf').val('');
@@ -108,15 +108,15 @@ $(document).ready(function(){
                     $('#clas_inst').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    bootbox.alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    bootbox.alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    bootbox.alert("Error de conexion!!");                    
                 }
                 
             }
@@ -146,18 +146,18 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Actualizado Exitosamente!!");
+                    bootbox.alert("Registro Actualizado Exitosamente!!");
                     window.location.href="main.php";
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    bootbox.alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    bootbox.alert("Error de conexion!!");                    
                 }
                 
             }
@@ -184,16 +184,16 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Eliminado Exitosamente!!");
+                    bootbox.alert("Registro Eliminado Exitosamente!!");
                     window.location.href="main.php";
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar Eliminar el Registro");
+                    bootbox.alert("Error. Hubo un problema al intentar Eliminar el Registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("No se envió correctamente el ID del registro!!");
+                    bootbox.alert("No se envió correctamente el ID del registro!!");
                     console.log("Datos: " + datos);
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    bootbox.alert("Error de conexion!!");                    
                 }
                 
             }

@@ -1,4 +1,40 @@
-<?php
+<?php   session_start();
+        include "../../connection/connection.php";
+        
+        $varsession_user = $_SESSION['user'];
+        $varsession_pass = $_SESSION['pass'];
+        
+	
+	$sql = "select user, password from usuarios where user = '$varsession_user' and password = '$varsession_pass'";
+	mysqli_select_db($conn,$dbase);
+	$query = mysqli_query($conn,$sql);
+	while($row = mysqli_fetch_array($query)){
+	      $user = $row['user'];
+	      $pass = $row['password'];
+	}
+	
+   
+    
+	if($varsession_user == null || $varsession_user == ''){
+  echo '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+        <title>GESDO [ Gestión Documental ]</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />';
+        skeleton();
+        echo '</head><body>';
+        echo '<br><div class="container">
+                <div class="alert alert-danger" role="alert">';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
+        echo "</div></div>";
+        die();
+        echo '</body></html>';
+	}
+
+
 /**
  * @file
  * File Thingie - Andreas Haugstrup Pedersen <andreas@solitude.dk>
@@ -1185,7 +1221,7 @@ function ft_make_header() {
 		$str .= "</h1>";
 	}
 	// Display logout link.
-  if (LOGIN == TRUE) {
+  /*if (LOGIN == TRUE) {
 	  $str .= '<div id="logout"><p>';
 	  if (isset($ft['users']) && @count($ft['users']) > 0 && LOGIN == TRUE) {
 	    $str .= t('Logged in as !user ', array('!user' => $_SESSION['ft_user_'.MUTEX]));
@@ -1193,7 +1229,7 @@ function ft_make_header() {
 	  $str .= ft_make_link(t("[logout]"), "act=logout", t("Logout of File Thingie")).'</p>';
 	  $str .= '<div id="secondary_menu">' . implode("", ft_invoke_hook('secondary_menu')) . '</div>';
 	  $str .= '</div>';
-	}
+	}*/
 	return $str;
 }
 
@@ -1231,7 +1267,7 @@ function ft_make_link($text, $query = "", $title = "") {
 /**
  * Create HTML for login box.
  */
-function ft_make_login() {
+function ft_make_login($user) {
 	$str = "<h1>".t('File Thingie Login')."</h1>";
 	$str .= '<form action="'.ft_get_self().'" method="post" id="loginbox">';
 	if (!empty($_REQUEST['act']) && $_REQUEST['act'] == "error") {
@@ -1239,7 +1275,7 @@ function ft_make_login() {
 	}
 	$str .= '<div>
 			<div>
-				<label for="ft_user" class="login"><input type="text" size="25" name="ft_user" id="ft_user" tabindex="1" /> '.t('Username:').'</label>
+				<label for="ft_user" class="login"><input type="text" size="25" name="ft_user" id="ft_user" value="'.$user.'" tabindex="1" /> '.t('Username:').'</label>
 			</div>
 			<div>
 				<label for="ft_pass" class="login"><input type="password" size="25" name="ft_pass" id="ft_pass" tabindex="2" /> '.t('Password:').'</label>
@@ -1613,7 +1649,7 @@ function ft_set_message($message = NULL, $type = 'ok') {
 function ft_settings_external($file) {
   if (file_exists($file)) {
     @include_once($file);
-    $json = ft_settings_external_load();
+    $json = ft_settings_external_load($user,$pass);
     if (!$json) {
       // Not translateable. Language info is not available yet.
       ft_set_message('Could not load external configuration.', 'error');
@@ -1836,7 +1872,7 @@ if (headers_sent()) {
   	$str .= ft_make_sidebar();
   	$str .= ft_make_body();
   } else {
-    	$str .= ft_make_login();
+    	$str .= ft_make_login($user);
   }
   $str .= ft_make_footer();
 }

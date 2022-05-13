@@ -45,6 +45,13 @@ function skeleton(){
 	<script src="/gesdoju/skeleton/js/buttons.bootstrap.min.js"></script>
 	<script src="/gesdoju/skeleton/js/buttons.print.min.js"></script>
 	
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.all.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.all..min.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.locales.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.locales.min.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.min.js"></script>
+	
 	<script src="/gesdoju/skeleton/Chart.js/Chart.min.js"></script>
 	<script src="/gesdoju/skeleton/Chart.js/Chart.bundle.min.js"></script>
 	<script src="/gesdoju/skeleton/Chart.js/Chart.bundle.js"></script>

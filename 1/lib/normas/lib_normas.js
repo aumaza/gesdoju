@@ -204,7 +204,7 @@ $(document).ready(function(){
             contentType: false,
             success:function(r){
                 if(r == 1){
-                    alert("Normativa Agregada Exitosamente");
+                    bootbox.alert("Normativa Agregada Exitosamente");
                      $('#nombre_norma').val('');
                      $('#n_norma').val('');
                      $('#t_norma').val('');
@@ -219,36 +219,36 @@ $(document).ready(function(){
                      $('#nombre_norma').focus();
                     console.log(values);
                     }else if(r == -1){
-                        alert("Hubo un problema al intentar Agregar el registro");
+                        bootbox.alert("Hubo un problema al intentar Agregar el registro");
                         //console.log(formData);
                     }
                     else if(r == 2){
-                        alert("Solo se ha subido el archivo de la norma sin impactar en la base de datos");
+                        bootbox.alert("Solo se ha subido el archivo de la norma sin impactar en la base de datos");
                        // console.log(formData);
                     }
                     else if(r == 3){
-                        alert("Contáctese con el Administrador ya que el directorio de destino no posee permisos de Escritura");
+                        bootbox.alert("Contáctese con el Administrador ya que el directorio de destino no posee permisos de Escritura");
                         console.log(values);
                     }
                     else if(r == 4){
-                        alert("Sólo se permiten archivos PDF");
+                        bootbox.alert("Sólo se permiten archivos PDF");
                         //console.log(formData);
                     }
                     else if(r == 5){
-                        alert("Aún no ha seleccionado el archivo a subir");
+                        bootbox.alert("Aún no ha seleccionado el archivo a subir");
                         //console.log(formData);
                     }
                     else if(r == 6){
-                        alert("Ya existe La norma en la base de datos");
+                        bootbox.alert("Ya existe La norma en la base de datos");
                         //console.log(formData);
                     }
                     
                     else if(r == 13){
-                        alert("Error de Conexion");
+                        bootbox.alert("Error de Conexion");
                         //console.log(formData);
                     }
                     else if(r == 15){
-                        alert("Hay campos sin completar!!");
+                        bootbox.alert("Hay campos sin completar!!");
                         console.log(values);
                     }
                     
@@ -278,22 +278,22 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("La Norma aún no ha sido cargada a la Base de datos");
+                    bootbox.alert("La Norma aún no ha sido cargada a la Base de datos");
                     $('#nro_norma').val('');
                     $('#anio').val('');
                     $('#tipo_norma').val('');
                     $('#nro_norma').focus('');
                      console.log(datos);
                     }else if(r == -1){
-                        alert("Hubo un problema al intentar realizar la consulta");
+                        bootbox.alert("Hubo un problema al intentar realizar la consulta");
                         console.log(datos);
                     }
                     else if(r == 3){
-                        alert("Hay campos sin completar!!");
+                        bootbox.alert("Hay campos sin completar!!");
                         console.log(datos);
                     }
                     else if(r == 2){
-                        alert("Norma Existente en la base de datos");
+                        bootbox.alert("Norma Existente en la base de datos");
                         $('#nro_norma').val('');
                         $('#anio').val('');
                         $('#tipo_norma').val('');
@@ -301,7 +301,7 @@ $(document).ready(function(){
                         console.log(datos);
                     }
                     else if(r == 7){
-                        alert("No hay conexion a la base de datos");
+                        bootbox.alert("No hay conexion a la base de datos");
                         console.log(datos);
                     }
                    
@@ -342,7 +342,7 @@ function Numeros(string){
              //Se a�aden a la salida los caracteres v�lidos
               out += string.charAt(i);
 	     }else{
-            alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " )");
+            bootbox.alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " )");
             document.clear();
 	     }
 	     }
@@ -361,7 +361,7 @@ function Text(string){//validacion solo letras
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-            alert("ATENCION - Sólo se permite Texto. Y Usted ingresó este caracter: "  + "( " + string + " )");
+            bootbox.alert("ATENCION - Sólo se permite Texto. Y Usted ingresó este caracter: "  + "( " + string + " )");
                     
         }
             
@@ -381,7 +381,7 @@ function alfaNum(string){//validacion solo letras
        if (filtro.indexOf(string.charAt(i)) != -1){ 
 	     out += string.charAt(i);
 	     }else{
-            alert("ATENCION - Ha tipeado caracteres no Válidos. Este es el caracter ingresado que no se permite: " + "( " + string + " )");
+            bootbox.alert("ATENCION - Ha tipeado caracteres no Válidos. Este es el caracter ingresado que no se permite: " + "( " + string + " )");
                
         }
 	     }

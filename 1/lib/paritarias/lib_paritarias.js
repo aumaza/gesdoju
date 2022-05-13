@@ -93,7 +93,7 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Guardado Exitosamente!!");
+                    bootbox.alert("Registro Guardado Exitosamente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
                     $('#organismo').val('');
@@ -102,13 +102,13 @@ $(document).ready(function(){
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    bootbox.alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    bootbox.alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 4){
-                    alert("Error. Representante Existente!!");
+                    bootbox.alert("Error. Representante Existente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
                     $('#organismo').val('');
@@ -117,9 +117,9 @@ $(document).ready(function(){
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    bootbox.alert("Error de conexion!!");                    
                 }
                 
             }
@@ -233,9 +233,9 @@ $('body #calendar-table').on('click', 'td', function(){
         var dia = $(this).text();
                         
     if(dia == ''){
-        alert('Ha seleccionado un casillero sin fecha');
+        bootbox.alert('Ha seleccionado un casillero sin fecha');
     }else{
-        alert('Día seleccionado: ' + dia);
+        bootbox.alert('Día seleccionado: ' + dia);
     }
       
     
