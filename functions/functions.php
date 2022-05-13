@@ -46,7 +46,7 @@ function skeleton(){
 	<script src="/gesdoju/skeleton/js/buttons.print.min.js"></script>
 	
 	<script src="/gesdoju/skeleton/js/bootbox/bootbox.all.js"></script>
-	<script src="/gesdoju/skeleton/js/bootbox/bootbox.all..min.js"></script>
+	<script src="/gesdoju/skeleton/js/bootbox/bootbox.all.min.js"></script>
 	<script src="/gesdoju/skeleton/js/bootbox/bootbox.js"></script>
 	<script src="/gesdoju/skeleton/js/bootbox/bootbox.locales.js"></script>
 	<script src="/gesdoju/skeleton/js/bootbox/bootbox.locales.min.js"></script>
