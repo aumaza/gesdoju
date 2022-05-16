@@ -27,12 +27,12 @@ function newNorma($conn){
 	        
                 <div class="form-group">
                     <label for="nombre">Nombre de la Norma (*)</label>
-                    <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" oninput="Text(this.value);" required>
+                    <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" oninput="Text(this.value);"  required>
                 </div>
 	        
                 <div class="form-group">
                     <label for="nombre">Nro de Norma (*)</label>
-                    <input type="text" class="form-control" id="n_norma" name="n_norma"  maxlength="25" placeholder="00000" oninput="Numeros(this.value);" required>
+                    <input type="text" class="form-control" id="n_norma" name="n_norma"  maxlength="25" placeholder="00000" value="" oninput="NumerosNorma(this.value);" required>
                 </div>
 		
             </div>';
@@ -95,7 +95,7 @@ function newNorma($conn){
 		
             <div class="form-group">
             <label for="pwd">Año (*)</label>
-            <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" maxlength="4" oninput="Numeros(this.value);" required>
+            <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" maxlength="4" oninput="NumerosAnio(this.value);" required>
             </div>
 		</div>';
 		
@@ -150,7 +150,7 @@ function newNorma($conn){
 		    
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción" oninput="alfaNum(this.value);" required></textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción"  required></textarea>
             </div>
         </div>
 		

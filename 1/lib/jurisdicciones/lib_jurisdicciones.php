@@ -52,6 +52,8 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 			  </div><br>';
 					  
 		  echo "<table class='display compact' style='width:100%' id='jurisdiccionesTable'>";
+		  
+		             
 		  echo "<thead>
 				<th class='text-nowrap text-center'>Código Jurisdicción</th>
 				<th class='text-nowrap text-center'>Jurisdicción</th>
@@ -78,10 +80,11 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 	
 			echo "</table>";
 			echo "<br>";
-			echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
 			echo '<form <action="main.php" method="POST">
 						<button type="submit" class="btn btn-default btn-sm" name="add_jur"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Jurisdicción</button>
-						</form>';
+                 </form><hr>';
+			echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+			
 			echo '</div>';
 			}else{
 			  echo 'Connection Failure...';
@@ -124,7 +127,9 @@ public function newJurisdiccion($conn){
 	 </div>';
  
  }
-
+	
+	
+	
 /*
 ** funcion editar Jurisdicción
 */
@@ -238,8 +243,12 @@ public function addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn){
         				  $resp = mysqli_query($conn,$consulta);
             
             if($resp){
+                $success = '[Registro insertado con éxito en la tabla Jurisdicciones]';
+                mysqlSuccessLogs($success);
             	echo 1; // registro insertado con exito
     		}else{
+                $error = mysqli_error($conn);
+                mysqlErrorLogs($error);
 			    echo -1; // hubo un problema al intentar insertar el registro
 		    }
 		    }else{
@@ -258,8 +267,12 @@ public function updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$c
 	$query = mysqli_query($conn,$sql);
 	
 	if($query){
+        $success = '[Registro actualizado con éxito en la tabla Jurisdicciones con ID: '.$id.']';
+        mysqlSuccessLogs($success);
 		echo 1; // registro insertado con exito
 	}else{
+        $error = mysqli_error($conn);
+        mysqlErrorLogs($error);
 		echo -1; // hubo un problema al insertar el registro
 	}
 }
@@ -297,6 +310,46 @@ function delJurisdiccion($id,$conn){
 
 
 // FIN SECCION PERSISTENCIA
+
+public function modalFormAltaJurisdiccion(){
+
+    echo '<div class="modal fade" id="myModalAltaJurisdiccion" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cargar Jurisdicción</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <form id="fr_add_new_jurisdiccion_ajax" method="POST">
+			 
+                        <div class="form-group">
+                        <label for="cod_jur">Código Jurisdicción</label>
+                        <input type="text" class="form-control" id="cod_jur" name="cod_jur"  maxlength="2" placeholder="Ingrese el código de la Jurisdicción" required>
+                        </div><hr>
+                        
+                        <div class="form-group">
+                        <label for="descripcion">Jurisdicción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese el Nombre de la Jurisdicción" required>
+                        </div><hr>
+                    
+                    <button type="submit" class="btn btn-success btn-block" id="add_jurisdiccion" name="add_jurisdiccion">
+                    <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+                    </form>
+                
+                
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>';
+
+}
+
 
 } // FIN DE LA CLASE
 

@@ -142,7 +142,7 @@ $(document).ready(function(){
             success:function(r){
                 if(r == 1){
                     bootbox.alert("Registro Actualizado Exitosamente!!");
-                    window.location.href="main.php";
+                    window.location.href="#";
                 }else if(r == -1){
                     bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);

@@ -132,8 +132,12 @@ public function addAmbitoNorma($obj_ambito_norma,$descripcion,$conn,$dbase){
         $query_1 = mysqli_query($conn,$sql_1);
             
             if($query_1){
+                $success = '[Registro insertado con éxito en la tabla Ambito de Norma con la Descripción: '.$descripcion.']';
+                mysqlSuccessLogs($success);
                 echo 1; // registro insertado con exito
             }else{
+                $error = mysqli_error($conn);
+                mysqlErrorLogs($error);
 			    echo -1; // hubo un problema al insertar el registro
 		    }
     }else{

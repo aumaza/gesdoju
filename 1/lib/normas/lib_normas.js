@@ -330,26 +330,154 @@ $(document).ready(function(){
 }
 
 
+function getID(){
+    
+    var test = document.querySelectorAll('.form-control');
+
+    for(var i = 0; i < test.length; i++){
+        
+        test[i].addEventListener("click", function(){
+                //console.log(this.id);
+                var id = this.id;
+                console.log(id);
+                return id;
+        }); 
+    }
+        
+    }
+    
+ 
+
 // CAPTURA DE CARACTERES NUMERICOS
-function Numeros(string){
+function NumerosNorma(string){
 //Solo numeros
     var out = '';
     var filtro = '1234567890';//Caracteres validos
-	
+    
+        
+    
     //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){ 
+    for (var i = 0; i < string.length; i++){
+       
+        if (filtro.indexOf(string.charAt(i)) != -1){ 
              //Se a�aden a la salida los caracteres v�lidos
               out += string.charAt(i);
+              
 	     }else{
-            bootbox.alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " )");
-            document.clear();
+             
+             bootbox.confirm({
+                title: "ATENCION / Sólo se permiten Números",
+                message: "Usted ingresó estos caracteres: "  + "( " + string + " ). Se quitará el caracter que no responde al criterio del campo.",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancelar'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Confirmar'
+                    }
+                },
+                callback: function (result) {
+                    //console.log('This was logged in the callback: ' + result);
+                    if(result == true){
+                       
+                        for (var i = 0; i < string.length; i++){
+       
+                            if (!filtro.indexOf(string.charAt(i)) != -1){ 
+                                //Se a�aden a la salida los caracteres v�lidos
+                                out = string.replace(string.charAt(i),'');
+                                //console.log(out);
+                            }
+                        }
+                        
+                                                
+                        $('#n_norma').val(out);
+                        $('#n_norma').trigger('input');
+                        console.log(out);
+                       
+                    }else{
+                        bootbox.alert('El caracter no se será quitado. Volverá a recibir el mensaje de aviso!!');
+                    }
+                }
+                
+            });
+             
+            //bootbox.alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " ).");
+             //$('#n_norma').val('');
+             //$('#anio').val('');
+             
 	     }
 	     }
 	
     //Retornar valor filtrado
     return out;
 }
+
+
+// CAPTURA DE CARACTERES NUMERICOS
+function NumerosAnio(string){
+//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+    
+        
+    
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i = 0; i < string.length; i++){
+       
+        if (filtro.indexOf(string.charAt(i)) != -1){ 
+             //Se a�aden a la salida los caracteres v�lidos
+              out += string.charAt(i);
+              
+	     }else{
+             
+             bootbox.confirm({
+                title: "ATENCION / Sólo se permiten Números",
+                message: "Usted ingresó estos caracteres: "  + "( " + string + " ). Se quitará el caracter que no responde al criterio del campo.",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancelar'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Confirmar'
+                    }
+                },
+                callback: function (result) {
+                    //console.log('This was logged in the callback: ' + result);
+                    if(result == true){
+                       
+                        for (var i = 0; i < string.length; i++){
+       
+                            if (!filtro.indexOf(string.charAt(i)) != -1){ 
+                                //Se a�aden a la salida los caracteres v�lidos
+                                out = string.replace(string.charAt(i),'');
+                                //console.log(out);
+                            }
+                        }
+                        
+                                                
+                        $('#anio').val(out);
+                        $('#anio').trigger('input');
+                        console.log(out);
+                       
+                    }else{
+                        bootbox.alert('El caracter no se será quitado. Volverá a recibir el mensaje de aviso!!');
+                    }
+                }
+                
+            });
+             
+            //bootbox.alert("ATENCION - Sólo se permiten Números. Y usted ingresó este caracter: "  + "( " + string + " ).");
+             //$('#n_norma').val('');
+             //$('#anio').val('');
+             
+	     }
+	     }
+	
+    //Retornar valor filtrado
+    return out;
+}
+
+
 
 // CAPTURA DE CARACTERES ALFABETICOS
 function Text(string){//validacion solo letras

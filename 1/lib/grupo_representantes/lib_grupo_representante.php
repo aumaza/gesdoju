@@ -445,8 +445,12 @@ class Grupo{
                     $query_2 = mysqli_query($conn,$sql_2);
                         
                     if($query_2){
+                        $success = '[Registro insertado con éxito en la tabla Grupo Representantesigo:]';
+                        mysqlSuccessLogs($success);
                         echo 1; // registro insertado correctamente
                     }else{
+                        $error = mysqli_error($conn);
+                        mysqlErrorLogs($error);
                         echo -1; // hubo un problema al insertar el registro
                     }
                     

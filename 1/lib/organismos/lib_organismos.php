@@ -60,8 +60,11 @@ if($conn){
 	      <div class="alert alert-success">
 	      <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Organismos
 	      </div><br>';
+	      
                   
       echo "<table class='display compact' style='width:100%' id='organismosTable'>";
+      
+      
       echo "<thead>
 		    <th class='text-nowrap text-center'>Código Organismo</th>
 		    <th class='text-nowrap text-center'>Organismo</th>
@@ -80,8 +83,10 @@ if($conn){
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo"><button type="submit" class="btn btn-success btn-sm" name="edit_org"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    <a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_org"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
+                    <button type="submit" class="btn btn-success btn-sm" name="edit_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo">
+                        <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                    <button type="submit" class="btn btn-danger btn-sm" name="del_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+                        <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
                     
              echo '</form>';
              echo "</td>";
@@ -90,11 +95,12 @@ if($conn){
 
 		echo "</table>";
 		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_org">
-                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Organismo</button>
+                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Organismo</button><hr>
                     </form>';
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+		
 		echo '</div>';
 		}else{
 		  echo 'Connection Failure...';
@@ -141,7 +147,8 @@ public function newOrganismo($conn){
 	</div>';
 
 } // FIN FORMULARIO DE CARGA DE ORGANISMO
-
+    
+ 
 
 /*
 ** funcion editar Organismo
@@ -207,7 +214,7 @@ public function formBorrarOrganismo($id,$my_organismo,$conn,$dbase){
       echo '<div class="container">
 	    <div class="row">
 	    <div class="col-sm-8">
-	      <h2>Eliminar Norma</h2><hr>
+	      <h2>Eliminar Organismo</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -256,12 +263,16 @@ public function addOrganismo($cod_org,$my_organismo,$descripcion,$ubicacion_fisi
                           $my_organismo->set_descripcion('$descripcion'),
                           $my_organismo->set_ubicacion_fisica('$ubicacion_fisica'))";
         
-        mysqli_select_db($conn,'gesdoju');
+        mysqli_select_db($conn,$dbase);
         $resp = mysqli_query($conn,$consulta);
             
             if($resp){
+                $success = '[Registro insertado con éxito en la tabla Organismos con el código: '.$cod_org.']';
+                mysqlSuccessLogs($success);
                 echo 1; // registro guardado correctamente
             }else{
+                $error = mysqli_error($conn);
+                mysqlErrorLogs($error);
 			    echo -1; // hubo un error al intentar guardar el registro
 		    }
 		    }else{
@@ -285,8 +296,12 @@ public function updateOrganismo($id,$my_organismo,$cod_org,$descripcion,$ubicaci
         $query = mysqli_query($conn,$sql);
         
         if($query){
-            echo 1; // registro actualizado correctamente
+                $success = '[Registro actualizado con éxito en la tabla Organismos con ID: '.$id.']';
+                mysqlSuccessLogs($success);
+                echo 1; // registro actualizado correctamente
         }else{
+           $error = mysqli_error($conn);
+           mysqlErrorLogs($error);
            echo -1; // hubo un problema al intentar actualizar el registro
         }
 

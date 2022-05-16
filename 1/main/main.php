@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -71,7 +71,7 @@
   
  
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();">
+<body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();" >
 
 
 <div class="panel-group">
@@ -501,11 +501,13 @@
 	// SE CREO EL OBJETO ORGoNISMO
 	$my_organismo = new Organismos();
 	
+	//
+	
 	if(isset($_POST['listar_organismos'])){
        $my_organismo->listarOrganismos($my_organismo,$conn,$dbase); 
 	}
 	if(isset($_POST['add_org'])){
-       $my_organismo->newOrganismo($conn);
+        $my_organismo->newOrganismo($conn);
 	}
 	if(isset($_POST['edit_org'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -519,6 +521,8 @@
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $my_organismo->delOrganismo($id,$conn,$dbase);
 	}
+	
+	
 	// FIN SECCION ORGANISMOS //
 	// =============================================================================== //
 	
@@ -527,8 +531,10 @@
 	// SE CREA EL OBJETO
 	$my_jurisdiccion = new Jurisdicciones();
 	
+	
+	
 	if(isset($_POST['L'])){
-        $my_jurisdiccion->listarJurisdicciones($my_jurisdiccion,$conn);
+        $my_jurisdiccion->listarJurisdicciones($my_jurisdiccion,$conn,$dbase);
 	}
 	if(isset($_POST['add_jur'])){
         $my_jurisdiccion->newJurisdiccion($conn);
@@ -545,6 +551,7 @@
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $my_jurisdiccion->delJurisdiccion($id,$conn);
 	}
+	
 	
 	// FIN SECCION JURIDISDICCIONES //
 	// =============================================================================== //
@@ -730,6 +737,7 @@
 <!-- Modal 2 -->
 <?php modal2(); ?>
 <!-- END Modal 2 -->
+
 
 </body>
 </html>
