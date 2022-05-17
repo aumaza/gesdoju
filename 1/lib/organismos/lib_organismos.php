@@ -82,7 +82,7 @@ if($conn){
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
-                                     
+                    
                     <button type="submit" class="btn btn-success btn-sm" name="edit_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo">
                         <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
                     <button type="submit" class="btn btn-danger btn-sm" name="del_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">

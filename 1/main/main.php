@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -522,7 +522,6 @@
         $my_organismo->delOrganismo($id,$conn,$dbase);
 	}
 	
-	
 	// FIN SECCION ORGANISMOS //
 	// =============================================================================== //
 	
@@ -737,6 +736,10 @@
 <!-- Modal 2 -->
 <?php modal2(); ?>
 <!-- END Modal 2 -->
+
+<!-- MODAL EDITAR ORGANISMO -->
+<?php //$my_organismo->modalEditarOrganismo($my_organismo,$conn,$dbase); ?>
+<!-- END MODAL ORGANISMO -->
 
 
 </body>

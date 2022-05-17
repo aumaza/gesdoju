@@ -141,8 +141,8 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Actualizado Exitosamente!!");
-                    window.location.href="#";
+                    alert("Registro Actualizado Exitosamente!!");
+                    window.location = "main.php";
                 }else if(r == -1){
                     bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
@@ -161,4 +161,17 @@ $(document).ready(function(){
         return false;
     
 });
+});
+
+/*
+** CAPTURA ID DE MODAL
+*/
+$(document).ready(function(e) {
+  $('#modalEditOrganismo').on('show.bs.modal', function(e) {
+    var id = $(e.relatedTarget).data().id;
+    id = parseInt(id);
+    document.getElementById('idOrg').innerText = id;
+    $(e.currentTarget).find('#bookId').val(id);
+    console.log(id);
+  });
 });

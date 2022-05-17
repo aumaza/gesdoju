@@ -212,39 +212,10 @@ function leftPanel($varsession){
                             </div>';
                             
                             
-                    echo '<div class="panel-group" id="accordion">
-                            <div class="panel panel-default" align="center">
-                                <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                    Organismos</a>
-                                </h4>
-                                </div>
-                                <div id="collapse4" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                
+                    echo '                                
                                 <button type="submit" class="btn btn-default btn-xs btn-block" name="listar_organismos" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
                                 
-                                </div>
-                                </div>
-                            </div>
-                            
-                            <div class="panel panel-default" align="center">
-                                <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                                    Jurisdicciones</a>
-                                </h4>
-                                </div>
-                                <div id="collapse5" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                
-                                <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </div>';
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button>';
                 
                 }
              
