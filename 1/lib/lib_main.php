@@ -213,9 +213,11 @@ function leftPanel($varsession){
                             
                             
                     echo '                                
-                                <button type="submit" class="btn btn-default btn-xs btn-block" name="listar_organismos" data-meeting-participanttoggle="tooltip" data-placement="right" title="Listar Organismos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="listar_organismos" data-toggle="tooltip" data-placement="right" title="Listar Organismos">
+                                    <img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Organismos</button>
                                 
-                                <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones"><img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button>';
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="L" data-toggle="tooltip" data-placement="right" title="Listar Jurisdicciones">
+                                    <img class="img-reponsive img-rounded" src="../../icons/actions/view-file-columns.png" /> Jurisdicciones</button><br>';
                 
                 }
              

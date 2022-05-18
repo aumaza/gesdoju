@@ -84,9 +84,9 @@ if($conn){
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                     
                     <button type="submit" class="btn btn-success btn-sm" name="edit_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo">
-                        <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button>
                     <button type="submit" class="btn btn-danger btn-sm" name="del_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
-                        <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button>';
                     
              echo '</form>';
              echo "</td>";

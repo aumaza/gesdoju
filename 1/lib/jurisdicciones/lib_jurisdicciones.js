@@ -140,8 +140,8 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Actualizado Exitosamente!!");
-                    window.location.href="#";
+                    alert("Registro Actualizado Exitosamente!!");
+                    window.location='main.php?jurisdiccion=jurisdicciones';
                 }else if(r == -1){
                     bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);

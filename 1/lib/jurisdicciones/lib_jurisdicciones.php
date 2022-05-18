@@ -70,8 +70,10 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 				 echo '<form <action="main.php" method="POST">
 						<input type="hidden" name="id" value="'.$fila['id'].'">
 										 
-						<a href="#" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Jurisdicción"><button type="submit" class="btn btn-success btn-sm" name="edit_jur"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-						<a href="#" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><button type="submit" class="btn btn-danger btn-sm" name="del_jur"><img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
+						<button type="submit" class="btn btn-success btn-sm" name="edit_jur" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Jurisdicción">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button>
+						<button type="submit" class="btn btn-danger btn-sm" name="del_jur" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button>';
 						
 				 echo '</form>';
 				 echo "</td>";

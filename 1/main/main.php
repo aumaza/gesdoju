@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -503,7 +503,7 @@
 	
 	//
 	
-	if(isset($_POST['listar_organismos'])){
+	if(isset($_POST['listar_organismos']) || (isset($_GET['organismo']) == 'organismos')){
        $my_organismo->listarOrganismos($my_organismo,$conn,$dbase); 
 	}
 	if(isset($_POST['add_org'])){
@@ -532,7 +532,7 @@
 	
 	
 	
-	if(isset($_POST['L'])){
+	if(isset($_POST['L']) || (isset($_GET['jurisdiccion']) == 'jurisdicciones')){
         $my_jurisdiccion->listarJurisdicciones($my_jurisdiccion,$conn,$dbase);
 	}
 	if(isset($_POST['add_jur'])){
