@@ -353,6 +353,43 @@ public function modalFormAltaJurisdiccion(){
 }
 
 
+public function modalJurisdiccionConfirm(){
+
+    echo '<div class="modal fade" id="myModalJurisdiccion" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Atención!!!</h4>
+                </div>
+                <div class="modal-body">
+                <p>La Jurisdicción ha sido actualizada Exitosamente.</p>
+                
+                 
+                
+                </div>
+                <div class="modal-footer">
+                
+                    <form action="main.php" method="POST">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" name="L">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+                    </form> 
+                        
+                </div>
+            </div>
+            
+            </div>
+        </div>
+        
+        </div>';
+
+}
+
+
+
 } // FIN DE LA CLASE
 
 ?>

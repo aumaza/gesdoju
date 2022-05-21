@@ -52,7 +52,7 @@
         ],
         columnDefs: [ {
             targets: -1,
-            visible: false
+            visible: true
         } ],
         "fixedColumns": true,
       "language":{
@@ -141,8 +141,7 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Actualizado Exitosamente!!");
-                    window.location='main.php?organismo=organismos';
+                    $("#myModalOrganismo").modal("show");
                 }else if(r == -1){
                     bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);

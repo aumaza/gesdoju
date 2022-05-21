@@ -503,7 +503,7 @@
 	
 	//
 	
-	if(isset($_POST['listar_organismos']) || (isset($_GET['organismo']) == 'organismos')){
+	if(isset($_POST['listar_organismos'])){
        $my_organismo->listarOrganismos($my_organismo,$conn,$dbase); 
 	}
 	if(isset($_POST['add_org'])){
@@ -522,6 +522,8 @@
         $my_organismo->delOrganismo($id,$conn,$dbase);
 	}
 	
+	$my_organismo->modalOrganismoConfirm();
+	
 	// FIN SECCION ORGANISMOS //
 	// =============================================================================== //
 	
@@ -532,7 +534,7 @@
 	
 	
 	
-	if(isset($_POST['L']) || (isset($_GET['jurisdiccion']) == 'jurisdicciones')){
+	if(isset($_POST['L'])){
         $my_jurisdiccion->listarJurisdicciones($my_jurisdiccion,$conn,$dbase);
 	}
 	if(isset($_POST['add_jur'])){
@@ -551,6 +553,7 @@
         $my_jurisdiccion->delJurisdiccion($id,$conn);
 	}
 	
+	$my_jurisdiccion->modalJurisdiccionConfirm();
 	
 	// FIN SECCION JURIDISDICCIONES //
 	// =============================================================================== //
