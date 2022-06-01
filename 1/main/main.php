@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -618,6 +618,10 @@
 	}
 	if(isset($_POST['nueva_paritaria'])){
         $paritaria->formAltaParitaria($conn,$dbase);
+	}
+	if(isset($_POST['edit_paritaria'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        $paritaria->formEditParitaria($id,$conn,$dbase);
 	}
 	if(isset($_POST['info_paritaria'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);

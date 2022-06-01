@@ -91,7 +91,7 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Guardado Exitosamente!!");
+                    alert("Registro Guardado Exitosamente!!");
                     $('#nombre_grupo').val('');
                     $('#representante_titular').val('');
                     $('#representante_suplente').val('');
@@ -100,13 +100,13 @@ $(document).ready(function(){
                     $('#nombre_grupo').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar guardar el registro");
+                    alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 4){
-                    bootbox.alert("Error. Representante Existente!!");
+                    alert("Error. Representante Existente!!");
                     $('#nombre_grupo').val('');
                     $('#representante_titular').val('');
                     $('#representante_suplente').val('');
@@ -115,9 +115,9 @@ $(document).ready(function(){
                     $('#nombre_grupo').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }
@@ -148,18 +148,18 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Actualizado Exitosamente!!");
+                    alert("Registro Actualizado Exitosamente!!");
                     window.location.href="main.php";
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }
@@ -186,19 +186,19 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Actualizado Exitosamente!!");
+                    alert("Registro Actualizado Exitosamente!!");
                     $('#representante').val('');
                     $('#representante').focus('');
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }
@@ -233,7 +233,7 @@ function compareSelect(string){
                 $('#primer_asesor').val('');
                 $('#segundo_asesor').val('');
             }else{
-                bootbox.alert('Puede Continuar...');
+                alert('Puede Continuar...');
             }
     }
         

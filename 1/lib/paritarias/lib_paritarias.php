@@ -126,7 +126,10 @@ class Paritarias{
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
                                 
-                                <button type="submit" class="btn btn-default btn-sm" name="info_paritaria" data-toggle="tooltip" data-placement="right" title="Información Extendida sobre paritaria">
+                                <button type="submit" class="btn btn-default btn-sm" name="edit_paritaria">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                
+                                <button type="submit" class="btn btn-default btn-sm" name="info_paritaria">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información Extendida</button>
                                 
                         </form>';
@@ -250,6 +253,105 @@ class Paritarias{
                 
                 <button type="submit" class="btn btn-default btn-block" id="add_new_paritaria" name="add_new_paritaria">
                     <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+            </form>
+           
+            </div></div></div>';   
+    
+    }
+    
+    
+    public function formEditParitaria($id,$conn,$dbase){
+        
+        mysqli_select_db($conn,$dbase);
+        $sql = "select * from representacion_paritarias where id = '$id'";
+        $query = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($query);
+    
+        echo '<div class="container">
+            <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Reunión Paritaria</div>
+                        
+                        <div class="panel-body">
+                                   
+            <form id="fr_update_paritaria_ajax" method="POST">
+            <input type="hidden" id="id" name="id" value="'.$id.'">
+            
+             
+            <div class="container">     
+                <div class="row">
+                    <div class="col-sm-6">
+                                                                                  
+                        <div class="form-group">
+                            <label for="grupo_representante">Grupo Representante</label>
+                            <select class="form-control" id="grupo_representante" name="grupo_representante" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT nombre_grupo FROM grupo_representantes order by nombre_grupo ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[nombre_grupo].'" '.("'$valores[nombre_grupo]'" == "'$row[grupo_representantes]'" ? "selected" : "").'>'.$valores[nombre_grupo].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                        
+                        <div class="form-group">
+                            <label for="tipo_representacion">Tipo de Representación:</label>
+                            <select class="form-control" id="tipo_representacion" name="tipo_representacion">
+                                <option value="" disabled selected>Seleccionar</option>
+                                <option value="Negociacion" '.("'Negociacion'" == "'$row[tipo_representacion]'" ? "selected" : "").'>Negociación</option>
+                                <option value="Interpretacion" '.("'Interpretacion'" == "'$row[tipo_representacion]'" ? "selected" : "").'>Interpretación</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="organismo">Organismo</label>
+                            <select class="form-control" id="organismo" name="organismo" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT * FROM organismos order by descripcion ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[descripcion].'" '.("'$valores[descripcion]'" == "'$row[organismo]'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                                    }
+                                    }
+                                }
+
+                                mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
+                        
+                        <div class="form-group">
+                            <label for="fecha_reunion">Fecha Reunión:</label>
+                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion" value="'.$row['fecha_reunion'].'" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="resumen_reunion">Resumen Reunión:</label>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" oninput="alfaNum(this.value);" placeholder="Ingrese un breve Resúmen de la Reunión" required>'.$row['resumen_reunion'].'</textarea>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                </div><hr>
+                
+                <button type="submit" class="btn btn-default btn-block" id="update_paritaria" name="update_paritaria">
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Actualizar</button>
             </form>
            
             </div></div></div>';   
@@ -613,6 +715,32 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     
     } // end funcion
 
+    public function updateParitaria($paritaria,$id,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
+        
+        if($conn){
+        
+            mysqli_select_db($conn,$dbase);
+            $sql = "update representacion_paritarias set
+                    grupo_representantes = $paritaria->set_grupo_representantes('$grupo_representante'),
+                    tipo_representacion = $paritaria->set_tipo_representacion('$tipo_representacion'),
+                    organismo = $paritaria->set_organismo('$organismo'),
+                    fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
+                    resumen_reunion = $paritaria->set_resumen_reunion('$resumen_reunion')
+                    where id = '$id'";
+            $query = mysqli_query($conn,$sql);
+            
+            if($query){
+                echo 1;
+            }else{
+                echo -1;
+            }       
+        
+        }else{
+            echo 7;
+        }
+    
+    } // END OF FUNCTION
+    
     
     public function calendarioParitarias($conn,$dbase){
         

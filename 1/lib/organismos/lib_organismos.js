@@ -92,29 +92,29 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Guardado Exitosamente!!");
+                    alert("Registro Guardado Exitosamente!!");
                     $('#cod_org').val('');
                     $('#descripcion').val('');
                     $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar guardar el registro");
+                    alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 4){
-                    bootbox.alert("Error. Organismo Existente!!");
+                    alert("Error. Organismo Existente!!");
                     $('#cod_org').val('');
                     $('#descripcion').val('');
                     $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }
@@ -143,15 +143,15 @@ $(document).ready(function(){
                 if(r == 1){
                     $("#myModalOrganismo").modal("show");
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }

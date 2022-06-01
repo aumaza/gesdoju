@@ -52,7 +52,7 @@
         ],
         columnDefs: [ {
             targets: -1,
-            visible: false
+            visible: true
         } ],
         "fixedColumns": true,
       "language":{
@@ -93,7 +93,7 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    bootbox.alert("Registro Guardado Exitosamente!!");
+                    alert("Registro Guardado Exitosamente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
                     $('#organismo').val('');
@@ -102,13 +102,13 @@ $(document).ready(function(){
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == -1){
-                    bootbox.alert("Error. Hubo un problema al intentar guardar el registro");
+                    alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    bootbox.alert("Error, Hay campos sin completar!!");
+                    alert("Error, Hay campos sin completar!!");
                     console.log("Datos: " + datos);
                 }else if(r == 4){
-                    bootbox.alert("Error. Representante Existente!!");
+                    alert("Error. Representante Existente!!");
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
                     $('#organismo').val('');
@@ -117,9 +117,9 @@ $(document).ready(function(){
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    bootbox.alert("Error de conexion dentro de la funcion principal!!");                    
+                    alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
-                    bootbox.alert("Error de conexion!!");                    
+                    alert("Error de conexion!!");                    
                 }
                 
             }
@@ -130,6 +130,43 @@ $(document).ready(function(){
 });
 });  
  
+/*
+** GUARDA NUEVO REGISTRO DE GRUPO
+*/
+
+$(document).ready(function(){
+    $('#update_paritaria').click(function(){
+        
+        var datos = $('#fr_update_paritaria_ajax').serialize();
+        
+        $.ajax({
+            type:"POST",
+            url:"../lib/paritarias/update_paritaria.php",
+            data:datos,
+            success:function(r){
+                if(r == 1){
+                    alert("Registro Actualizado Exitosamente!!");
+                    console.log("Datos: " + datos);
+                    window.location.href="main.php";
+                }else if(r == -1){
+                    alert("Error. Hubo un problema al intentar actualizar el registro");
+                    console.log("Datos: " + datos);
+                }else if(r == 5){
+                    alert("Error, Hay campos sin completar!!");
+                    console.log("Datos: " + datos);
+                }else if(r == 7){
+                    alert("Error de conexion dentro de la funcion principal!!");                    
+                }else if(r == 13){
+                    alert("Error de conexion!!");                    
+                }
+                
+            }
+        });
+
+        return false;
+    
+});
+});
 
 // ====================================================================================== //
 // 
