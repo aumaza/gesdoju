@@ -212,6 +212,19 @@ id_norma_principal int(11) not null,
 path_name varchar(100) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla eventos
+CREATE TABLE events(
+  id int(11) auto_increment primary key,
+  title varchar(255) NOT NULL,
+  color varchar(7) DEFAULT NULL,
+  start datetime NOT NULL,
+  end datetime DEFAULT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO events (id, title, color, start, end) VALUES (1, 'Evento Azul', '#0071c5', '2017-08-01 00:00:00', '2017-08-02 00:00:00'),(2, 'Eventos 2', '#40E0D0', '2017-08-02 00:00:00', '2017-08-03 00:00:00'),(3, 'Doble click para editar evento', '#008000', '2017-08-03 00:00:00', '2017-08-07 00:00:00');
+
+
+
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
 into table unidades_retributivas fields terminated by ',' enclosed by '"' lines terminated by '\n'

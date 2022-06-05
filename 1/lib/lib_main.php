@@ -241,11 +241,10 @@ function infoButttons(){
         echo '<button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal2">
                     <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Acerca de Gesdoju</button>
                     
-                <a href="../explorer/index.php" data-toggle="tooltip" data-placement="top" title="Ir al Sistema de Archivos de Gesdoju" target="_blank"><button type="button" class="btn btn-success navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button></a>
+                <button type="button" class="btn btn-success navbar-btn" onclick="callExplorer();"><img class="img-reponsive img-rounded" src="../../icons/places/folder-orange.png" /> Explorer</button>
         
-                <a href="../fmanager/ft2.php" data-toggle="tooltip" data-placement="top" title="Ir al File Manager de Administrador" target="_blank">
-                    <button type="button" class="btn btn-default navbar-btn">
-                        <img class="img-reponsive img-rounded" src="../../icons/status/meeting-chair.png" /> Admin Explorer</button></a><hr>';
+                <button type="button" class="btn btn-default navbar-btn" onclick="callAdminExplorer();">
+                        <img class="img-reponsive img-rounded" src="../../icons/status/meeting-chair.png" /> Admin Explorer</button><hr>';
 
 }
 

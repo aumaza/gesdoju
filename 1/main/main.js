@@ -94,3 +94,21 @@ function nobackbutton(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();   
 });
+
+
+function callAdminExplorer(){
+    
+    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=2000,height=650,left=200,top=200`;
+    
+    open("../fmanager/ft2.php", "adminExplorer", params);
+ 
+}
+
+
+function callExplorer(){
+    
+    let params = `scrollbars=yes,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=1300,height=550,left=200,top=200`;
+    
+    open("../explorer/index.php", "explorer", params);
+ 
+}

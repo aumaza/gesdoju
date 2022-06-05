@@ -268,13 +268,22 @@ $(document).ready(function(){
 $('body #calendar-table').on('click', 'td', function(){
     
         var dia = $(this).text();
-                        
+        
     if(dia == ''){
-        bootbox.alert('Ha seleccionado un casillero sin fecha');
+        alert('Ha seleccionado un casillero sin fecha');
     }else{
-        bootbox.alert('Día seleccionado: ' + dia);
+        alert('Día Seleccionado: ' + dia);
     }
-      
-    
+  
 })
 });
+
+
+function callCalendar(){
+    
+    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=800,height=850,left=200,top=200`;
+    
+    open("../calendar/index.php", "calendar", params);
+    
+    
+}

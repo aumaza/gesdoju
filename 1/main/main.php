@@ -636,9 +636,7 @@
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);        
         $paritaria->searchAdvanceParitariasResults($paritaria,$grupo_representante,$fecha_desde,$fecha_hasta,$conn,$dbase);
 	}
-	if(isset($_POST['calendario_paritarias'])){
-      $paritaria->calendarioParitarias($conn,$dbase);
-    }
+	
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //
 	

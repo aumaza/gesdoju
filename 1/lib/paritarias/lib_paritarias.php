@@ -147,11 +147,13 @@ class Paritarias{
                             <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="right" title="Búsqueda Avanzada sobre Paritarias">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/system-search.png" /> Búsqueda Avanzada</button>
                             
-                            <button type="submit" class="btn btn-default btn-sm" name="calendario_paritarias" data-toggle="tooltip" data-placement="right" title="Calendario de Paritarias">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-month.png" /> Calendario Paritarias</button>
+                            </form><br>';
+                            
+                    echo '<button type="button" class="btn btn-default btn-sm" name="calendario_paritarias" data-toggle="tooltip" data-placement="right" title="Calendario de Paritarias" onclick="callCalendar();">
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-month.png" /> Calendario Paritarias</button>';
                                 
-                        </form><br>';
-                    echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                        
+                    echo '<hr><button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
                     echo '</div></div>';
                     
                     }else{
@@ -806,17 +808,15 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                     </div>";
        
         $nuevo_anio = '<div id="nuevo_anio" ></div>';
-        $n_anio = strVal($nuevo_anio);
+        //$n_anio = strVal($nuevo_anio);
         
         $nuevo_mes = '<div id="nuevo_mes"></div>';
-        $n_mes = strVal($nuevo_mes);
+        //$n_mes = strVal($nuevo_mes);
         
-        echo $n_anio;
-        echo $n_mes;
+        echo $nuevo_anio;
+        echo $nuevo_mes;
         
-            
             $miAnio = intVal($anio);
-            
             
             switch($mes){
                 
@@ -875,8 +875,8 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                     <thead>
                     
                     <tr>";
-                        echo "<th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=2>Año: $anio </th>
-                                <th class='text-nowrap text-center' style='background-color:#454545; color: white;' colspan=5>Mes $mi_mes</th>";
+                        echo "<th class='text-nowrap text-center' id='mi_anio' style='background-color:#454545; color: white;' colspan=2>Año: $anio </th>
+                                <th class='text-nowrap text-center' id='mi_mes' style='background-color:#454545; color: white;' colspan=5>Mes $mi_mes</th>";
                     
               echo "</tr>
                     
@@ -898,7 +898,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                                 for($i = 1; $i <= 7; $i++){
                                     
                                     if($dias[$i] == $dia){
-                                        echo "<td align=center  style='background-color:#FFA07A; color: whi<th class='text-nowrap text-center' style='background-color:#454545; color: white;'>".$dias[$i]."</td>";
+                                        echo "<td align=center id='dia' style='background-color:#FFA07A; color: whi<th class='text-nowrap text-center' style='background-color:#454545; color: white;'>".$dias[$i]."</td>";
                                     }else if($i == 7){
                                         echo "<td align=center style='background-color: #FF5733; color: white;'>".$dias[$i]."</td>";
                                     }
