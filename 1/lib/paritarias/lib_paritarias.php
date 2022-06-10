@@ -85,7 +85,7 @@ class Paritarias{
     // METODOS
 
     /*
-    ** LISTAR GRUPOS
+    ** LISTAR
     */
     public function listarParitarias($paritaria,$conn,$dbase){
 
@@ -165,6 +165,146 @@ class Paritarias{
     } // FIN DEL METODO LISTAR
     
     
+    /*
+    ** LISTAR
+    */
+    public function listarTipoRepresentacion($paritaria,$conn,$dbase){
+
+    
+                if($conn){
+                
+                
+                $sql = "select * from tipo_representacion";
+                mysqli_select_db($conn,$dbase);
+                $query = mysqli_query($conn,$sql);
+                //mostramos fila x fila
+                $count = 0;
+                echo '<div class="panel panel-info">
+                        <div class="panel-heading">
+                            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Tipo de Representación </div>
+                        
+                        <div class="panel-body">
+                        <div class="table-responsive"><br>';
+                        
+                        echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
+                        echo "<thead>
+                        <th class='text-nowrap text-center'>Tipo Representación</th>
+                        <th>&nbsp;</th>
+                        </thead>";
+
+
+                while($fila = mysqli_fetch_array($query)){
+                        // Listado normal
+                        echo "<tr>";
+                        echo "<td align=center>".$paritaria->get_tipo_representacion($fila['descripcion'])."</td>";
+                        echo "<td class='text-nowrap'>";
+                        echo '<form action="#" method="POST">
+                                <input type="hidden" name="id" value="'.$fila['id'].'" >
+                                
+                                <button type="submit" class="btn btn-default btn-sm" name="edit_tipo_representacion">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                
+                        </form>';
+                        echo "</td>";
+                        $count++;
+                    }
+
+                    echo "</table>";
+                    echo "<hr>";
+                    echo '<form action="#" method="POST">
+                            
+                            <button type="submit" class="btn btn-default btn-sm" name="nuevo_tipo_representacion" data-toggle="tooltip" data-placement="right" title="Agregar Registro de Tipo Representación">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nuevo Registro de Tipo de Representación</button>
+                            
+                            </form><br>';
+                        
+                    echo '<hr><button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                    echo '</div></div>';
+                    
+                    }else{
+                    echo 'Connection Failure...';
+                    }
+
+                mysqli_close($conn);
+
+    } // FIN DEL METODO LISTAR
+    
+    
+    /*
+    ** FORMULARIO DE CARGA DE TIPO DE REPRESENTACION
+    */
+    public function formAltaTipoRepresentacion(){
+    
+        echo '<div class="container"><br>
+                <div class="row">
+                
+                <div class="col-sm-8">
+                <h1 align="center">Nuevo Tipo de Representación</h1><hr>
+                <p align="center">Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
+                </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-sm-8" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
+                        
+                        <form id="fr_add_new_tipo_representacion_ajax" method="POST">
+                        
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                        </div><hr>
+                        
+                        <button type="submit" class="btn btn-default btn-block" id="add_new_tipo_representacion">
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-save.png" /> Guardar</button>
+                        </form> 
+                        <br>
+                    </div>
+                    
+                </div>
+                </div>';    
+    }
+    
+    
+    /*
+    ** FORMULARIO DE EDITAR DE TIPO DE REPRESENTACION
+    */
+    public function formEditTipoRepresentacion($paritaria,$id,$conn,$dbase){
+        
+        mysqli_select_db($conn,$dbase);
+        $sql = "select * from tipo_representacion where id = '$id'";
+        $query = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($query);
+        
+        echo '<div class="container"><br>
+                <div class="row">
+                
+                <div class="col-sm-8">
+                <h1 align="center">Editar Tipo de Representación</h1><hr>
+                <p align="center">Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
+                </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-sm-8" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
+                        
+                        <form id="fr_update_tipo_representacion_ajax" method="POST">
+                        <input type="hidden" id="id" name="id" value="'.$id.'">
+                        
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$row['descripcion'].'" required>
+                        </div><hr>
+                        
+                        <button type="submit" class="btn btn-default btn-block" id="update_tipo_representacion">
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-save.png" /> Actualizar</button>
+                        </form> 
+                        <br>
+                    </div>
+                    
+                </div>
+                </div>';    
+    }
+    
 /*
 ** FORMULARIO DE CARGA DE UN NUEVO REGISTRO
 */
@@ -207,14 +347,28 @@ class Paritarias{
                             echo '</select>
                             </div>
                         
+                        
                         <div class="form-group">
-                            <label for="tipo_representacion">Tipo de Representación:</label>
-                            <select class="form-control" id="tipo_representacion" name="tipo_representacion">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option value="Negociacion">Negociación</option>
-                                <option value="Interpretacion">Interpretación</option>
-                            </select>
-                        </div>
+                            <label for="tipo_representacion">Tipo Representación</label>
+                            <select class="form-control" id="tipo_representacion" name="tipo_representacion" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT descripcion FROM tipo_representacion order by descripcion ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
                         
                         <div class="form-group">
                             <label for="organismo">Organismo</label>
@@ -307,13 +461,26 @@ class Paritarias{
                             </div>
                         
                         <div class="form-group">
-                            <label for="tipo_representacion">Tipo de Representación:</label>
-                            <select class="form-control" id="tipo_representacion" name="tipo_representacion">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option value="Negociacion" '.("'Negociacion'" == "'$row[tipo_representacion]'" ? "selected" : "").'>Negociación</option>
-                                <option value="Interpretacion" '.("'Interpretacion'" == "'$row[tipo_representacion]'" ? "selected" : "").'>Interpretación</option>
-                            </select>
-                        </div>
+                            <label for="tipo_representacion">Tipo Representación</label>
+                            <select class="form-control" id="tipo_representacion" name="tipo_representacion" required>
+                            <option value="" disabled selected>Seleccionar</option>';
+                                
+                                if($conn){
+                                $query = "SELECT descripcion FROM tipo_representacion order by descripcion ASC";
+                                mysqli_select_db($conn,$dbase);
+                                $res = mysqli_query($conn,$query);
+
+                                if($res){
+                                    while ($valores = mysqli_fetch_array($res)){
+                                    echo '<option value="'.$valores[descripcion].'" '.("'$valores[descripcion]'" == "'$row[tipo_representacion]'" ? "selected" : '').'>'.$valores[descripcion].'</option>';
+                                    }
+                                    }
+                                }
+
+                                //mysqli_close($conn);
+                            
+                            echo '</select>
+                            </div>
                         
                         <div class="form-group">
                             <label for="organismo">Organismo</label>
@@ -716,6 +883,41 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         }
     
     } // end funcion
+    
+    
+    public function addTipoRepresentacion($paritaria,$descripcion,$conn,$dbase){
+    
+        if($conn){
+        
+            mysqli_select_db($conn,$dbase);
+            
+            $sql = "select * from tipo_representacion where descripcion = '$descripcion'";
+            $query = mysqli_query($conn,$sql);
+            $rows = mysqli_num_rows($query);
+            
+            if($rows == 0){
+            
+            $sql_1 = "insert into tipo_representacion ".
+                   "(descripcion)".
+                   "values ".
+                   "($paritaria->set_tipo_representacion('$descripcion'))";
+            $query_1 = mysqli_query($conn,$sql_1);
+            
+            if($query_1){
+                echo 1;
+            }else{
+                echo -1;
+            }
+        
+        }if($rows > 0){
+            echo 4; // registro existente
+        }
+        }else{
+            echo 7;
+        }
+    
+    
+    }
 
     public function updateParitaria($paritaria,$id,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
         
@@ -743,6 +945,29 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     
     } // END OF FUNCTION
     
+    
+    public function updateTipoRepresentacion($paritaria,$id,$descripcion,$conn,$dbase){
+    
+        if($conn){
+            
+            mysqli_select_db($conn,$dbase);
+            $sql = "update tipo_representacion set
+                    descripcion = $paritaria->set_tipo_representacion('$descripcion')
+                    where id = '$id'";
+            
+            $query = mysqli_query($conn,$sql);
+            
+            if($query){
+                echo 1;
+            }else{
+                echo -1;
+            }
+        
+        }else{
+            echo 7;
+        }
+    
+    }
     
     public function calendarioParitarias($conn,$dbase){
         

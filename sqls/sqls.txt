@@ -224,6 +224,12 @@ CREATE TABLE events(
 INSERT INTO events (id, title, color, start, end) VALUES (1, 'Evento Azul', '#0071c5', '2017-08-01 00:00:00', '2017-08-02 00:00:00'),(2, 'Eventos 2', '#40E0D0', '2017-08-02 00:00:00', '2017-08-03 00:00:00'),(3, 'Doble click para editar evento', '#008000', '2017-08-03 00:00:00', '2017-08-07 00:00:00');
 
 
+#tabla tipo_representacion
+create table tipo_representacion(
+id int(11) auto_increment primary key,
+descripcion varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 

@@ -168,6 +168,90 @@ $(document).ready(function(){
 });
 });
 
+
+/*
+** GUARDA NUEVO REGISTRO DE GRUPO
+*/
+
+$(document).ready(function(){
+    $('#add_new_tipo_representacion').click(function(){
+        
+        var datos = $('#fr_add_new_tipo_representacion_ajax').serialize();
+        
+        $.ajax({
+            type:"POST",
+            url:"../lib/paritarias/nuevo_tipo_representacion.php",
+            data:datos,
+            success:function(r){
+                if(r == 1){
+                    alert("Registro Guardado Exitosamente!!");
+                    $('#descripcion').val('');
+                    $('#descripcion').focus('');
+                    console.log("Datos: " + datos);
+                }else if(r == -1){
+                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    console.log("Datos: " + datos);
+                }else if(r == 5){
+                    alert("Error, Hay campos sin completar!!");
+                    console.log("Datos: " + datos);
+                }else if(r == 4){
+                    alert("Error. Registro Existente!!");
+                    $('#descripcion').val('');
+                    $('#descripcion').focus('');
+                    console.log("Datos: " + datos);
+                }else if(r == 7){
+                    alert("Error de conexion dentro de la funcion principal!!");                    
+                }else if(r == 13){
+                    alert("Error de conexion!!");                    
+                }
+                
+            }
+        });
+
+        return false;
+    
+});
+});
+
+
+/*
+** GUARDA ACTUALIZACION DE  REGISTRO
+*/
+
+$(document).ready(function(){
+    $('#update_tipo_representacion').click(function(){
+        
+        var datos = $('#fr_update_tipo_representacion_ajax').serialize();
+        
+        $.ajax({
+            type:"POST",
+            url:"../lib/paritarias/update_tipo_representacion.php",
+            data:datos,
+            success:function(r){
+                if(r == 1){
+                    alert("Registro Actualizado Exitosamente!!");
+                    console.log("Datos: " + datos);
+                    window.location.href = 'main.php';
+                }else if(r == -1){
+                    alert("Error. Hubo un problema al intentar actualizar el registro");
+                    console.log("Datos: " + datos);
+                }else if(r == 5){
+                    alert("Error, Hay campos sin completar!!");
+                    console.log("Datos: " + datos);
+                }else if(r == 7){
+                    alert("Error de conexion dentro de la funcion principal!!");                    
+                }else if(r == 13){
+                    alert("Error de conexion!!");                    
+                }
+                
+            }
+        });
+
+        return false;
+    
+});
+});
+
 // ====================================================================================== //
 // 
 
