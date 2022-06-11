@@ -92,6 +92,7 @@ class Paritarias{
     
                 if($conn){
                 
+                $fecha_actual = date('Y-m-d');
                 
                 $sql = "select * from representacion_paritarias";
                 mysqli_select_db($conn,$dbase);
@@ -107,10 +108,11 @@ class Paritarias{
                         
                         echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
                         echo "<thead>
-                        <th class='text-nowrap text-center'>Grupo Encargado</th>
+                        <th class='text-nowrap text-center'>Representantes</th>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
                         <th class='text-nowrap text-center'>Fecha Reunión</th>
                         <th class='text-nowrap text-center'>Organismo</th>
+                        <th class='text-nowrap text-center'>Resumen</th>
                         <th>&nbsp;</th>
                         </thead>";
 
@@ -118,10 +120,23 @@ class Paritarias{
                 while($fila = mysqli_fetch_array($query)){
                         // Listado normal
                         echo "<tr>";
-                        echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
+                        $sql_1 = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo_representantes]'";
+                        $query_1 = mysqli_query($conn,$sql_1);
+                        while($row = mysqli_fetch_array($query_1)){                       
+                            echo "<td align=center>".$row['representante_titular']. " <br> " .$row['representante_suplente']."</td>";
+                        }
                         echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
-                        echo "<td align=center>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        if($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual){
+                            echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
+                        else if($paritaria->get_fecha_reunion($fila['fecha_reunion']) > $fecha_actual){
+                            echo "<td align=center style='background-color:#AED6F1'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
+                        else if($paritaria->get_fecha_reunion($fila['fecha_reunion']) < $fecha_actual){
+                            echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
                         echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
+                        echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen_reunion'])."</td>";
                         echo "<td class='text-nowrap'>";
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
@@ -137,8 +152,8 @@ class Paritarias{
                         $count++;
                     }
 
-                    echo "</table>";
-                    echo "<hr>";
+                    echo '</table><hr>';
+                    
                     echo '<form action="#" method="POST">
                             
                             <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="right" title="Agregar Informe de Paritaria">
@@ -399,7 +414,7 @@ class Paritarias{
                         
                         <div class="form-group">
                             <label for="resumen_reunion">Resumen Reunión:</label>
-                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" oninput="alfaNum(this.value);" placeholder="Ingrese un breve Resúmen de la Reunión" required></textarea>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required></textarea>
                         </div>
                         
                         
@@ -511,7 +526,7 @@ class Paritarias{
                         
                         <div class="form-group">
                             <label for="resumen_reunion">Resumen Reunión:</label>
-                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" oninput="alfaNum(this.value);" placeholder="Ingrese un breve Resúmen de la Reunión" required>'.$row['resumen_reunion'].'</textarea>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required>'.$row['resumen_reunion'].'</textarea>
                         </div>
                         
                         
