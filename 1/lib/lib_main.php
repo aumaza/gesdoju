@@ -52,12 +52,13 @@ function navBar($varsession,$nombre){
         echo '</form>
                 </ul>
                 
-                <ul class="nav navbar-nav navbar-right">
-                
-                <a href="../../logout.php" data-toggle="tooltip" data-placement="left" title="Cerrar Sesión"> 
-                <button class="btn btn-danger navbar-btn">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
+                <form action="#" method="POST">
+                <ul class="nav navbar-nav navbar-right">                
+                <button type="submit" class="btn btn-danger navbar-btn" name="logout">
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button>
                 </ul>
+                </form>
+                
                 </div>
             </div>
             </nav>';
@@ -209,7 +210,14 @@ function leftPanel($varsession){
                                 <button type="submit" class="btn btn-default btn-xs btn-block" name="back_up" data-toggle="tooltip" data-placement="right" title="Backup de Archivos Subidos"><img class="img-reponsive img-rounded" src="../../icons/apps/utilities-file-archiver.png" /> BackUp</button><hr>
                                 
                                 <button type="submit" class="btn btn-default btn-xs btn-block" name="dump_base" data-toggle="tooltip" data-placement="right" title="Backup Base de Datos"><img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button><hr>
+                                
+                                
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="view_errors" data-toggle="tooltip" data-placement="right" title="Visualizar Errores en Intentar insertar registros"><img class="img-reponsive img-rounded" src="../../icons/actions/tools-report-bug.png" /> Visualizar Errores</button><hr>
+                                
+                                <button type="submit" class="btn btn-default btn-xs btn-block" name="view_success" data-toggle="tooltip" data-placement="right" title="Visualizar Registros Exitosos"><img class="img-reponsive img-rounded" src="../../icons/actions/view-task.png" /> Visualizar Registros Exitosos</button><hr>
+                                
                                 </div>
+                                
                             </div>
                             </div>
                             </div>';

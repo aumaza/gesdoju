@@ -348,9 +348,62 @@ function modal2(){
   </div>
 </div>';
 
+}
 
+
+function viewMysqlErrors(){
+    
+    $fileName = "../../logs/mysql_error.log.txt";
+    $contents = file_get_contents($fileName);
+    $lines = explode("\n",$contents);
+    
+    
+    echo '<div class="container">
+            <h1>Errores Inserción de registros</h1><hr>
+            <div class="row">
+                <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Mysql Errors</div>
+                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
+                
+                foreach($lines as $line){
+                    echo $line .'<br>';
+                }
+                
+      echo '</div>
+            </div>
+            </div>';
+}
+
+function viewMysqlSuccess(){
+
+    $fileName = "../../logs/mysql_success.log.txt";
+    $contents = file_get_contents($fileName);
+    $lines = explode("\n",$contents);
+    
+    
+    echo '<div class="container">
+            <h1>Inserción de registros Exitosos</h1><hr>
+            <div class="row">
+                <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Record Success</div>
+                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
+                
+                foreach($lines as $line){
+                    echo $line .'<br>';
+                }
+                
+      echo '</div>
+            </div>
+            </div>';
 
 }
 
+function logOut($nombre){
+    
+    echo ' <div class="jumbotron" align="center">
+                <h1>Hasta Luego '.$nombre.'</h1>
+                <img src="lodding_1.gif"  class="img-reponsive img-rounded">
+                <meta http-equiv="refresh" content="4;URL=../../logout.php "/>
+            </div>';
+
+}
 
 ?>

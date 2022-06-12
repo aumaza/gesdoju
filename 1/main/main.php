@@ -97,6 +97,18 @@
    
       if($conn){
 	  
+	  // SALIR DEL SISTEMA
+	  if(isset($_POST['logout'])){
+        logOut($nombre);
+	  }
+	  
+	  // VISUALIZACION DE LOGS
+	  if(isset($_POST['view_errors'])){
+        viewMysqlErrors();
+	  }
+	  if(isset($_POST['view_success'])){
+        viewMysqlSuccess();
+	  }
 	  
 	  // seccion ABM de normas
 	  if(isset($_POST['nueva_norma'])){
