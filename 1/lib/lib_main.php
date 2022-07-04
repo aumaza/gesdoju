@@ -6,7 +6,7 @@
 function infoCarrouselNormas($conn,$dbase){
         
         mysqli_select_db($conn,$dabse);
-        $sql = "SET @row_number = 0;select (@row_number:=@row_number + 1) AS num, tipo_norma, count(tipo_norma) as cant from normas group by tipo_norma order by num asc";
+        $sql = "select tipo_norma, count(tipo_norma) as cant, row_number() over(order by cant asc) as num from normas group by tipo_norma order by num asc";
         $query = mysqli_query($conn,$sql);
         $rows = mysqli_num_rows($query);
         $slide[] = array();
