@@ -16,9 +16,8 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-success">
-	      <img src="../../icons/status/meeting-participant.png"  class="img-reponsive img-rounded"> Autoridades Superiores
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/status/meeting-participant.png"  class="img-reponsive img-rounded"> Autoridades Superiores [ Listado de Autoridades ]</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -67,13 +66,13 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_as">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Autoridad Superior</button>
-                    </form>';
-		echo '</div>';
+                    </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -90,11 +89,9 @@ function formAddAutoridad($conn){
 
 
 echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Autoridad</div>
-            <div class="panel-body">
+        <div class="jumbotron">
+            <p><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Autoridad</p><hr>
+            
             
             
                 <form action="main.php" method="POST">
@@ -185,7 +182,6 @@ echo '<div class="container">
                 </form>
               
             
-            </div>
             </div>
             </div>';
 

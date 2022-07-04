@@ -558,7 +558,9 @@ if($conn){
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
         </form><hr>';
-                  
+        
+        infoCarrouselNormas($conn,$dbase);
+        
       echo "<table class='display compact' style='width:100%' id='normasTable'>";
       echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre Norma</th>

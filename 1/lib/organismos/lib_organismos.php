@@ -117,8 +117,9 @@ if($conn){
 public function newOrganismo($conn){
 
    echo '<div class="container">
+	    <div class="jumbotron">
 	    <div class="row">
-	    <div class="col-sm-8">
+	    <div class="col-sm-12">
 	      <h2>Cargar Organismo</h2><hr>
 	        <form id="fr_add_new_organismo_ajax" method="POST">
 	        
@@ -143,7 +144,7 @@ public function newOrganismo($conn){
 	      
 	    </div>
 	    </div>
-	</div>';
+	</div></div>';
 
 } // FIN FORMULARIO DE CARGA DE ORGANISMO
     

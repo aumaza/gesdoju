@@ -10,12 +10,9 @@ function infoCarrouselNormas($conn,$dbase){
         $query = mysqli_query($conn,$sql);
         $rows = mysqli_num_rows($query);
         $slide[] = array();
-        $count = 0;
         
-    echo '<div class="container">
-            
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
+    echo '<div id="myCarousel" class="carousel slide" data-ride="carousel">
+                
                 <ol class="carousel-indicators">';
                 for($i = 0; $i < $rows; $i++){
                     if($slide[$i] == 1){
@@ -36,15 +33,15 @@ function infoCarrouselNormas($conn,$dbase){
                     
                         if($row['num'] == 1){
                             echo '<div class="item active">
-                                    <div class="alert alert-info">
-                                    <p><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>'.$row['tipo_norma'].' :</strong> <span class="badge">'.$row['cant'].'</span></p>
+                                    <div class="well well-sm">
+                                    <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Tipo de Norma:</strong> '.$row['tipo_norma'].' <span class="badge">'.$row['cant'].'</span>
                                     </div>
                                 </div>';
                         }else{
 
                             echo '<div class="item">
-                                    <div class="alert alert-success">
-                                    <p><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>'.$row['tipo_norma'].' :</strong> <span class="badge">'.$row['cant'].'<span></p>
+                                    <div class="well well-sm">
+                                    <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Tipo de Norma:</strong> '.$row['tipo_norma'].' <span class="badge">'.$row['cant'].'<span>
                                     </div>
                                 </div>';
                         }
@@ -52,9 +49,7 @@ function infoCarrouselNormas($conn,$dbase){
                     }
                
                 
-        echo '</div>
-              </div>
-              </div>';
+        echo '</div></div>';
 }
 
 
@@ -70,9 +65,52 @@ function encabezado(){
           </div>';
 }
 
+// MAIN NAVBAR
+function mainNavBar($varsession,$nombre){
+    
+    echo '<nav class="navbar navbar-inverse navbar-fixed-top">
+  
+            <div class="btn-group">
+                <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Inicio <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <form action="main.php" method="POST">
+                    <li><button type="submit" class="btn btn-default btn-block" name="B"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Normas</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="a_s"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span> Escalas Salariales</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="segmentacion_tematica"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Segmentación Temática</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Representación Paritarias</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="listar_organismos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Organismos</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="L"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Jurisdicciones</button></li>
+                    <li><button type="button" class="btn btn-default btn-block" onclick="callExplorer();"><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span> Explorer</button></li>
+                    <li class="divider"></li>
+                    <li><button type="submit" class="btn btn-primary btn-block" name="C"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> '.$nombre.'</button></li>
+                    <li class="divider"></li>';
+                    if($varsession == 'root'){
+                  echo '<li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Tablas Base</button></li>
+                        <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Mantenimiento</button></li>
+                        <li><button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios</button></li>
+                        <li><button type="button" class="btn btn-default btn-block" onclick="callAdminExplorer();"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Admin Explorer</button></li>';
+                    }
+              echo '<li class="divider"></li>
+                    <li><button type="submit" class="btn btn-danger btn-block" name="logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Salir</button></li>
+                    </form>
+                     
+                </ul>
+               
+                <ul class="nav navbar-nav navbar-right">
+                    <form action="main.php" method="POST">
+                        <button class="btn btn-warning navbar-btn" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</button>
+                    </form>
+                </ul>
+                
+            </div>
+                
+            </nav>';
+}
+
 
 // BARRA DE NAVEGACION
-function navBar($varsession,$nombre){
+function navBar($varsession,$nombre,$conn,$dbase){
 
     echo '<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
             <div class="container-fluid">
@@ -109,7 +147,10 @@ function navBar($varsession,$nombre){
                 
         echo '</form>
                 </ul>
+                <ul class="nav navbar-nav">';
+                infoCarrouselNormas($conn,$dbase);
                 
+         echo '</ul>
                 <form action="#" method="POST">
                 <ul class="nav navbar-nav navbar-right">                
                 <button type="submit" class="btn btn-danger navbar-btn" name="logout">

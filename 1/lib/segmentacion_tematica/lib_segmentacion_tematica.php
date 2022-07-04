@@ -114,9 +114,8 @@ if($conn){
 	
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/code-class.png"  class="img-reponsive img-rounded"> Segmentación Temática
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/code-class.png"  class="img-reponsive img-rounded"> Segmentación Temática</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='segmentacionTable'>";
       echo "<thead>
@@ -168,8 +167,7 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="nueva_segmentacion">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Registro</button>
@@ -177,8 +175,9 @@ if($conn){
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada_segmentacion">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-                    </form>';
-		echo '</div>';
+                    </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -194,9 +193,9 @@ if($conn){
 */
 public function formNewSegmentacion($conn){
 
-      echo '<div class="container-fluid">
+      echo '<div class="container">
 	    <div class="row">
-	    <div class="col-sm-10">
+	    <div class="col-sm-12">
 	    
 	    <div class="panel panel-default">
             <div class="panel-heading">
@@ -360,7 +359,7 @@ public function formEditSegmentacion($id,$conn,$dbase){
         
       echo '<div class="container-fluid">
 	    <div class="row">
-	    <div class="col-sm-10">
+	    <div class="col-sm-12">
 	    
 	      <div class="panel panel-default">
             <div class="panel-heading">

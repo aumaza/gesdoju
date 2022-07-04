@@ -10,9 +10,9 @@ if($conn)
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="panel panel-success" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Usuarios';
-	echo '</div><br>';
+	echo '<div class="container-fluid">
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Usuarios</h2><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
@@ -47,12 +47,12 @@ if($conn)
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_user"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Usuario</button>
              </form><hr>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Usuarios:  '.$count.' </button>';
-		echo '</div>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -356,10 +356,9 @@ if($conn){
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="container">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Mis Datos
-	      </div><br>';
+	echo '<div class="container-fluid">
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Cambiar Password</h2><hr>';
 	
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
@@ -385,8 +384,8 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '</div>';
+		echo "<hr>";
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -408,9 +407,10 @@ function editPassUser($id,$conn){
       
 
       echo '<div class="container">
+	    <div class="jumbotron">
 	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Cambiar Password</h2><hr>
+	    <div class="col-sm-12">
+	      <h2><img src="../../icons/actions/view-refresh.png"  class="img-reponsive img-rounded"> Cambiar Password</h2><hr>
 	      
 	      <form action="main.php" method="post">
 	      <input type="hidden" id="id" name="id" value="' . $fila['id'].'" />
@@ -444,6 +444,7 @@ function editPassUser($id,$conn){
 	  </div>
 	
 	      
+	      </div>
 	      </div>
 	      </div>
 	      </div>';

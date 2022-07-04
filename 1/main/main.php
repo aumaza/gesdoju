@@ -76,24 +76,13 @@
 
 <div class="panel-group">
     
-        <!-- ENCABEZAD0  -->
-    <?php encabezado(); ?>
-   
-    
         <!-- NAVBAR  -->
-    <?php navBar($_SESSION['user'],$nombre); ?>
+    <?php mainNavBar($varsession,$nombre); ?>
 
-        <!-- LEFT PANEL -->
-    <?php leftPanel($_SESSION['user']); ?>
-
-  
 
         <!-- CENTRAL PANEL -->
-	  <div class="col-sm-10 text-left"> 
+	  <div class="col-sm-12"><br><br><br>
         
-            <!-- BOTONES INFORMATIVOS -->
-        <?php infoButttons(); ?>
-        <?php infoCarrouselNormas($conn,$dbase); ?>
           
       <?php
    
