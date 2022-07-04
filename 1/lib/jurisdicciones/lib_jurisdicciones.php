@@ -47,9 +47,8 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 		//mostramos fila x fila
 		$count = 0;
 		echo '<div class="container">
-			  <div class="alert alert-success">
-			  <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Jurisdicciones
-			  </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Jurisdicciones [ Listado de Jurisdicciones ]</h2><hr>';
 					  
 		  echo "<table class='display compact' style='width:100%' id='jurisdiccionesTable'>";
 		  
@@ -81,13 +80,13 @@ public function listarJurisdicciones($my_jurisdiccion,$conn){
 			}
 	
 			echo "</table>";
-			echo "<br>";
+			echo "<hr>";
 			echo '<form <action="main.php" method="POST">
 						<button type="submit" class="btn btn-default btn-sm" name="add_jur"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Jurisdicción</button>
                  </form><hr>';
-			echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
 			
-			echo '</div>';
+			echo '</div></div>';
 			}else{
 			  echo 'Connection Failure...';
 			}

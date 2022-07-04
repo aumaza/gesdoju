@@ -71,13 +71,14 @@
   
  
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();" >
+<body data-spy="scroll" data-target=".navbar" data-offset="50" onload="nobackbutton();" style = "background: #839192;">
 
 
 <div class="panel-group">
     
         <!-- ENCABEZAD0  -->
     <?php encabezado(); ?>
+   
     
         <!-- NAVBAR  -->
     <?php navBar($_SESSION['user'],$nombre); ?>
@@ -92,6 +93,7 @@
         
             <!-- BOTONES INFORMATIVOS -->
         <?php infoButttons(); ?>
+        <?php infoCarrouselNormas($conn,$dbase); ?>
           
       <?php
    
@@ -210,7 +212,7 @@
 	  
 	  // SECCION CONSULTA DE NORMAS
 	  if(isset($_POST['B'])){
-	    normas($conn);
+        normas($conn,$dbase);
       }
       if(isset($_POST['busqueda_avanzada'])){
         formAdvanceSearch();

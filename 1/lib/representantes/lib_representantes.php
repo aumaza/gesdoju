@@ -48,18 +48,16 @@ class Representantes{
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
-                echo '<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Representantes</div>
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Representantes [ Listado de Representantes en Paritarias ]</h2><hr>';
                         
-                        <div class="panel-body">
-                        <div class="table-responsive"><br>';
                         
                         echo "<table class='display compact' style='width:100%' id='representantesTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>DNI Representante</th>
                         <th class='text-nowrap text-center'>Nombre Representante</th>
-                        <th>&nbsp;</th>
+                        <th class='text-nowrap text-center'>Acciones</th>
                         </thead>";
 
 
@@ -79,7 +77,7 @@ class Representantes{
                     }
 
                     echo "</table>";
-                    echo "<br>";
+                    echo "<hr>";
                     echo '<form action="#" method="POST">
                             
                             <button type="submit" class="btn btn-default btn-sm" name="nuevo_representante" data-toggle="tooltip" data-placement="right" title="Agregar Representante">
@@ -87,8 +85,8 @@ class Representantes{
                                 
                             <button type="submit" class="btn btn-default btn-sm" name="grupos" data-toggle="tooltip" data-placement="right" title="Listar Grupos de Representantes">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Grupos</button>
-                        </form><br>';
-                    echo '<button type="button" class="btn btn-primary">Cantidad de Representantes:  ' .$count; echo '</button>';
+                        </form><hr>';
+                    echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
                     echo '</div></div>';
                     
                     }else{

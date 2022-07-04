@@ -1,5 +1,63 @@
 <?php 
 
+/*
+** CARGA DE INFO CANTIDAD DE NORMAS POR TIPO
+*/
+function infoCarrouselNormas($conn,$dbase){
+        
+        mysqli_select_db($conn,$dabse);
+        $sql = "SET @row_number = 0;select (@row_number:=@row_number + 1) AS num, tipo_norma, count(tipo_norma) as cant from normas group by tipo_norma order by num asc";
+        $query = mysqli_query($conn,$sql);
+        $rows = mysqli_num_rows($query);
+        $slide[] = array();
+        $count = 0;
+        
+    echo '<div class="container">
+            
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">';
+                for($i = 0; $i < $rows; $i++){
+                    if($slide[$i] == 1){
+                        echo '<li data-target="#myCarousel" data-slide-to="'.$slide[$i].'" class="active"></li>';
+                    }else{
+                        echo '<li data-target="#myCarousel" data-slide-to="'.$slide[$i].'"></li>';
+                }
+                }
+                
+          echo '</ol>
+
+                
+                <div class="carousel-inner">';
+                
+               
+                
+                    while($row = mysqli_fetch_array($query)){
+                    
+                        if($row['num'] == 1){
+                            echo '<div class="item active">
+                                    <div class="alert alert-info">
+                                    <p><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>'.$row['tipo_norma'].' :</strong> <span class="badge">'.$row['cant'].'</span></p>
+                                    </div>
+                                </div>';
+                        }else{
+
+                            echo '<div class="item">
+                                    <div class="alert alert-success">
+                                    <p><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>'.$row['tipo_norma'].' :</strong> <span class="badge">'.$row['cant'].'<span></p>
+                                    </div>
+                                </div>';
+                        }
+                        
+                    }
+               
+                
+        echo '</div>
+              </div>
+              </div>';
+}
+
+
 // ENCABEZADO
 function encabezado(){
     

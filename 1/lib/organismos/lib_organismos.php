@@ -57,9 +57,8 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Organismos
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Organismos [ Listado de Organismos ]</h2><hr>';
 	      
                   
       echo "<table class='display compact' style='width:100%' id='organismosTable'>";
@@ -94,14 +93,14 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_org">
-                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Organismo</button><hr>
-                    </form>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Organismo</button>
+                    </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
 		
-		echo '</div>';
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}

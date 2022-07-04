@@ -1,14 +1,16 @@
 <?php 
 
+
 /*
 ** Funcion alta de norma
 */
 function newNorma($conn){
-
+        
       echo '<div class="container-fluid">
+            <div class="jumbotron">
             <div class="row">
-            <div class="col-sm-8">
-            <h2>Cargar Normativa</h2><hr>
+            <div class="col-sm-12">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Normativa</h2><hr>
             
            
                 <h4>Verificar si Existe Norma a Cargar</h4>
@@ -16,7 +18,7 @@ function newNorma($conn){
                 
                 <div class="col-sm-12">
                     <div class="alert alert-info">
-                    <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
+                        <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded">
                         <strong>Los campos con asteriscos son obligatorios</strong>
                     </div>
                 </div>
@@ -155,7 +157,7 @@ function newNorma($conn){
         </div>
 		
 		<div class="col-sm-12">
-            <p align="center"><strong>Archivos a Subir</strong></p>
+            <p align="center"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> <strong>Archivos a Subir</strong></p>
             <div class="alert alert-success">
             <div class="form-group">
             <label for="pwd">Seleccione Archivo a Subir de la Norma Principal (*)</label>
@@ -182,10 +184,16 @@ function newNorma($conn){
             <button type="submit" class="btn btn-default btn-block" id="add_normativa" >
                 <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
         </div>
-	      </form> <br>
+	      </form><hr>
 	      
 	    </div>
 	    </div>
+	
+	
+	<div id="messageNewNorma"></div>
+	
+	
+	</div>
 	</div>';
 
 }
@@ -526,20 +534,20 @@ function delNorma($id,$conn){
 ** LISTAR TODAS LAS NORMAS (FUNCION ACTUAL)
 */
 
-function normas($conn){
+function normas($conn,$dbase){
 
 if($conn){
 	
 	$sql = "SELECT * FROM normas";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $resultado = mysqli_query($conn,$sql);
         
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas
-	      </div>
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Normas [ Listado de Normas ]</h2><hr>
+	     
 	      
 	      <form <action="main.php" method="POST">
                     
@@ -559,7 +567,7 @@ if($conn){
             <th class='text-nowrap text-center'>Ambito</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -576,13 +584,13 @@ if($conn){
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
-                    <button type="submit" class="btn btn-info btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="top" title="Editar Datos de la Norma">
+                    <button type="submit" class="btn btn-info btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
                         <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
                     
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma" data-toggle="tooltip" data-placement="top" title="Eliminar Registro">
+                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
                         <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>
@@ -591,9 +599,9 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
-		echo '</div>';
+		echo "<hr>";
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}

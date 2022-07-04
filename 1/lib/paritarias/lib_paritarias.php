@@ -99,12 +99,9 @@ class Paritarias{
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
-                echo '<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Representación Paritarias</div>
-                        
-                        <div class="panel-body">
-                        <div class="table-responsive"><br>';
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>';
                         
                         echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
                         echo "<thead>
@@ -162,13 +159,9 @@ class Paritarias{
                             <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="right" title="Búsqueda Avanzada sobre Paritarias">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/system-search.png" /> Búsqueda Avanzada</button>
                             
-                            </form><br>';
-                            
-                    echo '<button type="button" class="btn btn-default btn-sm" name="calendario_paritarias" data-toggle="tooltip" data-placement="right" title="Calendario de Paritarias" onclick="callCalendar();">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-month.png" /> Calendario Paritarias</button>';
-                                
+                            </form><hr>';
                         
-                    echo '<hr><button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                    echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
                     echo '</div></div>';
                     
                     }else{

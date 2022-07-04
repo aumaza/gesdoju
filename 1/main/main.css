@@ -51,6 +51,7 @@
   
   textarea {
     overflow: scroll;
-    resize: none;
-    
+    resize: vertical;
+    font-size: 2vw; 
+    min-height:100px;   
   } 

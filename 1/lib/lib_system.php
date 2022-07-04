@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 /*
 ** GUARDAR LOS ERRORES DE MYSQL
 */
