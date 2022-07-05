@@ -106,11 +106,9 @@ class Representantes{
     public function formAltaRepresentante(){
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-new.png" /> Alta Representante</div>
+            <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/user-group-new.png" /> Alta Representante</h3><hr>
                         
-                        <div class="panel-body">
                                    
             <form id="fr_add_new_representante_ajax" method="POST">
             
@@ -154,11 +152,10 @@ class Representantes{
         $row = mysqli_fetch_assoc($query);
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar Representante</div>
+            <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar Representante</h3><hr>
                         
-                        <div class="panel-body">
+                        
                                    
             <form id="fr_update_representante_ajax" method="POST">
             <input type="hidden" name="id" id="id" value="'.$id.'" required>
@@ -185,7 +182,7 @@ class Representantes{
                     <img class="img-reponsive img-rounded" src="../../icons/actions/document-save-as.png" /> Guardar</button>
             </form>
            
-            </div></div></div>';   
+            </div></div>';   
     
     }
     

@@ -138,11 +138,8 @@ class Grupo{
     public function formAltaGrupo($conn,$dbase){
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Alta Grupo</div>
-                        
-                        <div class="panel-body">
+            <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Alta Grupo</h3><hr>
                                    
             <form id="fr_add_new_grupo_ajax" method="POST">
             
@@ -151,7 +148,9 @@ class Grupo{
                 <div class="row">
                     <div class="col-sm-6">
                     
-                    <hr><p><strong>Importante:</strong> Al dar de alta un grupo como mínimo debe tener dos integrante, luego podrá editar el grupo añadiendo o quitando integrantes del mismo</p><hr>
+                    <div class="alert alert-info">
+                    <p align="justify"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <strong>Importante:</strong> Al dar de alta un grupo como mínimo debe tener dos integrante, luego podrá editar el grupo añadiendo o quitando integrantes del mismo</p>
+                    </div><hr>
                                           
                         <div class="form-group">
                             <label for="nombre_grupo">Nombre Grupo:</label>
@@ -253,7 +252,7 @@ class Grupo{
                     <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
             </form>
            
-            </div></div></div>';   
+            </div></div>';   
     
     }
     
@@ -270,11 +269,9 @@ class Grupo{
         $row = mysqli_fetch_assoc($query);
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Alta Grupo</div>
-                        
-                        <div class="panel-body">
+            <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Editar Grupo</h3><hr>
+                            
                                    
             <form id="fr_update_grupo_ajax" method="POST">
             <input type="hidden" name="id" id="id" value="'.$id.'" required>
@@ -284,14 +281,11 @@ class Grupo{
                 <div class="row">
                     <div class="col-sm-6">
                     
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                                <p align="justify"><img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" />
+                    <div class="alert alert-info">
+                                <p align="justify"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                     <strong>Importante:</strong> Puede agregar tantos representantes como hay en el listado. Si añade un representante que ya se encuentra en el grupo, no tomará el cambio ya que se estarían repitiendo.</p>
                                     
                         </div>
-                    </div><hr>
-                           
                                                 
                         <div class="form-group">
                             <label for="nombre_grupo">Nombre Grupo:</label>
@@ -404,7 +398,7 @@ class Grupo{
                 
             </form>
            
-            </div></div></div>';   
+            </div></div>';   
     
     }
     

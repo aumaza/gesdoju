@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -490,6 +490,10 @@
 	
 	// SECCION MANTENIMIENTO //
 	// =============================================================================== //
+	if(isset($_POST['launch_herramientas'])){
+        launchHerramientas();
+	}
+	
 	if(isset($_POST['back_up'])){
         backup();
 	}
@@ -616,6 +620,10 @@
 	// se crea el objeto
 	$paritaria = new Paritarias();
 	
+	if(isset($_POST['launch_paritarias'])){
+        $paritaria->launchRepresentacionParitarias();
+	}
+	
 	if(isset($_POST['paritarias'])){
         $paritaria->listarParitarias($paritaria,$conn,$dbase);        
 	}
@@ -718,7 +726,9 @@
 	
 	// ============================ FIN SECCION AMBITO DE NORMA ========================= //
 	
-	
+	if(isset($_POST['launch_tablas_base'])){
+        launchTablasBase();
+	}
 	
 	}else{
 	  mysqli_error($conn);

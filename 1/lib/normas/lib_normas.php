@@ -210,9 +210,10 @@ function editNorma($id,$conn){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container-fluid">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Editar Normativa</h2><hr>
+	     <div class="jumbotron">
+            <div class="row">
+            <div class="col-sm-12">
+	      <h2><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Normativa</h2><hr>
                 
                 <div class="col-sm-12">
                     <div class="alert alert-info">
@@ -379,7 +380,7 @@ function editNorma($id,$conn){
 	    
 	    </div>
 	    </div>
-	</div>';
+	</div></div>';
 
 }
 
@@ -394,9 +395,10 @@ function formBorrarNorma($id,$conn){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Norma</h2><hr>
+	    <div class="jumbotron">
+        <div class="row">
+	    <div class="col-sm-12">
+	      <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Norma</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -416,6 +418,7 @@ function formBorrarNorma($id,$conn){
 	      </form> 
 	  
 	    </div>
+	</div>
 	</div>';
 
 }
@@ -1092,6 +1095,7 @@ function infoNorma($id,$conn){
         
     
     echo '<div class="container">
+            <div class="jumbotron">
              <div class="panel-group">
                 <div class="panel panel-default">
                 <div class="panel-heading">
@@ -1165,6 +1169,7 @@ function infoNorma($id,$conn){
                 </div>
                 </div>
             </div>
+            </div>
             </div>';
 }
 
@@ -1175,10 +1180,9 @@ function infoNorma($id,$conn){
 function formAdvanceSearch(){
     
     echo '<div class="container">
-            <div class="panel panel-default">
-            <div class="panel-heading">
-                <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</div>
-            <div class="panel-body">
+            <div class="jumbotron">
+            <h3><img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</h3><hr>
+            
             
             <div class="row">
              <div class="alert alert-info">
@@ -1235,9 +1239,8 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h3><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h3><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
@@ -1273,19 +1276,19 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
-		echo '</div>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
     
     }
     
@@ -1298,9 +1301,8 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h3><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h3><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
@@ -1336,18 +1338,18 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
 		echo '</div>';
     
     }
@@ -1361,9 +1363,8 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h3><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h3><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='normasAdvanceSearchTable'>";
       echo "<thead>
@@ -1399,18 +1400,18 @@ function searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search.php?file=print_table_info.php&palabra_clave='.$palabra_clave.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
 		echo '</div>';
 		
 		}

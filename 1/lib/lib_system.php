@@ -362,7 +362,8 @@ function viewMysqlErrors(){
     
     
     echo '<div class="container">
-            <h1>Errores Inserción de registros</h1><hr>
+            <div class="jumbotron">
+            <h1><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Errores Inserción de registros</h1><hr>
             <div class="row">
                 <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Mysql Errors</div>
                 <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
@@ -372,6 +373,7 @@ function viewMysqlErrors(){
                 }
                 
       echo '</div>
+            </div>
             </div>
             </div>';
 }
@@ -384,7 +386,8 @@ function viewMysqlSuccess(){
     
     
     echo '<div class="container">
-            <h1>Inserción de registros Exitosos</h1><hr>
+            <div class="jumbotron">
+            <h1><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Inserción de registros Exitosos</h1><hr>
             <div class="row">
                 <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Record Success</div>
                 <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
@@ -394,6 +397,7 @@ function viewMysqlSuccess(){
                 }
                 
       echo '</div>
+            </div>
             </div>
             </div>';
 

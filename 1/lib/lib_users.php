@@ -69,35 +69,35 @@ function newUser(){
 
       
         echo '<div class="container">
+                <div class="jumbotron">
                 <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
             
-                <div class="panel panel-primary">
-                <div class="panel-heading"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Usuario</div></div><hr>
+                <h3><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Usuario</h3><hr>
                 
                 <form action="main.php" method="POST">
                 
-                <p><strong>Nombre y Apellido</strong>:</p>
+                <label><strong>Nombre y Apellido</strong>:</label>
                 <div class="form-group">
                 <input type="text" class="form-control" name="nombre" required>
                 </div><hr>
                 
-                <p><strong>Usuario</strong>:</p>
+                <label><strong>Usuario</strong>:</label>
                 <div class="form-group">
                 <input type="text" class="form-control" name="user" placeholder="usuario_organismo" required>
                 </div><hr>
                 
-                <p><strong>Email</strong>:</p>
+                <label><strong>Email</strong>:</label>
                 <div class="form-group">
                 <input type="email" class="form-control" name="email" required>
                 </div><hr>
                 
-                <p><strong>Password</strong>:</p>
+                <label><strong>Password</strong>:</label>
                 <div class="form-group">
                 <input type="password" class="form-control" name="pass1" required>
                 </div><hr>
                 
-                <p><strong>Repita Password</strong>:</p>
+                <label><strong>Repita Password</strong>:</label>
                 <div class="form-group">
                 <input type="password" class="form-control" name="pass2" required>
                 </div><hr>
@@ -117,6 +117,7 @@ function newUser(){
                 </div>
                 </div>
                                                
+                </div>
                 </div>
                 </div>
                 </div>';

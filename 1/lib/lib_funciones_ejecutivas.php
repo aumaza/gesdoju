@@ -15,9 +15,8 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/quickopen-class.png"  class="img-reponsive img-rounded"> Funciones Ejecutivas
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/quickopen-class.png"  class="img-reponsive img-rounded"> Funciones Ejecutivas</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -29,7 +28,7 @@ if($conn){
             <th class='text-nowrap text-center'>Entrada Vigencia</th>
             <th class='text-nowrap text-center'>Mes</th>
             <th class='text-nowrap text-center'>Año</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -62,13 +61,14 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_fe">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Funcion Ejecutiva</button>
-                    </form>';
-		echo '</div>';
+                    </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -85,11 +85,8 @@ function formAddFuncionEjecutiva($conn){
 
 
 echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Función Ejecutiva</div>
-            <div class="panel-body">
+        <div class="jumbotron">
+        <h3><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Función Ejecutiva</h3><hr>
             
             
                 <form action="main.php" method="POST">
@@ -165,7 +162,6 @@ echo '<div class="container">
               
             
             </div>
-            </div>
             </div>';
 
 
@@ -222,11 +218,8 @@ function formEditFuncionEjecutiva($id,$conn){
 
 
 echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Función Ejecutiva</div>
-            <div class="panel-body">
+        <div class="jumbotron">
+            <h3><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Función Ejecutiva</h3><hr>
             
             
                 <form action="main.php" method="POST">
@@ -301,7 +294,6 @@ echo '<div class="container">
               
             
             </div>
-            </div>
             </div>';
 
 
@@ -353,9 +345,10 @@ function formBorrarFuncionEjecutiva($id,$conn){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
+	    <div class="jumbotron">
 	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Registro Funciones ejecutivas</h2><hr>
+	    <div class="col-sm-12">
+	      <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Registro Funciones ejecutivas</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -406,7 +399,7 @@ function formBorrarFuncionEjecutiva($id,$conn){
 	      
 	    </div>
 	    </div>
-	</div>';
+	</div></div>';
 
 }
 

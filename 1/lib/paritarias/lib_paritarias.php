@@ -243,7 +243,8 @@ class Paritarias{
     */
     public function formAltaTipoRepresentacion(){
     
-        echo '<div class="container"><br>
+        echo '<div class="container">
+                <div class="jumbotron">
                 <div class="row">
                 
                 <div class="col-sm-8">
@@ -268,6 +269,7 @@ class Paritarias{
                         <br>
                     </div>
                     
+                </div>
                 </div>
                 </div>';    
     }
@@ -320,11 +322,10 @@ class Paritarias{
     public function formAltaParitaria($conn,$dbase){
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Reunión Paritaria</div>
+                <div class="jumbotron">
+            <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Reunión Paritaria</h3><hr>
                         
-                        <div class="panel-body">
+                        
                                    
             <form id="fr_add_new_paritaria_ajax" method="POST">
             
@@ -419,7 +420,7 @@ class Paritarias{
                     <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
             </form>
            
-            </div></div></div>';   
+            </div></div>';   
     
     }
     
@@ -432,11 +433,8 @@ class Paritarias{
         $row = mysqli_fetch_assoc($query);
     
         echo '<div class="container">
-            <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Reunión Paritaria</div>
-                        
-                        <div class="panel-body">
+                <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Reunión Paritaria</h3><hr>
                                    
             <form id="fr_update_paritaria_ajax" method="POST">
             <input type="hidden" id="id" name="id" value="'.$id.'">
@@ -531,7 +529,7 @@ class Paritarias{
                     <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Actualizar</button>
             </form>
            
-            </div></div></div>';   
+            </div></div>';   
     
     }
     
@@ -562,6 +560,7 @@ class Paritarias{
     }
     
     echo '<div class="container">
+            <div class="jumbotron">
              <div class="panel-group">
                 <div class="panel panel-default">
                 <div class="panel-heading">
@@ -616,7 +615,7 @@ class Paritarias{
                 </div>
                 </div>
             </div>
-            </div>';
+            </div></div>';
 }
 
 
@@ -626,10 +625,9 @@ class Paritarias{
 public function formAdvanceSearchParitarias($conn,$dbase){
     
     echo '<div class="container">
-            <div class="panel panel-default">
-            <div class="panel-heading">
-                <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</div>
-            <div class="panel-body">
+            <div class="jumbotron">
+            <h3><img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</h3><hr>
+            
             
             <div class="row">
              <div class="alert alert-info">
@@ -686,7 +684,6 @@ public function formAdvanceSearchParitarias($conn,$dbase){
             
             </div>
 
-            </div>
             </div>';
 }
    
@@ -705,9 +702,8 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -732,19 +728,19 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
-		echo '</div>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '</div></div>';
     
     }
     
@@ -757,9 +753,8 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -784,18 +779,18 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
 		echo '</div>';
     
     }
@@ -809,9 +804,8 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -836,18 +830,18 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search_officio.php?file=print_paritarias_info.php&grupo_representante='.$grupo_representante.'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><hr>
               
               <form action="#" method="POST">
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
 		echo '</div>';
 		
 		}
@@ -1162,7 +1156,83 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
         return $anio - 1;
     }
     
-       
+/*
+** MAIN REPRESENTACION PARITARIAS
+*/
+public function launchRepresentacionParitarias(){
+
+    echo '<div class="container">
+            <div class="jumbotron">
+            <h2><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Sección Representación Paritarias</h2><hr>     
+            <p>En esta sección encontrará todo lo referente a la carga, edición y visualización de la Representación Paritarias</p><hr>
+            
+            <div class="container">
+        
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="nueva_paritaria"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Registro</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Representación Paritarias</button>
+                        </form><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="busqueda_paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Búsquedas Avanzadas</button>
+                        </form><br>
+                    </div>
+                </div><hr>
+
+                <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sección Representantes</h2><hr>     
+                    <p>En esta sección encontrará todo lo referente a la carga, edición y visualización de los Representantes que actuan en las paritarias</p><hr>
+
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="nuevo_representante"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Representante</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="representantes"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Representantes</button>
+                        </form><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="nuevo_grupo"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Grupo</button>
+                        </form><br>
+                    </div>
+                </div><hr>
+
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="grupos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Grupos</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    
+                </div>
+        
+            </div>  
+        </div></div>';
+} // END OF FUNCTION
     
 } // FIN DE LA CLASE
 

@@ -78,7 +78,7 @@ function mainNavBar($varsession,$nombre){
                     <li><button type="submit" class="btn btn-default btn-block" name="a_s"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
                     <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span> Escalas Salariales</button></li>
                     <li><button type="submit" class="btn btn-default btn-block" name="segmentacion_tematica"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Segmentación Temática</button></li>
-                    <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Representación Paritarias</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="launch_paritarias"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Representación Paritarias</button></li>
                     <li><button type="submit" class="btn btn-default btn-block" name="listar_organismos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Organismos</button></li>
                     <li><button type="submit" class="btn btn-default btn-block" name="L"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Jurisdicciones</button></li>
                     <li><button type="button" class="btn btn-default btn-block" onclick="callExplorer();"><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span> Explorer</button></li>
@@ -86,8 +86,8 @@ function mainNavBar($varsession,$nombre){
                     <li><button type="submit" class="btn btn-primary btn-block" name="C"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> '.$nombre.'</button></li>
                     <li class="divider"></li>';
                     if($varsession == 'root'){
-                  echo '<li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Tablas Base</button></li>
-                        <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Mantenimiento</button></li>
+                  echo '<li><button type="submit" class="btn btn-default btn-block" name="launch_tablas_base"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Tablas Base</button></li>
+                        <li><button type="submit" class="btn btn-default btn-block" name="launch_herramientas"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Mantenimiento</button></li>
                         <li><button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios</button></li>
                         <li><button type="button" class="btn btn-default btn-block" onclick="callAdminExplorer();"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Admin Explorer</button></li>';
                     }
@@ -355,6 +355,147 @@ function infoButttons(){
         
                 <button type="button" class="btn btn-default navbar-btn" onclick="callAdminExplorer();">
                         <img class="img-reponsive img-rounded" src="../../icons/status/meeting-chair.png" /> Admin Explorer</button><hr>';
+
+}
+
+/*
+** MAIN HERRAMIENTAS
+*/
+function launchHerramientas(){
+
+    echo '<div class="container">
+            <div class="jumbotron">
+            <h1><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Sección Mantenimiento</h1><hr>     
+            <p>En esta sección se encuentran herramientas para el Administrador del Sistema.</p><hr>
+            
+            <div class="container">
+        
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="back_up"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Back Up</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="dump_base"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Back Up Base</button>
+                        </form><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="view_errors"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Errores Mysql</button>
+                        </form><br>
+                    </div>
+                </div><hr>
+
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="view_success"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Inserción Exitosa de Registros</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <button type="button" class="btn btn-default btn-lg" onclick="callExplorer();"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Explorer</button>
+                        <br><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <button type="button" class="btn btn-default btn-lg" onclick="callAdminExplorer();"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Administrador Explorer</button>
+                        <br><br>
+                    </div>
+                </div><hr>
+    
+                </div>
+        
+            </div>  
+        </div></div>';
+
+}
+
+
+/*
+** MAIN TABLAS BASE
+*/
+function launchTablasBase(){
+
+    echo '<div class="container">
+            <div class="jumbotron">
+            <h1><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Sección Tablas Base</h1><hr>     
+            <p>En esta sección encontrará todo lo referente a la carga, edición y visualización de Tablas Base de las cuales usan datos otras partes del sistema.</p><hr>
+            
+            <div class="container">
+        
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="funciones_ejecutivas"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Funciones Ejecutivas</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="adicional_grado"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Adicional Grado</button>
+                        </form><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="unidades_retributivas"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Unidades Retributivas</button>
+                        </form><br>
+                    </div>
+                </div><hr>
+
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="tipo_organismos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Tipo Organismo</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="tipo_normas"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Tipo Normas</button>
+                        </form><br>
+                    </div>
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="ambito_normas"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Ambito Norma</button>
+                        </form><br>
+                    </div>
+                </div><hr>
+
+                <div class="row">
+                    
+                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-lg" name="tipo_representacion"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Tipo Representación</button>
+                        </form><br>
+                    
+                    </div>
+                    
+                    
+                </div>
+        
+            </div>  
+        </div></div>';
+
 
 }
 

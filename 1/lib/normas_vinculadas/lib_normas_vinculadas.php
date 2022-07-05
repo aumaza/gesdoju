@@ -41,9 +41,10 @@ class NormasVinculadas{
         $row = mysqli_fetch_assoc($query);
     
         echo '<div class="container">
+            <div class="jumbotron">
 		 <div class="row">
-		 <div class="col-sm-8">
-		   <h2>Cargar Normas Vinculadas</h2><hr>
+		 <div class="col-sm-12">
+		   <h2><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Cargar Normas Vinculadas</h2><hr>
 			<form action="#" method="POST" enctype="multipart/form-data">
 			 <input type="hidden" name="id" value="'.$id.'" required>
 			 
@@ -63,6 +64,7 @@ class NormasVinculadas{
 		   
 		 </div>
 		 </div>
+	 </div>
 	 </div>';
    
     
@@ -224,8 +226,9 @@ public function listarNormasVinculadas($id,$conn,$dbase){
     }
 
         echo '<div class="container">
+                <div class="jumbotron">
                 <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                 <div class="panel panel-primary">
                 <div class="panel-heading">Normas vinculadas a: <strong>'.$norma.'</strong></div>
                 <div class="panel-body">
@@ -238,6 +241,7 @@ public function listarNormasVinculadas($id,$conn,$dbase){
           echo '</div>
                 </div>
                 <div class="panel-footer"><strong>Cantidad de Normas Vinculadas:</strong> <span class="badge">'.$count.'</span></div>
+             </div>
              </div>
              </div>
              </div>
