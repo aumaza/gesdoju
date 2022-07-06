@@ -15,10 +15,9 @@ if($conn){
         
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="container">
-	      <div class="alert alert-success">
-	      <img src="../../icons/actions/format-list-ordered.png"  class="img-reponsive img-rounded"> Unidades Retributivas
-	      </div><br>';
+	echo '<div class="container-fluid">
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/actions/format-list-ordered.png"  class="img-reponsive img-rounded"> Unidades Retributivas</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -28,7 +27,7 @@ if($conn){
 		    <th class='text-nowrap text-center'>Sueldo UR</th>
 		    <th class='text-nowrap text-center'>Dedicación Func. UR</th>
 		    <th class='text-nowrap text-center'>Total</th>
-		    <th>&nbsp;</th>
+		    <th class='text-nowrap text-center'>Acciones</th>
 		    </thead>";
 
 
@@ -59,13 +58,14 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_ur">
                         <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar</button>
-                    </form>';
-		echo '</div>';
+                    </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		
+		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -81,11 +81,8 @@ function formAddUR($conn){
 
 
 echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Unidad Retributiva</div>
-            <div class="panel-body">
+        <div class="jumbotron">
+            <h2><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Unidad Retributiva</h2><hr>
             
             
                 <form action="main.php" method="POST">
@@ -138,7 +135,6 @@ echo '<div class="container">
               
             
             </div>
-            </div>
             </div>';
 
 }
@@ -156,12 +152,8 @@ function formEditUR($id,$conn){
 
 
 echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Unidad Retributiva</div>
-            <div class="panel-body">
-            
+        <div class="jumbotron">
+            <h2><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Unidad Retributiva</h2><hr>
             
                 <form action="main.php" method="POST">
                     <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />  
@@ -216,7 +208,6 @@ echo '<div class="container">
               
             
             </div>
-            </div>
             </div>';
 
 }
@@ -233,9 +224,9 @@ function formBorrarUR($id,$conn){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Registro Unidad Retributiva</h2><hr>
+	    <div class="jumbotron">
+	   
+	      <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Registro Unidad Retributiva</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -245,33 +236,32 @@ function formBorrarUR($id,$conn){
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
 	        
 	        <div class="form-group">
-		  <label for="nombre">Nivel</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['nivel'].'" readonly>
-		</div><hr>
+                <label for="nombre">Nivel</label>
+                <input type="text" class="form-control" id="nombre" value="'.$fila['nivel'].'" readonly>
+            </div><hr>
 		
-		<div class="form-group">
-		  <label for="nombre">Grado</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['grado'].'" readonly>
-		</div><hr>
+            <div class="form-group">
+            <label for="nombre">Grado</label>
+            <input type="text" class="form-control" id="nombre" value="'.$fila['grado'].'" readonly>
+            </div><hr>
 		
-		<div class="form-group">
-		  <label for="nombre">Sueldo Cantidad UR</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['sueldo_ur'].'" readonly>
-		</div><hr>
+            <div class="form-group">
+            <label for="nombre">Sueldo Cantidad UR</label>
+            <input type="text" class="form-control" id="nombre" value="'.$fila['sueldo_ur'].'" readonly>
+            </div><hr>
 		
-		<div class="form-group">
-		  <label for="nombre">Dedicación Funcional Cantidad UR</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['dedicacion_funcional_ur'].'" readonly>
-		</div><hr>
+            <div class="form-group">
+            <label for="nombre">Dedicación Funcional Cantidad UR</label>
+            <input type="text" class="form-control" id="nombre" value="'.$fila['dedicacion_funcional_ur'].'" readonly>
+            </div><hr>
 		
-		<button type="submit" class="btn btn-success btn-block" name="delete_ur"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+            <button type="submit" class="btn btn-success btn-block" name="delete_ur"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
 	      </form> 
 	      <a href="main.php"><button type="button" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
 	      <br>
 	      
 	    </div>
-	    </div>
-	</div>';
+	    </div>';
 
 }
 

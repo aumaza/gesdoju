@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -87,6 +87,10 @@
       <?php
    
       if($conn){
+	  // HOME
+	  if(isset($_POST['home'])){
+        mainHome();
+	  }
 	  
 	  // SALIR DEL SISTEMA
 	  if(isset($_POST['logout'])){

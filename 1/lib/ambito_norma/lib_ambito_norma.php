@@ -36,12 +36,10 @@ class AmbitoNorma{
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
-                echo '<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-education-university.png" /> Ambito de Normas</div>
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                            <h2><img class="img-reponsive img-rounded" src="../../icons/categories/applications-education-university.png" /> Ambito de Normas</h2><hr>';
                         
-                        <div class="panel-body">
-                        <div class="table-responsive"><br>';
                         
                         echo "<table class='display compact' style='width:100%' id='ambitoNormaTable'>";
                         echo "<thead>
@@ -60,14 +58,14 @@ class AmbitoNorma{
                     }
 
                     echo "</table>";
-                    echo "<br>";
+                    echo "<hr>";
                     echo '<form action="#" method="POST">
                             
                             <button type="submit" class="btn btn-default btn-sm" name="nuevo_ambito_norma" data-toggle="tooltip" data-placement="right" title="Agregar Ambito de Norma">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nueva Ambito Norma</button>
                            
-                        </form><br>';
-                    echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                        </form><hr>';
+                    echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
                     echo '</div></div>';
                     
                     }else{
@@ -87,9 +85,8 @@ class AmbitoNorma{
 public function newAmbitoNorma(){
 
 	echo '<div class="container">
-		 <div class="row">
-		 <div class="col-sm-8">
-		   <h2>Cargar Nuevo Ambito de Norma</h2><hr>
+		 <div class="jumbotron">
+		   <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Nuevo Ambito de Norma</h2><hr>
 			<form id="fr_add_new_ambito_norma_ajax" method="POST">
 			 
                 <div class="form-group">
@@ -102,8 +99,7 @@ public function newAmbitoNorma(){
             </form> <br>
 		   
 		 </div>
-		 </div>
-	 </div>';
+		 </div>';
  
  }
  

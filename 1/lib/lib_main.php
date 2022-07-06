@@ -1,5 +1,16 @@
 <?php 
 
+function mainHome(){
+    echo '<div class="container">
+            <div class="jumbotron">
+                <h1 align=center>Gesdo [ Gestión Documental ]</h1><hr>      
+                <p align=center>Sistema de Gestión Documental</p><hr>
+                <p align=center><img src="../../img/gesdo.jpg" class="img-rounded" alt="GESDO" width="500" height="350"></p><hr>';
+                encabezado();
+            
+            echo '</div></div>';
+}
+
 /*
 ** CARGA DE INFO CANTIDAD DE NORMAS POR TIPO
 */

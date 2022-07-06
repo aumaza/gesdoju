@@ -93,7 +93,8 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Guardado Exitosamente!!");
+                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
                     $('#grupo_representante').val('');
                     $('#tipo_representacion').val('');
                     $('#organismo').val('');
@@ -101,25 +102,25 @@ $(document).ready(function(){
                     $('#resumen_reunion').val('');
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
                     console.log("Datos: " + datos);
-                }else if(r == 4){
-                    alert("Error. Representante Existente!!");
-                    $('#grupo_representante').val('');
-                    $('#tipo_representacion').val('');
-                    $('#organismo').val('');
-                    $('#fecha_reunion').val('');
-                    $('#resumen_reunion').val('');
-                    $('#grupo_representante').focus('');
-                    console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }
                 
             }

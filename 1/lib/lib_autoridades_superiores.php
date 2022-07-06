@@ -31,7 +31,7 @@ if($conn){
             <th class='text-nowrap text-center'>SAC</th>
             <th class='text-nowrap text-center'>Otros Conceptos</th>
             <th class='text-nowrap text-center'>Observaciones</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -234,11 +234,9 @@ function formEditAutoridad($id,$conn){
       $fila = mysqli_fetch_assoc($res);
     
     echo '<div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Autoridad</div>
-            <div class="panel-body">
+        <div class="jumbotron">
+            <p><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar Autoridad</p><hr>
+            
             
             
                 <form action="main.php" method="POST">
@@ -331,7 +329,6 @@ function formEditAutoridad($id,$conn){
               
             
             </div>
-            </div>
             </div>';
 
 }
@@ -379,9 +376,8 @@ function formBorrarAutoridad($id,$conn){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Registro Autoridad Superior</h2><hr>
+	    <div class="jumbotron">
+	    <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Registro Autoridad Superior</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -402,8 +398,7 @@ function formBorrarAutoridad($id,$conn){
 	      <br>
 	      
 	    </div>
-	    </div>
-	</div>';
+	    </div>';
 
 }
 

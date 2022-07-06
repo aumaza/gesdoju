@@ -203,7 +203,6 @@ $(document).ready(function(){
             contentType: false,
             success:function(r){
                 if(r == 1){
-                    //alert("Normativa Agregada Exitosamente");
                     var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Normativa Agregada Exitosamente</p></div>';
                     document.getElementById('messageNewNorma').innerHTML = mensaje;
                      $('#nombre_norma').val('');

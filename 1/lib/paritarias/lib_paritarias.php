@@ -187,17 +187,14 @@ class Paritarias{
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
-                echo '<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Tipo de Representación </div>
-                        
-                        <div class="panel-body">
-                        <div class="table-responsive"><br>';
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                        <h2><img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Tipo de Representación </h2><hr>';
                         
                         echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
-                        <th>&nbsp;</th>
+                        <th class='text-nowrap text-center'>Acciones</th>
                         </thead>";
 
 
@@ -224,9 +221,9 @@ class Paritarias{
                             <button type="submit" class="btn btn-default btn-sm" name="nuevo_tipo_representacion" data-toggle="tooltip" data-placement="right" title="Agregar Registro de Tipo Representación">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nuevo Registro de Tipo de Representación</button>
                             
-                            </form><br>';
+                            </form><hr>';
                         
-                    echo '<hr><button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
                     echo '</div></div>';
                     
                     }else{
@@ -245,21 +242,17 @@ class Paritarias{
     
         echo '<div class="container">
                 <div class="jumbotron">
-                <div class="row">
+                <h3 align="center"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Tipo de Representación</h2><hr>
+                <p align="center"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
                 
-                <div class="col-sm-8">
-                <h1 align="center">Nuevo Tipo de Representación</h1><hr>
-                <p align="center">Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
-                </div>
-                </div>
                 <div class="row">
                     
-                    <div class="col-sm-8" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
+                    <div class="col-sm-12" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
                         
                         <form id="fr_add_new_tipo_representacion_ajax" method="POST">
                         
                         <div class="form-group">
-                            <label for="descripcion">Descripción:</label>
+                            <label for="descripcion">Descripción: (*)</label>
                             <input type="text" class="form-control" id="descripcion" name="descripcion" required>
                         </div><hr>
                         
@@ -285,23 +278,20 @@ class Paritarias{
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
         
-        echo '<div class="container"><br>
-                <div class="row">
+        echo '<div class="container">
+                <div class="jumbotron">
+                <h3 align="center"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Tipo de Representación</h3><hr>
+                <p align="center"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
                 
-                <div class="col-sm-8">
-                <h1 align="center">Editar Tipo de Representación</h1><hr>
-                <p align="center">Preste atención a los datos que recibe cada campo. <strong>Los Campos que muestran (*) son obligatorios</strong></p><hr>
-                </div>
-                </div>
                 <div class="row">
                     
-                    <div class="col-sm-8" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
+                    <div class="col-sm-12" style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;"><br>
                         
                         <form id="fr_update_tipo_representacion_ajax" method="POST">
                         <input type="hidden" id="id" name="id" value="'.$id.'">
                         
                         <div class="form-group">
-                            <label for="descripcion">Descripción:</label>
+                            <label for="descripcion">Descripción: (*)</label>
                             <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$row['descripcion'].'" required>
                         </div><hr>
                         
@@ -419,7 +409,9 @@ class Paritarias{
                 <button type="submit" class="btn btn-default btn-block" id="add_new_paritaria" name="add_new_paritaria">
                     <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
             </form>
-           
+            
+            <div id="messageNewParitaria"></div>
+            
             </div></div>';   
     
     }

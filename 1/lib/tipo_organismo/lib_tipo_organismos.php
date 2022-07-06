@@ -46,16 +46,15 @@ public function listarTipoOrganismos($my_tipo_organismo,$conn,$dbase){
 			
 		//mostramos fila x fila
 		$count = 0;
-		echo '<div class="container">
-			  <div class="alert alert-success">
-			  <img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Clasificación de Organismos
-			  </div><br>';
+		echo '<div class="container-fluid">
+			  <div class="jumbotron">
+                <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Clasificación de Organismos</h2><hr>';
 					  
 		  echo "<table class='display compact' style='width:100%' id='tipoOrganismoTable'>";
 		  echo "<thead>
 				<th class='text-nowrap text-center'>Código Clasificación</th>
 				<th class='text-nowrap text-center'>Clasificación</th>
-				<th>&nbsp;</th>
+				<th class='text-nowrap text-center'>Acciones</th>
 				</thead>";
 	
 	
@@ -69,10 +68,7 @@ public function listarTipoOrganismos($my_tipo_organismo,$conn,$dbase){
 						<input type="hidden" name="id" value="'.$fila['id'].'">
 										 
 						<button type="submit" class="btn btn-success btn-sm" name="edit_tipo_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Tipo de Organismo">
-						<img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-						
-						<button type="submit" class="btn btn-danger btn-sm" name="del_tipo_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
-						<img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>';
+						<img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>';
 						
 				 echo '</form>';
 				 echo "</td>";
@@ -80,12 +76,13 @@ public function listarTipoOrganismos($my_tipo_organismo,$conn,$dbase){
 			}
 	
 			echo "</table>";
-			echo "<br>";
-			echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button><hr>';
+			echo "<hr>";
 			echo '<form <action="main.php" method="POST">
 						<button type="submit" class="btn btn-default btn-sm" name="add_tipo_org"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Nueva Clasificación</button>
-						</form>';
-			echo '</div>';
+                  </form><hr>';
+			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+			
+			echo '</div></div>';
 			}else{
 			  echo 'Connection Failure...';
 			}
@@ -103,28 +100,26 @@ public function listarTipoOrganismos($my_tipo_organismo,$conn,$dbase){
 public function newTipoOrganismo(){
 
 	echo '<div class="container">
-		 <div class="row">
-		 <div class="col-sm-8">
-		   <h2>Cargar Nueva Clasificación de Organismo</h2><hr>
-			 <form id="fr_add_new_tipo_organismo_ajax" method="POST">
-			 
-			 <div class="form-group">
-			 <label for="cod_tipo_org">Código</label>
-			 <input type="text" class="form-control" id="cod_tipo_org" name="cod_tipo_org"  maxlength="2" placeholder="Ingrese el código de clasificación" required>
-			 </div><hr>
-			 
-			 <div class="form-group">
-		   <label for="descripcion">Clasificación</label>
-		   <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese la clasificación de tipo de organismo" required>
-		 </div><hr>
-		 
-		 <button type="submit" class="btn btn-success btn-block" id="add_tipo_organismo" name="add_tipo_organismo">
-		 <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-		   </form> <br>
-		   
-		 </div>
-		 </div>
-	 </div>';
+            <div class="jumbotron">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Nueva Clasificación de Organismo</h2><hr>
+                <form id="fr_add_new_tipo_organismo_ajax" method="POST">
+                
+                <div class="form-group">
+                    <label for="cod_tipo_org">Código</label>
+                    <input type="text" class="form-control" id="cod_tipo_org" name="cod_tipo_org"  maxlength="2" placeholder="Ingrese el código de clasificación" required>
+                </div><hr>
+                
+                <div class="form-group">
+                    <label for="descripcion">Clasificación</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese la clasificación de tipo de organismo" required>
+                </div><hr>
+            
+                <button type="submit" class="btn btn-success btn-block" id="add_tipo_organismo" name="add_tipo_organismo">
+                <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+                </form> <br>
+            
+            </div>
+            </div>';
  
  }
 
@@ -143,9 +138,8 @@ public function editTipoOrganismo($my_tipo_organismo,$id,$conn){
     
     
    echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Editar Clasificación de Organismo</h2><hr>
+            <div class="jumbotron">
+	      <h2><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Clasificación de Organismo</h2><hr>
 	        <form id="fr_update_tipo_organismo_ajax" method="POST">
 	        <input type="hidden" name="id" value="'.$id.'">
 	        
@@ -164,8 +158,7 @@ public function editTipoOrganismo($my_tipo_organismo,$id,$conn){
 	      </form> <br>
 	      
 	    </div>
-	    </div>
-	</div>';
+	    </div>';
 
 }
 

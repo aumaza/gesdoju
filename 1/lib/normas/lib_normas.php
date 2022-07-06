@@ -589,10 +589,10 @@ if($conn){
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
-                    <button type="submit" class="btn btn-info btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
                         <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
                     
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+                    <button type="submit" class="btn btn-default btn-sm" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
                         <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
                     
                     <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
@@ -621,23 +621,17 @@ if($conn){
 */
 function selectFile($id){
     
-    echo '<div class="panel panel-success" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/apps/acroread.png"  class="img-reponsive img-rounded"> Archivo PDF';
-	echo '</div><br>';
+    echo '<div class="container" >
+	      <div class="jumbotron">
+	      <h3><img src="../../icons/apps/acroread.png"  class="img-reponsive img-rounded"> Archivo PDF</h3><hr>
 	                         
-	echo '
-	  <div class="container">
-	    <div class="row">
-	      <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
                 <strong>Seleccione el Archivo a Subir:</strong><hr>
                 <form action="main.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="'.$id.'">
                 
                 <div class="form-group">
                 <label for="tipo_archivo">Tipo Archivo:</label>
-                <select class="form-control" id="tipo_archivo" name="tipo_archivo">
+                <select class="form-control" id="tipo_archivo" name="tipo_archivo" required>
                     <option value="" disabled selected>Seleccionar</option>
                     <option value="1">Norma</option>
                     <option value="2">Acta Comisión</option>
@@ -645,15 +639,10 @@ function selectFile($id){
                 </div><hr>
                 
                 <input type="file" name="file"><br>
-                <button type="submit" name="upload"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
-                </form>
+                <button type="submit" name="upload" class="btn btn-default btn-block"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
+                </form><hr>
             </div>
-            </div>
-            
-	      </div>  
-	    </div>
-	  </div>
-	  </div>';
+            </div>';
 }
 
 

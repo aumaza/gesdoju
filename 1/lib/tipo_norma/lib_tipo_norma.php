@@ -36,17 +36,14 @@ class TipoNorma{
                 $query = mysqli_query($conn,$sql);
                 //mostramos fila x fila
                 $count = 0;
-                echo '<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Tipo de Norma</div>
-                        
-                        <div class="panel-body">
-                        <div class="table-responsive"><br>';
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                            <h2><img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Tipo de Norma</h2><hr>';
                         
                         echo "<table class='display compact' style='width:100%' id='tipoNormaTable'>";
                         echo "<thead>
                         <th class='text-nowrap text-center'>Descripción</th>
-                        <th>&nbsp;</th>
+                        <th class='text-nowrap text-center'>&nbsp</th>
                         </thead>";
 
 
@@ -60,14 +57,14 @@ class TipoNorma{
                     }
 
                     echo "</table>";
-                    echo "<br>";
+                    echo "<hr>";
                     echo '<form action="#" method="POST">
                             
                             <button type="submit" class="btn btn-default btn-sm" name="nuevo_tipo_norma" data-toggle="tooltip" data-placement="right" title="Agregar Tipo de Norma">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nueva Tipo Norma</button>
                            
-                        </form><br>';
-                    echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+                        </form><hr>';
+                    echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
                     echo '</div></div>';
                     
                     }else{
@@ -86,9 +83,8 @@ class TipoNorma{
 public function newTipoNorma(){
 
 	echo '<div class="container">
-		 <div class="row">
-		 <div class="col-sm-8">
-		   <h2>Cargar Nuevo Tipo de Norma</h2><hr>
+		 <div class="jumbotron">
+		 <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Nuevo Tipo de Norma</h2><hr>
 			<form id="fr_add_new_tipo_norma_ajax" method="POST">
 			 
                 <div class="form-group">
@@ -101,8 +97,7 @@ public function newTipoNorma(){
             </form> <br>
 		   
 		 </div>
-		 </div>
-	 </div>';
+		 </div>';
  
  }
 

@@ -194,17 +194,10 @@ if($conn){
 public function formNewSegmentacion($conn){
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-12">
-	    
-	    <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2>Cargar Segmentacion Temática</h2>
-            </div>
+	    <div class="jumbotron">
+	    <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Segmentacion Temática</h2><hr>
         
-        <div class="panel-body">
-            
-	        <form id="fr_add_new_segmentacion_ajax" method="POST">
+        <form id="fr_add_new_segmentacion_ajax" method="POST">
 	    
 	    
 	    <div class="col-sm-4">
@@ -340,9 +333,7 @@ public function formNewSegmentacion($conn){
 	     
 	      
 	    </div>
-	    </div>
-	</div>
-	</div>';
+	    </div>';
 
 }
 
@@ -358,15 +349,8 @@ public function formEditSegmentacion($id,$conn,$dbase){
         $row = mysqli_fetch_assoc($query);
         
       echo '<div class="container-fluid">
-	    <div class="row">
-	    <div class="col-sm-12">
-	    
-	      <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2>Editar Segmentacion Temática</h2>
-            </div>
-        
-        <div class="panel-body">
+                <div class="jumbotron">
+                <h2><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Segmentacion Temática</h2><hr>
         
 	        <form id="fr_update_segmentacion_ajax" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$id.'" >
@@ -497,8 +481,7 @@ public function formEditSegmentacion($id,$conn,$dbase){
         </div>
 	      
 	    </div>
-	    </div>
-	</div>';
+	    </div>';
 
 }
 
@@ -514,9 +497,8 @@ public function formBorrarSegmentacion($id,$conn,$dbase){
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Registro</h2><hr>
+            <div class="jumbotron">
+            <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Registro</h2><hr>
 	      <div class="alert alert-danger">
 	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
             <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
@@ -549,11 +531,8 @@ public function formBorrarSegmentacion($id,$conn,$dbase){
 function formAdvanceSearchSegmentacion($conn,$dbase){
     
     echo '<div class="container">
-            <div class="panel panel-default">
-            <div class="panel-heading">
-                <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada Segmentación Temática</div>
-            <div class="panel-body">
-            
+            <div class="jumbotron">
+            <h2><img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada Segmentación Temática</h2><hr>
                         
             <form action="#" method="POST">
                 <div class="form-group">
@@ -586,7 +565,6 @@ function formAdvanceSearchSegmentacion($conn,$dbase){
             
             </div>
 
-            </div>
             </div>';
 }
 
@@ -606,9 +584,8 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
         //mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
-	      <div class="alert alert-info">
-	      <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada
-	      </div><br>';
+	      <div class="jumbotron">
+	      <h2><img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Resultado Búsqueda Avanzada</h2><hr>';
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
@@ -664,7 +641,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
 		}
 
 		echo "</table>";
-		echo "<br>";
+		echo "<hr>";
 		echo '<a href="../lib/informes/print_search_officio.php?file=print_table_info_segmentacion.php&clas_inst='.$clas_inst.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
                                 <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>
@@ -674,8 +651,8 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada_segmentacion">
                     <img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda Avanzada</button>
                     
-              </form><br>';
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+              </form><hr>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
 		echo '</div>';
     
     
@@ -715,6 +692,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
     }
     
     echo '<div class="container">
+            <div class="jumbotron">
              <div class="panel-group">
                 <div class="panel panel-default">
                 <div class="panel-heading">
@@ -750,6 +728,7 @@ function searchAdvanceResultsSegmentacion($clas_inst,$conn,$dbase){
                     '</div>
                 </div>
                 </div>
+            </div>
             </div>
             </div>';
 }

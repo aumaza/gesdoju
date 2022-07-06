@@ -405,12 +405,15 @@ function viewMysqlSuccess(){
 
 function logOut($nombre){
     
-    echo ' <div class="jumbotron" align="center">
+    echo '<div class="container">
+            <div class="jumbotron" align="center">
                 <h1>Hasta Luego '.$nombre.'</h1>
                 <img src="lodding_1.gif"  class="img-reponsive img-rounded">
                 <meta http-equiv="refresh" content="4;URL=../../logout.php "/>
-            </div>';
+            </div></div>';
 
 }
+
+
 
 ?>
