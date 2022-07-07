@@ -220,42 +220,36 @@ $(document).ready(function(){
                     console.log(values);
                     setTimeout(function() { $(".close").click(); }, 4000);
                     }else if(r == -1){
-                        //alert("Hubo un problema al intentar Agregar el registro");
                         var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Ocurrió un problema al intentar agregar el registro</p></div>';
-                     document.getElementById('messageNewNorma').innerHTML = mensaje;
+                        document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 2){
-                        //alert("Solo se ha subido el archivo de la norma sin impactar en la base de datos");
                         var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Solo se ha subido el archivo de la norma sin impactar en la base de datos</p></div>';
-                     document.getElementById('messageNewNorma').innerHTML = mensaje;
+                        document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 3){
-                        //alert("Contáctese con el Administrador ya que el directorio de destino no posee permisos de Escritura");
                         var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> El directorio de destino no posee permisos de escritura [ CONTACTE AL ADMINISTRADOR ]</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(values);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 4){
-                        //alert("Sólo se permiten archivos PDF");
                         var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sólo se permiten archivos PDF</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 5){
-                        //alert("Aún no ha seleccionado el archivo a subir");
                         var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Aún no ha seleccionado un archivo</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 6){
-                        //alert("Ya existe La norma en la base de datos");
                         var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Ya existe La norma en la base de datos</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
@@ -263,14 +257,12 @@ $(document).ready(function(){
                     }
                     
                     else if(r == 13){
-                        //alert("Error de Conexion");
                         var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Sin conexion a la base de datos</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(formData);
                         setTimeout(function() { $(".close").click(); }, 4000);
                     }
                     else if(r == 15){
-                        //alert("Hay campos sin completar!!");
                         var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Hay campos sin completar</p></div>';
                         document.getElementById('messageNewNorma').innerHTML = mensaje;
                         console.log(values);
@@ -295,7 +287,6 @@ $(document).ready(function(){
 // CONSULTAR NORMA
 $(document).ready(function(){
     $('#consultar_norma').click(function(){
-        //var datos=$('#fr_nueva_norma_ajax').serialize();
         var datos = $('#fr_consultar_norma_ajax').serialize();
          
          
@@ -349,7 +340,8 @@ $(document).ready(function(){
             
     if((x == 'palabra_clave') || 
                 (x == 'fecha_desde') ||
-                    (x == 'fecha_hasta')){
+                    (x == 'fecha_hasta') ||
+                        (x == 'anio_pub')){
                 
         document.getElementById(x).disabled = false;
     

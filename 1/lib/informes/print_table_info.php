@@ -20,6 +20,7 @@
 	
         //CAPTURA LAS VARIABLES
         $palabra_clave = $_GET['palabra_clave'];
+        $anio_pub = $_GET['anio_pub'];
         $fecha_desde = $_GET['fecha_desde'];
         $fecha_hasta = $_GET['fecha_hasta'];
 	
@@ -50,8 +51,19 @@
     <p class="p-center">Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
     <hr>
     <h1 align="center">Normas / Informe Búsqueda Avanzada</H1>
-    <h3 align="center">Criterio de Búsqueda: <?php echo $palabra_clave; ?></h3>
-    
+    <?php
+        
+        if($palabra_clave != ''){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Palabra Clave [ '.$palabra_clave.' ]</p>';
+        }if(($fecha_desde != '') && ($fecha_hasta != '')){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
+        }if($anio_pub != ''){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center" Año Publicación [ '.$anio_pub.' ]</p>';
+        }
+        if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Palabra Clave [ '.$palabra_clave.' ] Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
+        }
+    ?>
    
    </div>
    
@@ -185,7 +197,46 @@
                 
         
         }
-       
+        
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub != '')){
+    
+        $sql_2 = "SELECT * FROM normas WHERE anio_pub = '$anio_pub' order by anio_pub ASC";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        $count = 0;
+        
+        echo '<table id="normas">
+                    <tr>
+                        <th>Nombre Norma</th>
+                        <th>Nro. Norma</th>
+                        <th>Tipo Norma</th>
+                        <th>Fecha Pub.</th>
+                        <th>Organismo</th>
+                        <th>Resumen</th>
+                    </tr>';
+                      
+        while($row_2 = mysqli_fetch_array($query_2)){
+            
+                    echo "<tr>";
+                    echo "<td>".$row_2['nombre_norma']."</td>";
+                    echo "<td>".$row_2['n_norma']."</td>";
+                    echo "<td>".$row_2['tipo_norma']."</td>";
+                    echo "<td>".$row_2['f_pub']."</td>";
+                                        
+                        $mysql_2 = "select descripcion from organismos where cod_org = '$row_2[organismo]'";
+                        $res_2 = mysqli_query($conn,$mysql_2);
+                            
+                            while($fila_2 = mysqli_fetch_array($res_2)){
+                                echo '<td>'.$fila_2['descripcion'].'</td>';
+                            }
+                    echo "<td width='275'>".$row_2['observaciones']."</td></tr>";
+                    $count++;
+        
+        }
+        echo '</table>';
+                
+        
+        }
            
          }else{
 		  echo 'Connection Failure...' .mysqli_error($conn);

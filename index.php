@@ -1,6 +1,7 @@
-<?php include "connection/connection.php";
-      include "functions/functions.php";
-      include "1/lib/lib_system.php";
+<?php   session_start();
+        include "connection/connection.php";
+        include "functions/functions.php";
+        include "1/lib/lib_system.php";
       
       
 ?>
@@ -43,91 +44,17 @@
                  
          if($conn){
          
-	  if(isset($_POST['A'])){
-         
-	$user = mysqli_real_escape_string($conn,$_POST["user"]);
-	$pass1 = mysqli_real_escape_string($conn,$_POST["pass"]);
-	session_start();
-	$_SESSION['user'] = $user;
-	$_SESSION['pass'] = $pass1;
-	        
-	mysqli_select_db($conn,'gesdoju');
-	
-	$sql = "SELECT * FROM usuarios where user='$user' and password='$pass1' and role = 1";
-	$q = mysqli_query($conn,$sql);
-	
-	$query = "SELECT * FROM usuarios where user='$user' and password='$pass1' and role = 0";
-	$retval = mysqli_query($conn,$query);
-	
-	
-	
-	if(!$q && !$retval){	
-			echo '<div class="alert alert-danger" role="alert">';
-			echo "Error de Conexion..." .mysqli_error($conn);
-			echo "</div>";
-			echo '<a href="index.html"><br><br><button type="submit" class="btn btn-primary">Aceptar</button></a>';	
-			exit;			
-			
-			}
-		
-			if($user = mysqli_fetch_assoc($retval)){
-				
-
-				echo '<div class="alert alert-danger" role="alert">';
-				echo "<strong>Atención!  </strong>" .$_SESSION["user"];
-				echo "<br>";
-				echo '<span class="pull-center "><img src="icons/status/security-low.png"  class="img-reponsive img-rounded"><strong> Usuario Bloqueado. Contacte al Administrador.</strong>';
-				echo "</div>";
-				exit;
-			}
-
-			else if($user = mysqli_fetch_assoc($q)){
-
-				if(strcmp($_SESSION["user"], 'root') == 0){
+            if(isset($_POST['A'])){
                 
-                write_visita($_SESSION["user"]);
-                //logs($_SESSION["user"],$ip_add);
-				echo "<br>";
-				echo '<div class="alert alert-success" role="alert">';
-				echo '<button class="btn btn-success">
-				      <span class="spinner-border spinner-border-sm"></span>
-				      </button>';
-				echo "<strong> Bienvenido!  </strong>" .$_SESSION["user"];
-				echo "<strong> Aguarde un Instante...</strong>";
-				echo "<br>";
-				echo "</div>";
-  				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
-				
-			}else{
-				
-				write_visita($_SESSION["user"]);
-				//logs($_SESSION["user"],$ip_add);
-				echo '<div class="alert alert-success" role="alert">';
-				echo '<button class="btn btn-success">
-				      <span class="spinner-border spinner-border-sm"></span>
-				      </button>';
-				echo "<strong> Bienvenido!  </strong>" .$_SESSION["user"];
-				echo "<strong> Aguarde un Instante...</strong>";
-				echo "<br>";
-				echo "</div>";
-  				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
-				
-			}
-			}else{
-				echo '<div class="alert alert-danger" role="alert">';
-				echo '<span class="pull-center "><img src="icons/status/dialog-warning.png"  class="img-reponsive img-rounded"> Usuario o Contraseña Incorrecta. Reintente Por Favor....';
-				echo "</div>";
-				}
-				}
-				}else{
-				  mysqli_error($conn);
-				}
+                    $user = mysqli_real_escape_string($conn,$_POST["user"]);
+                    $pass = mysqli_real_escape_string($conn,$_POST["pass"]);
+                    logIn($user,$pass,$conn,$dbase);
+            }
+        }else{
+            echo 'Error Conction...';
+        }
 	
-			
 	
-	//cerramos la conexion
-	
-	mysqli_close($conn);
            
       ?>
       </div>

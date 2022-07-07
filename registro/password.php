@@ -48,14 +48,14 @@
                                                 mysqli_select_db($conn,'gesdoju');
                                                 $usuario = mysqli_real_escape_string($conn, $_POST['user']);
                                                 if(empty($usuario)){
-                                                echo "<br>";
-                                                echo '<div class="container">';
-                                                echo '<div class="alert alert-warning" role="alert">';
-                                                echo '<p><img class="img-reponsive img-rounded" src="../icons/status/task-attempt.png" /> Debe ingresar un usuario!</p>';
-                                                echo "</div>";
-                                                echo "</div>";
+                                                    echo '<br>
+                                                            <div class="container">
+                                                            <div class="alert alert-warning" role="alert">
+                                                                <p><img class="img-reponsive img-rounded" src="../icons/status/task-attempt.png" /> Debe ingresar un usuario!</p>
+                                                            </div>
+                                                            </div>';
                                                 }else{
-                                                resetPass($conn,$usuario);
+                                                resetPass($conn,$usuario,$dbase);
                                                 }
                                           }
                                           }else{

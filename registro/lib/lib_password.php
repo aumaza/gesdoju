@@ -79,41 +79,40 @@ function genPass(){
 ** Funcion para blanquear password
 */
 
-function resetPass($conn,$usuario){
+function resetPass($conn,$usuario,$dbase){
 
   $password = genPass();
-  
-  $sql = "UPDATE usuarios SET password = '$password' where user = '$usuario'";
-  
+  $passHash = password_hash($password, PASSWORD_BCRYPT);
+  mysqli_select_db($conn,$dbase);
+  $sql = "UPDATE usuarios SET password = '$passHash' where user = '$usuario'";
   $retval = mysqli_query($conn,$sql);
  
   
   if($retval){
     echo '<div class="container">
-      <div class="row">
-      <div class="col-md-6">';
-    
-    echo '<div class="alert alert-success" role="alert">';
-    echo "Su Password fue blanqueada con Exito!";
-    echo "<br>";
+            <div class="row">
+                <div class="col-md-6">
+                <div class="alert alert-success" role="alert">
+                    <p>Su Password fue blanqueada con Exito!</p>
+                <br>';
     gentxt($usuario,$password);
     
-    echo "</div>";
     echo '</div>
-	  </div>
-	  </div>';
+          </div>
+          </div>
+          </div>';
     
   }else{
     
     echo '<div class="container">
-      <div class="row">
-      <div class="col-md-6">';
-    echo '<div class="alert alert-danger" role="alert">';
-    echo "Error al Blanquear Password";
-    echo "</div>";
-     echo '</div>
-	  </div>
-	  </div>';
+            <div class="row">
+            <div class="col-md-6">
+            <div class="alert alert-danger" role="alert">
+            <p>Error al Blanquear Password</p>
+            </div>
+            </div>
+            </div>
+            </div>';
     
   }
    

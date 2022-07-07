@@ -1,6 +1,83 @@
 <?php
 
+/*
+** Funcion de validación de ingreso
+*/
+function logIn($user,$pass,$conn,$dbase){
 
+    mysqli_select_db($conn,$dbase);
+    
+	$_SESSION['user'] = $user;
+	$_SESSION['pass'] = $pass;
+	
+	$sql_1 = "select password from usuarios where user = '$user'";
+	$query_1 = mysqli_query($conn,$sql_1);
+	while($row = mysqli_fetch_array($query_1)){
+        $hash = $row['password'];
+	}
+	
+    
+    
+	$sql = "SELECT * FROM usuarios where user = '$user' and role = 1";
+	$q = mysqli_query($conn,$sql);
+	
+	$query = "SELECT * FROM usuarios where user = '$user' and role = 0";
+	$retval = mysqli_query($conn,$query);
+	
+	
+	
+	if(!$q && !$retval){	
+			echo '<div class="alert alert-danger" role="alert">';
+			echo "Error de Conexion..." .mysqli_error($conn);
+			echo "</div>";
+			echo '<a href="#"><br><br>
+                    <button type="submit" class="btn btn-primary">Aceptar</button></a>';	
+			exit;			
+			
+			}
+		
+			if(($user = mysqli_fetch_assoc($retval)) && (password_verify($pass,$hash))){
+				
+                echo '<div class="jumbotron">
+                        <h3 align="center"><strong>Atención!  </strong> '.$_SESSION["user"].'</h3><hr>
+                        <div class="alert alert-danger" role="alert">
+                            <p align="center"><img src="icons/status/user-busy.png"  class="img-reponsive img-rounded"> <strong> Usuario Bloqueado. Contacte al Administrador.</strong></p>
+                        </div><hr>
+                        </div>';
+                        exit;
+			}
+
+			else if(($user = mysqli_fetch_assoc($q)) && (password_verify($pass,$hash))){
+
+				if(strcmp($_SESSION["user"], 'root') == 0){
+
+				echo "<br>";
+				echo '<div class="alert alert-success" role="alert">';
+				echo '<img src="img/lodding.gif"  class="img-reponsive img-rounded avatar" width="60" height="40">';
+				echo "<strong> Bienvenido!  </strong>" .$_SESSION["user"];
+				echo "<strong> Aguarde un Instante...</strong>";
+				echo "<br>";
+				echo "</div>";
+				write_visita($_SESSION['user']);
+  				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
+				
+			}else{
+				echo '<div class="alert alert-success" role="alert">';
+				echo '<img src="img/lodding.gif"  class="img-reponsive img-rounded avatar" width="60" height="40">';
+				echo "<strong> Bienvenido!  </strong>" .$_SESSION["user"];
+				echo "<strong> Aguarde un Instante...</strong>";
+				echo "<br>";
+				echo "</div>";
+				write_visita($_SESSION['user']);
+  				echo '<meta http-equiv="refresh" content="5;URL=1/main/main.php "/>';
+				
+			}
+			}else{
+				echo '<div class="alert alert-danger" role="alert">';
+				echo '<img src="icons/status/dialog-warning.png"  class="img-reponsive img-rounded"> Usuario o Contraseña Incorrecta. Reintente Por Favor....';
+				echo "</div>";
+				}
+}
 
 
 /*

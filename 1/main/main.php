@@ -212,9 +212,10 @@
       }
       if(isset($_POST['search'])){
         $palabra_clave = mysqli_real_escape_string($conn,$_POST['palabra_clave']);
+        $anio_pub = mysqli_real_escape_string($conn,$_POST['anio_pub']);
         $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
-        searchAdvanceResults($palabra_clave,$fecha_desde,$fecha_hasta,$conn);
+        searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta,$conn);
       }
       
       // FIN SECCION CONSULTA DE NORMAS
@@ -481,13 +482,13 @@
 	}
 	if(isset($_POST['pass_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        editPassUser($id,$conn);
+        editPassUser($id,$conn,$dbase);
 	}
 	if(isset($_POST['change_pass'])){
        $id = mysqli_real_escape_string($conn,$_POST['id']);
        $pass1 = mysqli_real_escape_string($conn,$_POST['pass1']);
        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
-       updatePass($id,$pass1,$pass2,$conn);	
+       updatePass($id,$pass1,$pass2,$conn,$dbase);	
 	}
 	// FIN SECCION USUARIOS //
 	// =============================================================================== //
