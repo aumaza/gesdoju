@@ -1,12 +1,12 @@
 <?php
 
 
-function usuarios($conn){
+function usuarios($conn,$dbase){
 
 if($conn)
 {
 	$sql = "SELECT * FROM usuarios";
-    	mysqli_select_db($conn,'gesdoju');
+    	mysqli_select_db($conn,$dbase);
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;
@@ -20,7 +20,7 @@ if($conn)
             <th class='text-nowrap text-center'>Usuario</th>
             <th class='text-nowrap text-center'>Email</th>
             <th class='text-nowrap text-center'>Role</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -31,14 +31,14 @@ if($conn)
 			 echo "<td align=center>".$fila['user']."</td>";
 			 echo "<td align=center>".$fila['email']."</td>";
 			 echo "<td align=center>".$fila['role']."</td>";
-			 echo "<td class='text-nowrap'>";
+			 echo "<td class='text-nowrap' align=center>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">';
                     if($fila['user'] != 'root'){
-                     echo '<button type="submit" class="btn btn-danger btn-sm" name="del_user">
-                            <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
+                     echo '<button type="submit" class="btn btn-default btn-sm" name="del_user">
+                            <img src="../../icons/actions/trash-empty.png"  class="img-reponsive img-rounded"> Borrar</button>
                           
-                          <button type="submit" class="btn btn-warning btn-sm" name="allow_user">
+                          <button type="submit" class="btn btn-default btn-sm" name="allow_user">
                             <img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Cambiar Permisos</button>';
                      }
              echo '</form>';
@@ -77,30 +77,30 @@ function newUser(){
                 
                 <form action="main.php" method="POST">
                 
-                <label><strong>Nombre y Apellido</strong>:</label>
-                <div class="form-group">
-                <input type="text" class="form-control" name="nombre" required>
-                </div><hr>
+                    <label><strong>Nombre y Apellido</strong>:</label>
+                    <div class="form-group">
+                    <input type="text" class="form-control" name="nombre" >
+                    </div><hr>
                 
-                <label><strong>Usuario</strong>:</label>
-                <div class="form-group">
-                <input type="text" class="form-control" name="user" placeholder="usuario_organismo" required>
-                </div><hr>
+                    <label><strong>Usuario</strong>:</label>
+                    <div class="form-group">
+                    <input type="text" class="form-control" name="user" placeholder="usuario_organismo" >
+                    </div><hr>
                 
-                <label><strong>Email</strong>:</label>
-                <div class="form-group">
-                <input type="email" class="form-control" name="email" required>
-                </div><hr>
+                    <label><strong>Email</strong>:</label>
+                    <div class="form-group">
+                    <input type="email" class="form-control" name="email" >
+                    </div><hr>
                 
-                <label><strong>Password</strong>:</label>
-                <div class="form-group">
-                <input type="password" class="form-control" name="pass1" required>
-                </div><hr>
+                    <label><strong>Password</strong>:</label>
+                    <div class="form-group">
+                    <input type="password" class="form-control" name="pass1" >
+                    </div><hr>
                 
-                <label><strong>Repita Password</strong>:</label>
-                <div class="form-group">
-                <input type="password" class="form-control" name="pass2" required>
-                </div><hr>
+                    <label><strong>Repita Password</strong>:</label>
+                    <div class="form-group">
+                    <input type="password" class="form-control" name="pass2" >
+                    </div><hr>
                 
                  <div class="form-group">
                     <label for="sel1">Permisos:</label>
@@ -128,134 +128,182 @@ function newUser(){
 * Funcion para agregar usuarios al sistema
 */
 
-function agregarUser($nombre,$user,$email,$pass1,$pass2,$role,$conn){
+function agregarUser($nombre,$user,$email,$pass1,$pass2,$role,$conn,$dbase){
 
-	mysqli_select_db($conn,'gesdoju');	
-
-	$sqlInsert = "INSERT INTO usuarios ".
-		"(nombre,user,email,password,role)".
-		"VALUES ".
-      "('$nombre','$user','$email','$pass1','$role')";
+	if(($nombre != '') || ($user != '') || ($email != '') || ($pass1 != '') || ($pass2 != '') || ($role != '')){
       
 			
-	    if(strlen($pass1) <= 15 || strlen($pass2) <= 15){
+	    if((strlen($pass1) == 15) && (strlen($pass2) == 15)){
 
 	      if(strcmp($pass2, $pass1) == 0){
 		    
-		   $query = mysqli_query($conn,$sqlInsert);
+		    $passHash = password_hash($pass1, PASSWORD_BCRYPT);
+		    mysqli_select_db($conn,$dbase);	
+            $sql = "INSERT INTO usuarios ".
+                         "(nombre,user,email,password,role)".
+                         "VALUES ".
+                        "('$nombre','$user','$email','$passHash','$role')";
+		    
+		   $query = mysqli_query($conn,$sql);
 		    
 		    if($query){	
-		    echo "<br>";
-		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" alert-dismissible">
-		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Usuario Agregado Satisfactoriamente.';
-		    echo "</div>";
-		    echo "</div>";
+		    echo '<br>
+                    <div class="container">
+                    <div class="jumbotron">
+                    <div class="alert alert-success" alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Usuario Agregado Satisfactoriamente.
+                    </div><hr>
+                    <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="add_user"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Nuevo Usuario</button>
+                        <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                    </form>
+                    </div>
+                    </div>';
             }else{
 			   
-			    echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Agregar el Usuario. '  .mysqli_error($conn);
-			    echo "</div>";
-			    echo "</div>";
+			    echo '<div class="container">
+                        <div class="jumbotron">
+                        <div class="alert alert-warning" alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Agregar el Usuario. '  .mysqli_error($conn).'
+                        </div><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="add_user"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Nuevo Usuario</button>
+                        <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                        </form>
+                      </div>
+                      </div>';
 		    }
 		    }else{
-                echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Las Contraseñas no Coinciden. Reintente.';
-			    echo "</div>";
-			    echo "</div>";
+                echo '<div class="container">
+                        <div class="jumbotron">
+                        <div class="alert alert-warning" alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Las Contraseñas no Coinciden. Reintente.
+                        </div><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="add_user"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Nuevo Usuario</button>
+                        <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                        </form>
+                     </div>
+                     </div>';
 		    
 		    }
 		    }else{
-			    echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Ha superado los 15 caracteres. Reintente.';
-			    echo "</div>";
-			    echo "</div>";
+			    echo '<div class="container">
+                        <div class="jumbotron">
+                        <div class="alert alert-warning" alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> El password no puede tener menos o más de 15 caracteres.
+                        </div><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="add_user"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Nuevo Usuario</button>
+                        <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                        </form>
+                      </div>
+                      </div>';
 		    }
 		    
-		    
-}
+    }else{
+        echo '<div class="container">
+                <div class="jumbotron">
+                <div class="alert alert-warning" alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Debe ingrasar datos en los campos.
+                </div><hr>
+                <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="add_user"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reintentar</button>
+                        <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                </form>
+             </div>
+             </div>';
+    }
+} // END OF FUNCTION
 
 
 /*
 ** Funcion carga formulario de eliminacion de usuario
 */
-function formBorrarUser($id,$conn){
+function formBorrarUser($id,$conn,$dbase){
     
-    $sql = "select * from usuarios where id = '$id'";
-      mysqli_select_db($conn,'gesdoju');
-      $res = mysqli_query($conn,$sql);
-      $fila = mysqli_fetch_assoc($res);
+        mysqli_select_db($conn,$dbase);
+        $sql = "select * from usuarios where id = '$id'";
+        $res = mysqli_query($conn,$sql);
+        $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Usuario</h2><hr>
-	      <div class="alert alert-danger">
-	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
-            <strong>Atención!</strong> Está por eliminar al siguiente Usuario del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
-          </div><hr>
+	    <div class="jumbotron">
+            <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Usuario</h2><hr>
+            
+            <div class="alert alert-danger">
+            <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
+                <strong>Atención!</strong> Está por eliminar al siguiente Usuario del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
+            </div><hr>
           
 	        <form action="main.php" method="POST">
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
 	        
 	        <div class="form-group">
-		  <label for="nombre">Nombre</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['nombre'].'" readonly>
-		</div>
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" value="'.$fila['nombre'].'" readonly>
+            </div>
 		
-		<div class="form-group">
-		  <label for="pwd">Usuario:</label>
-		  <input type="text" class="form-control" value="'.$fila['user'].'" readonly>
-		</div><hr>
+            <div class="form-group">
+            <label for="pwd">Usuario:</label>
+            <input type="text" class="form-control" value="'.$fila['user'].'" readonly>
+            </div><hr>
 		
 		
-		<button type="submit" class="btn btn-success btn-block" name="delete_user"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+		<button type="submit" class="btn btn-default btn-block" name="delete_user"><img src="../../icons/actions/trash-empty.png"  class="img-reponsive img-rounded"> Eliminar</button>
+		<button type="submit" class="btn btn-default btn-block" name="J"><img src="../../icons/actions/dialog-cancel.png"  class="img-reponsive img-rounded"> Cancelar</button>
 	      </form> 
-	      <a href="main.php"><button type="submit" class="btn btn-danger btn-block" ><img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
-	      <br>
 	      
 	    </div>
-	    </div>
-	</div>';
+	    </div>';
 
 }
 
 /*
 ** funcion para eliminar usuario de la base de datos
 */
-function delUser($id,$conn){
+function delUser($id,$conn,$dbase){
 
 		
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$sql = "delete from usuarios where id = '$id'";
     $res = mysqli_query($conn,$sql);
 
 
 	if($res){
 		
-            echo "<br>";
-		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" alert-dismissible">
-		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Usuario Eliminado Satisfactoriamente.';
-		    echo "</div>";
-		    echo "</div>";
+            echo '<div class="container">
+                    <div class="jumbotron">
+                        <div class="alert alert-success" alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Usuario Eliminado Satisfactoriamente.
+                        </div><hr>
+                        <form action="#" method="POST">
+                            <button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Usuarios</button>
+                            <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                        </form>
+                    </div>
+                    </div>';
 		    
             }else{
 			   
-			    echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Eliminar el Usuario. '  .mysqli_error($conn);
-			    echo "</div>";
-			    echo "</div>";
+			    echo '<div class="container">
+                        <div class="jumbotron">
+                            <div class="alert alert-warning" alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Eliminar el Usuario. '  .mysqli_error($conn).'
+                            </div><hr>
+                            <form action="#" method="POST">
+                                <button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Usuarios</button>
+                                <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                            </form>
+                        </div>
+                     </div>';
 	}
 }
 
@@ -263,10 +311,10 @@ function delUser($id,$conn){
 /*
 ** funcion que carga formulario para cambiar permisos de usuario
 */
-function formAllowUser($id,$conn){
-
+function formAllowUser($id,$conn,$dbase){
+      
+      mysqli_select_db($conn,$dbase);
       $sql = "select * from usuarios where id = '$id'";
-      mysqli_select_db($conn,'gesdoju');
       $res = mysqli_query($conn,$sql);
       $fila = mysqli_fetch_assoc($res);
         
@@ -283,14 +331,14 @@ function formAllowUser($id,$conn){
 	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
 	        
 	        <div class="form-group">
-		  <label for="nombre">Nombre</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$fila['nombre'].'" readonly>
-		</div>
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" value="'.$fila['nombre'].'" readonly>
+            </div>
 		
-		<div class="form-group">
-		  <label for="pwd">Usuario:</label>
-		  <input type="text" class="form-control" value="'.$fila['user'].'" readonly>
-		</div><hr>
+            <div class="form-group">
+            <label for="pwd">Usuario:</label>
+            <input type="text" class="form-control" value="'.$fila['user'].'" readonly>
+            </div><hr>
 		
 		<div class="form-group">
             <label for="sel1">Permisos:</label>
@@ -312,44 +360,55 @@ function formAllowUser($id,$conn){
 /*
 ** funcion para cabiar permisos usuario de la base de datos
 */
-function changeRole($id,$role,$conn){
+function changeRole($id,$role,$conn,$dbase){
 
 		
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$sql = "update usuarios set role = '$role' where id = '$id'";
     $res = mysqli_query($conn,$sql);
 
 
 	if($res){
 		
-            echo "<br>";
-		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" alert-dismissible">
-		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Permisos Actualizados Satisfactoriamente.';
-		    echo "</div>";
-		    echo "</div>";
+		    echo '<div class="container">
+                    <div class="jumbotron">
+                        <div class="alert alert-success" alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Permisos Actualizados Satisfactoriamente.
+                        </div><hr>
+                        <form action="#" method="POST">
+                                <button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Usuarios</button>
+                                <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                        </form>
+                    </div>
+                 </div>';
 		    
             }else{
 			   
-			    echo '<div class="container">';
-                echo '<div class="alert alert-warning" alert-dismissible">
-			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Alctualizar los Permisos. '  .mysqli_error($conn);
-			    echo "</div>";
-			    echo "</div>";
+			    echo '<div class="container">
+                        <div class="jumbotron">
+                            <div class="alert alert-warning" alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Alctualizar los Permisos. '  .mysqli_error($conn).'
+                            </div><hr>
+                            <form action="#" method="POST">
+                                <button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Usuarios</button>
+                                <button type="submit" class="btn btn-default btn-block" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Volver a Home</button>
+                            </form>
+                        </div>
+                      </div>';
 	}
 }
 
 /*
 ** funcion que lista los datos del usuario
 */
-function loadUser($conn,$nombre){
+function loadUser($conn,$nombre,$dbase){
 
 if($conn){
-	
-	$sql = "SELECT * FROM usuarios where nombre = '$nombre'";
-    	mysqli_select_db($conn,'gesdoju');
+        
+        mysqli_select_db($conn,$dbase);
+        $sql = "SELECT * FROM usuarios where nombre = '$nombre'";
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
 	$count = 0;

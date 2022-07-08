@@ -321,26 +321,36 @@ function dumpMysql($conn,$dbase){
         
         if(is_file($salida)){
         
-         echo '<div class="alert alert-success" role="alert">
-               <h1 class="panel-title text-left" contenteditable="true">
-                <img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"><strong> Dump Successfully!!!</strong></h1>
-                </div>';
+         echo '<div class="container">
+                <div class="jumbotron">
+                    <div class="alert alert-success" role="alert">
+                        <p><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"><strong> Dump Successfully!!!</strong></p>
+                    </div>
+                </div>
+              </div>';
             copy($salida, '../../sqls/'.$salida);
             unlink($salida);
          
          }else{
-            echo '<div class="alert alert-danger" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true">
-                        <img src="../../icons/actions/application-exit.png"  class="img-reponsive img-rounded"><strong> No se pudo hacer back up de la base de datos</strong></h1>
+            echo '<div class="container">
+                    <div class="jumbotron">
+                    <div class="alert alert-danger" role="alert">
+                    <p><img src="../../icons/actions/application-exit.png"  class="img-reponsive img-rounded"><strong> No se pudo hacer back up de la base de datos</strong></p>
+                 </div>
+                 </div>
                  </div>';
          
          }
         
          }else{
             
-            echo '<div class="alert alert-danger" role="alert">';
-            echo '<h1 class="panel-title text-left" contenteditable="true">
-                    <img src="../../icons/actions/dialog-ok-apply.png" class="img-reponsive img-rounded"><strong>'. mysqli_error($conn). '</strong></h1>';
+            echo '<div class="container">
+                    <div class="jumbotron">
+                    <div class="alert alert-danger" role="alert">
+                        <p><img src="../../icons/actions/dialog-ok-apply.png" class="img-reponsive img-rounded"><strong>'. mysqli_error($conn). '</p>
+                    </div>
+                    </div>
+                    </div>';
          
          }
          

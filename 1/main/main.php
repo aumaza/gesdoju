@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -219,12 +219,6 @@
       }
       
       // FIN SECCION CONSULTA DE NORMAS
-	  
-	  // SECCION CARGAR USUARIOS
-	  if(isset($_POST['C'])){
-	    loadUser($conn,$nombre);
-	  }
-	  
 	  
 	  // ============================================================================== //
 	  
@@ -449,7 +443,7 @@
 	  //SECCION USUARIOS //
 	  // =============================================================================== //
 	  if(isset($_POST['J'])){
-	      usuarios($conn);
+	      usuarios($conn,$dbase);
 	}
 	if(isset($_POST['add_user'])){
         newUser();
@@ -461,24 +455,24 @@
         $pass1 = mysqli_real_escape_string($conn,$_POST['pass1']);
         $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
         $role = mysqli_real_escape_string($conn,$_POST['role']);
-        agregarUser($nombre,$user,$email,$pass1,$pass2,$role,$conn);
+        agregarUser($nombre,$user,$email,$pass1,$pass2,$role,$conn,$dbase);
 	}
 	if(isset($_POST['del_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formBorrarUser($id,$conn);
+        formBorrarUser($id,$conn,$dbase);
 	}
 	if(isset($_POST['delete_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        delUser($id,$conn);
+        delUser($id,$conn,$dbase);
 	}
 	if(isset($_POST['allow_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        formAllowUser($id,$conn);
+        formAllowUser($id,$conn,$dbase);
 	}
 	if(isset($_POST['role_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $role = mysqli_real_escape_string($conn,$_POST['role']);
-        changeRole($id,$role,$conn);
+        changeRole($id,$role,$conn,$dbase);
 	}
 	if(isset($_POST['pass_user'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
@@ -490,6 +484,10 @@
        $pass2 = mysqli_real_escape_string($conn,$_POST['pass2']);
        updatePass($id,$pass1,$pass2,$conn,$dbase);	
 	}
+	// CRAGA DATOS DEL USUARIO LOGUEADO
+	if(isset($_POST['C'])){
+	    loadUser($conn,$nombre,$dbase);
+    }
 	// FIN SECCION USUARIOS //
 	// =============================================================================== //
 	
