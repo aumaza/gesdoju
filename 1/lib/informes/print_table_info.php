@@ -54,14 +54,14 @@
     <?php
         
         if($palabra_clave != ''){
-            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Palabra Clave [ '.$palabra_clave.' ]</p>';
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Palabra Clave [ '.$palabra_clave.' ]</p>';
         }if(($fecha_desde != '') && ($fecha_hasta != '')){
-            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
         }if($anio_pub != ''){
-            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center" Año Publicación [ '.$anio_pub.' ]</p>';
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Año Publicación [ '.$anio_pub.' ]</p>';
         }
         if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
-            echo '<h3 align="center">Criterio de Búsqueda</h3><p align="center"> Palabra Clave [ '.$palabra_clave.' ] Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Palabra Clave [ '.$palabra_clave.' ] Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
         }
     ?>
    

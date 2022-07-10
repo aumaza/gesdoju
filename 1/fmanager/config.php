@@ -4,16 +4,19 @@
         $varsession_user = $_SESSION['user'];
         $varsession_pass = $_SESSION['pass'];
         
+        
 	
-	$sql = "select user, password from usuarios where user = '$varsession_user' and password = '$varsession_pass'";
+	
+	$sql = "select user, password from usuarios where user = '$varsession_user'";
 	mysqli_select_db($conn,$dbase);
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
 	      $user = $row['user'];
-	      $pass = $row['password'];
+	      $hash = $row['password'];
 	}
 	
-   
+  
+
     
 	if($varsession_user == null || $varsession_user == ''){
   echo '<!DOCTYPE html>
@@ -90,14 +93,14 @@ function ft_settings_external_load($user,$pass) {
   if($user == 'root'){
   
   $ft['users'][$user] = array(
-    'password' => $pass,
+    'password' => $password,
     'group' => 'administradores'
   );
   
   }else{
     
     $ft['users'][$user] = array(
-    'password' => $pass,
+    'password' => $varsession_pass,
     'group' => 'usuarios'
   );
   

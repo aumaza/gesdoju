@@ -3,17 +3,17 @@
         
         $varsession_user = $_SESSION['user'];
         $varsession_pass = $_SESSION['pass'];
-        
+                
 	
-	$sql = "select user, password from usuarios where user = '$varsession_user' and password = '$varsession_pass'";
+	$sql = "select user, password from usuarios where user = '$varsession_user'";
 	mysqli_select_db($conn,$dbase);
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
 	      $user = $row['user'];
-	      $pass = $row['password'];
+	      $hash = $row['password'];
 	}
 	
-   
+   $password = password_verify($varsession_pass,$hash);
     
 	if($varsession_user == null || $varsession_user == ''){
   echo '<!DOCTYPE html>
@@ -1278,7 +1278,7 @@ function ft_make_login($user) {
 				<label for="ft_user" class="login"><input type="text" size="25" name="ft_user" id="ft_user" value="'.$user.'" tabindex="1" /> '.t('Username:').'</label>
 			</div>
 			<div>
-				<label for="ft_pass" class="login"><input type="password" size="25" name="ft_pass" id="ft_pass" tabindex="2" /> '.t('Password:').'</label>
+				<label for="ft_pass" class="login"><input type="password" size="25" name="ft_pass" id="ft_pass" value="'.$varsession_pass.'" tabindex="2" readonly/> '.t('Password:').'</label>
 				<input type="hidden" name="act" value="dologin" />
 			</div>  <div class="checkbox">
     			  <input type="submit" value="'.t('Login').'" id="login_button" tabindex="10" />';
