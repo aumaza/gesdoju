@@ -98,7 +98,7 @@ $(document).ready(function(){
 
 function callAdminExplorer(){
     
-    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=2000,height=650,left=200,top=200`;
+    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=2000,height=650,left=70,right=80,top=200`;
     
     open("../fmanager/ft2.php", "adminExplorer", params);
  

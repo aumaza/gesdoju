@@ -488,6 +488,11 @@
 	if(isset($_POST['C'])){
 	    loadUser($conn,$nombre,$dbase);
     }
+    // VER REGISTRO DE LOGIN DE USUARIO
+    if(isset($_POST['view_user_log'])){
+        $id = mysqli_real_escape_string($conn,$_POST['id']);
+        viewUserLog($id,$conn,$dbase);
+    }
 	// FIN SECCION USUARIOS //
 	// =============================================================================== //
 	

@@ -41,7 +41,9 @@ if($conn)
                           <button type="submit" class="btn btn-default btn-sm" name="allow_user">
                             <img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Cambiar Permisos</button>';
                      }
-             echo '</form>';
+             echo '<button type="submit" class="btn btn-default btn-sm" name="view_user_log">
+                            <img src="../../icons/actions/mail-mark-task.png"  class="img-reponsive img-rounded"> Ver Regitro Login</button>
+                    </form>';
 			 echo "</td>";
 			 $count++;
 		}
@@ -595,6 +597,37 @@ function updatePass($id,$pass1,$pass2,$conn,$dbase){
 }
    
 
+function viewUserLog($id,$conn,$dbase){
+    
+    mysqli_select_db($conn,$dbase);
+    $sql = "select nombre, user from usuarios where id = '$id'";
+    $query = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($query);
+       
+    
+    $fileName = '../../logs/'.$row['user'].'.log.txt';
+    $contents = file_get_contents($fileName);
+    $lines = explode("\n",$contents);
+    
+    
+    echo '<div class="container">
+            <div class="jumbotron">
+            <h3><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Registro de Login: '.$row['nombre'].'</h3><hr>
+            <div class="row">
+                <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Records</div>
+                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">
+                <textarea class="form-control" readonly>';
+                foreach($lines as $line){
+                    echo $line .'<br>';
+                }
+                
+      echo '</textarea>
+            </div>
+            </div>
+            </div>
+            </div>';
+
+}
 
 
 ?>

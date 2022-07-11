@@ -63,7 +63,7 @@ function ft_settings_external_load($user,$pass) {
   $ft["settings"]["FILEBLACKLIST"]     = "ft2.php ft.css config.php index.php config.sample.php LICENSE README.markdown .DS_store .gitignore"; // Specific files that will not be shown.
   $ft["settings"]["FOLDERBLACKLIST"]   = "plugins js css locales data"; // Specifies folders that will not be shown. No starting or trailing slashes!
   $ft["settings"]["FILETYPEBLACKLIST"] = "php phtml php3 php4 php5"; // File types that are not allowed for upload.
-  $ft["settings"]["FILETYPEWHITELIST"] = "txt doc odt pdf xls docx xlsx sql csv zip rar"; // Add file types here to *only* allow those types to be uploaded.
+  $ft["settings"]["FILETYPEWHITELIST"] = "txt doc odt pdf xls docx xlsx sql csv zip rar tgz"; // Add file types here to *only* allow those types to be uploaded.
   $ft["settings"]["ADVANCEDACTIONS"]   = FALSE; // Set to TRUE to enable advanced actions like chmod and symlinks.
   $ft["settings"]["LIMIT"]             = 0; // Restrict total dir file usage to this amount of bytes. Set to "0" for no limit.
   $ft["settings"]["REQUEST_URI"]       = FALSE; // Installation path. You only need to set this if $_SERVER['REQUEST_URI'] is not being set by your server.
