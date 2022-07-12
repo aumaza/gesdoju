@@ -14,7 +14,7 @@ if($conn)
 	      <div class="jumbotron">
 	      <h2><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Usuarios</h2><hr>';
 
-            echo "<table class='display compact' style='width:100%' id='myTable'>";
+            echo "<table class='display compact' style='width:100%' id='usersTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>Nombre</th>
             <th class='text-nowrap text-center'>Usuario</th>
@@ -418,12 +418,11 @@ if($conn){
 	      <div class="jumbotron">
 	      <h2><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Cambiar Password</h2><hr>';
 	
-            echo "<table class='display compact' style='width:100%' id='myTable'>";
+            echo "<table class='display compact' style='width:100%' id='userTable'>";
               echo "<thead>
                     <th class='text-nowrap text-center'>Nombre</th>
                     <th class='text-nowrap text-center'>Usuario</th>
                     <th class='text-nowrap text-center'>Acciones</th>
-                    <th>&nbsp;</th>
                     </thead>";
 
 
@@ -432,10 +431,10 @@ if($conn){
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['nombre']."</td>";
 			 echo "<td align=center>".$fila['user']."</td>";
-			 echo "<td class='text-nowrap'>";
+			 echo "<td class='text-nowrap' align=center>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">';
-                    echo '<button type="submit" class="btn btn-default btn-block" name="pass_user">
+                    echo '<button type="submit" class="btn btn-default" name="pass_user">
                             <img src="../../icons/actions/view-refresh.png"  class="img-reponsive img-rounded"> Cambiar Password</button>
              </form></td>';
 			 $count++;

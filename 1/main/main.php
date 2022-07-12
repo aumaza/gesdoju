@@ -1,14 +1,14 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
-      include "../lib/lib_main.php";
-      include "../lib/lib_users.php";
+      include "lib_main.php";
+      include "../lib/users/lib_users.php";
       include "../lib/normas/lib_normas.php";
-      include "../lib/lib_system.php";
+      include "../lib/system/lib_system.php";
       include "../lib/organismos/lib_organismos.php";
       include "../lib/jurisdicciones/lib_jurisdicciones.php";
       include "../lib/lib_autoridades_superiores.php";
@@ -24,6 +24,7 @@
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
+  
   
       
         $varsession = $_SESSION['user'];
@@ -766,6 +767,7 @@
 <script type="text/javascript" src="../lib/segmentacion_tematica/lib_segmentacion_tematica.js"></script>
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
+<script type="text/javascript" src="../lib/users/lib_users.js"></script>
 
 
 <!-- Modal 2 -->
