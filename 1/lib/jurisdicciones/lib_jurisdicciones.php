@@ -36,12 +36,12 @@ class Jurisdicciones{
 /*
 ** funcion para listar jurisdicciones
 */
-public function listarJurisdicciones($my_jurisdiccion,$conn){
+public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 
 	if($conn){
 		
 		$sql = "SELECT * FROM jurisdicciones";
-		mysqli_select_db($conn,'gesdoju');
+		mysqli_select_db($conn,$dbase);
 		$resultado = mysqli_query($conn,$sql);
 			
 		//mostramos fila x fila
@@ -134,10 +134,10 @@ public function newJurisdiccion($conn){
 /*
 ** funcion editar Jurisdicción
 */
-public function formEditJurisdiccion($my_jurisdiccion,$id,$conn){
+public function formEditJurisdiccion($my_jurisdiccion,$id,$conn,$dbase){
 
 	$sql = "select * from jurisdicciones where id = '$id'";
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$query = mysqli_query($conn,$sql);
 	while($fila = mysqli_fetch_array($query)){
 		  $cod_jur = $fila['cod_jur'];
@@ -177,42 +177,37 @@ public function formEditJurisdiccion($my_jurisdiccion,$id,$conn){
   /*
 ** Funcion carga formulario de eliminacion de registro
 */
-public function formBorrarJurisdiccion($my_jurisdiccion,$id,$conn){
+public function formBorrarJurisdiccion($my_jurisdiccion,$id,$conn,$dbase){
     
     $sql = "select * from jurisdicciones where id = '$id'";
-      mysqli_select_db($conn,'gesdoju');
+      mysqli_select_db($conn,$dbase);
       $res = mysqli_query($conn,$sql);
       $fila = mysqli_fetch_assoc($res);
 
       echo '<div class="container">
-	    <div class="row">
-	    <div class="col-sm-8">
-	      <h2>Eliminar Norma</h2><hr>
-	      <div class="alert alert-danger">
-	      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
-            <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
-          </div><hr>
+                <div class="jumbotron">
+	    
+                <h2><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar Norma</h2><hr>
+                    <div class="alert alert-danger">
+                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
+                        <strong>Atención!</strong> Está por eliminar el siguiente Registro del sistema. Si desea continuar presione Aceptar de lo contrario presione Cancelar.</p>
+                    </div><hr>
           
-	        <form action="main.php" method="POST">
-	        <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
-	        
-	        <div class="form-group">
-		  <label for="nombre">Jurisdicción</label>
-		  <input type="text" class="form-control" id="nombre" value="'.$my_jurisdiccion->get_descripcion($fila['descripcion']).'" readonly>
-		</div><hr>
+                <form action="main.php" method="POST">
+                <input type="hidden" id="id" name="id" value="'.$fila['id'].'" />
+                
+                <div class="form-group">
+                <label for="nombre">Jurisdicción</label>
+                <input type="text" class="form-control" id="nombre" value="'.$my_jurisdiccion->get_descripcion($fila['descripcion']).'" readonly>
+                </div><hr>
 		
 		
-		<button type="submit" class="btn btn-success btn-block" name="delete_jur">
-		<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
-	      </form> 
+                <button type="submit" class="btn btn-success btn-block" name="delete_jur">
+                <img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+                </form> 
 	      
-		  <a href="main.php"><button type="button" class="btn btn-danger btn-block" >
-		  <img src="../../icons/actions/dialog-close.png"  class="img-reponsive img-rounded"> Cancelar</button></a>
-	      <br>
-	      
-	    </div>
-	    </div>
-	</div>';
+            </div>
+            </div>';
 
 }
 
@@ -224,10 +219,10 @@ public function formBorrarJurisdiccion($my_jurisdiccion,$id,$conn){
 /*
 ** funcion que agrega Jurisdicción a la base de datos
 */
-public function addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn){
+public function addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn,$dbase){
 
     $sql = "select cod_jur, descripcion from jurisdicciones where cod_jur = '$cod_jur' or descripcion = '$descripcion'";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $query = mysqli_query($conn,$sql);
     $rows = mysqli_num_rows($query);
           
@@ -261,10 +256,10 @@ public function addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn){
 /*
 ** funcion actualizar registro de Jurisdicción
 */
-public function updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$conn){
+public function updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$conn,$dbase){
 
 	$sql = "update jurisdicciones set cod_jur = $my_jurisdiccion->set_cod_jur('$cod_jur'), descripcion = $my_jurisdiccion->set_descripcion('$descripcion') where id = '$id'";
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$query = mysqli_query($conn,$sql);
 	
 	if($query){
@@ -282,30 +277,41 @@ public function updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$c
 ** Función para eliminar un registro de la tabla jurisdicciones
 */
 
-function delJurisdiccion($id,$conn){
+function delJurisdiccion($id,$conn,$dbase){
 
 		
-	mysqli_select_db($conn,'gesdoju');
+	mysqli_select_db($conn,$dbase);
 	$sql = "delete from jurisdicciones where id = '$id'";
            
 	$res = mysqli_query($conn,$sql);
 
 
 	if($res){
-		echo "<br>";
-        echo '<div class="container">';
-		echo '<div class="alert alert-success" alert-dismissible">
-		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />Registro Eliminado Satisfactoriamente.';
-		echo "</div>";
-		echo "</div>";
+		echo '<div class="container">
+                <div class="jumbotron">
+                    <div class="alert alert-success" alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />Registro Eliminado Satisfactoriamente.
+                    </div><hr>
+                    <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="L">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Jurisdicciones</button>
+                    </form>
+                </div>
+              </div>';
 	}else{
-		echo '<div class="container">';
-        echo '<div class="alert alert-warning" alert-dismissible">
-		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-		echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Eliminar el Registro. '  .mysqli_error($conn);
-		echo "</div>";
-		echo "</div>";
+		echo '<div class="container">
+                <div class="jumbotron">
+                    <div class="alert alert-warning" alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Eliminar el Registro. '  .mysqli_error($conn).'
+                    </div><hr>
+                    <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-block" name="L">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ir a Jurisdicciones</button>
+                    </form>
+                </div>
+              </div>';
 	}
 }
 

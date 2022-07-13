@@ -92,29 +92,43 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Guardado Exitosamente!!");
+                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
                     $('#cod_org').val('');
+                    $('#saf').val('');
                     $('#descripcion').val('');
                     $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 4){
-                    alert("Error. Organismo Existente!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error. Organismo Existente!!</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
                     $('#cod_org').val('');
+                    $('#saf').val('');
                     $('#descripcion').val('');
                     $('#ubicacion_fisica').val('');
                     $('#cod_org').focus('');
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error de conexion!!</p></div>';
+                    document.getElementById('messageNewOrganismo').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }
                 
             }
@@ -141,17 +155,36 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    $("#myModalOrganismo").modal("show");
+                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Actualizado Exitosamente</p></div><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="listar_organismos"> Ir a Organismos</button></form>';
+                    document.getElementById('messageUpdateOrganismo').innerHTML = mensaje;
+                    document.getElementById('cod_org').disabled = true;
+                    document.getElementById('saf').disabled = true;
+                    document.getElementById('descripcion').disabled = true;
+                    document.getElementById('ubicacion_fisica').disabled = true;
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error. Hubo un problema al intentar actualizar el registro</p></div><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="listar_organismos"> Ir a Organismos</button></form>';
+                    document.getElementById('messageUpdateOrganismo').innerHTML = mensaje;
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
+                    document.getElementById('messageUpdateOrganismo').innerHTML = mensaje;
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="listar_organismos"> Ir a Organismos</button></form></div>';
+                    document.getElementById('messageUpdateOrganismo').innerHTML = mensaje;
+                    $('#cod_org').disabled = true;
+                    $('#saf').disabled = true;
+                    $('#descripcion').disabled = true;
+                    $('#ubicacion_fisica').disabled = true;
+                    
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning" aria-hidden="true"></span> Error de conexion!!</p><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="listar_organismos"> Ir a Organismos</button></form></div>';
+                    document.getElementById('messageUpdateOrganismo').innerHTML = mensaje;
+                    $('#cod_org').disabled = true;
+                    $('#saf').disabled = true;
+                    $('#descripcion').disabled = true;
+                    $('#ubicacion_fisica').disabled = true;
+                   
                 }
                 
             }

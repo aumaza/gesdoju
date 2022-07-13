@@ -558,15 +558,15 @@
 	}
 	if(isset($_POST['edit_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_jurisdiccion->formEditJurisdiccion($my_jurisdiccion,$id,$conn);
+        $my_jurisdiccion->formEditJurisdiccion($my_jurisdiccion,$id,$conn,$dbase);
 	}
 	if(isset($_POST['del_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_jurisdiccion->formBorrarJurisdiccion($my_jurisdiccion,$id,$conn);
+        $my_jurisdiccion->formBorrarJurisdiccion($my_jurisdiccion,$id,$conn,$dbase);
 	}
 	if(isset($_POST['delete_jur'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        $my_jurisdiccion->delJurisdiccion($id,$conn);
+        $my_jurisdiccion->delJurisdiccion($id,$conn,$dbase);
 	}
 	
 	$my_jurisdiccion->modalJurisdiccionConfirm();

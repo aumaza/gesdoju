@@ -1,5 +1,5 @@
 <?php include "../../../connection/connection.php";
-      include "../lib_system.php";
+      include "../system/lib_system.php";
       include "lib_jurisdicciones.php";
       
            
@@ -23,7 +23,7 @@
                    echo 5; // hay campos vacios
                     
     }else{
-        $my_jurisdiccion->updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$conn);
+        $my_jurisdiccion->updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion

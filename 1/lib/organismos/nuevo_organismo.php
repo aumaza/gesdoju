@@ -1,5 +1,5 @@
 <?php include "../../../connection/connection.php";
-      include "../lib_system.php";
+      include "../system/lib_system.php";
       include "lib_organismos.php";
       
            
@@ -9,6 +9,7 @@
       
       // captura de datos
         $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $saf = mysqli_real_escape_string($conn,$_POST['saf']);
         $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
         $ubicacion_fisica = mysqli_real_escape_string($conn,$_POST['ubicacion_fisica']);
         
@@ -19,12 +20,13 @@
             
       // se verifica que los datos no estén vacios
       if(($cod_org == '') ||
-            ($descripcion == '') ||
-                ($ubicacion_fisica == '')){
+            ($saf == '') ||
+                ($descripcion == '') ||
+                    ($ubicacion_fisica == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $my_organismo->addOrganismo($cod_org,$my_organismo,$descripcion,$ubicacion_fisica,$conn,$dbase);
+        $my_organismo->addOrganismo($cod_org,$my_organismo,$saf,$descripcion,$ubicacion_fisica,$conn,$dbase);
     }
     }else{
         echo 13; //error de conexion
