@@ -92,10 +92,11 @@
             $obs = $row['observaciones'];
     	}
     	
-    	$sql_1 = "select descripcion from organismos where cod_org = '$organismo'";
+    	$sql_1 = "select saf, descripcion from organismos where cod_org = '$organismo'";
         $query_1 = mysqli_query($conn,$sql_1);
         while($row_1 = mysqli_fetch_array($query_1)){
             $org_descripcion = $row_1['descripcion'];
+            $saf = $row['saf'];
         }
         
         $sql_2 = "select descripcion from jurisdicciones where cod_jur = '$jurisdiccion'";
@@ -113,8 +114,14 @@
             <p class="p-justify"><strong>Ambito de la Norma</strong>: '.$foro_norma.'</p><hr>
             <p class="p-justify"><strong>Fecha Publicación</strong>: '.$f_pub.'</p><hr>
             <p class="p-justify"><strong>Año</strong>: '.$anio.'</p><hr>
-            <p class="p-justify"><strong>Organismo</strong>: '.$org_descripcion.'</p><hr>
-            <p class="p-justify"><strong>Jurisdicción</strong>: '.$jur_descripcion.'</p><hr>
+            <p class="p-justify"><strong>Organismo</strong>: '.$org_descripcion.'</p><hr>';
+            if($saf != ''){
+                echo '<p class="p-justify"><strong>SAF</strong>: '.$saf.'</p><hr>';
+            }else{
+                echo '<p class="p-justify"><strong>SAF</strong>: SAF NO DISPONIBLE</p><hr>';
+            }
+            
+      echo '<p class="p-justify"><strong>Jurisdicción</strong>: '.$jur_descripcion.'</p><hr>
             <p class="p-justify"><strong>Ubicación / Bibliorato</strong>: '.$unidad_fisica.'</p><hr>
             <p class="p-justify"><strong>Observaciones</strong>: '.$obs.'</p><br>
             

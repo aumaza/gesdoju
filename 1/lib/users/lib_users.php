@@ -617,7 +617,7 @@ function viewUserLog($id,$conn,$dbase){
                 <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">
                 <textarea class="form-control" readonly>';
                 foreach($lines as $line){
-                    echo $line .'<br>';
+                    echo $line .'&#13;&#10';
                 }
                 
       echo '</textarea>

@@ -104,28 +104,29 @@ public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 public function newJurisdiccion($conn){
 
 	echo '<div class="container">
-		 <div class="row">
-		 <div class="col-sm-8">
-		   <h2>Cargar Jurisdicción</h2><hr>
-			 <form id="fr_add_new_jurisdiccion_ajax" method="POST">
+            <div class="jumbotron">
+                
+                <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Jurisdicción</h2><hr>
+                <form id="fr_add_new_jurisdiccion_ajax" method="POST">
 			 
-			 <div class="form-group">
-			 <label for="cod_jur">Código Jurisdicción</label>
-			 <input type="text" class="form-control" id="cod_jur" name="cod_jur"  maxlength="2" placeholder="Ingrese el código de la Jurisdicción" required>
-			 </div><hr>
+                    <div class="form-group">
+                        <label for="cod_jur">Código Jurisdicción</label>
+                        <input type="text" class="form-control" id="cod_jur" name="cod_jur"  maxlength="2" placeholder="Ingrese el código de la Jurisdicción" required>
+                    </div><hr>
 			 
-			 <div class="form-group">
-		   <label for="descripcion">Jurisdicción</label>
-		   <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese el Nombre de la Jurisdicción" required>
-		 </div><hr>
+                    <div class="form-group">
+                        <label for="descripcion">Jurisdicción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion"  maxlength="120" placeholder="Ingrese el Nombre de la Jurisdicción" required>
+                    </div><hr>
 		 
-		 <button type="submit" class="btn btn-success btn-block" id="add_jurisdiccion" name="add_jurisdiccion">
-		 <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
-		   </form> <br>
+                <button type="submit" class="btn btn-success btn-block" id="add_jurisdiccion" name="add_jurisdiccion">
+                <img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+                </form><hr>
+                
+                <div id="messageNewJurisdiccion"></div>
 		   
 		 </div>
-		 </div>
-	 </div>';
+         </div>';
  
  }
 	
@@ -145,31 +146,27 @@ public function formEditJurisdiccion($my_jurisdiccion,$id,$conn,$dbase){
 		  }
 		 
 		 echo '<div class="container">
-			  <div class="row">
-			  <div class="col-sm-8">
-			  
-			  <div class="panel panel-success">
-			  <div class="panel-heading"><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar Jurisdicción</div>
-			  <div class="panel-body">
-			  <form id="fr_update_jurisdiccion_ajax" method="POST">
-			  <input type="hidden" class="form-control" name="id" value="'.$id.'">
-			  
-			  <div class="form-group">
-				  <label for="cod_jur">Código Jurisdicción:</label>
-				  <input type="text" class="form-control" id="cod_jur" name="cod_jur" value="'.$my_jurisdiccion->get_cod_jur($cod_jur).'" readonly>
-			  </div><hr>
-			  
-			  <div class="form-group">
-				  <label for="descripcion">Descripción:</label>
-				  <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$my_jurisdiccion->get_descripcion($descripcion).'">
-			  </div><hr>
-			  
-			  <button type="submit" class="btn btn-success btn-block" id="update_jurisdiccion" name="update_jurisdiccion">Aceptar</button>
-			  </form>
-			  </div>
-			  </div>
-			  
-			  </div>
+                <div class="jumbotron">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar Jurisdicción</h3><hr>
+                
+                <form id="fr_update_jurisdiccion_ajax" method="POST">
+                <input type="hidden" class="form-control" name="id" value="'.$id.'">
+                
+                <div class="form-group">
+                    <label for="cod_jur">Código Jurisdicción:</label>
+                    <input type="text" class="form-control" id="cod_jur" name="cod_jur" value="'.$my_jurisdiccion->get_cod_jur($cod_jur).'" readonly>
+                </div><hr>
+                
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" value="'.$my_jurisdiccion->get_descripcion($descripcion).'">
+                </div><hr>
+                
+                <button type="submit" class="btn btn-success btn-block" id="update_jurisdiccion" name="update_jurisdiccion">Aceptar</button>
+                </form><hr>
+                
+                <div id="messageUpdateJurisdiccion"></div>
+                
 			  </div>
 			  </div>';
   }
@@ -235,17 +232,17 @@ public function addJurisdiccion($my_jurisdiccion,$cod_jur,$descripcion,$conn,$db
         				"($my_jurisdiccion->set_cod_jur('$cod_jur'),
 						  $my_jurisdiccion->set_descripcion('$descripcion'))";
         
-						  mysqli_select_db($conn,'gesdoju');
+						  mysqli_select_db($conn,$dbase);
         				  $resp = mysqli_query($conn,$consulta);
             
             if($resp){
+                echo 1; // registro insertado con exito
                 $success = '[Registro insertado con éxito en la tabla Jurisdicciones]';
                 mysqlSuccessLogs($success);
-            	echo 1; // registro insertado con exito
     		}else{
+                echo -1; // hubo un problema al intentar insertar el registro
                 $error = mysqli_error($conn);
                 mysqlErrorLogs($error);
-			    echo -1; // hubo un problema al intentar insertar el registro
 		    }
 		    }else{
 		        echo 4; // jurisdiccion ya existente		    
@@ -263,13 +260,13 @@ public function updateJurisdiccion($my_jurisdiccion,$id,$cod_jur,$descripcion,$c
 	$query = mysqli_query($conn,$sql);
 	
 	if($query){
-        $success = '[Registro actualizado con éxito en la tabla Jurisdicciones con ID: '.$id.']';
+        echo 1; // registro insertado con exito
+		$success = '[Registro actualizado con éxito en la tabla Jurisdicciones con ID: '.$id.']';
         mysqlSuccessLogs($success);
-		echo 1; // registro insertado con exito
 	}else{
+        echo -1; // hubo un problema al insertar el registro
         $error = mysqli_error($conn);
         mysqlErrorLogs($error);
-		echo -1; // hubo un problema al insertar el registro
 	}
 }
 

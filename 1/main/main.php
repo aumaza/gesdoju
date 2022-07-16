@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 1);
+      ini_set('display_errors', 0);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -47,14 +47,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />';
         skeleton();
-        echo '</head><body>';
-        echo '<br><div class="container">
-                <div class="alert alert-danger" role="alert">';
-        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
-        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
-        echo "</div></div>";
-        die();
-        echo '</body></html>';
+        echo '</head>
+                <body>
+                <br><div class="container">
+                <div class="alert alert-danger" role="alert">
+                    <p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p><hr>
+                    <a href="../../logout.php"><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>
+                </div>
+                </div>';
+                die();
+        echo '</body>
+              </html>';
 	}
 	
 	
@@ -97,6 +100,7 @@
 	  if(isset($_POST['logout'])){
         logOut($nombre);
 	  }
+	  
 	  
 	  // VISUALIZACION DE LOGS
 	  if(isset($_POST['view_errors'])){
@@ -170,7 +174,7 @@
 	  }
 	  if(isset($_POST['info_norma'])){
         $id = mysqli_real_escape_string($conn,$_POST['id']);
-        infoNorma($id,$conn);
+        infoNorma($id,$conn,$dbase);
 	  }
 	  if(isset($_POST['subir_archivo'])){
         formSubirArchivo();

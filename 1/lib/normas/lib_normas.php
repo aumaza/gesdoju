@@ -554,7 +554,7 @@ if($conn){
 	      
 	      <form <action="main.php" method="POST">
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="nueva_norma" data-toggle="tooltip" data-placement="top" title="Agregar una Nueva Norma">
+                    <button type="submit" class="btn btn-primary btn-sm" name="nueva_norma" data-toggle="tooltip" data-placement="top" title="Agregar una Nueva Norma">
                     <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
                     
                     <button type="submit" class="btn btn-default btn-sm" name="busqueda_avanzada" data-toggle="tooltip" data-placement="top" title="Búsqueda Avanzada de Registros">
@@ -1046,10 +1046,10 @@ function quitarTildes($cadena){
 
 
 // INFORMACION EXTENDIDA
-function infoNorma($id,$conn){
+function infoNorma($id,$conn,$dbase){
     
     $sql = "select * from normas where id = '$id'";
-    mysqli_select_db($conn,'gesdoju');
+    mysqli_select_db($conn,$dbase);
     $query = mysqli_query($conn,$sql);
     
     $sql_3 = "select * from normas_vinculadas where id_norma_principal = '$id'";
@@ -1070,10 +1070,11 @@ function infoNorma($id,$conn){
         $archivo = $row['file_name'];
     }
     
-    $sql_1 = "select descripcion from organismos where cod_org = '$organismo'";
+    $sql_1 = "select saf, descripcion from organismos where cod_org = '$organismo'";
     $query_1 = mysqli_query($conn,$sql_1);
     while($row_1 = mysqli_fetch_array($query_1)){
         $org_descripcion = $row_1['descripcion'];
+        $saf = $row['saf'];
     }
     
     $sql_2 = "select descripcion from jurisdicciones where cod_jur = '$jurisdiccion'";
@@ -1095,15 +1096,20 @@ function infoNorma($id,$conn){
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
                     <ul class="list-group">
-                    <li class="list-group-item"><strong>Nombre de la Norma:</strong> '.$nombre_norma.'</li>
-                    <li class="list-group-item"><strong>Número de la Norma:</strong> '.$n_norma.'</li>
-                    <li class="list-group-item"><strong>Tipo de Norma:</strong> '.$tipo_norma.'</li>
-                    <li class="list-group-item"><strong>Ambito de  la Norma:</strong> '.$foro_norma.'</li>
-                    <li class="list-group-item"><strong>Fecha Publicación:</strong> '.$f_pub.'</li>
-                    <li class="list-group-item"><strong>Año Publicación:</strong> '.$anio.'</li>
-                    <li class="list-group-item"><strong>Organismo:</strong> '.$org_descripcion.'</li>
-                    <li class="list-group-item"><strong>Jurisdicción:</strong> '.$jur_descripcion.'</li>
-                    <li class="list-group-item"><strong>Ubicación / Bibliorato:</strong> '.$unidad_fisica.'</li>
+                    <li class="list-group-item"><strong>Nombre de la Norma:</strong> <span class="badge">'.$nombre_norma.'</span></li>
+                    <li class="list-group-item"><strong>Número de la Norma:</strong> <span class="badge">'.$n_norma.'</span></li>
+                    <li class="list-group-item"><strong>Tipo de Norma:</strong> <span class="badge">'.$tipo_norma.'</span></li>
+                    <li class="list-group-item"><strong>Ambito de  la Norma:</strong> <span class="badge">'.$foro_norma.'</span></li>
+                    <li class="list-group-item"><strong>Fecha Publicación:</strong> <span class="badge">'.$f_pub.'</span></li>
+                    <li class="list-group-item"><strong>Año Publicación:</strong> <span class="badge">'.$anio.'</span></li>
+                    <li class="list-group-item"><strong>Organismo:</strong> <span class="badge">'.$org_descripcion.'</span></li>';
+                    if($saf != ''){
+                        echo '<li class="list-group-item"><strong>SAF:</strong> <span class="badge">'.$saf.'</span></li>';
+                    }else{
+                        echo '<li class="list-group-item"><strong>SAF:</strong> <span class="badge">SAF NO DISPONIBLE</span></li>';
+                    }
+              echo '<li class="list-group-item"><strong>Jurisdicción:</strong> <span class="badge">'.$jur_descripcion.'</span></li>
+                    <li class="list-group-item"><strong>Ubicación / Bibliorato:</strong> <span class="badge">'.$unidad_fisica.'</span></li>
                     <li class="list-group-item"><strong>Observaciones:</strong> '.$obs.'</li>
                     </ul>
                     <div class="panel-footer">

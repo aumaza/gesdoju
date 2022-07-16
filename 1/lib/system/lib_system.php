@@ -1,6 +1,35 @@
 <?php
 
 /*
+** COMPROBAR CANTIDAD DE TABLAS EN LA BASE DE DATOS
+*/
+function sanityDataBase($conn,$dbase){
+
+    mysqli_select_db($conn,$dbase);
+    $sql = "SELECT COUNT(*) as tables from Information_Schema.Tables where TABLE_TYPE = 'BASE TABLE' and table_schema = '$dbase'";
+    $query = mysqli_query($conn,$sql);
+    
+    if($query){
+        
+        $row = mysqli_fetch_assoc($query);
+        $cantidad = $row['tables'];
+        
+            if($cantidad == 19){
+                return 1; // cantidad de tablas ok
+            }else{
+                return 2; // cantidad de tablas erroneas
+            }
+        
+    }else{
+        return -1; // error de consulta
+    }
+
+}
+
+
+
+
+/*
 ** Funcion de validación de ingreso
 */
 function logIn($user,$pass,$conn,$dbase){
@@ -51,7 +80,6 @@ function logIn($user,$pass,$conn,$dbase){
 
 				if(strcmp($_SESSION["user"], 'root') == 0){
 
-				echo "<br>";
 				echo '<div class="alert alert-success" role="alert">';
 				echo '<img src="img/lodding.gif"  class="img-reponsive img-rounded avatar" width="60" height="40">';
 				echo "<strong> Bienvenido!  </strong>" .$_SESSION["user"];
@@ -453,13 +481,15 @@ function viewMysqlErrors(){
             <h1><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Errores Inserción de registros</h1><hr>
             <div class="row">
                 <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Mysql Errors</div>
-                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
+                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">
+                <textarea class="form-control" readonly>';
                 
                 foreach($lines as $line){
-                    echo $line .'<br>';
+                    echo $line .'&#13;&#10';
                 }
                 
-      echo '</div>
+      echo '</textarea>
+            </div>
             </div>
             </div>
             </div>';
@@ -477,13 +507,15 @@ function viewMysqlSuccess(){
             <h1><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Inserción de registros Exitosos</h1><hr>
             <div class="row">
                 <div class="col-sm-4" align=center style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">Record Success</div>
-                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">';
+                <div class="col-sm-8" align=left style="background-color:#f2f4f4; border: 2px solid black; border-radius: 5px;">
+                <textarea class="form-control" readonly>';
                 
                 foreach($lines as $line){
-                    echo $line .'<br>';
+                    echo $line .'&#13;&#10';
                 }
                 
-      echo '</div>
+      echo '</textarea>
+            </div>
             </div>
             </div>
             </div>';

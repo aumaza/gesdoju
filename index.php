@@ -46,12 +46,32 @@
          
             if(isset($_POST['A'])){
                 
+                $sanity = sanityDataBase($conn,$dbase);
+                
+                if($sanity == 1){
+                    
+                echo '<div class="alert alert-info">
+                        <img class="img-reponsive img-rounded" src="icons/status/task-accepted.png" /> <strong>Atención!</strong> Verificación Base OK.
+                      </div><hr>';
+                    
                     $user = mysqli_real_escape_string($conn,$_POST["user"]);
                     $pass = mysqli_real_escape_string($conn,$_POST["pass"]);
                     logIn($user,$pass,$conn,$dbase);
+                }if($sanity == 2){
+                    echo '<div class="alert alert-danger">
+                            <p align=center><img class="img-reponsive img-rounded" src="icons/status/security-low.png" /> <strong>Error!</strong> La cantidad de tablas en la base no es la correcta [ CONTACTE AL ADMINISTRADOR ].</p>
+                          </div>';
+                    exit();
+                }if($sanity == -1){
+                    echo '<div class="alert alert-danger">
+                            <p align=center><img class="img-reponsive img-rounded" src="icons/status/user-busy.png" /> <strong>Error!</strong> Sin conexión a la Base de Datos [ CONTACTE AL ADMINISTRADOR ].</p>
+                          </div>';
+                }
             }
         }else{
-            echo 'Error Conction...';
+            echo '<div class="alert alert-danger">
+                    <p align=center><img class="img-reponsive img-rounded" src="icons/status/user-busy.png" /> <strong>Error!</strong> Sin conexión a la Base de Datos [ CONTACTE AL ADMINISTRADOR ].</p>
+                 </div>';
         }
 	
 	

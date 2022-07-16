@@ -93,27 +93,39 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    alert("Registro Guardado Exitosamente!!");
+                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
                     $('#cod_jur').val('');
                     $('#descripcion').val('');
                     $('#cod_jur').focus('');
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar guardar el registro");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 4){
-                    alert("Error. Jurisdicción Existente Existente!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Jurisdicción Existente!!</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
                     $('#cod_jur').val('');
                     $('#descripcion').val('');
                     $('#cod_jur').focus('');
                     console.log("Datos: " + datos);
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);                    
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion!!</p></div>';
+                    document.getElementById('messageNewJurisdiccion').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);                    
                 }
                 
             }
@@ -140,17 +152,34 @@ $(document).ready(function(){
             data:datos,
             success:function(r){
                 if(r == 1){
-                    $("#myModalJurisdiccion").modal("show");
+                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Actualizado Exitosamente</p></div><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="L"> Ir a Jurisdicciones</button></form>';
+                    document.getElementById('messageUpdateJurisdiccion').innerHTML = mensaje;
+                    document.getElementById('cod_jur').disabled = true;
+                    document.getElementById('descripcion').disabled = true;
+                    document.getElementById('cod_jur').disabled = true;
+                    console.log("Datos: " + datos);
                 }else if(r == -1){
-                    alert("Error. Hubo un problema al intentar Actualizar el Registro");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar actualizar el registro</p></div><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="L"> Ir a Jurisdicciones</button></form>';
+                    document.getElementById('messageUpdateJurisdiccion').innerHTML = mensaje;
                     console.log("Datos: " + datos);
                 }else if(r == 5){
-                    alert("Error, Hay campos sin completar!!");
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
+                    document.getElementById('messageUpdateJurisdiccion').innerHTML = mensaje;
                     console.log("Datos: " + datos);
                 }else if(r == 7){
-                    alert("Error de conexion dentro de la funcion principal!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="L"> Ir a Jurisdicciones</button></form></div>';
+                    document.getElementById('messageUpdateJurisdiccion').innerHTML = mensaje;
+                    document.getElementById('cod_jur').disabled = true;
+                    document.getElementById('descripcion').disabled = true;
+                    document.getElementById('cod_jur').disabled = true;
+                    console.log("Datos: " + datos);
                 }else if(r == 13){
-                    alert("Error de conexion!!");                    
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion!!</p><hr><form action="#" method="POST"><button type="submit" class="btn btn-default btn-block" name="L"> Ir a Jurisdicciones</button></form></div>';
+                    document.getElementById('messageUpdateJurisdiccion').innerHTML = mensaje;
+                    document.getElementById('cod_jur').disabled = true;
+                    document.getElementById('descripcion').disabled = true;
+                    document.getElementById('cod_jur').disabled = true;
+                    console.log("Datos: " + datos);                    
                 }
                 
             }
