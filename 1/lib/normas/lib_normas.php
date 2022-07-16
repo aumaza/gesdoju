@@ -1074,7 +1074,7 @@ function infoNorma($id,$conn,$dbase){
     $query_1 = mysqli_query($conn,$sql_1);
     while($row_1 = mysqli_fetch_array($query_1)){
         $org_descripcion = $row_1['descripcion'];
-        $saf = $row['saf'];
+        $saf = $row_1['saf'];
     }
     
     $sql_2 = "select descripcion from jurisdicciones where cod_jur = '$jurisdiccion'";
