@@ -9,6 +9,7 @@
         "scrollX":        true,
         "scrollCollapse": true,
         "paging":         true,
+        "deferRender": true,
         "dom":  "Bfrtip",
         buttons: [
             

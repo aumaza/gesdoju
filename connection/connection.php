@@ -1,11 +1,11 @@
 <?php
 
-//$dbhost = 'slackzone.ddns.net';
-$dbhost = 'localhost';
-//$dbuser = 'root';
-$dbuser = 'gesdoju';
-//$dbpass = 'slack142';
-$dbpass = 'gesdoju';
+$dbhost = 'slackzone.ddns.net';
+//$dbhost = 'localhost';
+$dbuser = 'root';
+//$dbuser = 'gesdoju';
+$dbpass = 'slack142';
+//$dbpass = 'gesdoju';
 $dbase = 'gesdoju';
 $conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbase);
 
