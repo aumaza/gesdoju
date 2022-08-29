@@ -1249,6 +1249,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th>&nbsp;</th>
@@ -1262,13 +1263,14 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila['n_norma']."</td>";
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila['f_norma']."</td>";
+			 echo "<td align=center>".$fila['organismo']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>
@@ -1311,6 +1313,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th>&nbsp;</th>
@@ -1324,13 +1327,14 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_1['n_norma']."</td>";
 			 echo "<td align=center>".$fila_1['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila_1['f_norma']."</td>";
+			 echo "<td align=center>".$fila_1['organismo']."</td>";
 			 echo "<td align=center>".$fila_1['f_pub']."</td>";
 			 echo "<td align=center>".$fila_1['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_1['id'].'">
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>
@@ -1373,6 +1377,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th>&nbsp;</th>
@@ -1386,13 +1391,14 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_2['n_norma']."</td>";
 			 echo "<td align=center>".$fila_2['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila_2['f_norma']."</td>";
+			 echo "<td align=center>".$fila_2['organismo']."</td>";
 			 echo "<td align=center>".$fila_2['f_pub']."</td>";
 			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>
@@ -1435,6 +1441,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Ambito</th>
+            <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th>&nbsp;</th>
@@ -1448,13 +1455,14 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_2['n_norma']."</td>";
 			 echo "<td align=center>".$fila_2['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila_2['f_norma']."</td>";
+			 echo "<td align=center>".$fila_2['organismo']."</td>";
 			 echo "<td align=center>".$fila_2['f_pub']."</td>";
 			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
                     
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="top" title="Información Extendida de la Norma">
+                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
                         <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
                                         
                 </form>

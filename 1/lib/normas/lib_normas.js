@@ -55,7 +55,7 @@
         ],
         columnDefs: [ {
             targets: -1,
-            visible: false
+            visible: true
         } ],
         "fixedColumns": true,
       "language":{
