@@ -152,7 +152,7 @@ function newNorma($conn){
 		    
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="1000" placeholder="Ingrese una breve Descripción"  required></textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="5000" placeholder="Ingrese una breve Descripción"  required></textarea>
             </div>
         </div>
 		
@@ -229,7 +229,7 @@ function editNorma($id,$conn){
                 
                 <div class="form-group">
                 <label for="nombre">Nombre de la Norma (*)</label>
-                <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" oninput="Text(this.value);" required readonly>
+                <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" oninput="Text(this.value);" required>
                 </div>
 	        
                 <div class="form-group">
@@ -356,7 +356,7 @@ function editNorma($id,$conn){
             
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" oninput="alfaNum(this.value);" required>'.$fila['observaciones'].'</textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" required>'.$fila['observaciones'].'</textarea>
             </div>
 		
 		</div>
@@ -566,13 +566,17 @@ if($conn){
         
       echo "<table class='display compact' style='width:100%' id='normasTable'>";
       echo "<thead>
-		    <th class='text-nowrap text-center'>Nombre Norma</th>
-		    <th class='text-nowrap text-center'>Nro. Norma</th>
-            <th class='text-nowrap text-center'>Tipo Norma</th>
-            <th class='text-nowrap text-center'>Ambito</th>
-            <th class='text-nowrap text-center'>F. Publicación</th>
-            <th class='text-nowrap text-center'>Año Publicación</th>
-            <th class='text-nowrap text-center'>Acciones</th>
+		    <th class='text-nowrap text-center'><span class='label label-default'>Nombre Norma</span></th>
+		    <th class='text-nowrap text-center'><span class='label label-default'>Nro. Norma</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Tipo Norma</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Ambito</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>F. Publicación</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Año Publicación</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Jurisdicción</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Organismo</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Unidad Física</span></th>
+            <th class='text-nowrap text-center'><span class='label label-default'>Resumen</span></th>
+            <th class='text-nowrap text-center'><h3><span class='label label-warning'>Acciones</span></h3></th>
             </thead>";
 
 
@@ -585,7 +589,11 @@ if($conn){
 			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
-			 echo "<td class='text-nowrap'>";
+             echo "<td align=center>".$fila['jurisdiccion']."</td>";
+             echo "<td align=center>".$fila['organismo']."</td>";
+             echo "<td align=center>".$fila['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila['observaciones']."</td>";
+             echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                                      
