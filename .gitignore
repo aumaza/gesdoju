@@ -1,9 +1,8 @@
-uploads/*
-documentos/*
-logs/*
-actas_comision/*
-backups/*
-sqls/*
-connection/*
+uploads/
+documentos/
+logs/
+actas_comision/
+backups/
+sqls/
 dump_data_base.sh
 config_allow.sh
