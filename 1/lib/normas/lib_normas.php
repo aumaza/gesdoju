@@ -29,7 +29,7 @@ function newNorma($conn){
 	        
                 <div class="form-group">
                     <label for="nombre">Nombre de la Norma (*)</label>
-                    <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" oninput="Text(this.value);"  required>
+                    <input type="text" class="form-control" id="nombre_norma" name="nombre_norma"  maxlength="140" placeholder="Ingrese el Nombre de la Norma" required>
                 </div>
 	        
                 <div class="form-group">
@@ -115,7 +115,7 @@ function newNorma($conn){
 
                     if($res){
                         while ($valores = mysqli_fetch_array($res)){
-                        echo '<option value="'.$valores[cod_org].'">'.$valores[descripcion].'</option>';
+                        echo '<option value="'.$valores[cod_org].'">'.$valores[cod_org].' - '.$valores[descripcion].'</option>';
                         }
                         }
                     }
@@ -229,12 +229,12 @@ function editNorma($id,$conn){
                 
                 <div class="form-group">
                 <label for="nombre">Nombre de la Norma (*)</label>
-                <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" oninput="Text(this.value);" required>
+                <input type="text" class="form-control" id="nombre" name="nombre_norma"  maxlength="140" value="'.$fila['nombre_norma'].'" required>
                 </div>
 	        
                 <div class="form-group">
                 <label for="nombre">Nro de Norma (*)</label>
-                <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" oninput="Numeros(this.value);" required readonly>
+                <input type="text" class="form-control" id="nombre" name="n_norma" value="'.$fila['n_norma'].'" maxlength="25" required readonly>
                 </div>
 		
             </div>
@@ -296,7 +296,7 @@ function editNorma($id,$conn){
             
             <div class="form-group">
             <label for="pwd">Año (*)</label>
-            <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" maxlength="4" oninput="Numeros(this.value);" required>
+            <input type="text" class="form-control" id="anio" name="anio" value="'.$fila['anio_pub'].'" maxlength="4" required>
             </div>
 		</div>';
 		
@@ -314,7 +314,7 @@ function editNorma($id,$conn){
 
                     if($res){
                         while($valores = mysqli_fetch_array($res)){
-                    echo '<option value="'.$valores[cod_org].'" '.("'.$fila[organismo].'" == "'.$valores[cod_org].'" ? "selected" : "").'>'.$valores[descripcion].'</option>';
+                    echo '<option value="'.$valores[cod_org].'" '.("'.$fila[organismo].'" == "'.$valores[cod_org].'" ? "selected" : "").'>'.$valores[cod_org].' - '.$valores[descripcion].'</option>';
                         }
                         }
                     }
@@ -351,7 +351,7 @@ function editNorma($id,$conn){
 		
             <div class="form-group">
             <label for="nombre">Ubicación Física/Carpeta (*)</label>
-            <input type="text" class="form-control" name="ub_fis" value="'.$fila['unidad_fisica'].'" oninput="alfaNum(this.value);" required>
+            <input type="text" class="form-control" name="ub_fis" value="'.$fila['unidad_fisica'].'" required>
             </div>
             
             <div class="form-group">
