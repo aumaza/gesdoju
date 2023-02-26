@@ -23,6 +23,10 @@
         $anio_pub = $_GET['anio_pub'];
         $fecha_desde = $_GET['fecha_desde'];
         $fecha_hasta = $_GET['fecha_hasta'];
+        $tipo_norma = $_GET['tipo_norma'];
+        $foro_norma = $_GET['foro_norma'];
+        $cod_org = $_GET['cod_org'];
+        $uni_fis = $_GET['uni_fis'];
 	
 ?>
 
@@ -62,6 +66,18 @@
         }
         if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
             echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Palabra Clave [ '.$palabra_clave.' ] Fecha Desde [ '.$fecha_desde.' ] Fecha Hasta [ '.$fecha_hasta.' ]</p>';
+        }
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($tipo_norma != '')){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Tipo de Norma [ '.$tipo_norma.' ]</p>';
+        }
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($tipo_norma == '') && ($foro_norma != '')){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Ambito de la Norma [ '.$foro_norma.' ]</p>';
+        }
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($tipo_norma == '') && ($foro_norma == '') && ($cod_org != '') ){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Código de Organismo  [ '.$cod_org.' ]</p>';
+        }
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($tipo_norma == '') && ($foro_norma == '') && ($cod_org == '') && ($uni_fis != '') ){
+            echo '<h3 align="center">Criterio de Búsqueda</h3><p class="p-center"> Unidad Física  [ '.$uni_fis.' ]</p>';
         }
     ?>
    
@@ -110,8 +126,9 @@
                     $count++;
         
         }
-        echo '</table>';
         
+        echo '</table>';
+                
       
         }
     	
@@ -151,7 +168,9 @@
                     echo "<td width='275'>".$row_1['observaciones']."</td></tr>";
                     $count++;
         }
+        
         echo '</table>';
+        
         
         
         }
@@ -193,11 +212,14 @@
                     $count++;
         
         }
+        
         echo '</table>';
                 
         
         }
         
+        // CRITERIO DE BUSQUEDA SOLO POR ANIO DE PUBLICACION
+
         if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub != '')){
     
         $sql_2 = "SELECT * FROM normas WHERE anio_pub = '$anio_pub' order by anio_pub ASC";
@@ -233,10 +255,180 @@
                     $count++;
         
         }
+        
         echo '</table>';
-                
+    }
+
+        // CRITERIO DE BUSQUEDA SOLO POR TIPO DE NORMA
+
+        if(($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub == '') && ($tipo_norma != '')){
+    
+        $sql_2 = "SELECT * FROM normas WHERE tipo_norma = '$tipo_norma'";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        $count = 0;
+        
+        echo '<table id="normas">
+                    <tr>
+                        <th>Nombre Norma</th>
+                        <th>Nro. Norma</th>
+                        <th>Tipo Norma</th>
+                        <th>Fecha Pub.</th>
+                        <th>Organismo</th>
+                        <th>Resumen</th>
+                    </tr>';
+                      
+        while($row_2 = mysqli_fetch_array($query_2)){
+            
+                    echo "<tr>";
+                    echo "<td>".$row_2['nombre_norma']."</td>";
+                    echo "<td>".$row_2['n_norma']."</td>";
+                    echo "<td>".$row_2['tipo_norma']."</td>";
+                    echo "<td>".$row_2['f_pub']."</td>";
+                                        
+                        $mysql_2 = "select descripcion from organismos where cod_org = '$row_2[organismo]'";
+                        $res_2 = mysqli_query($conn,$mysql_2);
+                            
+                            while($fila_2 = mysqli_fetch_array($res_2)){
+                                echo '<td>'.$fila_2['descripcion'].'</td>';
+                            }
+                    echo "<td width='275'>".$row_2['observaciones']."</td></tr>";
+                    $count++;
         
         }
+        
+        echo '</table>';
+
+        }
+
+
+        // CRITERIO DE BUSQUEDA SOLO POR FORO DE NORMA
+
+        if( ($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub == '') && ($tipo_norma == '') && ($foro_norma != '') ){
+    
+        $sql_2 = "SELECT * FROM normas WHERE f_norma = '$foro_norma'";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        $count = 0;
+        
+        echo '<table id="normas">
+                    <tr>
+                        <th>Nombre Norma</th>
+                        <th>Nro. Norma</th>
+                        <th>Tipo Norma</th>
+                        <th>Fecha Pub.</th>
+                        <th>Organismo</th>
+                        <th>Resumen</th>
+                    </tr>';
+                      
+        while($row_2 = mysqli_fetch_array($query_2)){
+            
+                    echo "<tr>";
+                    echo "<td>".$row_2['nombre_norma']."</td>";
+                    echo "<td>".$row_2['n_norma']."</td>";
+                    echo "<td>".$row_2['tipo_norma']."</td>";
+                    echo "<td>".$row_2['f_pub']."</td>";
+                                        
+                        $mysql_2 = "select descripcion from organismos where cod_org = '$row_2[organismo]'";
+                        $res_2 = mysqli_query($conn,$mysql_2);
+                            
+                            while($fila_2 = mysqli_fetch_array($res_2)){
+                                echo '<td>'.$fila_2['descripcion'].'</td>';
+                            }
+                    echo "<td width='275'>".$row_2['observaciones']."</td></tr>";
+                    $count++;
+        
+        }
+        
+        echo '</table>';
+
+        }
+
+
+        // CRITERIO DE BUSQUEDA SOLO POR CODIGO DE ORGAMISMO
+
+        if( ($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub == '') && ($tipo_norma == '') && ($foro_norma == '') && ($cod_org != '') ){
+    
+        $sql_2 = "SELECT * FROM normas WHERE organismo = '$cod_org'";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        $count = 0;
+        
+        echo '<table id="normas">
+                    <tr>
+                        <th>Nombre Norma</th>
+                        <th>Nro. Norma</th>
+                        <th>Tipo Norma</th>
+                        <th>Fecha Pub.</th>
+                        <th>Organismo</th>
+                        <th>Resumen</th>
+                    </tr>';
+                      
+        while($row_2 = mysqli_fetch_array($query_2)){
+            
+                    echo "<tr>";
+                    echo "<td>".$row_2['nombre_norma']."</td>";
+                    echo "<td>".$row_2['n_norma']."</td>";
+                    echo "<td>".$row_2['tipo_norma']."</td>";
+                    echo "<td>".$row_2['f_pub']."</td>";
+                                        
+                        $mysql_2 = "select descripcion from organismos where cod_org = '$row_2[organismo]'";
+                        $res_2 = mysqli_query($conn,$mysql_2);
+                            
+                            while($fila_2 = mysqli_fetch_array($res_2)){
+                                echo '<td>'.$fila_2['descripcion'].'</td>';
+                            }
+                    echo "<td width='275'>".$row_2['observaciones']."</td></tr>";
+                    $count++;
+        
+        }
+        
+        echo '</table>';
+
+        }
+
+        // CRITERIO DE BUSQUEDA SOLO POR UNIDAD FISICA
+
+        if( ($palabra_clave == '') && ($fecha_desde == '') && ($fecha_hasta == '') && ($anio_pub == '') && ($tipo_norma == '') && ($foro_norma == '') && ($cod_org == '') && ($uni_fis != '') ){
+    
+        $sql_2 = "SELECT * FROM normas WHERE unidad_fisica = '$uni_fis'";
+        mysqli_select_db($conn,'gesdoju');
+        $query_2 = mysqli_query($conn,$sql_2);
+        $count = 0;
+        
+        echo '<table id="normas">
+                    <tr>
+                        <th>Nombre Norma</th>
+                        <th>Nro. Norma</th>
+                        <th>Tipo Norma</th>
+                        <th>Fecha Pub.</th>
+                        <th>Organismo</th>
+                        <th>Resumen</th>
+                    </tr>';
+                      
+        while($row_2 = mysqli_fetch_array($query_2)){
+            
+                    echo "<tr>";
+                    echo "<td>".$row_2['nombre_norma']."</td>";
+                    echo "<td>".$row_2['n_norma']."</td>";
+                    echo "<td>".$row_2['tipo_norma']."</td>";
+                    echo "<td>".$row_2['f_pub']."</td>";
+                                        
+                        $mysql_2 = "select descripcion from organismos where cod_org = '$row_2[organismo]'";
+                        $res_2 = mysqli_query($conn,$mysql_2);
+                            
+                            while($fila_2 = mysqli_fetch_array($res_2)){
+                                echo '<td>'.$fila_2['descripcion'].'</td>';
+                            }
+                    echo "<td width='275'>".$row_2['observaciones']."</td></tr>";
+                    $count++;
+        
+        }
+        
+        echo '</table>';
+
+        }
+
            
          }else{
 		  echo 'Connection Failure...' .mysqli_error($conn);

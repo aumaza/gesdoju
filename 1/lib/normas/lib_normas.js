@@ -337,12 +337,16 @@ $(document).ready(function(){
 /*
 ** BLOQUEA LOS CAMPOS A EDITAR HASTA QUE EL USUARIO SELECCIONE EL QUE DESEA
 */
- var callEnable = function(x){
+ function callEnable(x){
             
     if((x == 'palabra_clave') || 
                 (x == 'fecha_desde') ||
                     (x == 'fecha_hasta') ||
-                        (x == 'anio_pub')){
+                        (x == 'anio_pub') ||
+                            (x == 'tipo_norma') ||
+                                (x == 'foro_norma') ||
+                                    (x == 'organismo') ||
+                                        (x == 'uni_fis')){
                 
         document.getElementById(x).disabled = false;
     
@@ -365,7 +369,16 @@ function getID(){
     }
         
     }
-    
+
+
+function enabledAdvanceSearch() {
+  var x = document.getElementById('divAdvanceSearch');
+  if (x.style.display === 'block') {
+    x.style.display = 'none';
+  } else {
+    x.style.display = 'block';
+  }
+}
  
 
 // CAPTURA DE CARACTERES NUMERICOS

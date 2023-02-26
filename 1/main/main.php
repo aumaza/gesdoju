@@ -220,7 +220,11 @@
         $anio_pub = mysqli_real_escape_string($conn,$_POST['anio_pub']);
         $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
         $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
-        searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta,$conn);
+        $tipo_norma = mysqli_real_escape_string($conn,$_POST['tipo_norma']);
+        $foro_norma = mysqli_real_escape_string($conn,$_POST['foro_norma']);
+        $cod_org = mysqli_real_escape_string($conn,$_POST['cod_org']);
+        $uni_fis = mysqli_real_escape_string($conn,$_POST['uni_fis']);
+        searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta,$tipo_norma,$foro_norma,$cod_org,$uni_fis,$conn,$dbase);
       }
       
       // FIN SECCION CONSULTA DE NORMAS
