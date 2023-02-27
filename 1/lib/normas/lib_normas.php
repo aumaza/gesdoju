@@ -559,7 +559,7 @@ if($conn){
                     <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
                     
         </form><hr>
-        <button onclick="enabledAdvanceSearch()"><img src="../../icons/actions/system-search.png"  class="img-reponsive img-rounded"> Búsqueda avanzada</button>';
+        <button type="button" class="btn btn-default btn-sm" onclick="enabledAdvanceSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Búsqueda avanzada</button>';
 
         inLineAdvanceSearch();
         
