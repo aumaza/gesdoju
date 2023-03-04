@@ -542,7 +542,7 @@ function normas($conn,$dbase){
 if($conn){
 	
 	//$sql = "SELECT * FROM normas";
-    $sql = "select * from normas N, organismos O where N.organismo = O.cod_org";
+    $sql = "select n.*, o.descripcion from normas n left join organismos o on n.organismo = o.cod_org";
     mysqli_select_db($conn,$dbase);
     $resultado = mysqli_query($conn,$sql);
         
@@ -855,6 +855,7 @@ if($rows == 0){
 
 
 $targetDir = '../../uploads/';
+//chmod($targetDir,0777);
 $fileName = $file;
 //$fileName = basename($_FILES["file"]["name"]);
 $targetFilePath = $targetDir . $fileName;

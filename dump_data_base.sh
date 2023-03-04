@@ -1,7 +1,7 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 fecha=`date +%d-%m-%Y`
 archivo="sqls/gesdoju-$fecha.sql"
-mysqldump --user=gesdoju --password=gesdoju gesdoju > $archivo
+mysqldump --user=root --password=slack142 gesdoju > $archivo
 chmod 777 $archivo
 
 
