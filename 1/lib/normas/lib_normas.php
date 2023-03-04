@@ -1366,7 +1366,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1380,6 +1382,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila['organismo']."</td>";
 			 echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
+             echo "<td align=center>".$fila['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila['observaciones']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
@@ -1432,7 +1436,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1446,6 +1452,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_1['organismo']."</td>";
 			 echo "<td align=center>".$fila_1['f_pub']."</td>";
 			 echo "<td align=center>".$fila_1['anio_pub']."</td>";
+             echo "<td align=center>".$fila_1['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_1['observaciones']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_1['id'].'">
@@ -1498,7 +1506,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1512,6 +1522,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_2['organismo']."</td>";
 			 echo "<td align=center>".$fila_2['f_pub']."</td>";
 			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
@@ -1564,7 +1576,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1578,6 +1592,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila_2['organismo']."</td>";
 			 echo "<td align=center>".$fila_2['f_pub']."</td>";
 			 echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
@@ -1632,7 +1648,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1646,6 +1664,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
              echo "<td align=center>".$fila_2['organismo']."</td>";
              echo "<td align=center>".$fila_2['f_pub']."</td>";
              echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
              echo "<td class='text-nowrap'>";
              echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
@@ -1700,7 +1720,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1714,6 +1736,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
              echo "<td align=center>".$fila_2['organismo']."</td>";
              echo "<td align=center>".$fila_2['f_pub']."</td>";
              echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
              echo "<td class='text-nowrap'>";
              echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
@@ -1767,7 +1791,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1781,6 +1807,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
              echo "<td align=center>".$fila_2['organismo']."</td>";
              echo "<td align=center>".$fila_2['f_pub']."</td>";
              echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
              echo "<td class='text-nowrap'>";
              echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
@@ -1834,7 +1862,9 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
             <th class='text-nowrap text-center'>Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Unidad Física</th>
+            <th class='text-nowrap text-center'>Resumen</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -1848,6 +1878,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
              echo "<td align=center>".$fila_2['organismo']."</td>";
              echo "<td align=center>".$fila_2['f_pub']."</td>";
              echo "<td align=center>".$fila_2['anio_pub']."</td>";
+             echo "<td align=center>".$fila_2['unidad_fisica']."</td>";
+             echo "<td align=center>".$fila_2['observaciones']."</td>";
              echo "<td class='text-nowrap'>";
              echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila_2['id'].'">
