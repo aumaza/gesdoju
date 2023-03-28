@@ -1,5 +1,6 @@
 <?php   include "../../connection/connection.php";
         include "../lib/normas/lib_normas.php";
+        include "../system/lib_system.php";
          
                 
         if($conn){

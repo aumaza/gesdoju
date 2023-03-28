@@ -835,7 +835,7 @@ if(!empty($_FILES["file"]["name"])){
 
 function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$obs,$file,$conn,$dbase){
     
-
+    $success = 'Se ha guardado la norma de manera exitosa';
     mysqli_select_db($conn,$dbase);
     $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma' and organismo = '$organismo' and anio_pub = '$anio'";
     $query_1 = mysqli_query($conn,$sql_1);    
@@ -852,7 +852,6 @@ function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
    }
 
 if($rows == 0){
-
 
 $targetDir = '../../uploads/';
 //chmod($targetDir,0777);
@@ -907,12 +906,15 @@ if(!empty($_FILES["file"]["name"])){
             
 
 			    return 1; // sea actualizo la base  y subio bien el archivo
-        
+                $success = 'Se ha guardado la norma ' .$n_norma. ' de manera exitosa';
+                mysqlSuccessLogs($success);        
                        
             }else{
 		  
 			   return 2; // solo se subio el archivo
-            
+               $myError = mysql_error($conn);
+               $error = 'Se ha producido el error: ' .$myError. ' al intentar guardar la normativa';
+               mysqlErrorLogs($error);            
             }
             }else{
 			              
