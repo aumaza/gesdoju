@@ -110,7 +110,7 @@ class Paritarias{
                         <th class='text-nowrap text-center'>Fecha Reunión</th>
                         <th class='text-nowrap text-center'>Organismo</th>
                         <th class='text-nowrap text-center'>Resumen</th>
-                        <th>&nbsp;</th>
+                        <th class='text-nowrap text-center'>Acciones</th>
                         </thead>";
 
 
@@ -313,11 +313,13 @@ class Paritarias{
     
         echo '<div class="container">
                 <div class="jumbotron">
-            <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Reunión Paritaria</h3><hr>
+                <div class="alert alert-info">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Reunión Paritaria</h3>
+                </div><hr>
                         
                         
                                    
-            <form id="fr_add_new_paritaria_ajax" method="POST">
+            <form id="fr_add_new_paritaria_ajax" method="POST" enctype="multipart/form-data">
             
              
             <div class="container">     
@@ -326,7 +328,7 @@ class Paritarias{
                                                                                   
                         <div class="form-group">
                             <label for="grupo_representante">Grupo Representante</label>
-                            <select class="form-control" id="grupo_representante" name="grupo_representante" required>
+                            <select class="form-control" id="grupo_representante" name="grupo_representante">
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -349,7 +351,7 @@ class Paritarias{
                         
                         <div class="form-group">
                             <label for="tipo_representacion">Tipo Representación</label>
-                            <select class="form-control" id="tipo_representacion" name="tipo_representacion" required>
+                            <select class="form-control" id="tipo_representacion" name="tipo_representacion">
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -371,7 +373,7 @@ class Paritarias{
                         
                         <div class="form-group">
                             <label for="organismo">Organismo</label>
-                            <select class="form-control" id="organismo" name="organismo" required>
+                            <select class="form-control" id="organismo" name="organismo" ed>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -393,21 +395,31 @@ class Paritarias{
                         
                         <div class="form-group">
                             <label for="fecha_reunion">Fecha Reunión:</label>
-                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion" required>
+                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion">
                         </div>
                         
                         <div class="form-group">
                             <label for="resumen_reunion">Resumen Reunión:</label>
-                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required></textarea>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión"></textarea>
                         </div>
-                        
-                        
+                                                
                     </div>
-                </div>
-                </div><hr>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="file">Seleccione Archivo:</label>
+                            <input type="file" id="myfile" name="myfile">
+                        </div>
+                    </div>
+
                 
-                <button type="submit" class="btn btn-default btn-block" id="add_new_paritaria" name="add_new_paritaria">
+                </div>
+                </div><br>
+                
+                <div class="alert alert-success">
+                <button type="submit" class="btn btn-default btn-block" id="add_new_paritaria">
                     <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                </div>
             </form>
             
             <div id="messageNewParitaria"></div>
@@ -845,36 +857,66 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 /*
 ** PERSISTENCIA A BASE DE NUEVA PARITARIA
 */
-    public function addParitaria($paritaria,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
+    public function addParitaria($paritaria,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$myfile,$conn,$dbase){
     
         if($conn){
         
-            mysqli_select_db($conn,$dbase);
-                                
-                    $sql = "INSERT INTO representacion_paritarias ".
-                    "(grupo_representantes,
-                      tipo_representacion,
-                      organismo,
-                      fecha_reunion,
-                      resumen_reunion)".
-                    "VALUES ".
-                    "($paritaria->set_grupo_representantes('$grupo_representante'),
-                      $paritaria->set_tipo_representacion('$tipo_representacion'),
-                      $paritaria->set_organismo('$organismo'),
-                      $paritaria->set_fecha_reunion('$fecha_reunion'),
-                      $paritaria->set_resumen_reunion('$resumen_reunion'))";
-                    
-                    $query = mysqli_query($conn,$sql);
-                        
-                    if($query){
-                        echo 1; // registro insertado correctamente
-                    }else{
-                        echo -1; // hubo un problema al insertar el registro
-                    }
+            $targetDir = '../../../actas_comision/';
+            //chmod($targetDir,0777);
+            $fileName = $myfile;
+            //$fileName = basename($_FILES["file"]["name"]);
+            $targetFilePath = $targetDir . $fileName;
+
+            $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+            if(!empty($_FILES["myfile"]["name"])){
+                // Allow certain file formats
+                $allowTypes = array('pdf');
+                
+                if(in_array($fileType, $allowTypes)){
+                
+                   // Upload file to server
+                    if(move_uploaded_file($_FILES["myfile"]["tmp_name"], $targetFilePath)){
             
-        }else{
-            echo 7; // no hay conexion
-        }
+                        mysqli_select_db($conn,$dbase);
+                                            
+                                $sql = "INSERT INTO representacion_paritarias ".
+                                "(grupo_representantes,
+                                  tipo_representacion,
+                                  organismo,
+                                  fecha_reunion,
+                                  resumen_reunion,
+                                  file_name,
+                                  file_path)".
+                                "VALUES ".
+                                "($paritaria->set_grupo_representantes('$grupo_representante'),
+                                  $paritaria->set_tipo_representacion('$tipo_representacion'),
+                                  $paritaria->set_organismo('$organismo'),
+                                  $paritaria->set_fecha_reunion('$fecha_reunion'),
+                                  $paritaria->set_resumen_reunion('$resumen_reunion'),
+                                  $paritaria->set_file_name('$fileName'),
+                                  $paritaria->set_file_path('$targetFilePath'))";
+                                
+                                $query = mysqli_query($conn,$sql);
+                                    
+                                if($query){
+                                    echo 1; // registro insertado correctamente
+                                }else{
+                                    echo -1; // hubo un problema al insertar el registro
+                                }
+                    }else{
+                        echo 3; // no se ha podido subir el archivo
+                    }
+                }else{
+                    echo 9; // solo se permiten archivos PDF
+                }
+            }else{
+                echo 11; // no se ha seleccionado archivo
+            }
+            
+            }else{
+                echo 7; // no hay conexion
+            }
     
     } // end funcion
     

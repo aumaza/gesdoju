@@ -80,18 +80,42 @@
 // GUARDA NUEVO REGISTRO //
 
 /*
-** GUARDA NUEVO REGISTRO DE GRUPO
+** GUARDA NUEVO REGISTRO DE PARITARIA
 */
 
 $(document).ready(function(){
     $('#add_new_paritaria').click(function(){
         
-        var datos = $('#fr_add_new_paritaria_ajax').serialize();
+        //var datos = $('#fr_add_new_paritaria_ajax').serialize();
+
+        const form = document.querySelector('#fr_add_new_paritaria_ajax');
         
-        $.ajax({
+        const grupo_representante = document.querySelector('#grupo_representante');
+        const tipo_representacion = document.querySelector('#tipo_representacion');
+        const organismo = document.querySelector('#organismo');
+        const fecha_reunion = document.querySelector('#fecha_reunion');
+        const resumen_reunion = document.querySelector('#resumen_reunion');
+        const myfile = document.querySelector('#myfile');
+        
+        const formData = new FormData(form);
+        const values = [...formData.entries()];
+        console.log(values);
+        
+        formData.append('grupo_representante', grupo_representante.value);
+        formData.append('tipo_representacion', tipo_representacion.value);
+        formData.append('organismo', organismo.value);
+        formData.append('fecha_reunion', fecha_reunion.value);
+        formData.append('resumen_reunion', resumen_reunion.value);
+        formData.append('myfile', myfile.value[0]);
+        
+        jQuery.ajax({
             type:"POST",
+            method:"POST",
             url:"../lib/paritarias/nueva_paritaria.php",
-            data:datos,
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
             success:function(r){
                 if(r == 1){
                     var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente</p></div>';
@@ -101,18 +125,19 @@ $(document).ready(function(){
                     $('#organismo').val('');
                     $('#fecha_reunion').val('');
                     $('#resumen_reunion').val('');
+                    $('#myfile').val('');
                     $('#grupo_representante').focus('');
-                    console.log("Datos: " + datos);
+                    console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
                     document.getElementById('messageNewParitaria').innerHTML = mensaje;
-                    console.log("Datos: " + datos);
+                    console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 5){
                     var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
                     document.getElementById('messageNewParitaria').innerHTML = mensaje;
-                    console.log("Datos: " + datos);
+                    console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == 7){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion dentro de la funcion principal!!</p></div>';
@@ -122,7 +147,20 @@ $(document).ready(function(){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error de conexion!!</p></div>';
                     document.getElementById('messageNewParitaria').innerHTML = mensaje;
                     setTimeout(function() { $(".close").click(); }, 4000);
+                }else if(r == 3){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. No se pudo subir el archivo seleccionado!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
+                }else if(r == 9){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Sólo se permiten archivos con extensión PDF!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
+                }else if(r == 11){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Atención. No ha seleccionado ningún archivo!!</p></div>';
+                    document.getElementById('messageNewParitaria').innerHTML = mensaje;
+                    setTimeout(function() { $(".close").click(); }, 4000);
                 }
+
                 
             }
         });
