@@ -2,19 +2,27 @@
 
 class Paritarias{
 
+    // =============================================================================================== //
     // VARIABLES DE LA CLASE
+    // =============================================================================================== //
+    private $nro_actuacion = '';
     private $grupo_representantes = '';
     private $tipo_representacion = '';
+    private $tipo_pedido = '';
     private $organismo = '';
     private $fecha_reunion = '';
     private $file_name = '';
     private $file_path = '';
     private $resumen_reunion = '';
     
+    // =============================================================================================== //
     // CONSTRUCTOR DESPARAMETRIZADO
+    // =============================================================================================== //
     function __construct(){
+        $this->nro_actuacion = '';
         $this->grupo_representantes = '';
         $this->tipo_representacion = '';
+        $this->tipo_pedido = '';
         $this->organismo = '';
         $this->fecha_reunion = '';
         $this->file_name = '';
@@ -22,13 +30,23 @@ class Paritarias{
         $this->resumen_reunion = '';
     }
     
+    // =============================================================================================== //
     // SETTERS
+    // =============================================================================================== //
+    private function set_nro_actuacion($var){
+        $this->nro_actuacion = $var;
+    }
+
     private function set_grupo_representantes($var){
         $this->grupo_representantes = $var;
     }
     
     private function set_tipo_representancion($var){
         $this->tipo_representacion = $var;
+    }
+
+    private function set_tipo_pedido($var){
+        $this->tipo_pedido = $var;
     }
     
     private function set_organismo($var){
@@ -51,14 +69,23 @@ class Paritarias{
         $this->resumen_reunion = $var;
     }
     
-    
+    // =============================================================================================== //
     // GETTERS
+    // =============================================================================================== //
+    private function get_nro_actuacion($var){
+        return $this->nro_actuacion = $var;
+    }    
+
     private function get_grupo_representantes($var){
         return $this->grupo_representantes = $var;
     }
     
     private function get_tipo_representacion($var){
         return $this->tipo_representacion = $var;
+    }
+
+    private function get_tipo_pedido($var){
+        return $this->tipo_pedido = $var;
     }
     
     private function get_organismo($var){
@@ -81,11 +108,12 @@ class Paritarias{
         return $this->resumen_reunion = $var;
     }
 
-    
-    // METODOS
+    // =============================================================================================== //
+    // ========================================== METODOS ============================================ //
+    // =============================================================================================== //
 
     /*
-    ** LISTAR
+    ** LISTAR PARITARIAS ACTIVAS
     */
     public function listarParitarias($paritaria,$conn,$dbase){
 
@@ -105,11 +133,13 @@ class Paritarias{
                         
                         echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
                         echo "<thead>
+                        <th class='text-nowrap text-center'>Nro. Actuación</th>
                         <th class='text-nowrap text-center'>Representantes</th>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
-                        <th class='text-nowrap text-center'>Fecha Reunión</th>
+                        <th class='text-nowrap text-center'>Tipo Pedido</th>
+                        <th class='text-nowrap text-center'>Fecha Alta</th>
                         <th class='text-nowrap text-center'>Organismo</th>
-                        <th class='text-nowrap text-center'>Resumen</th>
+                        <th class='text-nowrap text-center'>Referencia/Descripción</th>
                         <th class='text-nowrap text-center'>Acciones</th>
                         </thead>";
 
@@ -117,12 +147,14 @@ class Paritarias{
                 while($fila = mysqli_fetch_array($query)){
                         // Listado normal
                         echo "<tr>";
+                        echo "<td align=center>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
                         $sql_1 = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo_representantes]'";
                         $query_1 = mysqli_query($conn,$sql_1);
                         while($row = mysqli_fetch_array($query_1)){                       
                             echo "<td align=center>".$row['representante_titular']. " <br> " .$row['representante_suplente']."</td>";
                         }
                         echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
+                        echo "<td align=center>".$paritaria->get_tipo_pedido($fila['tipo_pedido'])."</td>";
                         if($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual){
                             echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
                         }
@@ -140,6 +172,9 @@ class Paritarias{
                                 
                                 <button type="submit" class="btn btn-default btn-sm" name="edit_paritaria">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+
+                                <button type="submit" class="btn btn-default btn-sm" name="view_advance">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/resource-calendar-child-insert.png" /> Avances Paritaria</button>
                                 
                                 <button type="submit" class="btn btn-default btn-sm" name="info_paritaria">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información Extendida</button>
@@ -153,10 +188,10 @@ class Paritarias{
                     
                     echo '<form action="#" method="POST">
                             
-                            <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="right" title="Agregar Informe de Paritaria">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nueva Registro de Reunión</button>
+                            <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="bottom" title="Agregar Nuevo registro de Paritaria">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nuevo Registro</button>
                             
-                            <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="right" title="Búsqueda Avanzada sobre Paritarias">
+                            <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="bottom" title="Búsqueda Avanzada sobre Paritarias">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/system-search.png" /> Búsqueda Avanzada</button>
                             
                             </form><hr>';
@@ -170,8 +205,108 @@ class Paritarias{
 
                 mysqli_close($conn);
 
+
     } // FIN DEL METODO LISTAR
     
+
+
+    /*
+    ** LISTAR AVANCES PARITARIA
+    */
+    public function listarAvancesParitaria($paritaria,$id,$conn,$dbase){
+
+    
+                if($conn){
+                
+                $fecha_actual = date('Y-m-d');
+                
+                $sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
+                mysqli_select_db($conn,$dbase);                
+                $query = mysqli_query($conn,$sql);
+                
+                //mostramos fila x fila
+                $count = 0;
+                echo '<div class="container-fluid">
+                        <div class="jumbotron">
+                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Avances Paritaria</h2><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                        </form><hr>';
+                        
+                        echo "<table class='display compact' style='width:100%' id='avancesParitariaTable'>";
+                        echo "<thead>
+                        <th class='text-nowrap text-center'>Nro. Actuación</th>
+                        <th class='text-nowrap text-center'>Representantes</th>
+                        <th class='text-nowrap text-center'>Tipo Representación</th>
+                        <th class='text-nowrap text-center'>Fecha Reunión</th>
+                        <th class='text-nowrap text-center'>Organismo</th>
+                        <th class='text-nowrap text-center'>Resumen</th>
+                        <th class='text-nowrap text-center'>Acciones</th>
+                        </thead>";
+
+
+                while($fila = mysqli_fetch_array($query)){
+                        // Listado normal
+                        echo "<tr>";
+                        echo "<td align=center id='nro_actuacion'>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
+                        $sql_1 = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo]'";
+                        $query_1 = mysqli_query($conn,$sql_1);
+                        while($row = mysqli_fetch_array($query_1)){                       
+                            echo "<td align=center>".$row['representante_titular']. " <br> " .$row['representante_suplente']."</td>";
+                        }
+                        echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
+                        if($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual){
+                            echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
+                        else if($paritaria->get_fecha_reunion($fila['fecha_reunion']) > $fecha_actual){
+                            echo "<td align=center style='background-color:#AED6F1'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
+                        else if($paritaria->get_fecha_reunion($fila['fecha_reunion']) < $fecha_actual){
+                            echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+                        }
+                        echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
+                        echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen'])."</td>";
+                        echo "<td class='text-nowrap'>";
+                        echo '<form action="#" method="POST">
+                                <input type="hidden" name="id" value="'.$fila['id'].'" >
+                                
+                                <button type="submit" class="btn btn-default btn-sm" name="edit_advance_paritaria">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+
+                                
+                        </form>';
+                        echo "</td>";
+                        $count++;
+                    }
+
+                    echo '</table><hr>';
+                    
+                    echo '<form action="#" method="POST">
+                            <input type="hidden" id="id" name="id" value="'.$id.'" >
+
+                            <button type="submit" class="btn btn-default btn-sm" name="add_advance" data-toggle="tooltip" data-placement="right" title="Agregar Avance">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Añadir Avance</button>
+
+                            <button type="submit" class="btn btn-default btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
+                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-open.png" /> Documentación Relacionada</button>
+
+                            </form><hr>
+
+                            <a href="../lib/informes/print.php?file=print_avance_paritaria.php&id='.$id.'" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm btn-block">
+                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Avances Paritaria</button></a><br>';
+                        
+                    echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
+                    echo '</div></div>';
+                    
+                    }else{
+                    echo 'Connection Failure...';
+                    }
+
+                mysqli_close($conn);
+
+    } // FIN DEL METODO LISTAR
+
     
     /*
     ** LISTAR
@@ -233,6 +368,62 @@ class Paritarias{
                 mysqli_close($conn);
 
     } // FIN DEL METODO LISTAR
+
+
+
+    public function listarDocRelacionada($id,$conn,$dbase){
+    
+    mysqli_select_db($conn,$dbase);
+    $sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
+    $query = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($query);
+    
+    $dir = $row['files_path'];
+    $path = substr($dir,3);
+    $path_b = substr($dir,9);
+    
+    $actuacion = $row['nro_actuacion'];
+    
+    if($filehandle = opendir($path)){
+        $list = array();
+        $count = 0;
+    
+        while(($file = readdir($filehandle)) !== FALSE){
+
+                $list[] = $file;
+                $count++;
+            
+        }
+    }else{
+        echo '<br>no puedo entrar<br>';
+    }
+
+    closedir($filehandle);
+
+        echo '<div class="container">
+                <div class="jumbotron">
+                <div class="row">
+                <div class="col-sm-12">
+                <div class="panel panel-primary">
+                <div class="panel-heading">Documentación Relacionada a: <strong>'.$actuacion.'</strong></div>
+                <div class="panel-body">
+                     <div class="list-group">';
+                        
+                        for($i = 0; $i < $count; $i++){
+                            echo '<a class="list-group-item" href="../../actas_comision/download.php?file_name='.$list[$i].'&path='.$path.'" >'.($i+1). ' - ' .$list[$i].'</a>';
+                        }       
+                        
+          echo '</div>
+                </div>
+                <div class="panel-footer"><strong>Cantidad de Documentos:</strong> <span class="badge">'.$count.'</span></div>
+             </div>
+             </div>
+             </div>
+             </div>
+             </div>';
+
+
+} //FIN DE LA FUNCION
     
     
     /*
@@ -314,7 +505,12 @@ class Paritarias{
         echo '<div class="container">
                 <div class="jumbotron">
                 <div class="alert alert-info">
-                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Reunión Paritaria</h3>
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/view-task.png" /> Alta Registro Paritaria</h3><hr>
+
+                <form action="#" method="POST">
+                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                </form>
+
                 </div><hr>
                         
                         
@@ -325,6 +521,12 @@ class Paritarias{
             <div class="container">     
                 <div class="row">
                     <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label for="nro_actuacion">Nro. Actuación:</label>
+                            <input type="text" class="form-control" id="nro_actuacion" name="nro_actuacion"
+                                placeholder="Ingrese aquí el Nro. de GEDO o CCOO">
+                        </div>
                                                                                   
                         <div class="form-group">
                             <label for="grupo_representante">Grupo Representante</label>
@@ -370,6 +572,15 @@ class Paritarias{
                             
                             echo '</select>
                             </div>
+
+                         <div class="form-group">
+                          <label for="tipo_pedido">Tipo Solicitud:</label>
+                          <select class="form-control" id="tipo_pedido" name="tipo_pedido">
+                            <option value="">Seleccionar</option>
+                            <option value="Solicitud">Solicitud</option>
+                            <option value="Ratificación">Ratificación</option>
+                          </select>
+                        </div> 
                         
                         <div class="form-group">
                             <label for="organismo">Organismo</label>
@@ -394,21 +605,25 @@ class Paritarias{
                             </div>
                         
                         <div class="form-group">
-                            <label for="fecha_reunion">Fecha Reunión:</label>
+                            <label for="fecha_reunion">Fecha Alta:</label>
                             <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion">
                         </div>
                         
                         <div class="form-group">
-                            <label for="resumen_reunion">Resumen Reunión:</label>
-                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión"></textarea>
+                            <label for="resumen_reunion">Descripción / Referencia:</label>
+                            <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese una breve Descripción o Referencia"></textarea>
                         </div>
                                                 
                     </div>
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="file">Seleccione Archivo:</label>
-                            <input type="file" id="myfile" name="myfile">
+                            <div class="alert alert-success">
+                                <label for="file">
+                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                                        Seleccione Archivo GEDO o CCOO ingresado en Nro. Actuación:</label><hr>
+                                <input type="file" id="myfile" name="myfile">
+                            </div>
                         </div>
                     </div>
 
@@ -418,7 +633,7 @@ class Paritarias{
                 
                 <div class="alert alert-success">
                 <button type="submit" class="btn btn-default btn-block" id="add_new_paritaria">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok.png" /> Aceptar</button>
                 </div>
             </form>
             
@@ -427,7 +642,173 @@ class Paritarias{
             </div></div>';   
     
     }
+
+
+
+/*
+** FORMULARIO DE CARGA DE UN NUEVO REGISTRO DE AVANCES PARITARIA
+*/
+
+    public function formAltaAvancesParitaria($paritaria,$id,$conn,$dbase){
+        
+        mysqli_select_db($conn,$dbase);
+        $sql = "select * from representacion_paritarias where id = '$id'";
+        $query = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($query);
+
+
+        echo '<div class="container">
+                <div class="jumbotron">
+                <div class="alert alert-info">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Avances Paritaria</h3>
+                </div><hr>
+                        
+                        
+                                   
+            <form id="fr_add_new_avance_paritaria_ajax" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="id" name="id" value="'.$id.'">
+             
+            <div class="container">     
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                          <label for="nro_actuacion">Nro. Actuación:</label>
+                          <input type="text" class="form-control" id="nro_actuacion" name="nro_actuacion" 
+                            value="'.$paritaria->get_nro_actuacion($row[nro_actuacion]).'" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="grupo_representante">Grupo Representante:</label>
+                          <input type="text" class="form-control" id="grupo_representantes" name="grupo_representantes" 
+                            value="'.$paritaria->get_grupo_representantes($row[grupo_representantes]).'" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="tipo_representacion">Tipo Representación:</label>
+                          <input type="text" class="form-control" id="tipo_representacion" name="tipo_representacion" 
+                            value="'.$paritaria->get_tipo_representacion($row[tipo_representacion]).'" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="organismo">Organismo:</label>
+                          <input type="text" class="form-control" id="organismo" name="organismo" 
+                            value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="fecha_reunion">Fecha Reunión:</label>
+                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="resumen_reunion">Resumen:</label>
+                            <textarea class="form-control" id="resumen" name="resumen" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión"></textarea>
+                        </div>
+                                                
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="file">Seleccione Archivo:</label>
+                            <input type="file" id="myfiles" name="myfiles[]" multiple="">
+                        </div>
+                    </div>
+
+                
+                </div>
+                </div><br>
+                
+                <div class="alert alert-success">
+                <button type="submit" class="btn btn-default btn-block" id="add_new_avance_paritaria">
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                </div>
+            </form>
+            
+            <div id="messageNewAvanceParitaria"></div>
+            
+            </div></div>';   
     
+    }
+    
+
+/*
+** FORMULARIO DE CARGA DE UN NUEVO REGISTRO DE AVANCES PARITARIA
+*/
+
+    public function formEditarAvancesParitaria($paritaria,$id,$conn,$dbase){
+        
+        mysqli_select_db($conn,$dbase);
+        $sql = "select * from avances_paritaria where id = '$id'";
+        $query = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($query);
+
+
+        echo '<div class="container">
+                <div class="jumbotron">
+                <div class="alert alert-info">
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Avances Paritaria</h3>
+                </div><hr>
+                        
+                        
+                                   
+            <form id="fr_update_avance_paritaria_ajax" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="id" name="id" value="'.$id.'">
+             
+            <div class="container">     
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        
+                        <div class="form-group">
+                          <label for="grupo_representante">Grupo Representante:</label>
+                          <input type="text" class="form-control" id="grupo_representantes" name="grupo_representantes" 
+                            value="'.$paritaria->get_grupo_representantes($row[grupo]).'" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="tipo_representacion">Tipo Representación:</label>
+                          <input type="text" class="form-control" id="tipo_representacion" name="tipo_representacion" 
+                            value="'.$paritaria->get_tipo_representacion($row[tipo_representacion]).'" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="organismo">Organismo:</label>
+                          <input type="text" class="form-control" id="organismo" name="organismo" 
+                            value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="fecha_reunion">Fecha Reunión:</label>
+                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion"
+                               value="'.$paritaria->get_fecha_reunion($row[fecha_reunion]).'" >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="resumen_reunion">Resumen:</label>
+                            <textarea class="form-control" id="resumen" name="resumen" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión">'.$paritaria->get_resumen_reunion($row[resumen]).'</textarea>
+                        </div>
+                                                
+                    </div>
+
+                
+                </div>
+                </div><br>
+                
+                <div class="alert alert-success">
+                <button type="submit" class="btn btn-default btn-block" id="update_avance_paritaria">
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                </div>
+            </form>
+            
+            <div id="messageUpdateAvanceParitaria"></div>
+            
+            </div></div>';   
+    
+    }
+
     
     public function formEditParitaria($id,$conn,$dbase){
         
@@ -447,6 +828,12 @@ class Paritarias{
             <div class="container">     
                 <div class="row">
                     <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label for="nro_actuacion">Nro. Actuación:</label>
+                            <input type="text" class="form-control" id="nro_actuacion" name="nro_actuacion"
+                                value="'.$row['nro_actuacion'].'" readonly>
+                        </div>
                                                                                   
                         <div class="form-group">
                             <label for="grupo_representante">Grupo Representante</label>
@@ -491,6 +878,15 @@ class Paritarias{
                             
                             echo '</select>
                             </div>
+
+                        <div class="form-group">
+                          <label for="tipo_pedido">Tipo Solicitud:</label>
+                          <select class="form-control" id="tipo_pedido" name="tipo_pedido">
+                            <option value="">Seleccionar</option>;
+                            <option value="Solicitud" '.($row['tipo_pedido'] == "Solicitud" ? "selected" : '').'>Solicitud</option>
+                            <option value="Ratificación" '.($row['tipo_pedido'] == "Ratificaación" ? "selected" : '').'>Ratificación</option>
+                          </select>
+                        </div>
                         
                         <div class="form-group">
                             <label for="organismo">Organismo</label>
@@ -520,7 +916,7 @@ class Paritarias{
                         </div>
                         
                         <div class="form-group">
-                            <label for="resumen_reunion">Resumen Reunión:</label>
+                            <label for="resumen_reunion">Descripción:</label>
                             <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required>'.$row['resumen_reunion'].'</textarea>
                         </div>
                         
@@ -546,8 +942,10 @@ class Paritarias{
     $query = mysqli_query($conn,$sql);
     
     while($row = mysqli_fetch_array($query)){
+        $nro_actuacion = $row['nro_actuacion'];
         $grupo_representantes = $row['grupo_representantes'];
         $tipo_representacion = $row['tipo_representacion'];
+        $tipo_pedido = $row['tipo_pedido'];
         $organismo = $row['organismo'];
         $fecha_reunion = $row['fecha_reunion'];
         $resumen_reunion = $row['resumen_reunion'];
@@ -575,6 +973,7 @@ class Paritarias{
                 </div>
                 <div id="collapse1" class="panel-collapse collapse-in">
                     <ul class="list-group">
+                    <li class="list-group-item"><strong>Nro. Actuación:</strong> '.$paritaria->get_nro_actuacion($nro_actuacion).'</li>
                     <li class="list-group-item"><strong>Grupo:</strong> '.$paritaria->get_grupo_representantes($grupo_representantes).'</li>
                     <li class="list-group-item"><strong>Representante Titular:</strong> '.$rep_titular.'</li>
                     <li class="list-group-item"><strong>Representante Suplente:</strong> '.$rep_suplente.'</li>';
@@ -583,9 +982,10 @@ class Paritarias{
                           <li class="list-group-item"><strong>Segundo Asesor:</strong> '.$asesor_2.'</li>';
                     }
               echo '<li class="list-group-item"><strong>Tipo Representacion:</strong> '.$paritaria->get_tipo_representacion($tipo_representacion).'</li>
+                    <li class="list-group-item"><strong>Tipo Pedido:</strong> '.$paritaria->get_tipo_pedido($tipo_pedido).'</li>
                     <li class="list-group-item"><strong>Organismo:</strong> '.$paritaria->get_organismo($organismo).'</li>
-                    <li class="list-group-item"><strong>Fecha Reunión:</strong> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
-                    <li class="list-group-item"><strong>Resúmen Reunión:</strong> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
+                    <li class="list-group-item"><strong>Fecha Alta:</strong> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
+                    <li class="list-group-item"><strong>Descripción / Referencia:</strong> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
                     </ul>
                     <div class="panel-footer">
                         
@@ -711,8 +1111,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
+            <th class='text-nowrap text-center'>Nro. Actuación</th>
 		    <th class='text-nowrap text-center'>Grupo Representante</th>
 		    <th class='text-nowrap text-center'>Tipo Representacion</th>
+            <th class='text-nowrap text-center'>Tipo Pedido</th>
             <th class='text-nowrap text-center'>Fecha Raunión</th>
             <th class='text-nowrap text-center'>Resúmen Reunión</th>
             <th>&nbsp;</th>
@@ -722,8 +1124,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 	while($fila = mysqli_fetch_array($query)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
+			 echo "<td align=center>".$paritaria->get_get_nro_actuacion($fila['nro_actuacion'])."</td>";
+             echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
 			 echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
+             echo "<td align=center>".$paritaria->get_tipo_pedido($fila['tipo_pedido'])."</td>";
 			 echo "<td align=center>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
 			 echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen_reunion'])."</td>";
 			 echo "<td class='text-nowrap'>";
@@ -762,8 +1166,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
+            <th class='text-nowrap text-center'>Nro. Actuación</th>
 		    <th class='text-nowrap text-center'>Grupo Representante</th>
 		    <th class='text-nowrap text-center'>Tipo Representacion</th>
+            <th class='text-nowrap text-center'>Tipo Pedido</th>
             <th class='text-nowrap text-center'>Fecha Raunión</th>
             <th class='text-nowrap text-center'>Resúmen Reunión</th>
             <th>&nbsp;</th>
@@ -773,8 +1179,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 	while($fila_1 = mysqli_fetch_array($query_1)){
 			  // Listado normal
 			 echo "<tr>";
+             echo "<td align=center>".$paritaria->get_nro_actuacion($fila_1['nro_actuacion'])."</td>";
 			 echo "<td align=center>".$paritaria->get_grupo_representantes($fila_1['grupo_representantes'])."</td>";
 			 echo "<td align=center>".$paritaria->get_tipo_representacion($fila_1['tipo_representacion'])."</td>";
+             echo "<td align=center>".$paritaria->get_tipo_pedido($fila_1['tipo_pedido'])."</td>";
 			 echo "<td align=center>".$paritaria->get_fecha_reunion($fila_1['fecha_reunion'])."</td>";
 			 echo "<td align=center>".$paritaria->get_resumen_reunion($fila_1['resumen_reunion'])."</td>";
 			 echo "<td class='text-nowrap'>";
@@ -813,8 +1221,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                   
       echo "<table class='display compact' style='width:100%' id='myTable'>";
       echo "<thead>
+            <th class='text-nowrap text-center'>Nro. Actuación</th>
 		    <th class='text-nowrap text-center'>Grupo Representante</th>
 		    <th class='text-nowrap text-center'>Tipo Representacion</th>
+            <th class='text-nowrap text-center'>Tipo Pedido</th>
             <th class='text-nowrap text-center'>Fecha Raunión</th>
             <th class='text-nowrap text-center'>Resúmen Reunión</th>
             <th>&nbsp;</th>
@@ -824,8 +1234,10 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 	while($fila_2 = mysqli_fetch_array($query_2)){
 			  // Listado normal
 			 echo "<tr>";
+             echo "<td align=center>".$paritaria->get_nro_actuacion($fila_2['nro_actuacion'])."</td>";
 			 echo "<td align=center>".$paritaria->get_grupo_representantes($fila_2['grupo_representantes'])."</td>";
 			 echo "<td align=center>".$paritaria->get_tipo_representacion($fila_2['tipo_representacion'])."</td>";
+             echo "<td align=center>".$paritaria->get_tipo_pedido($fila_2['tipo_pedido'])."</td>";
 			 echo "<td align=center>".$paritaria->get_fecha_reunion($fila_2['fecha_reunion'])."</td>";
 			 echo "<td align=center>".$paritaria->get_resumen_reunion($fila_2['resumen_reunion'])."</td>";
 			 echo "<td class='text-nowrap'>";
@@ -852,20 +1264,24 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
 
 }
    
-   
-    // PERSISTENCIA A BASE
+
+// =========================================================================================================== //
+// ============================================== PERSISTENCIA A BASE ======================================== //
+// =========================================================================================================== //
+
 /*
 ** PERSISTENCIA A BASE DE NUEVA PARITARIA
 */
-    public function addParitaria($paritaria,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$myfile,$conn,$dbase){
+    public function addParitaria($paritaria,$nro_actuacion,$grupo_representante,$tipo_representacion,$tipo_pedido,$organismo,$fecha_reunion,$resumen_reunion,$myfile,$conn,$dbase){
     
         if($conn){
-        
+            
             $targetDir = '../../../actas_comision/';
-            //chmod($targetDir,0777);
             $fileName = $myfile;
             //$fileName = basename($_FILES["file"]["name"]);
-            $targetFilePath = $targetDir . $fileName;
+            $dir = opendir($targetDir); // SE ABRE EL DIECTORIO
+            $targetFilePath = $targetDir.$fileName;
+            
 
             $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 
@@ -874,23 +1290,29 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                 $allowTypes = array('pdf');
                 
                 if(in_array($fileType, $allowTypes)){
-                
+                    
                    // Upload file to server
                     if(move_uploaded_file($_FILES["myfile"]["tmp_name"], $targetFilePath)){
-            
+                        
+                        closedir($dir); // SE CIERRA EL DIRECTORIO
+                        
                         mysqli_select_db($conn,$dbase);
                                             
                                 $sql = "INSERT INTO representacion_paritarias ".
-                                "(grupo_representantes,
+                                "(nro_actuacion,
+                                  grupo_representantes,
                                   tipo_representacion,
+                                  tipo_pedido,
                                   organismo,
                                   fecha_reunion,
                                   resumen_reunion,
                                   file_name,
                                   file_path)".
                                 "VALUES ".
-                                "($paritaria->set_grupo_representantes('$grupo_representante'),
+                                "($paritaria->set_nro_actuacion('$nro_actuacion'),
+                                  $paritaria->set_grupo_representantes('$grupo_representante'),
                                   $paritaria->set_tipo_representacion('$tipo_representacion'),
+                                  $paritaria->set_tipo_pedido('$tipo_pedido'),
                                   $paritaria->set_organismo('$organismo'),
                                   $paritaria->set_fecha_reunion('$fecha_reunion'),
                                   $paritaria->set_resumen_reunion('$resumen_reunion'),
@@ -901,6 +1323,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
                                     
                                 if($query){
                                     echo 1; // registro insertado correctamente
+                                    
                                 }else{
                                     echo -1; // hubo un problema al insertar el registro
                                 }
@@ -920,8 +1343,104 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     
     } // end funcion
     
+
+// =========================================================================================================== //
+/*
+**  GUARDA A BASE LOS AVANCES DE UNA PARITARIA
+*/
+public function addAdvanceParitaria($paritaria,$id,$nro_actuacion,$organismo,$tipo_representacion,$grupo_representante,$fecha_reunion,$resumen,$conn,$dbase){
+
+    $carpeta = '../../../actas_comision/'.$nro_actuacion; 
+            
+        if(!file_exists($carpeta)){
+            
+            mkdir($carpeta);
+            chmod($carpeta,0777);
+        
     
-    public function addTipoRepresentacion($paritaria,$descripcion,$conn,$dbase){
+    
+        foreach($_FILES["myfiles"]['tmp_name'] as $key => $tmp_name){
+        //condicional si el fichero existe
+        
+            if($_FILES["myfiles"]["name"][$key]){
+                
+                // Nombres de archivos temporales
+                $archivonombre = $_FILES["myfiles"]["name"][$key]; 
+                $fuente = $_FILES["myfiles"]["tmp_name"][$key]; 
+                
+                            
+                $dir = opendir($carpeta);
+                $target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+                
+        
+                move_uploaded_file($fuente, $target_path);
+                    
+                    
+                closedir($dir); //Cerramos la conexion con la carpeta destino
+            }
+        }
+    
+    $sql = "INSERT INTO avances_paritaria ".
+            "(paritaria_id,
+              organismo,
+              tipo_representacion,
+              grupo,
+              fecha_reunion,
+              resumen,
+              files_path)".
+            "VALUES ".
+            "('$id',
+              $paritaria->set_organismo('$organismo'),
+              $paritaria->set_tipo_representacion('$tipo_representacion'),
+              $paritaria->set_grupo_representantes('$grupo_representante'),
+              $paritaria->set_fecha_reunion('$fecha_reunion'),
+              $paritaria->set_resumen_reunion('$resumen'),
+              $paritaria->set_file_path('$carpeta')
+            )";
+        
+        mysqli_select_db($conn,$dbase);
+        $query = mysqli_query($conn,$sql);
+        
+        if($query){
+        
+            echo 1; // avance insertadas correctamente
+            
+        }else{
+           echo -1; // hubo un problema al intentar insertar los datos
+    
+    }
+
+
+}else{
+    echo 2; // no se puede crear el directorio
+}
+} // END OF FUNCTION
+
+// =========================================================================================================== //
+
+/*
+** actualizar avance de paritaria
+*/
+public function updateAvanceParitaria($paritaria,$id,$fecha_reunion,$resumen,$conn,$dbase){
+
+    mysqli_select_db($conn,$dbase);
+    $sql = "update avances_paritaria set fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'), resumen = $paritaria->set_resumen_reunion('$resumen') where id = '$id'";
+
+    $query = mysqli_query($conn,$sql);
+
+    if($query){
+        echo 1; // actualizacion exitosa
+    }else{
+        echo -1; // no se pudo actualizar
+    }
+
+
+} // END OF FUNCTION
+
+
+// =========================================================================================================== //
+    
+public function addTipoRepresentacion($paritaria,$descripcion,$conn,$dbase){
     
         if($conn){
         
@@ -955,7 +1474,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
     
     }
 
-    public function updateParitaria($paritaria,$id,$grupo_representante,$tipo_representacion,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
+    public function updateParitaria($paritaria,$id,$grupo_representante,$tipo_representacion,$tipo_pedido,$organismo,$fecha_reunion,$resumen_reunion,$conn,$dbase){
         
         if($conn){
         
@@ -963,6 +1482,7 @@ public function searchAdvanceParitariasResults($paritaria,$grupo_representante,$
             $sql = "update representacion_paritarias set
                     grupo_representantes = $paritaria->set_grupo_representantes('$grupo_representante'),
                     tipo_representacion = $paritaria->set_tipo_representacion('$tipo_representacion'),
+                    tipo_pedido = $paritaria->set_tipo_pedido('$tipo_pedido'),
                     organismo = $paritaria->set_organismo('$organismo'),
                     fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
                     resumen_reunion = $paritaria->set_resumen_reunion('$resumen_reunion')
@@ -1204,21 +1724,13 @@ public function launchRepresentacionParitarias(){
         
                 <div class="row">
                     
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-                    
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="nueva_paritaria"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Registro</button>
-                        </form><br>
-                    
-                    </div>
-                    
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    <div class="col-sm-6" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
                         <form action="#" method="POST">
                         <button type="submit" class="btn btn-default btn-lg" name="paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Representación Paritarias</button>
                         </form><br>
                     </div>
                     
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
+                    <div class="col-sm-6" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
                         <form action="#" method="POST">
                         <button type="submit" class="btn btn-default btn-lg" name="busqueda_paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Búsquedas Avanzadas</button>
                         </form><br>

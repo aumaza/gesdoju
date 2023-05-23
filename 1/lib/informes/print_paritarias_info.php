@@ -72,6 +72,7 @@
         
             echo '<table id="normas">
                     <tr>
+                        <th>Nro. Actuacion</th>
                         <th>Grupo Representante</th>
                         <th>Tipo Representación</th>
                         <th>Organismo</th>
@@ -82,6 +83,7 @@
         while($row = mysqli_fetch_array($query)){
             
                     echo "<tr>";
+                    echo "<td>".$row['nro_actuacion']."</td>";
                     echo "<td>".$row['grupo_representantes']."</td>";
                     echo "<td>".$row['tipo_representacion']."</td>";
                     echo "<td>".$row['organismo']."</td>";
@@ -106,6 +108,7 @@
         
         echo '<table id="normas">
                     <tr>
+                        <th>Nro. Actuacion</th>
                         <th>Integrantes</th>
                         <th>Tipo Representación</th>
                         <th>Organismo</th>
@@ -116,6 +119,7 @@
         while($row_1 = mysqli_fetch_array($query_1)){
             
                     echo "<tr>";
+                    echo "<td>".$row_1['nro_actuacion']."</td>";
                     $mysql = "select * from grupo_representantes where nombre_grupo = '$grupo_representante'";
                     $myquery = mysqli_query($conn,$mysql);
                     while($fila = mysqli_fetch_array($myquery)){
@@ -143,6 +147,7 @@
         
         echo '<table id="normas">
                     <tr>
+                        <th>Nro. Actuación</th>
                         <th>Grupo Representante</th>
                         <th>Tipo Representación</th>
                         <th>Organismo</th>
@@ -153,6 +158,7 @@
         while($row_2 = mysqli_fetch_array($query_2)){
             
                     echo "<tr>";
+                    echo "<td>".$row_2['nro_actuacion']."</td>";
                     echo "<td>".$row_2['grupo_representantes']."</td>";
                     echo "<td>".$row_2['tipo_representacion']."</td>";
                     echo "<td>".$row_2['organismo']."</td>";

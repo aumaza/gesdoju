@@ -210,32 +210,100 @@ $(document).ready(function(){
 });
 });
 
+
 /*
 ** compara selectores si hay dos iguales
 */
-function compareSelect(string){
+function compareSelect(){
     
     var rep_titular = document.getElementById('representante_titular').value;
     var rep_suplente = document.getElementById('representante_suplente').value;
     var asesor_1 = document.getElementById('primer_asesor').value;
     var asesor_2 = document.getElementById('segundo_asesor').value;
-    
-    console.log(rep_titular);
-     console.log(rep_suplente);
-      console.log(asesor_1);
-       console.log(asesor_2);
-    
-    if((rep_titular == string) && (asesor_1 == string) || (rep_titular == string) && (rep_suplente == string) || (rep_titular == string) || (rep_suplente == string)){
         
-            if(confirm('Un mismo representante no puede ser Titular, Suplente y Asesor. Desea Reseleccionar?') == true){
-                
-                $('#representante_titular').val('');
-                $('#representante_suplente').val('');
-                $('#primer_asesor').val('');
-                $('#segundo_asesor').val('');
+    if(rep_titular == ''){
+        alert('Seleccione un Representante Titular');        
+    }else{
+        
+
+        if(confirm('Ha seleccionado como Representante Titular a: \n\n' +rep_titular) == true){
+            rep_titular;
+            
+            if(rep_suplente == ''){
+                alert('Seleccione un Representante Suplente');
+
             }else{
-                alert('Puede Continuar...');
+                    
+                if(confirm('Ha seleccionado como Representante Suplente a: \n\n' +rep_suplente) == true){
+                        
+                    if(rep_titular != rep_suplente){
+                            rep_suplente;
+
+                        if(asesor_1 == ''){
+                            alert('Seleccione el Primer Asesor');
+                        }else{
+
+                            if(confirm('Ha seleccionado como Primer Asesor a: \n\n' +asesor_1) == true){
+                        
+                                if(rep_titular != asesor_1 && rep_suplente != asesor_1){
+                                    asesor_1;
+
+                                    if(asesor_2 == ''){
+                                        alert('Seleccione el Segundo Asesor');
+                                    }else{
+
+                                        if(confirm('Ha seleccionado como Segundo Asesor a: \n\n' +asesor_2) == true){
+                                            if(rep_titular != asesor_2 && rep_suplente != asesor_2 && asesor_1 != asesor_2){
+                                                asesor_2
+
+                                                if(confirm('Ha seleccionado los siguientes representantes: \n\nTitular: ' + rep_titular + '\n\nSuplente: ' + rep_suplente + '\n\n1º Asesor: ' + asesor_1 + '\n\n2º Asesor: ' + asesor_2+ '\n\nSon correctos?') == true){
+                                                    alert('Ya puede guardar!');
+                                                }else{
+                                                    alert('Seleccione nuevamente los representantes!');
+                                                    $('#segundo_asesor').val('');
+                                                    $('#primer_asesor').val('');
+                                                    $('#representante_suplente').val('');
+                                                    $('#representante_titular').val('');
+                                                }
+
+                                            }else{
+                                                alert('El Segundo Asesor, no puede ocupar dos funciones distintas al mismo tiempo. Seleccione un asesor distinto!');
+                                                $('#segundo_asesor').val('');            
+                                            }
+                                        }else{
+                                            $('#segundo_asesor').val('');
+                                        }
+                                    }
+
+
+                                }else{
+                                    alert('El Primer Asesor no puede ser Titular y Suplente al mismo tiempo!. Seleccione un Asesor distinto');
+                                    $('#primer_asesor').val('');
+                                }
+                            }else{
+                                $('#primer_asesor').val('');
+                            }
+
+                        }
+                    }else{
+                       alert('El Representante Suplente no puede ser Titular al mismo tiempo!. Seleccione un representante distinto');
+                        $('#representante_suplente').val('');                        
+                    }
+                }else{
+                    $('#representante_suplente').val('');
+                }
             }
+        }else{
+            $('#representante_titular').val('');
+        }
+
+
     }
-        
-}
+
+    
+    
+
+} // end of function
+
+
+                    

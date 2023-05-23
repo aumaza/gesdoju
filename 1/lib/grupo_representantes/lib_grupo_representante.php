@@ -142,7 +142,7 @@ class Grupo{
                 <h3><img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Alta Grupo</h3><hr>
                                    
             <form id="fr_add_new_grupo_ajax" method="POST">
-            
+
              
             <div class="container">     
                 <div class="row">
@@ -159,7 +159,7 @@ class Grupo{
                         
                         <div class="form-group">
                             <label for="representante_titular">Representante Titular</label>
-                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -180,7 +180,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="representante_suplente">Representante Suplente</label>
-                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -202,7 +202,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="primer_asesor">Primer Asesor</label>
-                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -224,7 +224,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="segundo_asesor">Segundo Asesor</label>
-                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -275,8 +275,7 @@ class Grupo{
                                    
             <form id="fr_update_grupo_ajax" method="POST">
             <input type="hidden" name="id" id="id" value="'.$id.'" required>
-            
-             
+                         
             <div class="container">     
                 <div class="row">
                     <div class="col-sm-6">
@@ -295,7 +294,7 @@ class Grupo{
                         
                         <div class="form-group">
                             <label for="representante_titular">Representante Titular</label>
-                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect(this.value);" required>
+                            <select class="form-control" id="representante_titular" name="representante_titular" onchange="compareSelect();" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -319,7 +318,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="representante_suplente">Representante Suplente</label>
-                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect(this.value);" required>
+                            <select class="form-control" id="representante_suplente" name="representante_suplente" onchange="compareSelect();" required>
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -343,7 +342,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="primer_asesor">Primer Asesor</label>
-                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="primer_asesor" name="primer_asesor" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -367,7 +366,7 @@ class Grupo{
                             
                             <div class="form-group">
                             <label for="segundo_asesor">Segundo Asesor</label>
-                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect(this.value);" >
+                            <select class="form-control" id="segundo_asesor" name="segundo_asesor" onchange="compareSelect();" >
                             <option value="" disabled selected>Seleccionar</option>';
                                 
                                 if($conn){
@@ -393,7 +392,7 @@ class Grupo{
                 </div>
                 </div><hr>
                 
-                <button type="submit" class="btn btn-default btn-block" id="update_grupo" name="update_grupo">
+                <button type="submit" class="btn btn-default btn-block" id="update_grupo" name="update_grupo"> 
                     <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Actualizar</button>
                 
             </form>

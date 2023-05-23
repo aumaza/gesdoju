@@ -674,6 +674,24 @@
         $id = mysqli_real_escape_string($conn,$_POST['id']);
         $paritaria->formEditTipoRepresentacion($paritaria,$id,$conn,$dbase);
 	}
+
+	if(isset($_POST['view_advance'])){
+		$id = mysqli_real_escape_string($conn, $_POST['id']);
+		$paritaria->listarAvancesParitaria($paritaria,$id,$conn,$dbase);
+	}
+
+	if(isset($_POST['add_advance'])){
+		$id = mysqli_real_escape_string($conn,$_POST['id']);
+		$paritaria->formAltaAvancesParitaria($paritaria,$id,$conn,$dbase);
+	}
+	if(isset($_POST['edit_advance_paritaria'])){
+		$id = mysqli_real_escape_string($conn,$_POST['id']);
+		$paritaria->formEditarAvancesParitaria($paritaria,$id,$conn,$dbase);
+	}
+	if(isset($_POST['doc_adicional'])){
+		$id = mysqli_real_escape_string($conn,$_POST['id']);
+		$paritaria->listarDocRelacionada($id,$conn,$dbase);
+	}
 	
 		
 	// ============================ FIN REPRESENTACION PARITARIAS ========================= //

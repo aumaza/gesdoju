@@ -43,7 +43,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Gestión Documental - Informe de Reunión Representación Paritaria</title>
+  <title>Gestión Documental - Alta Representación Paritaria</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="../../../icons/apps/kthesaurus.png" rel="icon">
@@ -65,7 +65,7 @@
     <p class="p-center">Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
     <hr>
     <h1 align="center">Representación Paritarias</H1>
-    <h3 align="center">Informe Extendido Representación Paritaria</h3>
+    <h3 align="center">Carátula</h3>
        
    </div>
    
@@ -80,6 +80,7 @@
     $query = mysqli_query($conn,$sql);
     
     while($row = mysqli_fetch_array($query)){
+        $nro_actuacion = $row['nro_actuacion'];
         $grupo_representantes = $row['grupo_representantes'];
         $tipo_representacion = $row['tipo_representacion'];
         $organismo = $row['organismo'];
@@ -100,6 +101,7 @@
        
     echo '<div class="row">
             
+            <p class="p-justify"><strong>Nro. Actuación:</strong> '.$nro_actuacion.'</p><hr>
             <p class="p-justify"><strong>Grupo:</strong> '.$grupo_representantes.'</p><hr>
             <p class="p-center"><strong>Integrantes</strong></p><hr>
             <p class="p-justify"><strong>Representante Titular:</strong> '.$rep_titular.'</p>
@@ -110,8 +112,8 @@
             }
       echo '<hr><p class="p-justify"><strong>Tipo Representación</strong>: '.$tipo_representacion.'</p><hr>
             <p class="p-justify"><strong>Organismo</strong>: '.$organismo.'</p><hr>
-            <p class="p-justify"><strong>Fecha Reunión</strong>: '.$fecha_reunion.'</p><hr>
-            <p class="p-justify"><strong>Resumen Reunión</strong>: '.$resumen_reunion.'</p><hr>
+            <p class="p-justify"><strong>Fecha Alta</strong>: '.$fecha_reunion.'</p><hr>
+            <p class="p-justify"><strong>Referencia / Descripción</strong>: '.$resumen_reunion.'</p><hr>
             
             </div>';
          
