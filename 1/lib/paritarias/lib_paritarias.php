@@ -290,11 +290,7 @@ class Paritarias{
                             <button type="submit" class="btn btn-default btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
                                 <img class="img-reponsive img-rounded" src="../../icons/actions/document-open.png" /> Documentación Relacionada</button>
 
-                            </form><hr>
-
-                            <a href="../lib/informes/print.php?file=print_avance_paritaria.php&id='.$id.'" target="_blank">
-                            <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Avances Paritaria</button></a><br>';
+                            </form><hr>';
                         
                     echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
                     echo '</div></div>';
@@ -378,9 +374,9 @@ class Paritarias{
     $query = mysqli_query($conn,$sql);
     $row = mysqli_fetch_assoc($query);
     
-    $dir = $row['files_path'];
+    $dir = $row['files_path'].'/';
     $path = substr($dir,3);
-    $path_b = substr($dir,9);
+    $path_b = substr($dir,6);
     
     $actuacion = $row['nro_actuacion'];
     
@@ -390,8 +386,11 @@ class Paritarias{
     
         while(($file = readdir($filehandle)) !== FALSE){
 
+            if($file != "." && $file != ".."){
+                
                 $list[] = $file;
                 $count++;
+            }
             
         }
     }else{
@@ -402,21 +401,28 @@ class Paritarias{
 
         echo '<div class="container">
                 <div class="jumbotron">
+                <h2><img class="img-reponsive img-rounded" src="../../icons/actions/document-open-folder.png" /> Avances Paritarias [ Documentación Relacionada ] </h2><hr>
+
                 <div class="row">
                 <div class="col-sm-12">
                 <div class="panel panel-primary">
-                <div class="panel-heading">Documentación Relacionada a: <strong>'.$actuacion.'</strong></div>
+                <div class="panel-heading">Nro. Actuación: <strong>'.$actuacion.'</strong></div>
                 <div class="panel-body">
                      <div class="list-group">';
                         
                         for($i = 0; $i < $count; $i++){
-                            echo '<a class="list-group-item" href="../../actas_comision/download.php?file_name='.$list[$i].'&path='.$path.'" >'.($i+1). ' - ' .$list[$i].'</a>';
+                            echo '<a class="list-group-item" href="../../actas_comision/download.php?file_name='.$list[$i].'&path='.$path_b.'" >'.($i+1). ' - ' .$list[$i].'</a>';
                         }       
                         
           echo '</div>
                 </div>
                 <div class="panel-footer"><strong>Cantidad de Documentos:</strong> <span class="badge">'.$count.'</span></div>
-             </div>
+                
+             </div><br>
+
+             <form action="#" method="POST">
+                    <button type="submit" class="btn btn-primary btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+             </form>
              </div>
              </div>
              </div>
@@ -662,6 +668,10 @@ class Paritarias{
                 <div class="alert alert-info">
                 <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Avances Paritaria</h3>
                 </div><hr>
+
+                <form action="#" method="POST">
+                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                </form><hr>
                         
                         
                                    
@@ -799,7 +809,7 @@ class Paritarias{
                 
                 <div class="alert alert-success">
                 <button type="submit" class="btn btn-default btn-block" id="update_avance_paritaria">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Actualizar</button>
                 </div>
             </form>
             
@@ -1412,7 +1422,57 @@ public function addAdvanceParitaria($paritaria,$id,$nro_actuacion,$organismo,$ti
 
 
 }else{
-    echo 2; // no se puede crear el directorio
+    
+    foreach($_FILES["myfiles"]['tmp_name'] as $key => $tmp_name){
+        //condicional si el fichero existe
+        
+            if($_FILES["myfiles"]["name"][$key]){
+                
+                // Nombres de archivos temporales
+                $archivonombre = $_FILES["myfiles"]["name"][$key]; 
+                $fuente = $_FILES["myfiles"]["tmp_name"][$key]; 
+                
+                            
+                $dir = opendir($carpeta);
+                $target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+                
+        
+                move_uploaded_file($fuente, $target_path);
+                    
+                    
+                closedir($dir); //Cerramos la conexion con la carpeta destino
+            }
+        }
+    
+    $sql = "INSERT INTO avances_paritaria ".
+            "(paritaria_id,
+              organismo,
+              tipo_representacion,
+              grupo,
+              fecha_reunion,
+              resumen,
+              files_path)".
+            "VALUES ".
+            "('$id',
+              $paritaria->set_organismo('$organismo'),
+              $paritaria->set_tipo_representacion('$tipo_representacion'),
+              $paritaria->set_grupo_representantes('$grupo_representante'),
+              $paritaria->set_fecha_reunion('$fecha_reunion'),
+              $paritaria->set_resumen_reunion('$resumen'),
+              $paritaria->set_file_path('$carpeta')
+            )";
+        
+        mysqli_select_db($conn,$dbase);
+        $query = mysqli_query($conn,$sql);
+        
+        if($query){
+        
+            echo 1; // avance insertadas correctamente
+            
+        }else{
+           echo -1; // hubo un problema al intentar insertar los datos
+    
+    }
 }
 } // END OF FUNCTION
 
