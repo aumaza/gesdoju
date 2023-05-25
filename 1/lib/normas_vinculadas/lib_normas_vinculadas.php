@@ -74,7 +74,7 @@ class NormasVinculadas{
 
     
     // ============================================ PERSISTENCIA =============================================== //
-    public function addNormasVinculadas($obj_norma_vinculada,$id_norma,$norma,$files,$conn,$dbase){
+public function addNormasVinculadas($obj_norma_vinculada,$id_norma,$norma,$files,$conn,$dbase){
     
         $carpeta = '../../documentos/'.$norma; 
 			
@@ -85,77 +85,76 @@ class NormasVinculadas{
 		
     
     
-        foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
-		//condicional si el fichero existe
+            foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
+		      //condicional si el fichero existe
 		
-		if($_FILES["files"]["name"][$key]){
+		      if($_FILES["files"]["name"][$key]){
 			
-			// Nombres de archivos temporales
-			$archivonombre = $_FILES["files"]["name"][$key]; 
-			$fuente = $_FILES["files"]["tmp_name"][$key]; 
+			     // Nombres de archivos temporales
+			     $archivonombre = $_FILES["files"]["name"][$key]; 
+			     $fuente = $_FILES["files"]["tmp_name"][$key]; 
 			
 						
-			$dir = opendir($carpeta);
-			$target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
+			     $dir = opendir($carpeta);
+			     $target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
 			
 	
-			if(move_uploaded_file($fuente, $target_path)){	
+			    if(move_uploaded_file($fuente, $target_path)){	
 				
-                        echo '<div class="container">
+                    echo '<div class="container">
+                            <div class="row">
+                            <div class="col-sm-8">
+                            <div class="alert alert-success" role="alert">
+                            <h1 class="panel-title text-left" contenteditable="true"></h1>
+                            <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
+                            <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>                                </div></div></div></div>';
+                }else{	
+                    echo '<div class="container">
+                            <div class="row">
+                             <div class="col-sm-8">
+                            <div class="alert alert-warning" role="alert">
+                            <h1 class="panel-title text-left" contenteditable="true"></h1>
+                            <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
+                            <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
+                                </div></div></div></div>';
+			    }
+			closedir($dir); //Cerramos la conexion con la carpeta destino
+		      }
+	        }
+	
+            	$sql = "INSERT INTO normas_vinculadas ".
+                        "(id_norma_principal,
+                          path_name)".
+                        "VALUES ".
+                        "($obj_norma_vinculada->set_id_norma_principal('$id_norma'),
+                          $obj_norma_vinculada->set_path_name('$carpeta'))";
+                    
+                    mysqli_select_db($conn,$dbase);
+                    $query = mysqli_query($conn,$sql);
+                    
+                    if($query){
+                    
+                        echo ' <div class="container">
                                 <div class="row">
                                 <div class="col-sm-8">
                                 <div class="alert alert-success" role="alert">
                                 <h1 class="panel-title text-left" contenteditable="true"></h1>
                                 <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
-                                <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
-                                </div></div></div></div>';
-            }else{	
+                                    <strong> Base de Datos Actualizada correctamente..</strong></p>
+                             </div></div></div></div>';
+                    }else{
+                    
                         echo '<div class="container">
                                 <div class="row">
                                 <div class="col-sm-8">
-                                <div class="alert alert-warning" role="alert">
+                                <div class="alert alert-danger" role="alert">
                                 <h1 class="panel-title text-left" contenteditable="true"></h1>
                                 <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
-                                <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
-                                </div></div></div></div>';
-			}
-			closedir($dir); //Cerramos la conexion con la carpeta destino
-		}
-	}
-	
-	$sql = "INSERT INTO normas_vinculadas ".
-            "(id_norma_principal,
-              path_name)".
-            "VALUES ".
-            "($obj_norma_vinculada->set_id_norma_principal('$id_norma'),
-              $obj_norma_vinculada->set_path_name('$carpeta'))";
-        
-        mysqli_select_db($conn,$dbase);
-        $query = mysqli_query($conn,$sql);
-        
-        if($query){
-        
-            echo ' <div class="container">
-                    <div class="row">
-                    <div class="col-sm-8">
-                    <div class="alert alert-success" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true"></h1>
-                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
-                        <strong> Base de Datos Actualizada correctamente..</strong></p>
-                 </div></div></div></div>';
-        }else{
-        
-            echo '<div class="container">
-                    <div class="row">
-                    <div class="col-sm-8">
-                    <div class="alert alert-danger" role="alert">
-                    <h1 class="panel-title text-left" contenteditable="true"></h1>
-                    <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
-                    <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
-			     </div></div></div></div>';
-        }
+                                <strong> Hubo un problema al intentar actualizar base de datos.</strong></h1> '.mysqli_error($conn).'</p>
+            			     </div></div></div></div>';
+                    }
     
-    }else{
+        }else{
     
             foreach($_FILES["files"]['tmp_name'] as $key => $tmp_name){
             //condicional si el fichero existe
@@ -171,32 +170,13 @@ class NormasVinculadas{
                     $target_path = $carpeta.'/'.$archivonombre; //indicamos la ruta de destino de los archivos
                     
             
-                    if(move_uploaded_file($fuente, $target_path)){	
-                        
-                                echo '<div class="container">
-                                        <div class="row">
-                                        <div class="col-sm-8">
-                                        <div class="alert alert-success" role="alert">
-                                        <h1 class="panel-title text-left" contenteditable="true"></h1>
-                                        <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" />
-                                        <strong> Norma Guardada Exitosamente. El/Los Archivo/s '.$archivonombre. ' se ha/n subido correctamente..</strong></p>
-                                        </div></div></div></div>';
-                    }else{	
-                                echo '<div class="container">
-                                        <div class="row">
-                                        <div class="col-sm-8">
-                                        <div class="alert alert-warning" role="alert">
-                                        <h1 class="panel-title text-left" contenteditable="true"></h1>
-                                        <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" />
-                                        <strong> Ups. Hubo un error subiendo el Archivo. Verifique si posee permisos su usuario, o el directorio de destino tiene permisos de escritura</strong></p>
-                                        </div></div></div></div>';
-                    }
+                    move_uploaded_file($fuente, $target_path);
                     closedir($dir); //Cerramos la conexion con la carpeta destino
+                }
             }
+    
         }
-    
-    }
-    
+   
 } // FIN DE LA FUNCION
 
 
