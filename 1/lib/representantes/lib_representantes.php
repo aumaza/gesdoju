@@ -50,7 +50,7 @@ class Representantes{
                 $count = 0;
                 echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Representantes [ Listado de Representantes en Paritarias ]</h2><hr>';
+                        <h2><img src="../../icons/actions/representantes.png"  class="img-reponsive img-rounded"> Representantes [ Listado de Representantes en Paritarias ]</h2><hr>';
                         
                         
                         echo "<table class='display compact' style='width:100%' id='representantesTable'>";

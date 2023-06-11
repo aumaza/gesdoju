@@ -75,7 +75,7 @@ class Grupo {
 			$count = 0;
 			echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Grupos Representantes [ Listado de Grupos Representantes ]</h2><hr>';
+                        <h2><img src="../../icons/actions/partners.png"  class="img-reponsive img-rounded"> Grupos Representantes [ Listado de Grupos Representantes ]</h2><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='grupoRepresentantesTable'>";
 			echo "<thead>

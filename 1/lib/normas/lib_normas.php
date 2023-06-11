@@ -1348,7 +1348,8 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
     // BUSQUEDA POR PALABRA CLAVE, FECHA DESDE Y FECHA HASTA
 
     if(($palabra_clave != '') && ($fecha_desde != '') && ($fecha_hasta != '')){
-    
+        
+        //$sql = "SELECT n.*, o.descripcion FROM normas n left join organismos o on n.organismos = o.cod_org WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta'";
         $sql = "SELECT * FROM normas WHERE MATCH(nombre_norma,f_norma,observaciones) AGAINST('+$palabra_clave' IN BOOLEAN MODE) and f_pub between '$fecha_desde' and '$fecha_hasta'";
         mysqli_select_db($conn,$dbase);
         $query = mysqli_query($conn,$sql);
@@ -1365,7 +1366,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 		    <th class='text-nowrap text-center'>Nro. Norma</th>
             <th class='text-nowrap text-center'>Tipo Norma</th>
             <th class='text-nowrap text-center'>Ambito</th>
-            <th class='text-nowrap text-center'>Organismo</th>
+            <th class='text-nowrap text-center'>Cod. Organismo</th>
             <th class='text-nowrap text-center'>F. Publicación</th>
             <th class='text-nowrap text-center'>Año Publicación</th>
             <th class='text-nowrap text-center'>Unidad Física</th>
@@ -1382,7 +1383,7 @@ function searchAdvanceResults($palabra_clave,$anio_pub,$fecha_desde,$fecha_hasta
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila['f_norma']."</td>";
 			 echo "<td align=center>".$fila['organismo']."</td>";
-			 echo "<td align=center>".$fila['f_pub']."</td>";
+             echo "<td align=center>".$fila['f_pub']."</td>";
 			 echo "<td align=center>".$fila['anio_pub']."</td>";
              echo "<td align=center>".$fila['unidad_fisica']."</td>";
              echo "<td align=center>".$fila['observaciones']."</td>";

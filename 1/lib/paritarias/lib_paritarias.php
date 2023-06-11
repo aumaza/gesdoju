@@ -120,6 +120,9 @@ class Paritarias {
 		if ($conn) {
 
 			$fecha_actual = date('Y-m-d');
+			$empty = "Sin Cargar";
+			$empty_group = "Sin Designar";
+			$empty_request = "Sin Determinar";
 
 			$sql = "select * from representacion_paritarias";
 			mysqli_select_db($conn, $dbase);
@@ -128,31 +131,62 @@ class Paritarias {
 			$count = 0;
 			echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>';
+                        <h2><img src="../../icons/actions/agreement_representation.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
 			echo "<thead>
-                        <th class='text-nowrap text-center'>Nro. Actuación</th>
-                        <th class='text-nowrap text-center'>Representantes</th>
-                        <th class='text-nowrap text-center'>Tipo Representación</th>
-                        <th class='text-nowrap text-center'>Tipo Pedido</th>
-                        <th class='text-nowrap text-center'>Fecha Alta</th>
-                        <th class='text-nowrap text-center'>Organismo</th>
-                        <th class='text-nowrap text-center'>Referencia/Descripción</th>
-                        <th class='text-nowrap text-center'>Acciones</th>
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Nro. Actuación</span></th>
+                        
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Representantes</span></th>
+                        
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Tipo Representación</span></th>
+                        
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Tipo Pedido</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Fecha Alta</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Organismo</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Referencia/Descripción</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Acciones</span></th>
                         </thead>";
 
 			while ($fila = mysqli_fetch_array($query)) {
 				// Listado normal
 				echo "<tr>";
-				echo "<td align=center>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
-				$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo_representantes]'";
-				$query_1 = mysqli_query($conn, $sql_1);
-				while ($row = mysqli_fetch_array($query_1)) {
-					echo "<td align=center>".$row['representante_titular']." <br> ".$row['representante_suplente']."</td>";
+				if($paritaria->get_nro_actuacion($fila['nro_actuacion']) != ""){
+					echo "<td align=center>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
+				}else{
+					echo "<td align=center style='background-color:#F4D03F'><strong>".$empty."</strong></td>";
+				}
+
+				if($paritaria->get_grupo_representantes($fila['grupo_representantes']) != ""){
+
+					$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo_representantes]'";
+					$query_1 = mysqli_query($conn, $sql_1);
+					while ($row = mysqli_fetch_array($query_1)) {
+						echo "<td align=center>".$row['representante_titular']." <br> ".$row['representante_suplente']."</td>";
+					}
+				}else{
+					echo "<td align=center style='background-color:#D2B4DE'><strong>".$empty_group."</strong></td>";
 				}
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
-				echo "<td align=center>".$paritaria->get_tipo_pedido($fila['tipo_pedido'])."</td>";
+				
+				if($paritaria->get_tipo_pedido($fila['tipo_pedido']) != ""){
+					echo "<td align=center>".$paritaria->get_tipo_pedido($fila['tipo_pedido'])."</td>";
+				}else{
+					echo "<td align=center style='background-color:#D7BDE2'><strong>".$empty_request."</strong></td>";
+				}
+
 				if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual) {
 					echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) > $fecha_actual) {
@@ -160,9 +194,11 @@ class Paritarias {
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) < $fecha_actual) {
 					echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
 				}
+
 				echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
 				echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen_reunion'])."</td>";
-				echo "<td class='text-nowrap'>";
+				echo "<td align=center class='text-nowrap'>";
+
 				echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
@@ -211,6 +247,7 @@ class Paritarias {
 		if ($conn) {
 
 			$fecha_actual = date('Y-m-d');
+			$empty = "Sin Cargar";
 
 			$sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
 			mysqli_select_db($conn, $dbase);
@@ -220,26 +257,43 @@ class Paritarias {
 			$count = 0;
 			echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Avances Paritaria</h2><hr>
+                        <h2><img src="../../icons/actions/advance-process.png"  class="img-reponsive img-rounded"> Avances Paritaria</h2><hr>
                         <form action="#" method="POST">
                         <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
                         </form><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='avancesParitariaTable'>";
 			echo "<thead>
-                        <th class='text-nowrap text-center'>Nro. Actuación</th>
-                        <th class='text-nowrap text-center'>Representantes</th>
-                        <th class='text-nowrap text-center'>Tipo Representación</th>
-                        <th class='text-nowrap text-center'>Fecha Reunión</th>
-                        <th class='text-nowrap text-center'>Organismo</th>
-                        <th class='text-nowrap text-center'>Resumen</th>
-                        <th class='text-nowrap text-center'>Acciones</th>
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Nro. Actuación</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Representantes</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Tipo Representación</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Fecha Reunión</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Organismo</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Resumen</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Acciones</span></th>
                         </thead>";
 
 			while ($fila = mysqli_fetch_array($query)) {
 				// Listado normal
 				echo "<tr>";
-				echo "<td align=center id='nro_actuacion'>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
+				if($paritaria->get_nro_actuacion($fila['nro_actuacion']) != ""){
+					echo "<td align=center id='nro_actuacion'>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
+				}else{
+					echo "<td align=center id='nro_actuacion' style='background-color:#F4D03F'>".$empty."</td>";
+				}
 				$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo]'";
 				$query_1 = mysqli_query($conn, $sql_1);
 				while ($row = mysqli_fetch_array($query_1)) {
@@ -308,7 +362,7 @@ class Paritarias {
                         <div class="jumbotron">
                         <h2><img class="img-reponsive img-rounded" src="../../icons/categories/applications-engineering.png" /> Tipo de Representación </h2><hr>';
 
-			echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
+			echo "<table class='display compact' style='width:100%' id='tipoRepresentacionTable'>";
 			echo "<thead>
                         <th class='text-nowrap text-center'>Tipo Representación</th>
                         <th class='text-nowrap text-center'>Acciones</th>
@@ -735,6 +789,9 @@ class Paritarias {
                 <div class="alert alert-info">
                 <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Avances Paritaria</h3>
                 </div><hr>
+                <form action="#" method="POST">
+                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                </form><hr>
 
 
 
@@ -803,7 +860,10 @@ class Paritarias {
 
 		echo '<div class="container">
                 <div class="jumbotron">
-                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Registro de Reunión Paritaria</h3><hr>
+                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Editar Representación Paritaria</h3><hr>
+                <form action="#" method="POST">
+                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                </form><hr>
 
             <form id="fr_update_paritaria_ajax" method="POST">
             <input type="hidden" id="id" name="id" value="'.$id.'">
@@ -903,9 +963,21 @@ class Paritarias {
                             <label for="resumen_reunion">Descripción:</label>
                             <textarea class="form-control" id="resumen_reunion" name="resumen_reunion" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión" required>'.$row['resumen_reunion'].'</textarea>
                         </div>
+                        </div>
 
-
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="alert alert-success">
+                                <label for="file">
+                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                                        Seleccione Archivo GEDO o CCOO ingresado en Nro. Actuación:</label><hr>
+                                <input type="file" id="myfile" name="myfile">
+                            </div>
+                        </div>
                     </div>
+
+
+                    
                 </div>
                 </div><hr>
 
@@ -1286,14 +1358,14 @@ class Paritarias {
                                   file_path)".
 						"VALUES ".
 						"($paritaria->set_nro_actuacion('$nro_actuacion'),
-$paritaria->set_grupo_representantes('$grupo_representante'),
-$paritaria->set_tipo_representacion('$tipo_representacion'),
-$paritaria->set_tipo_pedido('$tipo_pedido'),
-$paritaria->set_organismo('$organismo'),
-$paritaria->set_fecha_reunion('$fecha_reunion'),
-$paritaria->set_resumen_reunion('$resumen_reunion'),
-$paritaria->set_file_name('$fileName'),
-$paritaria->set_file_path('$targetFilePath'))";
+							$paritaria->set_grupo_representantes('$grupo_representante'),
+							$paritaria->set_tipo_representacion('$tipo_representacion'),
+							$paritaria->set_tipo_pedido('$tipo_pedido'),
+							$paritaria->set_organismo('$organismo'),
+							$paritaria->set_fecha_reunion('$fecha_reunion'),
+							$paritaria->set_resumen_reunion('$resumen_reunion'),
+							$paritaria->set_file_name('$fileName'),
+							$paritaria->set_file_path('$targetFilePath'))";
 
 						$query = mysqli_query($conn, $sql);
 
@@ -1360,13 +1432,13 @@ $paritaria->set_file_path('$targetFilePath'))";
               files_path)".
 			"VALUES ".
 			"('$id',
-$paritaria->set_organismo('$organismo'),
-$paritaria->set_tipo_representacion('$tipo_representacion'),
-$paritaria->set_grupo_representantes('$grupo_representante'),
-$paritaria->set_fecha_reunion('$fecha_reunion'),
-$paritaria->set_resumen_reunion('$resumen'),
-$paritaria->set_file_path('$carpeta')
-            )";
+				$paritaria->set_organismo('$organismo'),
+				$paritaria->set_tipo_representacion('$tipo_representacion'),
+				$paritaria->set_grupo_representantes('$grupo_representante'),
+				$paritaria->set_fecha_reunion('$fecha_reunion'),
+				$paritaria->set_resumen_reunion('$resumen'),
+				$paritaria->set_file_path('$carpeta')
+			)";
 
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
@@ -1410,12 +1482,12 @@ $paritaria->set_file_path('$carpeta')
               files_path)".
 			"VALUES ".
 			"('$id',
-$paritaria->set_organismo('$organismo'),
-$paritaria->set_tipo_representacion('$tipo_representacion'),
-$paritaria->set_grupo_representantes('$grupo_representante'),
-$paritaria->set_fecha_reunion('$fecha_reunion'),
-$paritaria->set_resumen_reunion('$resumen'),
-$paritaria->set_file_path('$carpeta')
+				$paritaria->set_organismo('$organismo'),
+				$paritaria->set_tipo_representacion('$tipo_representacion'),
+				$paritaria->set_grupo_representantes('$grupo_representante'),
+				$paritaria->set_fecha_reunion('$fecha_reunion'),
+				$paritaria->set_resumen_reunion('$resumen'),
+				$paritaria->set_file_path('$carpeta')
             )";
 
 			mysqli_select_db($conn, $dbase);
@@ -1487,29 +1559,76 @@ $paritaria->set_file_path('$carpeta')
 
 	}
 
-	public function updateParitaria($paritaria, $id, $grupo_representante, $tipo_representacion, $tipo_pedido, $organismo, $fecha_reunion, $resumen_reunion, $conn, $dbase) {
+	public function updateParitaria($paritaria, $id, $nro_actuacion,$grupo_representante, $tipo_representacion, $tipo_pedido, $organismo, $fecha_reunion, $resumen_reunion, $myfile, $conn, $dbase) {
 
 		if ($conn) {
 
-			mysqli_select_db($conn, $dbase);
-			$sql = "update representacion_paritarias set
-                    grupo_representantes = $paritaria->set_grupo_representantes('$grupo_representante'),
-                    tipo_representacion = $paritaria->set_tipo_representacion('$tipo_representacion'),
-                    tipo_pedido = $paritaria->set_tipo_pedido('$tipo_pedido'),
-                    organismo = $paritaria->set_organismo('$organismo'),
-                    fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
-                    resumen_reunion = $paritaria->set_resumen_reunion('$resumen_reunion')
-                    where id = '$id'";
-			$query = mysqli_query($conn, $sql);
+			$targetDir = '../../../actas_comision/';
+			$fileName  = $myfile;
+			//$fileName = basename($_FILES["file"]["name"]);
+			$dir            = opendir($targetDir);// SE ABRE EL DIECTORIO
+			$targetFilePath = $targetDir.$fileName;
 
-			if ($query) {
-				echo 1;
+			$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+			if (!empty($_FILES["myfile"]["name"])) {
+				// Allow certain file formats
+				$allowTypes = array('pdf');
+
+				if (in_array($fileType, $allowTypes)) {
+
+					// Upload file to server
+					if (move_uploaded_file($_FILES["myfile"]["tmp_name"], $targetFilePath)) {
+
+						closedir($dir);// SE CIERRA EL DIRECTORIO
+
+						mysqli_select_db($conn, $dbase);
+						$sql = "update representacion_paritarias set
+								nro_actuacion = $paritaria->set_nro_actuacion('$nro_actuacion'),
+			                    grupo_representantes = $paritaria->set_grupo_representantes('$grupo_representante'),
+			                    tipo_representacion = $paritaria->set_tipo_representacion('$tipo_representacion'),
+			                    tipo_pedido = $paritaria->set_tipo_pedido('$tipo_pedido'),
+			                    organismo = $paritaria->set_organismo('$organismo'),
+			                    fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
+			                    resumen_reunion = $paritaria->set_resumen_reunion('$resumen_reunion'),
+			                    file_name = $paritaria->set_file_name('$fileName'),
+								file_path = $paritaria->set_file_path('$targetFilePath')
+			                    where id = '$id'";
+						$query = mysqli_query($conn, $sql);
+
+						if ($query) {
+							echo 1; // actualizacion ok
+						} else {
+							echo -1; // actualizacion error
+						}
+					}else{
+						echo 3;// no se ha podido subir el archivo
+					}
+				} else {
+					echo 9;// solo se permiten archivos PDF
+				}
 			} else {
-				echo -1;
-			}
+				
+				mysqli_select_db($conn, $dbase);
+				$sql = "update representacion_paritarias set
+						nro_actuacion = $paritaria->set_nro_actuacion('$nro_actuacion'),
+			            grupo_representantes = $paritaria->set_grupo_representantes('$grupo_representante'),
+			            tipo_representacion = $paritaria->set_tipo_representacion('$tipo_representacion'),
+			            tipo_pedido = $paritaria->set_tipo_pedido('$tipo_pedido'),
+			            organismo = $paritaria->set_organismo('$organismo'),
+			            fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
+			            resumen_reunion = $paritaria->set_resumen_reunion('$resumen_reunion')
+			            where id = '$id'";
+						$query = mysqli_query($conn, $sql);
 
-		} else {
-			echo 7;
+						if ($query) {
+							echo 1; // actualizacion ok
+						} else {
+							echo -1; // actualizacion error
+						}
+			}
+		}else {
+			echo 7; // sin conexion
 		}
 
 	}// END OF FUNCTION

@@ -1,9 +1,8 @@
-// ESTRUCTURA TABLE
 
- $(document).ready(function(){
-      
+ $(document).ready(function(){ 
+
       $('#paritariasTable').DataTable({
-        "order": [[0, "asc"]],
+        "order": [[4, "desc"]],
         "responsive":     true,
         "scrollY":        "300px",
         "scrollX":        true,
@@ -82,7 +81,7 @@
       const nro_actuacion = document.querySelector('#nro_actuacion').innerHTML;
       
       $('#avancesParitariaTable').DataTable({
-        "order": [[0, "asc"]],
+        "order": [[3, "desc"]],
         "responsive":     true,
         "scrollY":        "300px",
         "scrollX":        true,
@@ -153,6 +152,80 @@
          
     });
 
+
+$(document).ready(function(){      
+      $('#tipoRepresentacionTable').DataTable({
+        "order": [[0, "asc"]],
+        "responsive":     true,
+        "scrollY":        "300px",
+        "scrollX":        true,
+        "scrollCollapse": true,
+        "paging":         true,
+        "deferRender": true,
+        "dom":  "Bfrtip",
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Export Excel',
+                messageTop: 'Listado Tipo Representación',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'csv',
+                text: 'Export CSV',
+                messageTop: 'Listado Tipo Representación',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'pdf',
+                text: 'Export PDF',
+                messageTop: 'Listado Tipo Representación',
+                exportOptions: { columns: ':visible',}
+            },
+            {
+                extend: 'print',
+                text: 'Imprimir',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '8pt' );
+                        
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                },
+                messageTop: 'Listado Tipo Representación',
+                autoPrint: false,
+                exportOptions: {
+                    columns: ':visible',
+                }
+                
+            },
+            
+            'colvis'
+        ],
+        columnDefs: [ {
+            targets: -1,
+            visible: true
+        } ],
+        "fixedColumns": true,
+      "language":{
+        "lengthMenu": "Mostrar _MENU_ registros por pagina",
+        "info": "Mostrando pagina _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "infoFiltered": "(filtrada de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+          "next":       "Siguiente",
+          "previous":   "Anterior"
+        },
+      }
+    });
+         
+    });
 
 
 // ====================================================================================== //
@@ -419,27 +492,63 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('#update_paritaria').click(function(){
         
-        var datos = $('#fr_update_paritaria_ajax').serialize();
+        const form = document.querySelector('#fr_update_paritaria_ajax');
         
-        $.ajax({
+        const nro_actuacion = document.querySelector('#nro_actuacion');
+        const grupo_representante = document.querySelector('#grupo_representante');
+        const tipo_representacion = document.querySelector('#tipo_representacion');
+        const tipo_pedido = document.querySelector('#tipo_pedido');
+        const organismo = document.querySelector('#organismo');
+        const fecha_reunion = document.querySelector('#fecha_reunion');
+        const resumen_reunion = document.querySelector('#resumen_reunion');
+        const myfile = document.querySelector('#myfile');
+        
+        const formData = new FormData(form);
+        const values = [...formData.entries()];
+        console.log(values);
+        
+        formData.append('nro_actuacion', nro_actuacion.value);
+        formData.append('grupo_representante', grupo_representante.value);
+        formData.append('tipo_representacion', tipo_representacion.value);
+        formData.append('tipo_pedido', tipo_pedido.value);
+        formData.append('organismo', organismo.value);
+        formData.append('fecha_reunion', fecha_reunion.value);
+        formData.append('resumen_reunion', resumen_reunion.value);
+        formData.append('myfile', myfile.value[0]);
+        
+        jQuery.ajax({
             type:"POST",
+            method:"POST",
             url:"../lib/paritarias/update_paritaria.php",
-            data:datos,
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
             success:function(r){
                 if(r == 1){
                     alert("Registro Actualizado Exitosamente!!");
-                    console.log("Datos: " + datos);
-                    window.location.href="main.php";
+                    console.log("Datos: " + values);
+                    //window.location.href="main.php";
+                    //var url = 'main.php'
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="paritarias" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar actualizar el registro");
-                    console.log("Datos: " + datos);
+                    console.log("Datos: " + values);
                 }else if(r == 5){
                     alert("Error, Hay campos sin completar!!");
-                    console.log("Datos: " + datos);
+                    console.log("Datos: " + values);
                 }else if(r == 7){
                     alert("Error de conexion dentro de la funcion principal!!");                    
                 }else if(r == 13){
                     alert("Error de conexion!!");                    
+                }else if(r == 3){
+                    alert("Error!! No se ha podido subir el Archivo!!");                    
+                }else if(r == 9){
+                    alert("Error!!...Sólo se permiten archivos PDF");                    
                 }
                 
             }

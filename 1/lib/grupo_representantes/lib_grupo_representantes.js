@@ -224,35 +224,30 @@ function compareSelect(){
     if(rep_titular == ''){
         alert('Seleccione un Representante Titular');        
     }else{
-        
-
-        if(confirm('Ha seleccionado como Representante Titular a: \n\n' +rep_titular) == true){
             rep_titular;
             
             if(rep_suplente == ''){
                 alert('Seleccione un Representante Suplente');
+                $('#representante_suplente').focus('');
 
             }else{
-                    
-                if(confirm('Ha seleccionado como Representante Suplente a: \n\n' +rep_suplente) == true){
                         
                     if(rep_titular != rep_suplente){
                             rep_suplente;
 
                         if(asesor_1 == ''){
                             alert('Seleccione el Primer Asesor');
+                            $('#primer_asesor').focus('');
                         }else{
 
-                            if(confirm('Ha seleccionado como Primer Asesor a: \n\n' +asesor_1) == true){
-                        
                                 if(rep_titular != asesor_1 && rep_suplente != asesor_1){
                                     asesor_1;
 
                                     if(asesor_2 == ''){
                                         alert('Seleccione el Segundo Asesor');
+                                        $('#segundo_asesor').focus('');
                                     }else{
 
-                                        if(confirm('Ha seleccionado como Segundo Asesor a: \n\n' +asesor_2) == true){
                                             if(rep_titular != asesor_2 && rep_suplente != asesor_2 && asesor_1 != asesor_2){
                                                 asesor_2
 
@@ -270,9 +265,7 @@ function compareSelect(){
                                                 alert('El Segundo Asesor, no puede ocupar dos funciones distintas al mismo tiempo. Seleccione un asesor distinto!');
                                                 $('#segundo_asesor').val('');            
                                             }
-                                        }else{
-                                            $('#segundo_asesor').val('');
-                                        }
+                                        
                                     }
 
 
@@ -280,29 +273,15 @@ function compareSelect(){
                                     alert('El Primer Asesor no puede ser Titular y Suplente al mismo tiempo!. Seleccione un Asesor distinto');
                                     $('#primer_asesor').val('');
                                 }
-                            }else{
-                                $('#primer_asesor').val('');
-                            }
-
+                         
                         }
+
                     }else{
                        alert('El Representante Suplente no puede ser Titular al mismo tiempo!. Seleccione un representante distinto');
                         $('#representante_suplente').val('');                        
                     }
-                }else{
-                    $('#representante_suplente').val('');
-                }
             }
-        }else{
-            $('#representante_titular').val('');
-        }
-
-
     }
-
-    
-    
-
 } // end of function
 
 
