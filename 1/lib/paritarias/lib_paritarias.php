@@ -173,8 +173,18 @@ class Paritarias {
 			$empty = "Sin Cargar";
 			$empty_group = "Sin Designar";
 			$empty_request = "Sin Determinar";
+			$update_grupo = "Actualice el grupo";
 
-			$sql = "select * from representacion_paritarias";
+			$sql = "select r.id, r.nro_actuacion, 
+					ifnull(concat(g.representante_titular, '<br>', g.representante_suplente), 
+							'Debe Actualizar Grupo') as representantes, r.tipo_representacion,
+						r.tipo_pedido,
+						r.fecha_reunion,
+						r.organismo,
+						r.resumen_reunion from representacion_paritarias as r 
+						left join grupo_representantes as g on g.nombre_grupo = r.grupo_representantes";
+
+			//$sql = "select * from representacion_paritarias";
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
 			//mostramos fila x fila
@@ -222,16 +232,7 @@ class Paritarias {
 					echo "<td align=center style='background-color:#F4D03F'><strong>".$empty."</strong></td>";
 				}
 
-				if($paritaria->get_grupo_representantes($fila['grupo_representantes']) != ""){
-
-					$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo_representantes]'";
-					$query_1 = mysqli_query($conn, $sql_1);
-					while ($row = mysqli_fetch_array($query_1)) {
-						echo "<td align=center>".$row['representante_titular']." <br> ".$row['representante_suplente']."</td>";
-					}
-				}else{
-					echo "<td align=center style='background-color:#D2B4DE'><strong>".$empty_group."</strong></td>";
-				}
+				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['representantes'])."</td>";
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
 				
 				if($paritaria->get_tipo_pedido($fila['tipo_pedido']) != ""){
@@ -302,7 +303,24 @@ class Paritarias {
 			$fecha_actual = date('Y-m-d');
 			$empty = "Sin Cargar";
 
-			$sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
+			$sql = "select a.id,
+					   rp.nro_actuacion,
+					   a.organismo,
+					   a.tipo_representacion,
+					   ifnull(concat(g.representante_titular, '<br>', g.representante_suplente, '<br>' ,g.primer_asesor, '<br>', g.segundo_asesor), 'Debe Actualizar Grupo') as representantes,
+					   a.fecha_reunion,
+					   a.resumen,
+					   a.participantes_externos,
+					   a.asunto,
+					   a.compromiso_asumido,
+					   a.fecha_prox_reunion,
+					   a.comentario_adicional
+					   from avances_paritaria as a
+					   left join grupo_representantes as g on g.nombre_grupo = a.grupo
+					   join representacion_paritarias as rp on a.paritaria_id  = rp.id 
+					   where a.paritaria_id = '$id'";
+
+			//$sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
 
@@ -362,12 +380,8 @@ class Paritarias {
 				}else{
 					echo "<td align=center id='nro_actuacion' style='background-color:#F4D03F'>".$empty."</td>";
 				}
-				$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo]'";
-				$query_1 = mysqli_query($conn, $sql_1);
+				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['representantes'])."</td>";
 				
-				while ($row = mysqli_fetch_array($query_1)) {
-					echo "<td align=center>".$row['representante_titular']." <br> ".$row['representante_suplente']."</td>";
-				}
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
 				if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual) {
 					echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
