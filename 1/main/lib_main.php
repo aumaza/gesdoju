@@ -70,7 +70,7 @@ function encabezado(){
     echo '<div class="panel panel-default">
             <div class="panel-heading" align="center">
                 <h4><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" />
-                    <strong>Ministerio de Economía de la Nación - Dirección de Presupuesto y Evaluación de Gastos en Personal</strong>
+                    <strong>Ministerio de Economía de la Nación - Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional</strong>
                 </h4>
             </div>
           </div>';
@@ -82,39 +82,57 @@ function mainNavBar($varsession,$nombre){
     echo '<nav class="navbar navbar-inverse navbar-fixed-top">
   
             <div class="btn-group">
-                <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Inicio <span class="caret"></span></button>
+                <button type="button" class="btn btn-default btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Inicio <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
                     <form action="main.php" method="POST">
+                    
                     <li><button type="submit" class="btn btn-default btn-block" name="B"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Normas</button></li>
-                    <li><button type="submit" class="btn btn-default btn-block" name="a_s"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
-                    <li><button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span> Escalas Salariales</button></li>
-                    <li><button type="submit" class="btn btn-default btn-block" name="segmentacion_tematica"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Segmentación Temática</button></li>
-                    <li><button type="submit" class="btn btn-default btn-block" name="launch_paritarias"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Representación Paritarias</button></li>
+                    
+                    <li><button type="submit" class="btn btn-default btn-block" name="a_s" data-toggle="tooltip" title="Sección en Desarrollo!" data-placement="right" disabled><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
+                    
+                    <li><button type="submit" class="btn btn-default btn-block" data-toggle="tooltip" title="Sección en Desarrollo!" data-placement="right" disabled><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span> Escalas Salariales</button></li>
+                    
+                    <li><button type="submit" class="btn btn-default btn-block" name="segmentacion_tematica" data-toggle="tooltip" title="Sección en Desarrollo!" data-placement="right" disabled><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Segmentación Temática</button></li>
+
+
+                    <li><button type="submit" class="btn btn-default btn-block" name="launch_paritarias"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Gestión Paritarias</button></li>
+                    
                     <li><button type="submit" class="btn btn-default btn-block" name="listar_organismos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Organismos</button></li>
+                    
                     <li><button type="submit" class="btn btn-default btn-block" name="L"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Jurisdicciones</button></li>
+                    
                     <li><button type="button" class="btn btn-default btn-block" onclick="callExplorer();"><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span> Explorer</button></li>
+                    
                     <li class="divider"></li>
+                    
                     <li><button type="submit" class="btn btn-primary btn-block" name="C"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> '.$nombre.'</button></li>
                     <li class="divider"></li>';
+
                     if($varsession == 'root'){
+
                   echo '<li><button type="submit" class="btn btn-default btn-block" name="launch_tablas_base"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Tablas Base</button></li>
                         <li><button type="submit" class="btn btn-default btn-block" name="launch_herramientas"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Mantenimiento</button></li>
                         <li><button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios</button></li>
                         <li><button type="button" class="btn btn-default btn-block" onclick="callAdminExplorer();"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Admin Explorer</button></li>';
                     }
+
               echo '<li class="divider"></li>
+                    
                     <li><button type="submit" class="btn btn-danger btn-block" name="logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Salir</button></li>
                     </form>
                      
                 </ul>
+                </div>
                
                 <ul class="nav navbar-nav navbar-right">
                     <form action="main.php" method="POST">
-                        <button class="btn btn-warning navbar-btn" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</button>
-                    </form>
+                        <button class="btn btn-warning btn-sm navbar-btn" name="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal2">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Acerca de...</button>
+                    </form>                    
                 </ul>
                 
-            </div>
+            
                 
             </nav>';
 }

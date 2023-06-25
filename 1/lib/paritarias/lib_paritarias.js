@@ -26,6 +26,32 @@
             {
                 extend: 'pdf',
                 text: 'Export PDF',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                customize: function(doc) {
+                  doc.content[0].text = "Listado Paritarias";
+                  doc.pageMargins = [10, 10, 45, 20];
+                  doc.defaultStyle.fontSize = 9;
+                  doc.styles.tableHeader.fontSize = 10;
+                  doc.styles.title.fontSize = 14;
+                  doc.footer = function(page, pages) {
+                    return {
+                      margin: [5, 0, 10, 0],
+                      height: 30,
+                      columns: [{
+                        alignment: "left",
+                        text: 'Página',
+                      }, {
+                         alignment: "right",
+                         text: [
+                           { text: page.toString(), italics: true },
+                             " de ",
+                           { text: pages.toString(), italics: true }
+                         ]
+                      }]
+                    }
+                  }   
+                },
                 messageTop: 'Listado Paritarias',
                 exportOptions: { columns: ':visible',}
             },
@@ -105,6 +131,32 @@
             {
                 extend: 'pdf',
                 text: 'Export PDF',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                customize: function(doc) {
+                  doc.content[0].text = 'Listado Avances Paritaria Nro. Actuación: ['+ nro_actuacion + ' ]';
+                  doc.pageMargins = [10, 10, 45, 20];
+                  doc.defaultStyle.fontSize = 9;
+                  doc.styles.tableHeader.fontSize = 10;
+                  doc.styles.title.fontSize = 14;
+                  doc.footer = function(page, pages) {
+                    return {
+                      margin: [5, 0, 10, 0],
+                      height: 30,
+                      columns: [{
+                        alignment: "left",
+                        text: 'Página',
+                      }, {
+                         alignment: "right",
+                         text: [
+                           { text: page.toString(), italics: true },
+                             " de ",
+                           { text: pages.toString(), italics: true }
+                         ]
+                      }]
+                    }
+                  }   
+                },
                 messageTop: 'Listado Avances Paritaria Nro. Actuación: ['+ nro_actuacion + ' ]',
                 exportOptions: { columns: ':visible',}
             },
@@ -179,6 +231,32 @@ $(document).ready(function(){
             {
                 extend: 'pdf',
                 text: 'Export PDF',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                customize: function(doc) {
+                  doc.content[0].text = 'Listado Tipo Representación';
+                  doc.pageMargins = [10, 10, 45, 20];
+                  doc.defaultStyle.fontSize = 9;
+                  doc.styles.tableHeader.fontSize = 10;
+                  doc.styles.title.fontSize = 14;
+                  doc.footer = function(page, pages) {
+                    return {
+                      margin: [5, 0, 10, 0],
+                      height: 30,
+                      columns: [{
+                        alignment: "left",
+                        text: 'Página',
+                      }, {
+                         alignment: "right",
+                         text: [
+                           { text: page.toString(), italics: true },
+                             " de ",
+                           { text: pages.toString(), italics: true }
+                         ]
+                      }]
+                    }
+                  }   
+                },
                 messageTop: 'Listado Tipo Representación',
                 exportOptions: { columns: ':visible',}
             },
@@ -349,6 +427,11 @@ $(document).ready(function(){
         const organismo = document.querySelector('#organismo');
         const fecha_reunion = document.querySelector('#fecha_reunion');
         const resumen_reunion = document.querySelector('#resumen');
+        const participantes_externos = document.querySelector('#participantes_externos');
+        const asunto = document.querySelector('#asunto');
+        const compromisos_asumidos = document.querySelector('#compromisos_asumidos');
+        const fecha_prox_reunion = document.querySelector('#fecha_prox_reunion');
+        const comentarios_adicionales = document.querySelector('#comentarios_adicionales');
         const myfiles = document.querySelector('#myfiles');
         
         const formData = new FormData(form);
@@ -362,6 +445,12 @@ $(document).ready(function(){
         formData.append('organismo', organismo.value);
         formData.append('fecha_reunion', fecha_reunion.value);
         formData.append('resumen_reunion', resumen_reunion.value);
+        formData.append('participantes_externos', participantes_externos.value);
+        formData.append('asunto', asunto.value);
+        formData.append('compromisos_asumidos', compromisos_asumidos.value);
+        formData.append('fecha_prox_reunion', fecha_prox_reunion.value);
+        formData.append('comentarios_adicionales', comentarios_adicionales.value);
+
         
         Array.from(myfiles).forEach(file => {
             formData.append('myfiles', file);
@@ -387,6 +476,16 @@ $(document).ready(function(){
                     setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
+                    document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
+                    console.log("Datos: " + values);
+                    setTimeout(function() { $(".close").click(); }, 4000);
+                }else if(r == -2){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. No se pudo realizar la consulta a Avances Paritaria</p></div>';
+                    document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
+                    console.log("Datos: " + values);
+                    setTimeout(function() { $(".close").click(); }, 4000);
+                }else if(r == -3){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro en el Calendario</p></div>';
                     document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
@@ -428,16 +527,28 @@ $(document).ready(function(){
         
         const form = document.querySelector('#fr_update_avance_paritaria_ajax');
         
-        const paritaria_id = document.querySelector('#id');
+        const advance_paritaria_id = document.querySelector('#id');
+        const paritaria_id = document.querySelector('#paritaria_id');
         const fecha_reunion = document.querySelector('#fecha_reunion');
+        const participantes_externos = document.querySelector('#participantes_externos');
+        const asunto = document.querySelector('#asunto');
+        const compromisos_asumidos = document.querySelector('#compromisos_asumidos');
+        const fecha_prox_reunion = document.querySelector('#fecha_prox_reunion');
+        const comentarios_adicionales = document.querySelector('#comentarios_adicionales');
         const resumen_reunion = document.querySelector('#resumen');
         
         const formData = new FormData(form);
         const values = [...formData.entries()];
         console.log(values);
         
+        formData.append('advance_paritaria_id', advance_paritaria_id.value);
         formData.append('paritaria_id', paritaria_id.value);
         formData.append('fecha_reunion', fecha_reunion.value);
+        formData.append('participantes_externos', participantes_externos.value);
+        formData.append('asunto', asunto.value);
+        formData.append('compromisos_asumidos', compromisos_asumidos.value);
+        formData.append('fecha_prox_reunion', fecha_prox_reunion.value);
+        formData.append('comentarios_adicionales', comentarios_adicionales.value);
         formData.append('resumen_reunion', resumen_reunion.value);
         
         jQuery.ajax({
@@ -466,11 +577,17 @@ $(document).ready(function(){
 
                     //setTimeout(function() { $(".close").click(); }, 4000);
                 }else if(r == -1){
-                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al actualizar el registro</p></div>';
                     document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
-                }else if(r == 5){
+                }else if(r == -2){
+                    var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al actualizar el calendario</p></div>';
+                    document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
+                    console.log("Datos: " + values);
+                    setTimeout(function() { $(".close").click(); }, 4000);
+                }
+                else if(r == 5){
                     var mensaje = '<br><div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error, Hay campos sin completar!!</p></div>';
                     document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
                     console.log("Datos: " + values);
@@ -756,7 +873,7 @@ $('body #calendar-table').on('click', 'td', function(){
 
 function callCalendar(){
     
-    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=800,height=850,left=200,top=200`;
+    let params = `scrollbars=yes,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=800,left=1100,right=200,top=80`;
     
     open("../calendar/index.php", "calendar", params);
     

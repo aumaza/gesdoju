@@ -14,6 +14,11 @@ class Paritarias {
 	private $file_name            = '';
 	private $file_path            = '';
 	private $resumen_reunion      = '';
+	private $participantes_externos = '';
+	private $asunto = '';
+	private $compromisos_asumidos = '';
+	private $fecha_prox_reunion = '';
+	private $comentarios_adicionales = '';
 
 	// =============================================================================================== //
 	// CONSTRUCTOR DESPARAMETRIZADO
@@ -28,6 +33,11 @@ class Paritarias {
 		$this->file_name            = '';
 		$this->file_path            = '';
 		$this->resumen_reunion      = '';
+		$this->participantes_externos = '';
+		$this->asunto = '';
+		$this->compromisos_asumidos = '';
+		$this->fecha_prox_reunion = '';
+		$this->comentarios_adicionales = '';
 	}
 
 	// =============================================================================================== //
@@ -69,6 +79,26 @@ class Paritarias {
 		$this->resumen_reunion = $var;
 	}
 
+	private function set_participantes_externos($var){
+		$this->participantes_externos = $var;
+	}
+
+	private function set_asunto($var){
+		$this->asunto = $var;
+	}
+
+	private function set_compromisos_asumidos($var){
+		$this->compromisos_asumidos = $var;
+	}
+
+	private function set_fecha_prox_reunion($var){
+		$this->fecha_prox_reunion = $var;
+	}
+
+	private function set_comentarios_adicionales($var){
+		$this->comentarios_adicionales = $var;
+	}
+
 	// =============================================================================================== //
 	// GETTERS
 	// =============================================================================================== //
@@ -108,6 +138,26 @@ class Paritarias {
 		return $this->resumen_reunion = $var;
 	}
 
+	private function get_participantes_externos($var){
+		return $this->participantes_externos = $var;
+	}
+
+	private function get_asunto($var){
+		return $this->asunto = $var;
+	}
+
+	private function get_compromisos_asumidos($var){
+		return $this->compromisos_asumidos = $var;
+	}
+
+	private function get_fecha_prox_reunion($var){
+		return $this->fecha_prox_reunion = $var;
+	}
+
+	private function get_comentarios_adicionales($var){
+		return $this->comentarios_adicionales = $var;
+	}
+
 	// =============================================================================================== //
 	// ========================================== METODOS ============================================ //
 	// =============================================================================================== //
@@ -131,7 +181,10 @@ class Paritarias {
 			$count = 0;
 			echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/agreement_representation.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>';
+                        <h2><img src="../../icons/actions/agreement_representation.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-sm" name="launch_paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Menú Paritarias</button>
+                        </form><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
 			echo "<thead>
@@ -280,10 +333,25 @@ class Paritarias {
                         <span class='label label-default'>Organismo</span></th>
 
                         <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Participantes Externos</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Asunto</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Compromisos Asumidos</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Fecha Próxima Reunión</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Comentarios Adicionales</span></th>
+
+                        <th class='text-nowrap text-center'>
                         <span class='label label-default'>Resumen</span></th>
 
                         <th class='text-nowrap text-center'>
-                        <span class='label label-default'>Acciones</span></th>
+                        <span class='label label-warning'>Acciones</span></th>
                         </thead>";
 
 			while ($fila = mysqli_fetch_array($query)) {
@@ -296,6 +364,7 @@ class Paritarias {
 				}
 				$sql_1   = "select representante_titular, representante_suplente from grupo_representantes where nombre_grupo = '$fila[grupo]'";
 				$query_1 = mysqli_query($conn, $sql_1);
+				
 				while ($row = mysqli_fetch_array($query_1)) {
 					echo "<td align=center>".$row['representante_titular']." <br> ".$row['representante_suplente']."</td>";
 				}
@@ -308,6 +377,11 @@ class Paritarias {
 					echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
 				}
 				echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
+				echo "<td align=center>".$paritaria->get_participantes_externos($fila['participantes_externos'])."</td>";
+				echo "<td align=center>".$paritaria->get_asunto($fila['asunto'])."</td>";
+				echo "<td align=center>".$paritaria->get_compromisos_asumidos($fila['compromiso_asumido'])."</td>";
+				echo "<td align=center>".$paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion'])."</td>";
+				echo "<td align=center>".$paritaria->get_comentarios_adicionales($fila['comentario_adicional'])."</td>";
 				echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen'])."</td>";
 				echo "<td class='text-nowrap'>";
 				echo '<form action="#" method="POST">
@@ -689,6 +763,9 @@ class Paritarias {
 
 	public function formAltaAvancesParitaria($paritaria, $id, $conn, $dbase) {
 
+		$actual_date = date('Y-m-d');
+		$datetime = $date = date('Y-m-d H:i:s');
+
 		mysqli_select_db($conn, $dbase);
 		$sql   = "select * from representacion_paritarias where id = '$id'";
 		$query = mysqli_query($conn, $sql);
@@ -737,25 +814,54 @@ class Paritarias {
                             value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
                         </div>
 
-
-                        <div class="form-group">
-                            <label for="fecha_reunion">Fecha Reunión:</label>
-                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="resumen_reunion">Resumen:</label>
-                            <textarea class="form-control" id="resumen" name="resumen" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión"></textarea>
-                        </div>
+                        <div class="alert alert-success">
+		                        <div class="form-group">
+		                            <label for="file">Seleccione Archivo:</label>
+		                            <input type="file" id="myfiles" name="myfiles[]" multiple="">
+		                        </div>
+	                    	</div>
 
                     </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="file">Seleccione Archivo:</label>
-                            <input type="file" id="myfiles" name="myfiles[]" multiple="">
-                        </div>
-                    </div>
+                    
+	                    <div class="col-sm-6">
+	                    	
+	                    	<div class="form-group">
+	                            <label for="fecha_reunion">Fecha Reunión:</label>
+	                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion">
+	                        </div>
+
+	                    	<div class="form-group">
+	                            <label for="`participantes_externos">Organismos Participantes:</label>
+	                            <textarea class="form-control" id="participantes_externos" name="participantes_externos" maxlength="2000" placeholder="Ingrese los participantes de otros organismos en la reunión"></textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                          <label for="asunto">Asunto:</label>
+	                          <input type="text" class="form-control" id="asunto" name="asunto" maxlength="100" placeholder="Tema tratado en reunión">
+	                        </div>
+
+	                    	<div class="form-group">
+	                            <label for="resumen_reunion">Resumen / Conclusiones de Reunión:</label>
+	                            <textarea class="form-control" id="resumen" name="resumen" maxlength="2000" placeholder="Ingrese un breve Resúmen de la Reunión"></textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="compromisos_asumidos">Compromisos Asumidos:</label>
+	                            <textarea class="form-control" id="compromisos_asumidos" name="compromisos_asumidos" maxlength="2000" placeholder="Ingrese un breve Resúmen de los Compromisos Pactados"></textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="fecha_prox_reunion">Fecha Próxima Reunión:</label>
+	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" min="'.$actual_date.'"">
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="comentarios_adicionales">Comentarios Adicionales:</label>
+	                            <textarea class="form-control" id="comentarios_adicionales" name="comentarios_adicionales" maxlength="2000" placeholder="Ingrese comentarios adicionales"></textarea>
+	                        </div>
+
+	                	</div>
 
 
                 </div>
@@ -797,6 +903,7 @@ class Paritarias {
 
             <form id="fr_update_avance_paritaria_ajax" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="id" name="id" value="'.$id.'">
+            <input type="hidden" id="paritaria_id" name="paritaria_id" value="'.$row[paritaria_id].'">
 
             <div class="container">
                 <div class="row">
@@ -821,19 +928,54 @@ class Paritarias {
                             value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
                         </div>
 
-
-                        <div class="form-group">
-                            <label for="fecha_reunion">Fecha Reunión:</label>
-                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion"
-                               value="'.$paritaria->get_fecha_reunion($row[fecha_reunion]).'" >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="resumen_reunion">Resumen:</label>
-                            <textarea class="form-control" id="resumen" name="resumen" maxlength="1000" placeholder="Ingrese un breve Resúmen de la Reunión">'.$paritaria->get_resumen_reunion($row[resumen]).'</textarea>
-                        </div>
+                        <div class="alert alert-success">
+		                        <div class="form-group">
+		                            <label for="file">Seleccione Archivo:</label>
+		                            <input type="file" id="myfiles" name="myfiles[]" multiple="">
+		                        </div>
+	                    	</div>
 
                     </div>
+
+                    
+	                    <div class="col-sm-6">
+	                    	
+	                    	<div class="form-group">
+	                            <label for="fecha_reunion">Fecha Reunión:</label>
+	                            <input type="date" class="form-control" id="fecha_reunion" name="fecha_reunion" value="'.$paritaria->get_fecha_reunion($row[fecha_reunion]).'">
+	                        </div>
+
+	                    	<div class="form-group">
+	                            <label for="`participantes_externos">Organismos Participantes:</label>
+	                            <textarea class="form-control" id="participantes_externos" name="participantes_externos" maxlength="2000" placeholder="Ingrese los participantes de otros organismos en la reunión">'.$paritaria->get_participantes_externos($row[participantes_externos]).'</textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                          <label for="asunto">Asunto:</label>
+	                          <input type="text" class="form-control" id="asunto" name="asunto" maxlength="100" value="'.$paritaria->get_asunto($row[asunto]).'" placeholder="Tema tratado en reunión">
+	                        </div>
+
+	                    	<div class="form-group">
+	                            <label for="resumen_reunion">Resumen / Conclusiones de Reunión:</label>
+	                            <textarea class="form-control" id="resumen" name="resumen" maxlength="2000" placeholder="Ingrese un breve Resúmen de la Reunión">'.$paritaria->get_resumen_reunion($row[resumen]).'</textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="compromisos_asumidos">Compromisos Asumidos:</label>
+	                            <textarea class="form-control" id="compromisos_asumidos" name="compromisos_asumidos" maxlength="2000" placeholder="Ingrese un breve Resúmen de los Compromisos Pactados">'.$paritaria->get_compromisos_asumidos($row[compromiso_asumido]).'</textarea>
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="fecha_prox_reunion">Fecha Próxima Reunión:</label>
+	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" min="'.$actual_date.'"" value="'.$paritaria->get_fecha_prox_reunion($row[fecha_prox_reunion]).'">
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="comentarios_adicionales">Comentarios Adicionales:</label>
+	                            <textarea class="form-control" id="comentarios_adicionales" name="comentarios_adicionales" maxlength="2000" placeholder="Ingrese comentarios adicionales">'.$paritaria->get_comentarios_adicionales($row[comentario_adicional]).'</textarea>
+	                        </div>
+
+	                	</div>
 
 
                 </div>
@@ -1395,8 +1537,10 @@ class Paritarias {
 	/*
 	 **  GUARDA A BASE LOS AVANCES DE UNA PARITARIA
 	 */
-	public function addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $resumen, $conn, $dbase) {
-
+	public function addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$comentarios_adicionales,$resumen, $conn, $dbase) {
+		$fileName = "mysql_error.log.txt";
+		$color = '#008000';
+		$hour = ' 00:00:00';
 		$carpeta = '../../../actas_comision/'.$nro_actuacion;
 
 		if (!file_exists($carpeta)) {
@@ -1429,6 +1573,11 @@ class Paritarias {
               grupo,
               fecha_reunion,
               resumen,
+              participantes_externos,
+              asunto,
+              compromiso_asumido,
+              fecha_prox_reunion,
+              comentario_adicional,
               files_path)".
 			"VALUES ".
 			"('$id',
@@ -1437,18 +1586,61 @@ class Paritarias {
 				$paritaria->set_grupo_representantes('$grupo_representante'),
 				$paritaria->set_fecha_reunion('$fecha_reunion'),
 				$paritaria->set_resumen_reunion('$resumen'),
+				$paritaria->set_participantes_externos('$participantes_externos'),
+				$paritaria->set_asunto('$asunto'),
+				$paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
+				$paritaria->set_fecha_prox_reunion('$fecha_prox_reunion'),
+				$paritaria->set_comentarios_adicionales('$comentarios_adicionales'),
 				$paritaria->set_file_path('$carpeta')
 			)";
 
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
+			
 
-			if ($query) {
+			if ($query){
 
-				echo 1;// avance insertadas correctamente
+				$sql_1 = "select max(id) as id from avances_paritaria where paritaria_id = '$id'";
+				mysqli_select_db($conn, $dbase);
+				$query_1 = mysqli_query($conn,$sql_1);
+				while($row = mysqli_fetch_array($query_1)){
+					$advance_paritaria_id = $row['id'];
+				}
 
+				if($advance_paritaria_id != ''){
+
+					$sql_2 = "INSERT INTO events ".
+					 "(paritaria_id,
+					   advance_paritaria_id,
+					   title,
+					   color,
+					   start,
+					   end)".
+					 "VALUES ".
+					 "('$id',
+					   '$advance_paritaria_id',
+					 	$paritaria->set_asunto('$asunto'),
+					   '$color',
+					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
+					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour')
+					  )";
+
+					$query_2 = mysqli_query($conn,$sql_2);
+
+					if($query_2){
+						echo 1;// avance insertadas correctamente
+					}else{
+						echo -3; // no se pudo insertar el registro en calendario
+						$file = fopen($fileName, 'w');
+						$message = mysqli_error($conn);
+			            fwrite($file, $sql_2);
+			            fclose($file);
+					}
+				}else{
+					echo -2;// no se pudo ejecutar la consulta sobre avances paritaria
+				}
 			} else {
-				echo -1;// hubo un problema al intentar insertar los datos
+				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
 
 			}
 
@@ -1479,6 +1671,11 @@ class Paritarias {
               grupo,
               fecha_reunion,
               resumen,
+              participantes_externos,
+              asunto,
+              compromiso_asumido,
+              fecha_prox_reunion,
+              comentario_adicional,
               files_path)".
 			"VALUES ".
 			"('$id',
@@ -1487,21 +1684,63 @@ class Paritarias {
 				$paritaria->set_grupo_representantes('$grupo_representante'),
 				$paritaria->set_fecha_reunion('$fecha_reunion'),
 				$paritaria->set_resumen_reunion('$resumen'),
+				$paritaria->set_participantes_externos('$participantes_externos'),
+				$paritaria->set_asunto('$asunto'),
+				$paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
+				$paritaria->set_fecha_prox_reunion('$fecha_prox_reunion'),
+				$paritaria->set_comentarios_adicionales('$comentarios_adicionales'),
 				$paritaria->set_file_path('$carpeta')
             )";
 
+            
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
+			if ($query){
 
-			if ($query) {
+				$sql_1 = "select max(id) as id from avances_paritaria where paritaria_id = '$id'";
+				$query_1 = mysqli_query($conn,$sql_1);
+				while($row = mysqli_fetch_array($query_1)){
+					$advance_paritaria_id = $row['id'];
+				}
 
-				echo 1;// avance insertadas correctamente
+				if($advance_paritaria_id != ''){
 
+					$sql_2 = "INSERT INTO events ".
+					 "(paritaria_id,
+					   advance_paritaria_id,
+					   title,
+					   color,
+					   start,
+					   end)".
+					 "VALUES ".
+					 "('$id',
+					   '$advance_paritaria_id',
+					 	$paritaria->set_asunto('$asunto'),
+					   '$color',
+					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
+					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour')
+					  )";
+
+					$query_2 = mysqli_query($conn,$sql_2);
+
+					if($query_2){
+						echo 1;// avance insertadas correctamente
+					}else{
+						echo -3; // no se pudo insertar el registro en calendario
+						$file = fopen($fileName, 'w');
+						$message = mysqli_error($conn);
+			            fwrite($file, $sql_2);
+			            fclose($file);
+					}
+				}else{
+					echo -2;// no se pudo ejecutar la consulta sobre avances paritaria
+				}
 			} else {
-				echo -1;// hubo un problema al intentar insertar los datos
+				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
 
 			}
 		}
+
 	}// END OF FUNCTION
 
 	// =========================================================================================================== //
@@ -1509,17 +1748,52 @@ class Paritarias {
 	/*
 	 ** actualizar avance de paritaria
 	 */
-	public function updateAvanceParitaria($paritaria, $id, $fecha_reunion, $resumen, $conn, $dbase) {
+	public function updateAvanceParitaria($paritaria,$id,$paritaria_id,$fecha_reunion,$participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$comentarios_adicionales,$resumen,$conn,$dbase) {
+		$fileName = "mysql_error.log.txt";
+		$color = '#008000';
+		$hour = ' 00:00:00';
 
 		mysqli_select_db($conn, $dbase);
-		$sql = "update avances_paritaria set fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'), resumen = $paritaria->set_resumen_reunion('$resumen') where id = '$id'";
+		$sql = "update avances_paritaria set 
+				fecha_reunion = $paritaria->set_fecha_reunion('$fecha_reunion'),
+				participantes_externos = $paritaria->set_participantes_externos('$participantes_externos'),
+				asunto = $paritaria->set_asunto('$asunto'),
+				compromiso_asumido = $paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
+				fecha_prox_reunion = $paritaria->set_fecha_reunion('$fecha_prox_reunion'),
+				comentario_adicional = $paritaria->set_comentarios_adicionales('$comentarios_adicionales'), 
+				resumen = $paritaria->set_resumen_reunion('$resumen') where id = '$id'";
+
+		$sql_1 = "update events set
+				  title = $paritaria->set_asunto('$asunto'),
+				  color = '$color',
+				  start = $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
+				  end = $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour') where advance_paritaria_id = '$id' and paritaria_id = '$paritaria_id'";
+		
+		$query_1 = mysqli_query($conn,$sql_1);
 
 		$query = mysqli_query($conn, $sql);
 
-		if ($query) {
-			echo 1;// actualizacion exitosa
-		} else {
+		if ($query){
+			
+			if($query_1){
+		
+				echo 1;// actualizacion exitosa
+			}else{
+				echo -2;//
+				$file = fopen($fileName, 'w');
+				$message = mysqli_error($conn);
+	            fwrite($file, $sql_1);
+	            fclose($file);
+	            //chmod($file, 0777);
+			}
+
+		}else {
 			echo -1;// no se pudo actualizar
+			$file = fopen($fileName, 'w');
+			$message = mysqli_error($conn);
+            fwrite($file, $message);
+            fclose($file);
+            //chmod($file, 0777);
 		}
 
 	}// END OF FUNCTION
@@ -1559,7 +1833,7 @@ class Paritarias {
 
 	}
 
-	public function updateParitaria($paritaria, $id, $nro_actuacion,$grupo_representante, $tipo_representacion, $tipo_pedido, $organismo, $fecha_reunion, $resumen_reunion, $myfile, $conn, $dbase) {
+	public function updateParitaria($paritaria,$id,$nro_actuacion,$grupo_representante,$tipo_representacion,$tipo_pedido,$organismo,$fecha_reunion,$resumen_reunion,$myfile,$conn,$dbase) {
 
 		if ($conn) {
 
@@ -1848,72 +2122,53 @@ class Paritarias {
 	/*
 	 ** MAIN REPRESENTACION PARITARIAS
 	 */
-	public function launchRepresentacionParitarias() {
+	public function launchRepresentacionParitarias(){
 
 		echo '<div class="container">
-            <div class="jumbotron">
-            <h2><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Sección Representación Paritarias</h2><hr>
-            <p>En esta sección encontrará todo lo referente a la carga, edición y visualización de la Representación Paritarias</p><hr>
+				<div class="jumbotron">
+				  <h2><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Gestión Paritarias</h2><hr>
 
-            <div class="container">
+				   <div class="panel-group">
+				    <div class="panel panel-default">
+				      <div class="panel-heading">
+				        <h4 class="panel-title">
+				          <a data-toggle="collapse" href="#collapse1" data-toggle="tooltip" title="Click para expandir/contraer">
+				          <img src="../../icons/actions/debug-run.png"  class="img-reponsive img-rounded">Gestionar</a>
+				        </h4>
+				      </div>
+				      <div id="collapse1" class="panel-collapse collapse in">
+				        <ul class="list-group">
+				        <form action="#" method="POST">
+				          
+				          <li class="list-group-item">
+				          <button type="submit" class="btn btn-default btn-block" name="paritarias">
+				          <img src="../../icons/actions/agreement_representation.png"  class="img-reponsive img-rounded"> Paritarias</button></li>
+				          
+				          <li class="list-group-item">
+				          <button type="button" class="btn btn-default btn-block" onclick="callCalendar();">
+				          <img src="../../icons/actions/view-calendar-month.png"  class="img-reponsive img-rounded"> Calendario</button></li>
+				          
+				          <li class="list-group-item">
+				          <button type="submit" class="btn btn-default btn-block" name="representantes">
+				          <img src="../../icons/actions/representantes.png"  class="img-reponsive img-rounded"> Representantes</button></li>
+				          
+				          <li class="list-group-item">
+				          <button type="submit" class="btn btn-default btn-block" name="grupos">
+				          <img src="../../icons/actions/partners.png"  class="img-reponsive img-rounded"></span> Grupos</button></li>
+				                       
+				                       
+				          </form>
+				          </li>
+				        </ul>
+				        <div class="panel-footer" align=center><strong>GESDO</strong> [ Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional ]</div>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				</div>';
+	} // end of function
 
-                <div class="row">
-
-                    <div class="col-sm-6" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Representación Paritarias</button>
-                        </form><br>
-                    </div>
-
-                    <div class="col-sm-6" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="busqueda_paritarias"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Búsquedas Avanzadas</button>
-                        </form><br>
-                    </div>
-                </div><hr>
-
-                <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sección Representantes</h2><hr>
-                    <p>En esta sección encontrará todo lo referente a la carga, edición y visualización de los Representantes que actuan en las paritarias</p><hr>
-
-                <div class="row">
-
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="nuevo_representante"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Representante</button>
-                        </form><br>
-
-                    </div>
-
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="representantes"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Representantes</button>
-                        </form><br>
-                    </div>
-
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="nuevo_grupo"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Nuevo Grupo</button>
-                        </form><br>
-                    </div>
-                </div><hr>
-
-                <div class="row">
-
-                    <div class="col-sm-4" align=center style="background-color:#808B96; border: 2px solid black; border-radius: 5px;"><br>
-
-                        <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-lg" name="grupos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Listar Grupos</button>
-                        </form><br>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div></div>';
-	}// END OF FUNCTION
 
 }// FIN DE LA CLASE
 

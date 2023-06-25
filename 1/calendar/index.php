@@ -34,11 +34,11 @@ $events = $req->fetchAll();
     <!-- Custom CSS -->
     <style>
     body {
-        padding-top: 70px;
-        
+        padding-top: 20px;
+        padding-bottom: 10px;
     }
 	#calendar {
-		max-width: 800px;
+		max-width: 600px;
 	}
 	.col-centered{
 		float: none;
@@ -50,11 +50,12 @@ $events = $req->fetchAll();
 
 </head>
 
-<body>
+<body style = "background: #839192;">
 
 
     <!-- Page Content -->
     <div class="container">
+    	<div class="jumbotron">
 
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -181,7 +182,35 @@ $events = $req->fetchAll();
 		  </div>
 		</div>
 
+		<!-- Modal View-->
+		<div class="modal fade" id="ModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Evento Paritarias</h4>
+			  </div>
+			  <div class="modal-body">
+				
+				  <div class="form-group">
+					<label for="title" class="col-sm-2 control-label">Titulo</label>
+					<div class="col-sm-10">
+					  <input type="text" name="title" class="form-control" id="title" placeholder="Titulo" readonly>
+					</div>
+				  </div>
+  
+			</div>
+		  </div>
+		</div>
+
     </div>
+
+    <div class="panel panel-default">
+	    <div class="panel-body" align=center><strong>GESDO</strong> [ Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional ]</div>
+	</div>
+
+</div>
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->
@@ -219,28 +248,27 @@ $events = $req->fetchAll();
 			eventLimit: true, // allow "more" link when too many events
 			selectable: true,
 			selectHelper: true,
-			select: function(start, end) {
+			/*select: function(start, end) {
 				
 				$('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
 				$('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
 				$('#ModalAdd').modal('show');
-			},
+			},*/
 			eventRender: function(event, element) {
 				element.bind('dblclick', function() {
-					$('#ModalEdit #id').val(event.id);
-					$('#ModalEdit #title').val(event.title);
-					$('#ModalEdit #color').val(event.color);
-					$('#ModalEdit').modal('show');
+					$('#ModalView #id').val(event.id);
+					$('#ModalView #title').val(event.title);
+					$('#ModalView').modal('show');
 				});
 			},
 			eventDrop: function(event, delta, revertFunc) { // si changement de position
 
-				edit(event);
+				//edit(event);
 
 			},
 			eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
 
-				edit(event);
+				//edit(event);
 
 			},
 			events: [
@@ -315,7 +343,7 @@ $events = $req->fetchAll();
         </div>
         <div class="modal-body">
           <p>Tenga en cuenta que en este calendario sólo se cargarán los avisos de futuras fechas de reuniones de los Equipos de paritarias.
-                Para cargar más información sobre reuniones llevadas a cabo por cada equipo, deberá realizarlo desde el botón <strong>Nuevo Registro de Reunión<s/trong></p>
+                Para cargar más información sobre reuniones llevadas a cabo por cada equipo, deberá realizarlo dentro de <strong>Avances Paritaria</strong></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

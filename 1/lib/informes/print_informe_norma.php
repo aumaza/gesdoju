@@ -62,7 +62,7 @@
        
     <p class="p-center"><img class="img-50" src="../../../img/escudo.png"></p>
     <p class="p-center">Ministerio de Economía de la Nación</p>
-    <p class="p-center">Dirección de Presupuesto y Evaluación de Gastos en Personal</p>
+    <p class="p-center">Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional</p>
     <hr>
     <h1 align="center">Normas</H1>
     <h3 align="center">Informe Extendido</h3>

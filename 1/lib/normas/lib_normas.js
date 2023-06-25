@@ -105,7 +105,33 @@
             {
                 extend: 'pdf',
                 text: 'Export PDF',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
                 messageTop: 'Listado de Normas',
+                customize: function(doc) {
+                  doc.content[0].text = "Listado de Normas";
+                  doc.pageMargins = [10, 10, 45, 20];
+                  doc.defaultStyle.fontSize = 9;
+                  doc.styles.tableHeader.fontSize = 10;
+                  doc.styles.title.fontSize = 14;
+                  doc.footer = function(page, pages) {
+                    return {
+                      margin: [5, 0, 10, 0],
+                      height: 30,
+                      columns: [{
+                        alignment: "left",
+                        text: 'Página',
+                      }, {
+                         alignment: "right",
+                         text: [
+                           { text: page.toString(), italics: true },
+                             " de ",
+                           { text: pages.toString(), italics: true }
+                         ]
+                      }]
+                    }
+                  }   
+                },
                 exportOptions: { columns: ':visible',}
             },
             {

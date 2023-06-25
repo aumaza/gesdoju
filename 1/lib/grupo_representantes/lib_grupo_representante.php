@@ -75,7 +75,10 @@ class Grupo {
 			$count = 0;
 			echo '<div class="container-fluid">
                         <div class="jumbotron">
-                        <h2><img src="../../icons/actions/partners.png"  class="img-reponsive img-rounded"> Grupos Representantes [ Listado de Grupos Representantes ]</h2><hr>';
+                        <h2><img src="../../icons/actions/partners.png"  class="img-reponsive img-rounded"> Grupos Representantes [ Listado de Grupos Representantes ]</h2><hr>
+                        <form action="#" method="POST">
+                        <button type="submit" class="btn btn-default btn-sm" name="launch_paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Menú Paritarias</button>
+                        </form><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='grupoRepresentantesTable'>";
 			echo "<thead>

@@ -396,14 +396,14 @@ function modal2(){
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">
-            <img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /> Acerca de Gesdoju</h4>
+            <img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /> Acerca de Gesdo</h4>
       </div>
       <div class="modal-body">
         
         <div class="container-fluid">
             <ul class="nav nav-pills nav-justified">
     <li class="active"><a data-toggle="tab" href="#home">
-        <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gesdoju</a></li>
+        <img class="img-reponsive img-rounded" src="../../icons/apps/accessories-dictionary.png" /> Gesdo</a></li>
     <li><a data-toggle="tab" href="#menu1">
         <img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> Desarroladores</a></li>
     <li><a data-toggle="tab" href="#menu2">
@@ -419,7 +419,7 @@ function modal2(){
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h2>Gestión de Documentación Jurídica</h2>
-      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional </p>
+      <p align="center">Aplicación destinada a la carga, administración y consulta de documentación jurídica, como así también a la administración de escalas salariales tanto de Autoridades Superiores como del personal administrativo en la Administración Pública Nacional. Gestión de Representación Paritarias. Etc.</p>
     </div>
     
     <div id="menu1" class="tab-pane fade">
@@ -433,9 +433,9 @@ function modal2(){
     </div>
     
     <div id="menu3" class="tab-pane fade">
-      <h2>1.0.0</h2>
+      <h2>0.9.8</h2>
       <p>Version beta</p>
-      <p>2019-2021</p>
+      <p>2019-2023</p>
     </div>
     
     <div id="menu4" class="tab-pane fade">

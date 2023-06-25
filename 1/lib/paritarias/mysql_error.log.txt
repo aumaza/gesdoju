@@ -1,0 +1,12 @@
+INSERT INTO events (paritaria_id,
+					   advance_paritaria_id,
+					   title,
+					   color,
+					   start,
+					   end)VALUES ('1',
+					   '8',
+					 	('Pase a planta'),
+					   '#008000',
+					    ('2023-06-27. 00:00:00'),
+					    ('2023-06-27. 00:00:00')
+					  )
