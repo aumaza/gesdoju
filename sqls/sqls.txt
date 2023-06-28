@@ -252,7 +252,7 @@ descripcion_requerimiento varchar(2000) not null,
 fecha_solicitud date not null,
 usuario_solicitante varchar(100),
 usuario_desarrollador varchar(100),
-descripción_avance varchar(2000),
+descripcion_avance varchar(2000),
 fecha_avance date,
 estado_requerimiento varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
