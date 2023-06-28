@@ -24,6 +24,7 @@
       include "../lib/tipo_norma/lib_tipo_norma.php";
       include "../lib/ambito_norma/lib_ambito_norma.php";
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
+      include "../lib/requerimientos/lib_requerimientos.php";
   
   
       
@@ -84,10 +85,10 @@
     <?php mainNavBar($varsession,$nombre); ?>
 
 
+
         <!-- CENTRAL PANEL -->
 	  <div class="col-sm-12"><br><br><br>
-        
-          
+      
       <?php
    
       if($conn){
@@ -760,6 +761,24 @@
 	}
 	
 	// ============================ FIN SECCION AMBITO DE NORMA ========================= //
+
+	// ============================================================================== //
+	//================================ SECCION REQUERIMIENTOS ======================= //
+	// SE CREA EL OBJETO
+	$oneRequerimiento = new Requerimientos();
+
+	if(isset($_POST['requerimientos'])){
+		$oneRequerimiento->listarRequerimientos($oneRequerimiento,$conn,$dbase);
+	}
+
+	$oneRequerimiento->modalFormNewRequirement($nombre);
+	$oneRequerimiento->modalFormAdvanceRequirement($nombre);
+
+
+
+	// ============================ FIN SECCION REQUERIMIENTOS======================= //
+	// ============================================================================== //
+
 	
 	if(isset($_POST['launch_tablas_base'])){
         launchTablasBase();
@@ -794,6 +813,7 @@
 <script type="text/javascript" src="../lib/tipo_norma/lib_tipo_norma.js"></script>
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 <script type="text/javascript" src="../lib/users/lib_users.js"></script>
+<script type="text/javascript" src="../lib/requerimientos/lib_requerimientos.js"></script>
 
 
 <!-- Modal 2 -->

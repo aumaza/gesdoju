@@ -79,7 +79,7 @@
         ],
         columnDefs: [ {
             targets: -1,
-            visible: false
+            visible: true
         } ],
         "fixedColumns": true,
       "language":{
@@ -176,7 +176,12 @@ $(document).ready(function(){
             success:function(r){
                 if(r == 1){
                     alert("Registro Actualizado Exitosamente!!");
-                    window.location.href="main.php";
+                    //window.location.href="main.php";
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="grupos" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);
@@ -216,6 +221,11 @@ $(document).ready(function(){
                     alert("Registro Actualizado Exitosamente!!");
                     $('#representante').val('');
                     $('#representante').focus('');
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="representantes" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);

@@ -243,6 +243,23 @@ files_path varchar(300)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+#tabla requerimientos
+create table requerimientos (
+id int(11) auto_increment primary key,
+tipo_solicitud varchar(100) not null,
+descripcion_modulo varchar(100) not null,
+descripcion_requerimiento varchar(2000) not null,
+fecha_solicitud date not null,
+usuario_solicitante varchar(100),
+usuario_desarrollador varchar(100),
+descripción_avance varchar(2000),
+fecha_avance date,
+estado_requerimiento varchar(100)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# ===============================================================================================#
+
+
 #subir csv unidades retributivas
 load data local infile '/mnt/sdb4/server/htdocs/gesdoju/sqls/unidades_retributivas.csv' 
 into table unidades_retributivas fields terminated by ',' enclosed by '"' lines terminated by '\n'

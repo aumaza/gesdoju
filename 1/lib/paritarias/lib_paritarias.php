@@ -778,7 +778,7 @@ class Paritarias {
 	public function formAltaAvancesParitaria($paritaria, $id, $conn, $dbase) {
 
 		$actual_date = date('Y-m-d');
-		$datetime = $date = date('Y-m-d H:i:s');
+		$datetime = date('Y-m-d H:i:s');
 
 		mysqli_select_db($conn, $dbase);
 		$sql   = "select * from representacion_paritarias where id = '$id'";
@@ -2143,7 +2143,7 @@ class Paritarias {
 				  <h2><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Gestión Paritarias</h2><hr>
 
 				   <div class="panel-group">
-				    <div class="panel panel-default">
+				    <div class="panel panel-primary">
 				      <div class="panel-heading">
 				        <h4 class="panel-title">
 				          <a data-toggle="collapse" href="#collapse1" data-toggle="tooltip" title="Click para expandir/contraer">
@@ -2174,7 +2174,7 @@ class Paritarias {
 				          </form>
 				          </li>
 				        </ul>
-				        <div class="panel-footer" align=center><strong>GESDO</strong> [ Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional ]</div>
+				        <div class="panel-footer" align=center><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional</strong></div>
 				        </form>
 				      </div>
 				    </div>

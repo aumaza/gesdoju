@@ -98,12 +98,12 @@ class Grupo {
 				echo "<td align=center>".$grupo->get_representante_suplente($fila['representante_suplente'])."</td>";
 				echo "<td align=center>".$grupo->get_primer_asesor($fila['primer_asesor'])."</td>";
 				echo "<td align=center>".$grupo->get_segundo_asesor($fila['segundo_asesor'])."</td>";
-				echo "<td class='text-nowrap'>";
+				echo "<td class='text-nowrap' align=center>";
 				echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
-                                <button type="submit" class="btn btn-primary btn-sm" name="editar_grupo" data-toggle="tooltip" data-placement="right" title="Editar Datos del Grupo">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                <button type="submit" class="btn btn-default btn-sm" name="editar_grupo" data-toggle="tooltip" data-placement="top" title="Editar Datos del Grupo">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
 
                         </form>';
 				echo "</td>";

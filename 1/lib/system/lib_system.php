@@ -14,7 +14,7 @@ function sanityDataBase($conn,$dbase){
         $row = mysqli_fetch_assoc($query);
         $cantidad = $row['tables'];
         
-            if($cantidad == 20){
+            if($cantidad == 21){
                 return 1; // cantidad de tablas ok
             }else{
                 return 2; // cantidad de tablas erroneas

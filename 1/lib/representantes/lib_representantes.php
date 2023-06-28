@@ -69,11 +69,11 @@ class Representantes{
                         echo "<tr>";
                         echo "<td align=center>".$representante->get_dni_representante($fila['dni_representante'])."</td>";
                         echo "<td align=center>".$representante->get_nombre_representante($fila['nombre_representante'])."</td>";
-                        echo "<td class='text-nowrap'>";
+                        echo "<td class='text-nowrap' align=center>";
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
-                                <button type="submit" class="btn btn-primary btn-sm" name="editar_representante" data-toggle="tooltip" data-placement="right" title="Editar Datos del Representante">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                <button type="submit" class="btn btn-default btn-sm" name="editar_representante" data-toggle="tooltip" data-placement="right" title="Editar Datos del Representante">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
                         </form>';
                         echo "</td>";
                         $count++;

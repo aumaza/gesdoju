@@ -474,6 +474,11 @@ $(document).ready(function(){
                     $('#fecha_reunion').focus('');
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="paritarias" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
                     document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
@@ -564,18 +569,18 @@ $(document).ready(function(){
                     var mensaje = `<br><div class="alert alert-success alert-dismissible">
                                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Actualizado Exitosamente</p>
-                                    <form action="#" method="POST">
-                                        <button type="submit" class="btn btn-default btn-sm" name="paritarias">
-                                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
-                                    </form>
                                     </div>`;
                     document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
                     $('#fecha_reunion').val('');
                     $('#resumen').val('');
                     $('#fecha_reunion').focus('');
                     console.log("Datos: " + values);
-
-                    //setTimeout(function() { $(".close").click(); }, 4000);
+                    setTimeout(function() { $(".close").click(); }, 6000);
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="paritarias" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al actualizar el registro</p></div>';
                     document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
