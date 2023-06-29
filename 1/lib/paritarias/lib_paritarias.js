@@ -1,6 +1,6 @@
 
  $(document).ready(function(){ 
-
+     
       $('#paritariasTable').DataTable({
         "order": [[4, "desc"]],
         "responsive":     true,

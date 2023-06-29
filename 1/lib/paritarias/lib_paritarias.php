@@ -3,7 +3,7 @@
 class Paritarias {
 
 	// =============================================================================================== //
-	// VARIABLES DE LA CLASE
+	// PROPIEDADES DE LA CLASE
 	// =============================================================================================== //
 	private $nro_actuacion        = '';
 	private $grupo_representantes = '';
@@ -175,16 +175,17 @@ class Paritarias {
 			$empty_request = "Sin Determinar";
 			$update_grupo = "Actualice el grupo";
 
-			$sql = "select r.id, r.nro_actuacion, 
+			$sql = "select r.id, r.nro_actuacion, r.grupo_representantes, 
 					ifnull(concat(g.representante_titular, '<br>', g.representante_suplente), 
 							'Debe Actualizar Grupo') as representantes, r.tipo_representacion,
 						r.tipo_pedido,
 						r.fecha_reunion,
-						r.organismo,
-						r.resumen_reunion from representacion_paritarias as r 
+						r.organismo,						
+						r.resumen_reunion,
+						(select count(*) from avances_paritaria as a where a.paritaria_id = r.id) as cant_avances
+						from representacion_paritarias as r 
 						left join grupo_representantes as g on g.nombre_grupo = r.grupo_representantes";
 
-			//$sql = "select * from representacion_paritarias";
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
 			//mostramos fila x fila
@@ -200,6 +201,9 @@ class Paritarias {
 			echo "<thead>
                         <th class='text-nowrap text-center'>
                         <span class='label label-default'>Nro. Actuación</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Nombre Grupo</span></th>
                         
                         <th class='text-nowrap text-center'>
                         <span class='label label-default'>Representantes</span></th>
@@ -232,6 +236,7 @@ class Paritarias {
 					echo "<td align=center style='background-color:#F4D03F'><strong>".$empty."</strong></td>";
 				}
 
+				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
 				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['representantes'])."</td>";
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
 				
@@ -257,13 +262,13 @@ class Paritarias {
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
                                 <button type="submit" class="btn btn-default btn-sm" name="edit_paritaria">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
 
-                                <button type="submit" class="btn btn-default btn-sm" name="view_advance">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/resource-calendar-child-insert.png" /> Avances Paritaria</button>
+                                <button type="submit" class="btn btn-default btn-sm" name="view_advance" data-toggle="tooltip" title="Cantidad Avances: '.$fila['cant_avances'].'">
+                                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> Avances Paritaria <span class="badge">'.$fila['cant_avances'].'</span></button>
 
                                 <button type="submit" class="btn btn-default btn-sm" name="info_paritaria">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información Extendida</button>
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Información Extendida</button>
 
                         </form>';
 				echo "</td>";
@@ -275,10 +280,10 @@ class Paritarias {
 			echo '<form action="#" method="POST">
 
                             <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="bottom" title="Agregar Nuevo registro de Paritaria">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nuevo Registro</button>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Registro</button>
 
                             <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="bottom" title="Búsqueda Avanzada sobre Paritarias">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/system-search.png" /> Búsqueda Avanzada</button>
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Búsqueda Avanzada</button>
 
                             </form><hr>';
 
@@ -320,7 +325,7 @@ class Paritarias {
 					   join representacion_paritarias as rp on a.paritaria_id  = rp.id 
 					   where a.paritaria_id = '$id'";
 
-			//$sql = "select avances_paritaria.* , representacion_paritarias.nro_actuacion from avances_paritaria join representacion_paritarias on avances_paritaria.paritaria_id = representacion_paritarias.id where paritaria_id = '$id'";
+			
 			mysqli_select_db($conn, $dbase);
 			$query = mysqli_query($conn, $sql);
 
@@ -402,7 +407,7 @@ class Paritarias {
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
                                 <button type="submit" class="btn btn-default btn-sm" name="edit_advance_paritaria">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
 
 
                         </form>';
@@ -416,10 +421,10 @@ class Paritarias {
                             <input type="hidden" id="id" name="id" value="'.$id.'" >
 
                             <button type="submit" class="btn btn-default btn-sm" name="add_advance" data-toggle="tooltip" data-placement="right" title="Agregar Avance">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Añadir Avance</button>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Añadir Avance</button>
 
                             <button type="submit" class="btn btn-default btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-open.png" /> Documentación Relacionada</button>
+                                <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Documentación Relacionada</button>
 
                             </form><hr>';
 
