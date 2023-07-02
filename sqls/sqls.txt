@@ -1,3 +1,10 @@
+# email data
+@name: Administrador
+@apellido: Mecon
+#user: gesdo.app@gmail.com
+#pass: proteo*310*311*
+
+
 #crear nuevo usuario y luego cambiar datos en archivo connection.php
 CREATE USER 'gesdoju'@'localhost' IDENTIFIED BY 'gesdoju';
 GRANT ALL PRIVILEGES ON gesdoju . * TO 'gesdoju'@'localhost';

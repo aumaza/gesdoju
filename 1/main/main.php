@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -25,6 +25,7 @@
       include "../lib/ambito_norma/lib_ambito_norma.php";
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
       include "../lib/requerimientos/lib_requerimientos.php";
+      include "../lib/smtp_email/lib_smtp_email.php";
   
   
       
@@ -101,7 +102,10 @@
 	  if(isset($_POST['logout'])){
         logOut($nombre);
 	  }
-	  
+	  // ENVIAR EMAIL
+	  if(isset($_POST['send_email'])){
+	  	sendEmail();
+	  }
 	  
 	  // VISUALIZACION DE LOGS
 	  if(isset($_POST['view_errors'])){

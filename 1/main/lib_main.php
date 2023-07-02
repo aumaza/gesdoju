@@ -110,7 +110,8 @@ function mainNavBar($varsession,$nombre){
 
                   echo '<li><button type="submit" class="btn btn-default btn-block" name="launch_tablas_base"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Tablas Base</button></li>
                         <li><button type="submit" class="btn btn-default btn-block" name="launch_herramientas"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Mantenimiento</button></li>
-                        <li><button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios</button></li>';
+                        <li><button type="submit" class="btn btn-default btn-block" name="J"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios</button></li>
+                        <li><button type="submit" class="btn btn-default btn-block" name="send_email"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Enviar Email</button></li>';
                     }
 
               echo '<li class="divider"></li>
