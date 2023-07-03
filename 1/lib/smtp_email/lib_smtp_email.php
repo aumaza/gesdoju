@@ -1,67 +1,80 @@
 <?php include "../../3rdparty/vendor/autoload.php";
-
+      
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\GoogleOauthClient;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use League\OAuth2\Client\Provider\Google;
+use PHPMailer\PHPMailer\OAuth;
 
 
-function sendEmail(){
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
-//use PHPMailer\PHPMailer\PHPMailer;
-//use PHPMailer\PHPMailer\SMTP;
-//use PHPMailer\PHPMailer\Exception;
+function sendEmail($conn,$dbase){
 
-//Load Composer's autoloader
-//require 'vendor/autoload.php';
+// se consultan los datos de la cuenta de email
+$sql = "select * from mail_properties where id = 1";
 
-
+// se realiza la consulta
+mysqli_select_db($conn,$dbase);
+$query = mysqli_query($conn,$sql);
+while($row = mysqli_fetch_array($query)){
+    $provider = $row['provider'];
+    $email = $row['email'];
+    $google_id_client = $row['client_id'];
+    $google_secret_client = $row['secret_client'];
+    $refreshToken = $row['refresh_token'];
+    $host = $row['host'];
+    $port = $row['host_port'];
+}
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
+$mail->CharSet = "UTF-8";
 
 try {
-
-    $mail->SMTPOptions = array(
-                'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-                )
-            );
+    
     //Server settings
     $mail->SMTPDebug = 0;
     $mail->Mailer = 'smtp';
     $mail->SMTPKeepAlive = true;  
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                    //Set the SMTP server to send through
+    $mail->Host       = $host;                    //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'gesdo.app@gmail.com';                     //SMTP username
-    $mail->Password   = 'proteo*310*311*';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-    $mail->SMTPAutoTLS = false;
-    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set 
+    //$mail->SMTPAutoTLS = false;
+    $mail->Port       = $port;                                    //TCP port to connect to; use 587 if you have set 
     //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+    
+    // Set AuthType to use XOAUTH2
     $mail->AuthType = 'XOAUTH2';
 
-    $google_id_client = '85759119171-9je341pirsnkdr9r78kc54lohlipncag.apps.googleusercontent.com';
-    $google_secret_client = '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';
+      // Create a new OAuth2 provider instance
+      $provider = new Google(
+        [
+            "clientId" => $google_id_client,
+            "clientSecret" => $google_secret_client,
+        ]
+      );
 
-    //Create and pass GoogleOauthClient to PHPMailer
-    $oauthTokenProvider = new GoogleOauthClient(
-        'gesdo.app@gmail.com',
-        'gmail-xoauth2-credentials.json',
-        'gmail-xoauth-token.json'
-    );
-    $mail->setOAuth($oauthTokenProvider);
-    
+      // Pass the OAuth provider instance to PHPMailer
+      $mail->setOAuth(
+        new OAuth(
+            [
+                "provider" => $provider,
+                "clientId" => $google_id_client,
+                "clientSecret" => $google_secret_client,
+                "refreshToken" => $refreshToken,
+                "userName" => $email,
+            ]
+        )
+      );
 
     //Recipients
-    $mail->setFrom('gesdo.app@gmail.com', 'Administrador Gesdo');
+    $mail->setFrom($email, 'Administrador Gesdo');
     $mail->addAddress('debianmaza@gmail.com', 'Augusto Maza');     //Add a recipient
+    //$mail->addAddress('aumaza@mecon.gov.ar', 'Augusto Maza');
+    //$mail->addAddress('develslack@gmail.com', 'Slackzone Development');
     //$mail->addAddress('ellen@example.com');               //Name is optional
-    $mail->addReplyTo('gesdo.app@gmail.com', 'Administrador Gesdo');
+    $mail->addReplyTo($email, 'Administrador Gesdo');
     //$mail->addCC('cc@example.com');
     //$mail->addBCC('bcc@example.com');
 
@@ -71,6 +84,7 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
+    
     $mail->Subject = 'Gesdo - Email automático - Fechas Paritarias';
     $mail->Body    = 'Este es un email automático <b>No Responder!</b>';
     //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

@@ -264,6 +264,20 @@ fecha_avance date,
 estado_requerimiento varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+#tabla mail_properties
+create table mail_properties(
+id int(11) auto_increment primary key,
+email varchar(35) not null,
+password varchar(15) not null,
+provider varchar(20) not null,
+client_id varchar(200) not null,
+secret_client varchar(200) not null,
+refresh_token varchar(200) not null,
+host varchar(20) not null,
+host_port varchar(3) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 # ===============================================================================================#
 
 

@@ -104,7 +104,7 @@
 	  }
 	  // ENVIAR EMAIL
 	  if(isset($_POST['send_email'])){
-	  	sendEmail();
+	  	sendEmail($conn,$dbase);
 	  }
 	  
 	  // VISUALIZACION DE LOGS
