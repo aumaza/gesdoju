@@ -5,12 +5,14 @@ class Representantes{
     // VARIABLES
     private $nombre_representante = '';
     private $dni_representante = '';
+    private $email_representante = '';
     
     // CONSTRUCTOR DESPARAMETRIZADO
     function __constructor(){
         
         $this->nombre_representante = '';
         $this->dni_representante = '';
+        $this->email_representante = '';
         
     }
     
@@ -22,6 +24,10 @@ class Representantes{
     private function set_dni_representante($var){
         $this->dni_representante = $var;
     }
+
+    private function set_email_representante($var){
+        $this->email_representante = $var;
+    }
     
     // getters
     private function get_nombre_representante($var){
@@ -30,6 +36,10 @@ class Representantes{
     
     private function get_dni_representante($var){
         return $this->dni_representante = $var;
+    }
+
+    private function get_email_representante($var){
+        return $this->email_representante = $var;
     }
 
     // METODOS
@@ -60,6 +70,7 @@ class Representantes{
                         echo "<thead>
                         <th class='text-nowrap text-center'>DNI Representante</th>
                         <th class='text-nowrap text-center'>Nombre Representante</th>
+                        <th class='text-nowrap text-center'>Email Representante</th>
                         <th class='text-nowrap text-center'>Acciones</th>
                         </thead>";
 
@@ -69,6 +80,7 @@ class Representantes{
                         echo "<tr>";
                         echo "<td align=center>".$representante->get_dni_representante($fila['dni_representante'])."</td>";
                         echo "<td align=center>".$representante->get_nombre_representante($fila['nombre_representante'])."</td>";
+                        echo "<td align=center>".$representante->get_email_representante($fila['email_representante'])."</td>";
                         echo "<td class='text-nowrap' align=center>";
                         echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
@@ -129,6 +141,11 @@ class Representantes{
                             <label for="nombre_representante">Nombre y Apellido:</label>
                             <input type="text" class="form-control" id="nombre_representante" placeholder="Ingrese el Nombre y Apellido del representante a agregar" name="nombre_representante" oninput="Text(this.value);" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="email_representante">Email:</label>
+                            <input type="email" class="form-control" id="email_representante" placeholder="Ingrese el email del representante a agregar" name="email_representante" required>
+                        </div>
                         
                     </div>
                 </div>
@@ -176,6 +193,11 @@ class Representantes{
                             <label for="nombre_representante">Nombre y Apellido:</label>
                             <input type="text" class="form-control" id="nombre_representante" placeholder="Ingrese el Nombre y Apellido del representante a agregar" name="nombre_representante" value="'.$row['nombre_representante'].'" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="email_representante">Email:</label>
+                            <input type="email" class="form-control" id="email_representante" placeholder="Ingrese el email del representante a agregar" name="email_representante" value="'.$row['email_representante'].'" required>
+                        </div>
                         
                     </div>
                 </div>
@@ -193,7 +215,7 @@ class Representantes{
 /*
 ** PERSISTENCIA A BASE DE NUEVO REPRESENTANTE
 */
-    public function addRepresentante($representante,$nombre_representante,$dni_representante,$conn,$dbase){
+    public function addRepresentante($representante,$nombre_representante,$dni_representante,$email_representante,$conn,$dbase){
     
         if($conn){
         
@@ -209,10 +231,12 @@ class Representantes{
                     
                     $sql_2 = "INSERT INTO representantes ".
                     "(dni_representante,
-                      nombre_representante)".
+                      nombre_representante,
+                      email_representante)".
                     "VALUES ".
                     "($representante->set_dni_representante('$dni_representante'),
-                      $representante->set_nombre_representante('$nombre_representante'))";
+                      $representante->set_nombre_representante('$nombre_representante'),
+                      $representante->set_email_representante('$email_representante'))";
                     
                     $query_2 = mysqli_query($conn,$sql_2);
                         
@@ -238,11 +262,11 @@ class Representantes{
 ** ACTUALIZA REGISTRO EN BASE
 */
     
-    public function updateRepresentante($id,$representante,$nombre_representante,$dni_representante,$conn,$dbase){
+    public function updateRepresentante($id,$representante,$nombre_representante,$dni_representante,$email_representante,$conn,$dbase){
     
         if($conn){
 
-            $sql = "update representantes set nombre_representante = $representante->set_nombre_representante('$nombre_representante'), dni_representante = $representante->set_dni_representante('$dni_representante') where id = '$id'";
+            $sql = "update representantes set nombre_representante = $representante->set_nombre_representante('$nombre_representante'), dni_representante = $representante->set_dni_representante('$dni_representante'), email_representante = $representante->set_email_representante('$email_representante') where id = '$id'";
             mysqli_select_db($conn,$dbase);
             $query = mysqli_query($conn,$sql);
             

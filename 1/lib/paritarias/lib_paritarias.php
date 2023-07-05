@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 class Paritarias {
 
@@ -261,16 +261,23 @@ class Paritarias {
 				echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
-                                <button type="submit" class="btn btn-default btn-sm" name="edit_paritaria">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
+                                <div class="btn-group">
+		                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
+		                        <ul class="dropdown-menu" role="menu">
+		                        
+		                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_paritaria">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button></li>
+		                          
+		                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="view_advance" data-toggle="tooltip" title="Cantidad Avances: '.$fila['cant_avances'].'">
+                                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> Avances Paritaria <span class="badge">'.$fila['cant_avances'].'</span></li>
 
-                                <button type="submit" class="btn btn-default btn-sm" name="view_advance" data-toggle="tooltip" title="Cantidad Avances: '.$fila['cant_avances'].'">
-                                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> Avances Paritaria <span class="badge">'.$fila['cant_avances'].'</span></button>
-
-                                <button type="submit" class="btn btn-default btn-sm" name="info_paritaria">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Información Extendida</button>
-
-                        </form>';
+                                <li><button type="submit" class="btn btn-default btn-sm btn-block" name="info_paritaria">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Información Extendida</button></li>
+		                        
+		                        </ul>
+		                      </div>
+		               </form>';
 				echo "</td>";
 				$count++;
 			}
@@ -465,12 +472,12 @@ class Paritarias {
 				// Listado normal
 				echo "<tr>";
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['descripcion'])."</td>";
-				echo "<td class='text-nowrap'>";
+				echo "<td class='text-nowrap' align=center>";
 				echo '<form action="#" method="POST">
                                 <input type="hidden" name="id" value="'.$fila['id'].'" >
 
                                 <button type="submit" class="btn btn-default btn-sm" name="edit_tipo_representacion">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/document-edit.png" /> Editar</button>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
 
                         </form>';
 				echo "</td>";
@@ -482,7 +489,7 @@ class Paritarias {
 			echo '<form action="#" method="POST">
 
                             <button type="submit" class="btn btn-default btn-sm" name="nuevo_tipo_representacion" data-toggle="tooltip" data-placement="right" title="Agregar Registro de Tipo Representación">
-                                <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Nuevo Registro de Tipo de Representación</button>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Registro</button>
 
                             </form><hr>';
 
@@ -782,7 +789,7 @@ class Paritarias {
 
 	public function formAltaAvancesParitaria($paritaria, $id, $conn, $dbase) {
 
-		$actual_date = date('Y-m-d');
+		$actual_date = date('2017-1-01');
 		$datetime = date('Y-m-d H:i:s');
 
 		mysqli_select_db($conn, $dbase);
@@ -872,7 +879,7 @@ class Paritarias {
 
 	                        <div class="form-group">
 	                            <label for="fecha_prox_reunion">Fecha Próxima Reunión:</label>
-	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" min="'.$actual_date.'"">
+	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion">
 	                        </div>
 
 	                        <div class="form-group">
@@ -986,7 +993,7 @@ class Paritarias {
 
 	                        <div class="form-group">
 	                            <label for="fecha_prox_reunion">Fecha Próxima Reunión:</label>
-	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" min="'.$actual_date.'"" value="'.$paritaria->get_fecha_prox_reunion($row[fecha_prox_reunion]).'">
+	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" value="'.$paritaria->get_fecha_prox_reunion($row[fecha_prox_reunion]).'">
 	                        </div>
 
 	                        <div class="form-group">
@@ -1532,9 +1539,14 @@ class Paritarias {
 
 						if ($query) {
 							echo 1;// registro insertado correctamente
-
+							$success = '[Se ha guardado de manera exitosa resitro en la tabla Representación Paritarias]';
+                			mysqlSuccessLogs($success);
+							
 						} else {
 							echo -1;// hubo un problema al insertar el registro
+							$myError = mysql_error($conn);
+				            $error = '[Se ha producido el error: ' .$myError. ' al intentar guardar en la tabla Representación Paritarias]';
+				            mysqlErrorLogs($error);
 						}
 					} else {
 						echo 3;// no se ha podido subir el archivo
@@ -1648,6 +1660,8 @@ class Paritarias {
 
 					if($query_2){
 						echo 1;// avance insertadas correctamente
+						$success = '[Se ha guardado de manera exitosa registro en la tabla Avances Paritaria]';
+                		mysqlSuccessLogs($success);
 					}else{
 						echo -3; // no se pudo insertar el registro en calendario
 						$file = fopen($fileName, 'w');
@@ -1660,6 +1674,9 @@ class Paritarias {
 				}
 			} else {
 				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
+				$myError = mysql_error($conn);
+				$error = '[Se ha producido el error: ' .$myError. ' al intentar guardar en la tabla Avances Paritaria]';
+				mysqlErrorLogs($error);
 
 			}
 
@@ -1744,6 +1761,8 @@ class Paritarias {
 
 					if($query_2){
 						echo 1;// avance insertadas correctamente
+						$success = '[Se ha guardado de manera exitosa registro en la tabla Avances Paritaria]';
+                		mysqlSuccessLogs($success);
 					}else{
 						echo -3; // no se pudo insertar el registro en calendario
 						$file = fopen($fileName, 'w');
@@ -1756,6 +1775,9 @@ class Paritarias {
 				}
 			} else {
 				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
+				$myError = mysql_error($conn);
+				$error = '[Se ha producido el error: ' .$myError. ' al intentar guardar en la tabla Avances Paritaria]';
+				mysqlErrorLogs($error);
 
 			}
 		}
@@ -1797,6 +1819,8 @@ class Paritarias {
 			if($query_1){
 		
 				echo 1;// actualizacion exitosa
+				$success = '[Se ha actualizado de manera exitosa registro en la tabla Avances Paritaria con ID: ' .$id.']';
+                mysqlSuccessLogs($success);
 			}else{
 				echo -2;//
 				$file = fopen($fileName, 'w');
@@ -1813,6 +1837,9 @@ class Paritarias {
             fwrite($file, $message);
             fclose($file);
             //chmod($file, 0777);
+            $myError = mysql_error($conn);
+			$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Avances Paritaria con ID: ' .$id.']';
+			mysqlErrorLogs($error);
 		}
 
 	}// END OF FUNCTION
@@ -1839,8 +1866,13 @@ class Paritarias {
 
 				if ($query_1) {
 					echo 1;
+					$success = '[Se ha insertado de manera exitosa registro en la tabla Tipo Representación]';
+                	mysqlSuccessLogs($success);
 				} else {
 					echo -1;
+					$myError = mysql_error($conn);
+					$error = '[Se ha producido el error: ' .$myError. ' al intentar insertar registro en la tabla Tipo Representación]';
+					mysqlErrorLogs($error);
 				}
 
 			}if ($rows > 0) {
@@ -1891,8 +1923,13 @@ class Paritarias {
 
 						if ($query) {
 							echo 1; // actualizacion ok
+							$success = '[Se ha actualizado de manera exitosa registro en la tabla Representación Paritaria con ID: ' .$id.' ]';
+                			mysqlSuccessLogs($success);
 						} else {
 							echo -1; // actualizacion error
+							$myError = mysql_error($conn);
+							$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Representación Paritaria con ID: ' .$id.']';
+							mysqlErrorLogs($error);
 						}
 					}else{
 						echo 3;// no se ha podido subir el archivo
@@ -1916,8 +1953,12 @@ class Paritarias {
 
 						if ($query) {
 							echo 1; // actualizacion ok
+							$success = '[Se ha actualizado de manera exitosa registro en la tabla Representación Paritaria con ID: ' .$id. ' ]';
+                			mysqlSuccessLogs($success);
 						} else {
 							echo -1; // actualizacion error
+							$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Representación Paritaria con ID: ' .$id.' ]';
+							mysqlErrorLogs($error);
 						}
 			}
 		}else {
@@ -1939,8 +1980,13 @@ class Paritarias {
 
 			if ($query) {
 				echo 1;
+				$success = '[Se ha actualizado de manera exitosa registro en la tabla Tipo Representación con ID: ' .$id.']';
+                			mysqlSuccessLogs($success);
 			} else {
 				echo -1;
+				$myError = mysqli_error($conn);
+				$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Tipo Representación con ID: ' .$id.']';
+							mysqlErrorLogs($error);
 			}
 
 		} else {

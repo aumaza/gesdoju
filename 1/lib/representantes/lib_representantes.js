@@ -122,8 +122,14 @@ $(document).ready(function(){
                     alert("Registro Guardado Exitosamente!!");
                     $('#nombre_representante').val('');
                     $('#dni_representante').val('');
+                    $('#email_representante').val('');
                     $('#nombre_representante').focus('');
                     console.log("Datos: " + datos);
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="representantes" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
@@ -134,6 +140,7 @@ $(document).ready(function(){
                     alert("Error. Representante Existente!!");
                     $('#nombre_representante').val('');
                     $('#dni_representante').val('');
+                    $('#email_representante').val('');
                     $('#nombre_representante').focus('');
                     console.log("Datos: " + datos);
                 }else if(r == 7){
@@ -171,7 +178,11 @@ $(document).ready(function(){
             success:function(r){
                 if(r == 1){
                     alert("Registro Actualizado Exitosamente!!");
-                    window.location.href="main.php";
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="representantes" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar Actualizar el Registro");
                     console.log("Datos: " + datos);

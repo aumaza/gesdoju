@@ -66,7 +66,7 @@ if($conn){
         
 	//mostramos fila x fila
 	$count = 0;
-	echo '<div class="container">
+	echo '<div class="container-fluid">
 	      <div class="jumbotron">
 	      <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Organismos [ Listado de Organismos ]</h2><hr>';
 	      
@@ -79,7 +79,7 @@ if($conn){
 		    <th class='text-nowrap text-center'>SAF</th>
 		    <th class='text-nowrap text-center'>Organismo</th>
 		    <th class='text-nowrap text-center'>Ubicación Física / Bibliorato</th>
-            <th>&nbsp;</th>
+            <th class='text-nowrap text-center'>Acciones</th>
             </thead>";
 
 
@@ -90,14 +90,21 @@ if($conn){
 			 echo "<td align=center>".$my_organismo->get_saf($fila['saf'])."</td>";
 			 echo '<td align=center>'.$my_organismo->get_descripcion($fila['descripcion']).'</td>';
 			 echo '<td align=center>'.$my_organismo->get_ubicacion_fisica($fila['ubicacion_fisica']).'</td>';
-			 echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
+			 echo "<td class='text-nowrap' align=center>";
+			 echo '<form action="#" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
                     
-                    <button type="submit" class="btn btn-success btn-sm" name="edit_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button>
-                    <button type="submit" class="btn btn-danger btn-sm" name="del_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button>';
+                    <div class="btn-group">
+                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                        
+                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_org" data-toggle="tooltip" data-placement="left" title="Editar Datos del Organismo"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button></li>
+                          
+                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="del_org" data-toggle="tooltip" data-placement="left" title="Eliminar Registro"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar</button></li>
+                        
+                        </ul>
+                      </div>';
                     
              echo '</form>';
              echo "</td>";
@@ -108,7 +115,7 @@ if($conn){
 		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
                     <button type="submit" class="btn btn-default btn-sm" name="add_org">
-                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Organismo</button>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Organismo</button>
                     </form><hr>';
 		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
 		

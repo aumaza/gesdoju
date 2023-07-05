@@ -102,9 +102,9 @@
 	  if(isset($_POST['logout'])){
         logOut($nombre);
 	  }
-	  // ENVIAR EMAIL
-	  if(isset($_POST['send_email'])){
-	  	sendEmail($conn,$dbase);
+	  // ENVIAR EMAIL NUEVA PARITARIA
+	  if(isset($_POST['paritaria_send_email'])){
+	  	sendEmailParitaria($conn,$dbase);
 	  }
 	  
 	  // VISUALIZACION DE LOGS
@@ -818,6 +818,7 @@
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 <script type="text/javascript" src="../lib/users/lib_users.js"></script>
 <script type="text/javascript" src="../lib/requerimientos/lib_requerimientos.js"></script>
+
 
 
 <!-- Modal 2 -->
