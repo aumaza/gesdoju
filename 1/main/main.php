@@ -215,7 +215,7 @@
 	  
 	  // SECCION CONSULTA DE NORMAS
 	  if(isset($_POST['B'])){
-        normas($conn,$dbase);
+        normas($nombre,$conn,$dbase);
       }
       if(isset($_POST['busqueda_avanzada'])){
         formAdvanceSearch();

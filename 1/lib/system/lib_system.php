@@ -135,6 +135,106 @@ function mysqlErrorLogs($error){
 
 
 /*
+** GUARDAR LOS ERRORES DE MYSQL PARA NORMAS
+*/
+function mysqlNormasErrorLogs($error){
+    
+      $fileName = "../../logs/mysql_error.log.txt"; 
+      $date = date("d-m-Y H:i:s");
+      $message = 'Error: '.$error.' - '.$date;
+       
+        if (file_exists($fileName)){
+        
+        $file = fopen($fileName, 'a');
+        fwrite($file, "\n".$date);
+        fclose($file);
+        chmod($file, 0777);
+        
+        }else{
+            $file = fopen($fileName, 'w');
+            fwrite($file, $message);
+            fclose($file);
+            chmod($file, 0777);
+            }
+
+}
+
+/*
+** GUARDAR LOS SUCCESS DE MYSQL PARA NORMAS
+*/
+function mysqlNormasSuccessLogs($success){
+    
+      $fileName = "../../logs/mysql_success.log.txt"; 
+      $date = date("d-m-Y H:i:s");
+      $message = 'Success: '.$success.' - '.$date;
+       
+        if (file_exists($fileName)){
+        
+        $file = fopen($fileName, 'a');
+        fwrite($file, "\n".$message);
+        fclose($file);
+        chmod($file, 0777);
+        
+        }else{
+            $file = fopen($fileName, 'w');
+            fwrite($file, $message);
+            fclose($file);
+            chmod($file, 0777);
+            }
+
+}
+
+/*
+** GUARDAR LOS SUCCESS DE MYSQL PARA NORMAS
+*/
+function mysqlNormasInsertSuccessLogs($success){
+    
+      $fileName = "../logs/mysql_success.log.txt"; 
+      $date = date("d-m-Y H:i:s");
+      $message = 'Success: '.$success.' - '.$date;
+       
+        if (file_exists($fileName)){
+        
+        $file = fopen($fileName, 'a');
+        fwrite($file, "\n".$message);
+        fclose($file);
+        chmod($file, 0777);
+        
+        }else{
+            $file = fopen($fileName, 'w');
+            fwrite($file, $message);
+            fclose($file);
+            chmod($file, 0777);
+            }
+
+}
+
+/*
+** GUARDAR LOS ERRORES DE MYSQL PARA NORMAS
+*/
+function mysqlNormasInsertErrorLogs($error){
+    
+      $fileName = "../logs/mysql_error.log.txt"; 
+      $date = date("d-m-Y H:i:s");
+      $message = 'Error: '.$error.' - '.$date;
+       
+        if (file_exists($fileName)){
+        
+        $file = fopen($fileName, 'a');
+        fwrite($file, "\n".$date);
+        fclose($file);
+        chmod($file, 0777);
+        
+        }else{
+            $file = fopen($fileName, 'w');
+            fwrite($file, $message);
+            fclose($file);
+            chmod($file, 0777);
+            }
+
+}
+
+/*
 ** GUARDAR LOS SUCCESS DE MYSQL
 */
 function mysqlSuccessLogs($success){
