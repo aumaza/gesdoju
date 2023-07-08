@@ -352,7 +352,9 @@ $(document).ready(function(){
             contentType: false,
             success:function(r){
                 if(r == 1){
-                    var mensaje = '<br><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente</p></div>';
+                    var mensaje = `<br><div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p align=center><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registro Agregado Exitosamente!. Aguarde un instante.</p></div>`;
                     document.getElementById('messageNewParitaria').innerHTML = mensaje;
                     $('#nro_actuacion').val('');
                     $('#grupo_representante').val('');
@@ -364,7 +366,15 @@ $(document).ready(function(){
                     $('#myfile').val('');
                     $('#grupo_representante').focus('');
                     console.log("Datos: " + values);
-                    setTimeout(function() { $(".close").click(); }, 4000);
+                    
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="paritaria_send_email" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
+
+                    setTimeout(function() { $(".close").click(); }, 5000);
+                    
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
                     document.getElementById('messageNewParitaria').innerHTML = mensaje;
@@ -474,11 +484,21 @@ $(document).ready(function(){
                     $('#fecha_reunion').focus('');
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
+                    
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="avance_paritaria_send_email" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
+
+                    /*
                     var form = $('<form action="#" method="post">' +
                       '<input type="hidden" name="paritarias" />' +
                       '</form>');
                     $('body').append(form);
                     form.submit();
+                    */
+
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
                     document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
@@ -701,6 +721,13 @@ $(document).ready(function(){
                     $('#descripcion').val('');
                     $('#descripcion').focus('');
                     console.log("Datos: " + datos);
+
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="tipo_representacion" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
+
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar guardar el registro");
                     console.log("Datos: " + datos);
@@ -744,7 +771,13 @@ $(document).ready(function(){
                 if(r == 1){
                     alert("Registro Actualizado Exitosamente!!");
                     console.log("Datos: " + datos);
-                    window.location.href = 'main.php';
+                    
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="tipo_representacion" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
+
                 }else if(r == -1){
                     alert("Error. Hubo un problema al intentar actualizar el registro");
                     console.log("Datos: " + datos);
@@ -884,3 +917,18 @@ function callCalendar(){
     
     
 }
+
+
+function enviarAvanceParitarias() {
+  var formulario = document.getElementById("avance_paritaria");
+  var dato = formulario[0];
+  if (dato.value=="paritarias") {
+    alert("Aguarde un momento...");
+    formulario.submit();
+    return true;
+  } else {
+    alert("No se ha podido enviar el email...");
+    return false;
+  }
+}
+

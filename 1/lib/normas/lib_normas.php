@@ -1,6 +1,5 @@
 <?php 
 
-
 /*
 ** Funcion alta de norma
 */
@@ -152,7 +151,7 @@ function newNorma($conn){
 		    
             <div class="form-group">
             <label for="pwd">Breve Descripción (*)</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="5000" placeholder="Ingrese una breve Descripción"  required></textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" maxlength="2000" placeholder="Ingrese una breve Descripción" required></textarea>
             </div>
         </div>
 		
@@ -492,6 +491,8 @@ function updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
 		echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Norma Editada Satisfactoriamente.';
 		echo "</div>";
 		echo "</div>";
+        $success = '[Se ha actualizado de manera exitosa registro en la tabla Normas con ID: ' .$id.']';
+        mysqlNormasSuccessLogs($success);
 	}else{
 		echo '<div class="container">';
         echo '<div class="alert alert-warning" alert-dismissible">
@@ -499,6 +500,9 @@ function updateNorma($id,$nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$
 		echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Editar la Norma. '  .mysqli_error($conn);
 		echo "</div>";
 		echo "</div>";
+        $myError = mysqli_error($conn);
+        $error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Normas con ID: ' .$id.']';
+        mysqlNormasErrorLogs($error);
 	}
 }
 
@@ -537,7 +541,7 @@ function delNorma($id,$conn){
 ** LISTAR TODAS LAS NORMAS (FUNCION ACTUAL)
 */
 
-function normas($conn,$dbase){
+function normas($nombre,$conn,$dbase){
 
 if($conn){
 	
@@ -545,7 +549,7 @@ if($conn){
     $sql = "select n.*, o.descripcion from normas n left join organismos o on n.organismo = o.cod_org";
     mysqli_select_db($conn,$dbase);
     $resultado = mysqli_query($conn,$sql);
-        
+
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="container-fluid">
@@ -556,7 +560,7 @@ if($conn){
 	      <form <action="main.php" method="POST">
                     
                     <button type="submit" class="btn btn-primary btn-sm" name="nueva_norma" data-toggle="tooltip" data-placement="top" title="Agregar una Nueva Norma">
-                    <img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Normativa</button>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Normativa</button>
                     
         </form><hr>
         <button type="button" class="btn btn-default btn-sm" onclick="enabledAdvanceSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Búsqueda avanzada</button>';
@@ -585,7 +589,7 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['nombre_norma']."</td>";
+			 echo "<td align=justify>".$fila['nombre_norma']."</td>";
 			 echo "<td align=center>".$fila['n_norma']."</td>";
 			 echo "<td align=center>".$fila['tipo_norma']."</td>";
 			 echo "<td align=center>".$fila['f_norma']."</td>";
@@ -595,19 +599,31 @@ if($conn){
              echo "<td align=center>".$fila['organismo']."</td>";
              echo "<td align=center>".$fila['descripcion']."</td>";
              echo "<td align=center>".$fila['unidad_fisica']."</td>";
-             echo "<td align=center>".$fila['observaciones']."</td>";
-             echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
+             echo "<td align=justify>".$fila['observaciones']."</td>";
+             echo "<td class='text-nowrap' align=center>";
+			 echo '<form <action="#" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
-                                     
-                    <button type="submit" class="btn btn-default btn-sm" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
-                        <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
-                    
-                    <button type="submit" class="btn btn-default btn-sm" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
-                        <img src="../../icons/actions/edit-delete.png"  class="img-reponsive img-rounded"> Borrar</button>
-                    
-                    <button type="submit" class="btn btn-default btn-sm" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
-                        <img src="../../icons/actions/help-about.png"  class="img-reponsive img-rounded"> Información Extendida</button>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                
+                            <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button></li>';
+                            if($nombre == 'Administrador'){
+                            echo '<li><button type="submit" class="btn btn-default btn-sm btn-block" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button></li>';
+                            }else{
+                               echo '<li><button type="submit" class="btn btn-default btn-sm btn-block" name="del_norma" data-toggle="tooltip" data-placement="left" title="Eliminar Registro" disabled>
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button></li>'; 
+                            }
+
+                            echo '<li><button type="submit" class="btn btn-default btn-sm btn-block" name="info_norma" data-toggle="tooltip" data-placement="left" title="Información Extendida de la Norma">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Información Extendida</button></li>
+                                
+                                </ul>
+                              </div>
                                         
                 </form>
                 </td>';
@@ -835,7 +851,7 @@ if(!empty($_FILES["file"]["name"])){
 
 function insertNormativa($nombre_norma,$n_norma,$tipo_norma,$foro_norma,$f_pub,$anio,$organismo,$jurisdiccion,$obs,$file,$conn,$dbase){
     
-    $success = 'Se ha guardado la norma de manera exitosa';
+    
     mysqli_select_db($conn,$dbase);
     $sql_1 = "select * from normas where n_norma = '$n_norma' and tipo_norma = '$tipo_norma' and organismo = '$organismo' and anio_pub = '$anio'";
     $query_1 = mysqli_query($conn,$sql_1);    
@@ -903,18 +919,13 @@ if(!empty($_FILES["file"]["name"])){
 
          
             if($query){
-            
-
+                
 			    return 1; // sea actualizo la base  y subio bien el archivo
-                $success = 'Se ha guardado la norma ' .$n_norma. ' de manera exitosa';
-                mysqlSuccessLogs($success);        
+                        
                        
             }else{
-		  
-			   return 2; // solo se subio el archivo
-               $myError = mysql_error($conn);
-               $error = 'Se ha producido el error: ' .$myError. ' al intentar guardar la normativa';
-               mysqlErrorLogs($error);            
+		       
+			   return 2; // solo se subio el archivo                           
             }
             }else{
 			              
@@ -992,12 +1003,51 @@ function normasViculadas($norma,$n_norma,$tipo_norma,$files,$conn,$dbase){
         $query = mysqli_query($conn,$sql);
         
         if($query){
-        
+            
             echo 1; // normas insertadas correctamente
+            $fileName = "mysql_success.log.txt"; 
+              $date = date("d-m-Y H:i:s");
+              $success = '[Se ha registrado de manera exitosa la norma: ' .$n_norma.' en la tabla Normas]';
+              $message = 'Success: '.$success.' - '.$date;
+               
+                if (file_exists($fileName)){
+                
+                $file = fopen($fileName, 'a');
+                fwrite($file, "\n".$message);
+                fclose($file);
+                chmod($file, 0777);
+                
+                }else{
+                    $file = fopen($fileName, 'w');
+                    fwrite($file, $message);
+                    fclose($file);
+                    chmod($file, 0777);
+                    }
             
         }else{
+            
            echo -1; // hubo un problema al intentar actualizar la base de datos de normas vinculadas
-        }
+           $fileName = "mysql_error.log.txt";
+              $myError = mysql_error($conn);
+              $error = '[Se ha producido el error: ' .$myError. ' al intentar guardar la normativa]';
+              $date = date("d-m-Y H:i:s");
+              $message = 'Error: '.$error.' - '.$date;
+               
+                if (file_exists($fileName)){
+                
+                $file = fopen($fileName, 'a');
+                fwrite($file, "\n".$date);
+                fclose($file);
+                chmod($file, 0777);
+                
+                }else{
+                    $file = fopen($fileName, 'w');
+                    fwrite($file, $message);
+                    fclose($file);
+                    chmod($file, 0777);
+                    }
+
+                }
     
     }
 } // FIN DE FUNCION

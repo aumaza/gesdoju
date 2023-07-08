@@ -46,7 +46,7 @@ public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 			
 		//mostramos fila x fila
 		$count = 0;
-		echo '<div class="container">
+		echo '<div class="container-fluid">
 	      <div class="jumbotron">
 	      <h2><img src="../../icons/actions/view-file-columns.png"  class="img-reponsive img-rounded"> Jurisdicciones [ Listado de Jurisdicciones ]</h2><hr>';
 					  
@@ -56,7 +56,7 @@ public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 		  echo "<thead>
 				<th class='text-nowrap text-center'>Código Jurisdicción</th>
 				<th class='text-nowrap text-center'>Jurisdicción</th>
-				<th>&nbsp;</th>
+                <th class='text-nowrap text-center'>Acciones</th>
 				</thead>";
 	
 	
@@ -65,14 +65,23 @@ public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 				 echo "<tr>";
 				 echo "<td align=center>".$my_jurisdiccion->get_cod_jur($fila['cod_jur'])."</td>";
 				 echo '<td align=center>'.$my_jurisdiccion->get_descripcion($fila['descripcion']).'</td>';
-				 echo "<td class='text-nowrap'>";
+				 echo "<td class='text-nowrap' align=center>";
 				 echo '<form <action="main.php" method="POST">
 						<input type="hidden" name="id" value="'.$fila['id'].'">
-										 
-						<button type="submit" class="btn btn-success btn-sm" name="edit_jur" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Jurisdicción">
-						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button>
-						<button type="submit" class="btn btn-danger btn-sm" name="del_jur" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
-						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button>';
+
+                        <div class="btn-group">
+                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                        
+                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_jur" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Jurisdicción">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button></li>
+                          
+                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="del_jur" data-toggle="tooltip" data-placement="left" title="Eliminar Registro">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar</button></li>
+                        
+                        </ul>
+                      </div>';
 						
 				 echo '</form>';
 				 echo "</td>";
@@ -82,7 +91,7 @@ public function listarJurisdicciones($my_jurisdiccion,$conn,$dbase){
 			echo "</table>";
 			echo "<hr>";
 			echo '<form <action="main.php" method="POST">
-						<button type="submit" class="btn btn-default btn-sm" name="add_jur"><img src="../../icons/actions/list-add.png"  class="img-reponsive img-rounded"> Agregar Jurisdicción</button>
+						<button type="submit" class="btn btn-default btn-sm" name="add_jur"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Jurisdicción</button>
                  </form><hr>';
 			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
 			

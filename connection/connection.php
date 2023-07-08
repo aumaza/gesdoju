@@ -19,6 +19,7 @@ $conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbase);
 // CONENCTION HOME PC
 
 $dbhost = 'slackzone.ddns.net';
+//$dbhost = 'deps.slackzone.com.ar';
 $dbuser = 'root';
 $dbpass = 'slack142';
 $dbase = 'gesdoju';

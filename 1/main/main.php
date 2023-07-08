@@ -25,6 +25,7 @@
       include "../lib/ambito_norma/lib_ambito_norma.php";
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
       include "../lib/requerimientos/lib_requerimientos.php";
+      include "../lib/smtp_email/lib_smtp_email.php";
   
   
       
@@ -101,7 +102,15 @@
 	  if(isset($_POST['logout'])){
         logOut($nombre);
 	  }
-	  
+	  // ENVIAR EMAIL NUEVA PARITARIA
+	  if(isset($_POST['paritaria_send_email'])){
+	  	sendEmailParitaria($conn,$dbase);
+	  }
+
+	  // ENVIAR EMAIL EN NUEVO AVANCE PARITARIA
+	  if(isset($_POST['avance_paritaria_send_email'])){
+	  	sendEmailParitariaFutura($conn,$dbase);
+	  }
 	  
 	  // VISUALIZACION DE LOGS
 	  if(isset($_POST['view_errors'])){
@@ -211,7 +220,7 @@
 	  
 	  // SECCION CONSULTA DE NORMAS
 	  if(isset($_POST['B'])){
-        normas($conn,$dbase);
+        normas($nombre,$conn,$dbase);
       }
       if(isset($_POST['busqueda_avanzada'])){
         formAdvanceSearch();
@@ -814,6 +823,7 @@
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 <script type="text/javascript" src="../lib/users/lib_users.js"></script>
 <script type="text/javascript" src="../lib/requerimientos/lib_requerimientos.js"></script>
+
 
 
 <!-- Modal 2 -->
