@@ -106,6 +106,11 @@
 	  if(isset($_POST['paritaria_send_email'])){
 	  	sendEmailParitaria($conn,$dbase);
 	  }
+
+	  // ENVIAR EMAIL EN NUEVO AVANCE PARITARIA
+	  if(isset($_POST['avance_paritaria_send_email'])){
+	  	sendEmailParitariaFutura($conn,$dbase);
+	  }
 	  
 	  // VISUALIZACION DE LOGS
 	  if(isset($_POST['view_errors'])){

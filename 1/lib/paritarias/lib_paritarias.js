@@ -484,11 +484,21 @@ $(document).ready(function(){
                     $('#fecha_reunion').focus('');
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
+                    
+                    var form = $('<form action="#" method="post">' +
+                      '<input type="hidden" name="avance_paritaria_send_email" />' +
+                      '</form>');
+                    $('body').append(form);
+                    form.submit();
+
+                    /*
                     var form = $('<form action="#" method="post">' +
                       '<input type="hidden" name="paritarias" />' +
                       '</form>');
                     $('body').append(form);
                     form.submit();
+                    */
+
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
                     document.getElementById('messageNewAvanceParitaria').innerHTML = mensaje;
@@ -906,5 +916,19 @@ function callCalendar(){
     open("../calendar/index.php", "calendar", params);
     
     
+}
+
+
+function enviarAvanceParitarias() {
+  var formulario = document.getElementById("avance_paritaria");
+  var dato = formulario[0];
+  if (dato.value=="paritarias") {
+    alert("Aguarde un momento...");
+    formulario.submit();
+    return true;
+  } else {
+    alert("No se ha podido enviar el email...");
+    return false;
+  }
 }
 
