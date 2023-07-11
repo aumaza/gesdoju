@@ -1184,17 +1184,41 @@ class Paritarias {
 			$asesor_2     = $row_1['segundo_asesor'];
 		}
 
-		echo '<div class="container">
+
+		$sql_2 = "select a.id,
+					   rp.nro_actuacion,
+					   a.organismo,
+					   a.tipo_representacion,
+					   ifnull(concat(g.representante_titular, '<br>', g.representante_suplente, '<br>' ,g.primer_asesor, '<br>', g.segundo_asesor), 'Debe Actualizar Grupo') as representantes,
+					   a.fecha_reunion,
+					   a.resumen,
+					   a.participantes_externos,
+					   a.asunto,
+					   a.compromiso_asumido,
+					   a.fecha_prox_reunion,
+					   a.comentario_adicional
+					   from avances_paritaria as a
+					   left join grupo_representantes as g on g.nombre_grupo = a.grupo
+					   join representacion_paritarias as rp on a.paritaria_id  = rp.id 
+					   where a.paritaria_id = '$id'";
+
+			
+			mysqli_select_db($conn, $dbase);
+			$query_2 = mysqli_query($conn, $sql_2);
+			$count = 1;
+
+
+		echo '<div class="container-fluid">
             <div class="jumbotron">
              <div class="panel-group">
                 <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse1">
+                    <a data-toggle="collapse" href="#collapseA">
                         <img class="img-reponsive img-rounded" src="../../icons/actions/arrow-down-double.png" /> Información Extendida</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse-in">
+                <div id="collapseA" class="panel-collapse collapse-in">
                     <ul class="list-group">
                     <li class="list-group-item"><strong>Nro. Actuación:</strong> '.$paritaria->get_nro_actuacion($nro_actuacion).'</li>
                     <li class="list-group-item"><strong>Grupo:</strong> '.$paritaria->get_grupo_representantes($grupo_representantes).'</li>
@@ -1209,17 +1233,65 @@ class Paritarias {
                     <li class="list-group-item"><strong>Organismo:</strong> '.$paritaria->get_organismo($organismo).'</li>
                     <li class="list-group-item"><strong>Fecha Alta:</strong> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
                     <li class="list-group-item"><strong>Descripción / Referencia:</strong> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
+
+                    
                     </ul>
+
+                    <div class="panel-group" id="accordion">
+					    <div class="panel panel-primary">
+					      <div class="panel-heading">
+					        <h4 class="panel-title" align=center>
+					          <a data-toggle="collapse" data-parent="#accordion" href="#collapseB">
+					          	<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Avances</a>
+					        </h4>
+					      </div>
+					      <div id="collapseB" class="panel-collapse collapse">
+					        <div class="panel-body">';
+
+					          while($row_2 = mysqli_fetch_array($query_2)){
+					          
+					          echo '<div class="panel panel-default">
+							          <div class="panel-heading">
+							            <h4 class="panel-title">
+							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$count.'"><strong>Fecha Reunión:</strong> '.$row_2['fecha_reunion'].'</a>
+							            </h4>
+							          </div>
+					          		<div id="collapse'.$count.'" class="panel-collapse collapse in">
+							            <div class="panel-body">
+
+							            <li class="list-group-item"><strong>Asunto:</strong> '.$row_2['asunto'].'</li>
+							            <li class="list-group-item"><strong>Representantes Externos:</strong> '.$row_2['participantes_externos'].'</li>
+							            <li class="list-group-item"><strong>Compromiso Asumido:</strong> '.$row_2['compromiso_asumido'].'</li>
+							            <li class="list-group-item"><strong>Comentario Adicional:</strong> '.$row_2['comentario_adicional'].'</li>
+							            <li class="list-group-item list-group-item-info"><strong>Fecha Próxima Reunión:</strong> '.$row_2['fecha_prox_reunion'].'</li>
+
+							            </div>
+							          </div>
+							        </div>';
+							   $count++;
+							}
+
+
+					        
+					        echo '</div>
+					      </div>
+					    </div>
+					    
+					    
+					    
+					  </div>
+
                     <div class="panel-footer">
 
                         <form action="main.php" method="POST">
                                 <button type="submit" class="btn btn-default btn-sm btn-block" name="paritarias">
-                                <img src="../../icons/apps/kthesaurus.png"  class="img-reponsive img-rounded"> Volver a Paritarias</button>
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Volver a Paritarias</button>
                         </form><br>
 
+                        
                         <a href="../lib/informes/print.php?file=print_informe_paritaria.php&id='.$id.'" target="_blank">
                             <button type="button" class="btn btn-default btn-sm btn-block">
-                                <img src="../../icons/devices/printer.png"  class="img-reponsive img-rounded"> Imprimir Informe</button></a><br>';
+                                <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir Informe</button></a><br>';
 
 		if ($paritaria->get_file_name($archivo) == '') {
 
@@ -1228,14 +1300,12 @@ class Paritarias {
                               <input type="hidden" name="id" value="'.$id.'">
 
                                 <button type="submit" class="btn btn-warning btn-sm btn-block" name="upload_file" data-toggle="tooltip" data-placement="left" title="Subir Archivo">
-                                <img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir</button>
+                                <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Subir</button>
 
                               </form>';
 
 		} else {
-			echo '<a href="../normas/download.php?file_name='.$paritaria->get_file_name($archivo).'&tipo_archivo=2" data-toggle="tooltip" data-placement="left" title="Ver o Descargar Archivo '.$paritaria->get_file_name($archivo).'">
-                                    <button type="button" class="btn btn-default btn-sm btn-block">
-                                        <img src="../../icons/actions/layer-visible-on.png"  class="img-reponsive img-rounded"> Ver</button>';
+			echo '<a href="../normas/download.php?file_name='.$paritaria->get_file_name($archivo).'&tipo_archivo=2" data-toggle="tooltip" data-placement="top" title="Ver o Descargar Archivo '.$paritaria->get_file_name($archivo).'"><button type="button" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver Documento</button></a>';
 		}
 
 		'</div>
@@ -2233,6 +2303,9 @@ class Paritarias {
 				</div>
 				</div>';
 	} // end of function
+
+
+	
 
 
 }// FIN DE LA CLASE
