@@ -932,3 +932,13 @@ function enviarAvanceParitarias() {
   }
 }
 
+// LEVANTAR ID EN MODAL AVANCE PARTITARIA
+
+$(document).ready(function(e) {
+  $('#myModalAvancesParitaria').on('show.bs.modal', function(e) {
+    var id = $(e.relatedTarget).data().id;
+    document.getElementById('paritaria_id').innerHTML = id;
+    //$(e.currentTarget).find('#paritaria_id').val(id);
+  });
+});
+
