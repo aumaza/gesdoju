@@ -1263,6 +1263,7 @@ class Paritarias {
 							            <li class="list-group-item"><strong>Representantes Externos:</strong> '.$row_2['participantes_externos'].'</li>
 							            <li class="list-group-item"><strong>Compromiso Asumido:</strong> '.$row_2['compromiso_asumido'].'</li>
 							            <li class="list-group-item"><strong>Comentario Adicional:</strong> '.$row_2['comentario_adicional'].'</li>
+							            <li class="list-group-item"><strong>Resumen:</strong> '.$row_2['resumen'].'</li>
 							            <li class="list-group-item list-group-item-info"><strong>Fecha Próxima Reunión:</strong> '.$row_2['fecha_prox_reunion'].'</li>
 
 							            </div>

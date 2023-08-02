@@ -114,7 +114,7 @@ if($conn){
 		echo "</table>";
 		echo "<hr>";
 		echo '<form <action="main.php" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="add_org">
+                    <button type="submit" class="btn btn-success btn-sm" name="add_org">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Organismo</button>
                     </form><hr>';
 		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div><hr>';
@@ -138,7 +138,10 @@ public function newOrganismo($conn){
    echo '<div class="container">
 	    <div class="jumbotron">
 	    
-	      <h2>Cargar Organismo</h2><hr>
+	      <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cargar Organismo</h2><hr>
+          <form action="#" method="POST"><button type="submit" class="btn btn-primary btn-sm" name="listar_organismos"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Volver a Organismos</button></form><hr>
+
 	        <form id="fr_add_new_organismo_ajax" method="POST">
 	        
 	        <div class="form-group">
@@ -162,7 +165,7 @@ public function newOrganismo($conn){
             </div><hr>
 		
 		<button type="submit" class="btn btn-success btn-block" id="add_organismo">
-		<img src="../../icons/devices/media-floppy.png"  class="img-reponsive img-rounded"> Guardar</button>
+		<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
 	      </form><hr>
 	    
 	    <div id="messageNewOrganismo"></div>
