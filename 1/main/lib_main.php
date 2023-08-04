@@ -96,6 +96,8 @@ function mainNavBar($varsession,$nombre){
 
 
                     <li><button type="submit" class="btn btn-default btn-block" name="launch_paritarias"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Gestión Paritarias</button></li>
+
+                    <li><button type="submit" class="btn btn-default btn-block" name="sinep"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> SINEP</button></li>
                     
                     <li><button type="submit" class="btn btn-default btn-block" name="listar_organismos"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Organismos</button></li>
                     
