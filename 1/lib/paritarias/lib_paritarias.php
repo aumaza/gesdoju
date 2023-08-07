@@ -194,7 +194,7 @@ class Paritarias {
                         <div class="jumbotron">
                         <h2><img src="../../icons/actions/agreement_representation.png"  class="img-reponsive img-rounded"> Representación Paritarias [ Listado de Representaciones ]</h2><hr>
                         <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-sm" name="launch_paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Menú Paritarias</button>
+                        <button type="submit" class="btn btn-primary btn-sm" name="launch_paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Menú Paritarias</button>
                         </form><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='paritariasTable'>";
@@ -233,7 +233,7 @@ class Paritarias {
 				if($paritaria->get_nro_actuacion($fila['nro_actuacion']) != ""){
 					echo "<td align=center>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
 				}else{
-					echo "<td align=center style='background-color:#F4D03F'><strong>".$empty."</strong></td>";
+					echo "<td align=center><span class='label label-warning'><strong>".$empty."</strong></span></td>";
 				}
 
 				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['grupo_representantes'])."</td>";
@@ -243,15 +243,15 @@ class Paritarias {
 				if($paritaria->get_tipo_pedido($fila['tipo_pedido']) != ""){
 					echo "<td align=center>".$paritaria->get_tipo_pedido($fila['tipo_pedido'])."</td>";
 				}else{
-					echo "<td align=center style='background-color:#D7BDE2'><strong>".$empty_request."</strong></td>";
+					echo "<td align=center><span class='label label-danger'><strong>".$empty_request."</strong></span></td>";
 				}
 
 				if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual) {
-					echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-primary'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) > $fecha_actual) {
-					echo "<td align=center style='background-color:#AED6F1'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-success'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) < $fecha_actual) {
-					echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-danger'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				}
 
 				echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
@@ -264,7 +264,7 @@ class Paritarias {
                                 <div class="btn-group">
 		                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 		                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
-		                        <ul class="dropdown-menu" role="menu">
+		                        <ul class="dropdown-menu dropdown-menu-right">
 		                        
 		                          <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_paritaria">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button></li>
@@ -286,15 +286,15 @@ class Paritarias {
 
 			echo '<form action="#" method="POST">
 
-                            <button type="submit" class="btn btn-default btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="bottom" title="Agregar Nuevo registro de Paritaria">
+                            <button type="submit" class="btn btn-success btn-sm" name="nueva_paritaria" data-toggle="tooltip" data-placement="bottom" title="Agregar Nuevo registro de Paritaria">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Registro</button>
 
-                            <button type="submit" class="btn btn-default btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="bottom" title="Búsqueda Avanzada sobre Paritarias">
+                            <button type="submit" class="btn btn-info btn-sm" name="busqueda_paritarias" data-toggle="tooltip" data-placement="bottom" title="Búsqueda Avanzada sobre Paritarias">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Búsqueda Avanzada</button>
 
                             </form><hr>';
 
-			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  '.$count.'</div><hr>';
+			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  <span class="badge badge-info">'.$count.'</span></div><hr>';
 			echo '</div></div>';
 
 		} else {
@@ -342,7 +342,7 @@ class Paritarias {
                         <div class="jumbotron">
                         <h2><img src="../../icons/actions/advance-process.png"  class="img-reponsive img-rounded"> Avances Paritaria</h2><hr>
                         <form action="#" method="POST">
-                        <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                        <button type="submit" class="btn btn-primary btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
                         </form><hr>';
 
 			echo "<table class='display compact' style='width:100%' id='avancesParitariaTable'>";
@@ -390,17 +390,17 @@ class Paritarias {
 				if($paritaria->get_nro_actuacion($fila['nro_actuacion']) != ""){
 					echo "<td align=center id='nro_actuacion'>".$paritaria->get_nro_actuacion($fila['nro_actuacion'])."</td>";
 				}else{
-					echo "<td align=center id='nro_actuacion' style='background-color:#F4D03F'>".$empty."</td>";
+					echo "<td align=center id='nro_actuacion'><span class='label label-danger'>".$empty."</span></td>";
 				}
 				echo "<td align=center>".$paritaria->get_grupo_representantes($fila['representantes'])."</td>";
 				
 				echo "<td align=center>".$paritaria->get_tipo_representacion($fila['tipo_representacion'])."</td>";
 				if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) == $fecha_actual) {
-					echo "<td align=center style='background-color:#F8C471'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-info'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) > $fecha_actual) {
-					echo "<td align=center style='background-color:#AED6F1'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-success'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				} else if ($paritaria->get_fecha_reunion($fila['fecha_reunion']) < $fecha_actual) {
-					echo "<td align=center style='background-color:#F1948A'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</td>";
+					echo "<td align=center><span class='label label-danger'>".$paritaria->get_fecha_reunion($fila['fecha_reunion'])."</span></td>";
 				}
 				echo "<td align=center>".$paritaria->get_organismo($fila['organismo'])."</td>";
 				echo "<td align=center>".$paritaria->get_participantes_externos($fila['participantes_externos'])."</td>";
@@ -427,15 +427,15 @@ class Paritarias {
 			echo '<form action="#" method="POST">
                             <input type="hidden" id="id" name="id" value="'.$id.'" >
 
-                            <button type="submit" class="btn btn-default btn-sm" name="add_advance" data-toggle="tooltip" data-placement="right" title="Agregar Avance">
+                            <button type="submit" class="btn btn-success btn-sm" name="add_advance" data-toggle="tooltip" data-placement="right" title="Agregar Avance">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Añadir Avance</button>
 
-                            <button type="submit" class="btn btn-default btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
+                            <button type="submit" class="btn btn-info btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
                                 <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Documentación Relacionada</button>
 
                             </form><hr>';
 
-			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  '.$count.'</div><hr>';
+			echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong> <span class="badge badge-info">'.$count.'</span></div><hr>';
 			echo '</div></div>';
 
 		} else {
@@ -648,7 +648,7 @@ class Paritarias {
                 <h3><img class="img-reponsive img-rounded" src="../../icons/actions/view-task.png" /> Alta Registro Paritaria</h3><hr>
 
                 <form action="#" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
+                    <button type="submit" class="btn btn-primary btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
                 </form>
 
                 </div><hr>
@@ -1220,19 +1220,19 @@ class Paritarias {
                 </div>
                 <div id="collapseA" class="panel-collapse collapse-in">
                     <ul class="list-group">
-                    <li class="list-group-item"><strong>Nro. Actuación:</strong> '.$paritaria->get_nro_actuacion($nro_actuacion).'</li>
-                    <li class="list-group-item"><strong>Grupo:</strong> '.$paritaria->get_grupo_representantes($grupo_representantes).'</li>
-                    <li class="list-group-item"><strong>Representante Titular:</strong> '.$rep_titular.'</li>
-                    <li class="list-group-item"><strong>Representante Suplente:</strong> '.$rep_suplente.'</li>';
+                    <li class="list-group-item"><span class="label label-default"><strong>Nro. Actuación:</strong></span> '.$paritaria->get_nro_actuacion($nro_actuacion).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Grupo:</strong></span> '.$paritaria->get_grupo_representantes($grupo_representantes).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Representante Titular:</strong></span> '.$rep_titular.'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Representante Suplente:</strong></span> '.$rep_suplente.'</li>';
 		if (($asesor_1 != '') && ($asesor_2 != '')) {
-			echo '<li class="list-group-item"><strong>Primer Asesor:</strong> '.$asesor_1.'</li>
-                          <li class="list-group-item"><strong>Segundo Asesor:</strong> '.$asesor_2.'</li>';
+			echo '<li class="list-group-item"><span class="label label-default"><strong>Primer Asesor:</strong></span> '.$asesor_1.'</li>
+                          <li class="list-group-item"><span class="label label-default"><strong>Segundo Asesor:</strong></span> '.$asesor_2.'</li>';
 		}
-		echo '<li class="list-group-item"><strong>Tipo Representacion:</strong> '.$paritaria->get_tipo_representacion($tipo_representacion).'</li>
-                    <li class="list-group-item"><strong>Tipo Pedido:</strong> '.$paritaria->get_tipo_pedido($tipo_pedido).'</li>
-                    <li class="list-group-item"><strong>Organismo:</strong> '.$paritaria->get_organismo($organismo).'</li>
-                    <li class="list-group-item"><strong>Fecha Alta:</strong> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
-                    <li class="list-group-item"><strong>Descripción / Referencia:</strong> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
+		echo '<li class="list-group-item"><span class="label label-default"><strong>Tipo Representacion:</strong></span> '.$paritaria->get_tipo_representacion($tipo_representacion).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Tipo Pedido:</strong></span> '.$paritaria->get_tipo_pedido($tipo_pedido).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Organismo:</strong></span> '.$paritaria->get_organismo($organismo).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Fecha Alta:</strong></span> '.$paritaria->get_fecha_reunion($fecha_reunion).'</li>
+                    <li class="list-group-item"><span class="label label-default"><strong>Descripción / Referencia:</strong></span> '.$paritaria->get_resumen_reunion($resumen_reunion).'</li>
 
                     
                     </ul>
@@ -1253,18 +1253,18 @@ class Paritarias {
 					          echo '<div class="panel panel-default">
 							          <div class="panel-heading">
 							            <h4 class="panel-title">
-							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$count.'"><strong>Fecha Reunión:</strong> '.$row_2['fecha_reunion'].'</a>
+							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$count.'"><span class="label label-default"><strong>Fecha Reunión:</strong></span> <span class="label label-info">'.$row_2['fecha_reunion'].'</span></a>
 							            </h4>
 							          </div>
 					          		<div id="collapse'.$count.'" class="panel-collapse collapse in">
 							            <div class="panel-body">
 
-							            <li class="list-group-item"><strong>Asunto:</strong> '.$row_2['asunto'].'</li>
-							            <li class="list-group-item"><strong>Representantes Externos:</strong> '.$row_2['participantes_externos'].'</li>
-							            <li class="list-group-item"><strong>Compromiso Asumido:</strong> '.$row_2['compromiso_asumido'].'</li>
-							            <li class="list-group-item"><strong>Comentario Adicional:</strong> '.$row_2['comentario_adicional'].'</li>
-							            <li class="list-group-item"><strong>Resumen:</strong> '.$row_2['resumen'].'</li>
-							            <li class="list-group-item list-group-item-info"><strong>Fecha Próxima Reunión:</strong> '.$row_2['fecha_prox_reunion'].'</li>
+							            <li class="list-group-item"><span class="label label-default"><strong>Asunto:</strong></span> '.$row_2['asunto'].'</li>
+							            <li class="list-group-item"><span class="label label-default"><strong>Representantes Externos:</strong></span> '.$row_2['participantes_externos'].'</li>
+							            <li class="list-group-item"><span class="label label-default"><strong>Compromiso Asumido:</strong></span> '.$row_2['compromiso_asumido'].'</li>
+							            <li class="list-group-item"><span class="label label-default"><strong>Comentario Adicional:</strong></span> '.$row_2['comentario_adicional'].'</li>
+							            <li class="list-group-item"><span class="label label-default"><strong>Resumen:</strong></span> '.$row_2['resumen'].'</li>
+							            <li class="list-group-item list-group-item-info"><span class="label label-default"><strong>Fecha Próxima Reunión:</strong></span> <span class="label label-warning">'.$row_2['fecha_prox_reunion'].'</span></li>
 
 							            </div>
 							          </div>

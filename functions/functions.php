@@ -10,6 +10,7 @@ function skeleton() {
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/bootstrap-theme.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/bootstrap-theme.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/css/scrolling-nav.css" >
+	<link rel="stylesheet" href="/gesdoju/skeleton/css/main.css" >
 
 	<link rel="stylesheet" href="/gesdoju/skeleton/Chart.js/Chart.min.css" >
 	<link rel="stylesheet" href="/gesdoju/skeleton/Chart.js/Chart.css" >
