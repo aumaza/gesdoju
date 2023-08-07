@@ -607,7 +607,7 @@ if($conn){
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Acciones <span class="caret"></span></button>
-                                <ul class="dropdown-menu" role="menu">
+                                <ul class="dropdown-menu dropdown-menu-right">
                                 
                             <li><button type="submit" class="btn btn-default btn-sm btn-block" name="edit_norma" data-toggle="tooltip" data-placement="left" title="Editar Datos de la Norma">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button></li>';
@@ -632,7 +632,7 @@ if($conn){
 
 		echo "</table>";
 		echo "<hr>";
-		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  ' .$count.'</div>';
+		echo '<div class="alert alert-info"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> <strong>Cantidad de Registros:</strong>  <span class="badge badge-info">'.$count.'</span></div>';
 		echo '</div></div>';
 		}else{
 		  echo 'Connection Failure...';
