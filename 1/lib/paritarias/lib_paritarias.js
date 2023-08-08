@@ -438,9 +438,11 @@ $(document).ready(function(){
         const fecha_reunion = document.querySelector('#fecha_reunion');
         const resumen_reunion = document.querySelector('#resumen');
         const participantes_externos = document.querySelector('#participantes_externos');
+        const documento_adjunto = document.querySelector('#documento_adjunto');
         const asunto = document.querySelector('#asunto');
         const compromisos_asumidos = document.querySelector('#compromisos_asumidos');
         const fecha_prox_reunion = document.querySelector('#fecha_prox_reunion');
+        const asunto_futuro = document.querySelector('#asunto_futuro');
         const comentarios_adicionales = document.querySelector('#comentarios_adicionales');
         const myfiles = document.querySelector('#myfiles');
         
@@ -456,9 +458,11 @@ $(document).ready(function(){
         formData.append('fecha_reunion', fecha_reunion.value);
         formData.append('resumen_reunion', resumen_reunion.value);
         formData.append('participantes_externos', participantes_externos.value);
+        formData.append('documento_adjunto', documento_adjunto.value);
         formData.append('asunto', asunto.value);
         formData.append('compromisos_asumidos', compromisos_asumidos.value);
         formData.append('fecha_prox_reunion', fecha_prox_reunion.value);
+        formData.append('asunto_futuro', asunto_futuro.value);
         formData.append('comentarios_adicionales', comentarios_adicionales.value);
 
         
@@ -469,7 +473,7 @@ $(document).ready(function(){
         jQuery.ajax({
             type:"POST",
             method:"POST",
-            url:"../lib/paritarias/add_advance_paritaria.php",
+            url:"add_advance_paritaria.php",
             data: formData,
             cache: false,
             processData: false,
@@ -481,23 +485,33 @@ $(document).ready(function(){
                     $('#fecha_reunion').val('');
                     $('#resumen').val('');
                     $('#myfiles').val('');
+                    $('#participantes_externos').val('');
+                    $('#documento_adjunto').val('');
+                    $('#asunto').val('');
+                    $('#compromisos_asumidos').val('');
+                    $('#fecha_prox_reunion').val('');
+                    $('#asunto_futuro').val('');
+                    $('#comentarios_adicionales').val('');
                     $('#fecha_reunion').focus('');
+
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 4000);
                     
-                    var form = $('<form action="#" method="post">' +
+                    /*var form = $('<form action="../../main/main.php" method="post">' +
                       '<input type="hidden" name="avance_paritaria_send_email" />' +
                       '</form>');
                     $('body').append(form);
                     form.submit();
-
+                    */
                     /*
-                    var form = $('<form action="#" method="post">' +
-                      '<input type="hidden" name="paritarias" />' +
+                    var form = $('<form action="../../main/main.php" method="post">' +
+                      '<input type="hidden" name="id" value="'+paritaria_id+'"' +
+                      '<input type="hidden" name="view_advance" />' +
                       '</form>');
                     $('body').append(form);
                     form.submit();
                     */
+                    
 
                 }else if(r == -1){
                     var mensaje = '<br><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p align=center><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Error. Hubo un problema al intentar guardar el registro</p></div>';
@@ -559,6 +573,7 @@ $(document).ready(function(){
         const asunto = document.querySelector('#asunto');
         const compromisos_asumidos = document.querySelector('#compromisos_asumidos');
         const fecha_prox_reunion = document.querySelector('#fecha_prox_reunion');
+        const asunto_futuro = document.querySelector('#asunto_futuro');
         const comentarios_adicionales = document.querySelector('#comentarios_adicionales');
         const resumen_reunion = document.querySelector('#resumen');
         
@@ -573,6 +588,7 @@ $(document).ready(function(){
         formData.append('asunto', asunto.value);
         formData.append('compromisos_asumidos', compromisos_asumidos.value);
         formData.append('fecha_prox_reunion', fecha_prox_reunion.value);
+        formData.append('asunto_futuro', asunto_futuro.value);
         formData.append('comentarios_adicionales', comentarios_adicionales.value);
         formData.append('resumen_reunion', resumen_reunion.value);
         
@@ -593,6 +609,7 @@ $(document).ready(function(){
                     document.getElementById('messageUpdateAvanceParitaria').innerHTML = mensaje;
                     $('#fecha_reunion').val('');
                     $('#resumen').val('');
+                    $('#asunto_futuro').val('');
                     $('#fecha_reunion').focus('');
                     console.log("Datos: " + values);
                     setTimeout(function() { $(".close").click(); }, 6000);
@@ -914,6 +931,17 @@ function callCalendar(){
     let params = `scrollbars=yes,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=800,left=1100,right=200,top=80`;
     
     open("../calendar/index.php", "calendar", params);
+    
+    
+}
+
+
+function callNewAdvanceParitaria(id){
+    
+    console.log(id);
+    let params = `scrollbars=yes,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=1000,height=800,left=1100,right=200,top=80`;
+    
+    open("../lib/paritarias/form_alta_avance_paritaria.php?id="+id+"", "avance_paritaria", params);
     
     
 }

@@ -15,9 +15,11 @@ class Paritarias {
 	private $file_path            = '';
 	private $resumen_reunion      = '';
 	private $participantes_externos = '';
+	private $documento_adjunto = '';
 	private $asunto = '';
 	private $compromisos_asumidos = '';
 	private $fecha_prox_reunion = '';
+	private $asunto_futuro = '';
 	private $comentarios_adicionales = '';
 
 	// =============================================================================================== //
@@ -34,9 +36,11 @@ class Paritarias {
 		$this->file_path            = '';
 		$this->resumen_reunion      = '';
 		$this->participantes_externos = '';
+		$this->documento_adjunto = '';
 		$this->asunto = '';
 		$this->compromisos_asumidos = '';
 		$this->fecha_prox_reunion = '';
+		$this->asunto_futuro = '';
 		$this->comentarios_adicionales = '';
 	}
 
@@ -83,6 +87,10 @@ class Paritarias {
 		$this->participantes_externos = $var;
 	}
 
+	private function set_documento_adjunto($var){
+		$this->documento_adjunto = $var;
+	}
+
 	private function set_asunto($var){
 		$this->asunto = $var;
 	}
@@ -93,6 +101,10 @@ class Paritarias {
 
 	private function set_fecha_prox_reunion($var){
 		$this->fecha_prox_reunion = $var;
+	}
+
+	private function set_asunto_futuro($var){
+		$this->asunto_futuro = $var;
 	}
 
 	private function set_comentarios_adicionales($var){
@@ -142,6 +154,10 @@ class Paritarias {
 		return $this->participantes_externos = $var;
 	}
 
+	private function get_documento_adjunto($var){
+		return $this->documento_adjunto = $var;
+	}
+
 	private function get_asunto($var){
 		return $this->asunto = $var;
 	}
@@ -152,6 +168,10 @@ class Paritarias {
 
 	private function get_fecha_prox_reunion($var){
 		return $this->fecha_prox_reunion = $var;
+	}
+
+	private function get_asunto_futuro($var){
+		return $this->asunto_futuro = $var;
 	}
 
 	private function get_comentarios_adicionales($var){
@@ -325,7 +345,9 @@ class Paritarias {
 					   a.participantes_externos,
 					   a.asunto,
 					   a.compromiso_asumido,
+					   a.documento_adjunto,
 					   a.fecha_prox_reunion,
+					   a.asunto_futuro,
 					   a.comentario_adicional
 					   from avances_paritaria as a
 					   left join grupo_representantes as g on g.nombre_grupo = a.grupo
@@ -372,7 +394,13 @@ class Paritarias {
                         <span class='label label-default'>Compromisos Asumidos</span></th>
 
                         <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Documento Adjunto</span></th>
+
+                        <th class='text-nowrap text-center'>
                         <span class='label label-default'>Fecha Próxima Reunión</span></th>
+
+                        <th class='text-nowrap text-center'>
+                        <span class='label label-default'>Asunto a Tratar</span></th>
 
                         <th class='text-nowrap text-center'>
                         <span class='label label-default'>Comentarios Adicionales</span></th>
@@ -406,7 +434,15 @@ class Paritarias {
 				echo "<td align=center>".$paritaria->get_participantes_externos($fila['participantes_externos'])."</td>";
 				echo "<td align=center>".$paritaria->get_asunto($fila['asunto'])."</td>";
 				echo "<td align=center>".$paritaria->get_compromisos_asumidos($fila['compromiso_asumido'])."</td>";
-				echo "<td align=center>".$paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion'])."</td>";
+				echo "<td align=center>".$paritaria->get_documento_adjunto($fila['documento_adjunto'])."</td>";
+				if($paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion']) == $fecha_actual){
+					echo "<td align=center><span class='label label-info'>".$paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion'])."</span></td>";
+				}else if($paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion']) > $fecha_actual){
+					echo "<td align=center><span class='label label-success'>".$paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion'])."</span></td>";
+				}else if($paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion']) < $fecha_actual){
+					echo "<td align=center><span class='label label-danger'>".$paritaria->get_fecha_prox_reunion($fila['fecha_prox_reunion'])."</span></td>";
+				}
+				echo "<td align=center>".$paritaria->get_asunto_futuro($fila['asunto_futuro'])."</td>";
 				echo "<td align=center>".$paritaria->get_comentarios_adicionales($fila['comentario_adicional'])."</td>";
 				echo "<td align=center>".$paritaria->get_resumen_reunion($fila['resumen'])."</td>";
 				echo "<td class='text-nowrap'>";
@@ -427,8 +463,8 @@ class Paritarias {
 			echo '<form action="#" method="POST">
                             <input type="hidden" id="id" name="id" value="'.$id.'" >
 
-                            <button type="submit" class="btn btn-success btn-sm" name="add_advance" data-toggle="tooltip" data-placement="right" title="Agregar Avance">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Añadir Avance</button>
+                            <button type="button" class="btn btn-success btn-sm" value="'.$id.'" onclick="callNewAdvanceParitaria(this.value);">
+				          		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Avance</button>
 
                             <button type="submit" class="btn btn-info btn-sm" name="doc_adicional" data-toggle="tooltip" data-placement="right" title="Documentación Relacionada">
                                 <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Documentación Relacionada</button>
@@ -800,13 +836,8 @@ class Paritarias {
 		echo '<div class="container">
                 <div class="jumbotron">
                 <div class="alert alert-info">
-                <h3><img class="img-reponsive img-rounded" src="../../icons/actions/document-edit-sign.png" /> Alta Registro de Avances Paritaria</h3>
+                <h3><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Alta Registro de Avances Paritaria</h3>
                 </div><hr>
-
-                <form action="#" method="POST">
-                    <button type="submit" class="btn btn-default btn-sm" name="paritarias"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Volver a Paritarias</button>
-                </form><hr>
-
 
 
             <form id="fr_add_new_avance_paritaria_ajax" method="POST" enctype="multipart/form-data">
@@ -840,6 +871,11 @@ class Paritarias {
                             value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
                         </div>
 
+                        <div class="form-group">
+                          <label for="documento_adjunto">Documento Adjunto:</label>
+                          <input type="text" class="form-control" id="documento_adjunto" name="documento_adjunto">
+                        </div>
+
                         <div class="alert alert-success">
 		                        <div class="form-group">
 		                            <label for="file">Seleccione Archivo:</label>
@@ -858,7 +894,7 @@ class Paritarias {
 	                        </div>
 
 	                    	<div class="form-group">
-	                            <label for="`participantes_externos">Organismos Participantes:</label>
+	                            <label for="participantes_externos">Organismos Participantes:</label>
 	                            <textarea class="form-control" id="participantes_externos" name="participantes_externos" maxlength="2000" placeholder="Ingrese los participantes de otros organismos en la reunión"></textarea>
 	                        </div>
 
@@ -883,6 +919,11 @@ class Paritarias {
 	                        </div>
 
 	                        <div class="form-group">
+	                            <label for="asunto_futuro">Asunto a Tratar:</label>
+	                            <input type="text" class="form-control" id="asunto_futuro" name="asunto_futuro">
+	                        </div>
+
+	                        <div class="form-group">
 	                            <label for="comentarios_adicionales">Comentarios Adicionales:</label>
 	                            <textarea class="form-control" id="comentarios_adicionales" name="comentarios_adicionales" maxlength="2000" placeholder="Ingrese comentarios adicionales"></textarea>
 	                        </div>
@@ -895,7 +936,7 @@ class Paritarias {
 
                 <div class="alert alert-success">
                 <button type="submit" class="btn btn-default btn-block" id="add_new_avance_paritaria">
-                    <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Agregar</button>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
                 </div>
             </form>
 
@@ -954,6 +995,12 @@ class Paritarias {
                             value="'.$paritaria->get_organismo($row[organismo]).'" readonly>
                         </div>
 
+                        <div class="form-group">
+                          <label for="documento_adjunto">Documento Adjunto:</label>
+                          <input type="text" class="form-control" id="documento_adjunto" name="documento_adjunto"
+                          value="'.$paritaria->get_documento_adjunto($row[documento_adjunto]).'" readonly>
+                        </div>
+
                         <div class="alert alert-success">
 		                        <div class="form-group">
 		                            <label for="file">Seleccione Archivo:</label>
@@ -994,6 +1041,12 @@ class Paritarias {
 	                        <div class="form-group">
 	                            <label for="fecha_prox_reunion">Fecha Próxima Reunión:</label>
 	                            <input type="date" class="form-control" id="fecha_prox_reunion" name="fecha_prox_reunion" value="'.$paritaria->get_fecha_prox_reunion($row[fecha_prox_reunion]).'">
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="asunto_futuro">Asunto a Tratar:</label>
+	                            <input type="text" class="form-control" id="asunto_futuro" name="asunto_futuro"
+	                            	value="'.$paritaria->get_asunto_futuro($row[asunto_futuro]).'">
 	                        </div>
 
 	                        <div class="form-group">
@@ -1639,7 +1692,7 @@ class Paritarias {
 	/*
 	 **  GUARDA A BASE LOS AVANCES DE UNA PARITARIA
 	 */
-	public function addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$comentarios_adicionales,$resumen, $conn, $dbase) {
+	public function addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $participantes_externos,$documento_adjunto,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$asunto_futuro,$comentarios_adicionales,$resumen, $conn, $dbase) {
 		$fileName = "mysql_error.log.txt";
 		$color = '#008000';
 		$hour = ' 00:00:00';
@@ -1676,9 +1729,11 @@ class Paritarias {
               fecha_reunion,
               resumen,
               participantes_externos,
+              documento_adjunto,
               asunto,
               compromiso_asumido,
               fecha_prox_reunion,
+              asunto_futuro,
               comentario_adicional,
               files_path)".
 			"VALUES ".
@@ -1689,9 +1744,11 @@ class Paritarias {
 				$paritaria->set_fecha_reunion('$fecha_reunion'),
 				$paritaria->set_resumen_reunion('$resumen'),
 				$paritaria->set_participantes_externos('$participantes_externos'),
+				$paritaria->set_documento_adjunto('$documento_adjunto'),
 				$paritaria->set_asunto('$asunto'),
 				$paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
 				$paritaria->set_fecha_prox_reunion('$fecha_prox_reunion'),
+				$paritaria->set_asunto_futuro('$asunto_futuro'),
 				$paritaria->set_comentarios_adicionales('$comentarios_adicionales'),
 				$paritaria->set_file_path('$carpeta')
 			)";
@@ -1721,7 +1778,7 @@ class Paritarias {
 					 "VALUES ".
 					 "('$id',
 					   '$advance_paritaria_id',
-					 	$paritaria->set_asunto('$asunto'),
+					 	$paritaria->set_asunto_futuro('$asunto_futuro'),
 					   '$color',
 					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
 					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour')
@@ -1779,9 +1836,11 @@ class Paritarias {
               fecha_reunion,
               resumen,
               participantes_externos,
+              documento_adjunto,
               asunto,
               compromiso_asumido,
               fecha_prox_reunion,
+              asunto_futuro,
               comentario_adicional,
               files_path)".
 			"VALUES ".
@@ -1792,9 +1851,11 @@ class Paritarias {
 				$paritaria->set_fecha_reunion('$fecha_reunion'),
 				$paritaria->set_resumen_reunion('$resumen'),
 				$paritaria->set_participantes_externos('$participantes_externos'),
+				$paritaria->set_documento_adjunto('$documento_adjunto'),
 				$paritaria->set_asunto('$asunto'),
 				$paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
 				$paritaria->set_fecha_prox_reunion('$fecha_prox_reunion'),
+				$paritaria->set_asunto_futuro('$asunto_futuro'),
 				$paritaria->set_comentarios_adicionales('$comentarios_adicionales'),
 				$paritaria->set_file_path('$carpeta')
             )";
@@ -1822,7 +1883,7 @@ class Paritarias {
 					 "VALUES ".
 					 "('$id',
 					   '$advance_paritaria_id',
-					 	$paritaria->set_asunto('$asunto'),
+					 	$paritaria->set_asunto_futuro('$asunto_futuro'),
 					   '$color',
 					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
 					    $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour')
@@ -1860,7 +1921,7 @@ class Paritarias {
 	/*
 	 ** actualizar avance de paritaria
 	 */
-	public function updateAvanceParitaria($paritaria,$id,$paritaria_id,$fecha_reunion,$participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$comentarios_adicionales,$resumen,$conn,$dbase) {
+	public function updateAvanceParitaria($paritaria,$id,$paritaria_id,$fecha_reunion,$participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$asunto_futuro,$comentarios_adicionales,$resumen,$conn,$dbase) {
 		$fileName = "mysql_error.log.txt";
 		$color = '#008000';
 		$hour = ' 00:00:00';
@@ -1872,11 +1933,12 @@ class Paritarias {
 				asunto = $paritaria->set_asunto('$asunto'),
 				compromiso_asumido = $paritaria->set_compromisos_asumidos('$compromisos_asumidos'),
 				fecha_prox_reunion = $paritaria->set_fecha_reunion('$fecha_prox_reunion'),
+				asunto_futuro = $paritaria->set_asunto_futuro('$asunto_futuro'),
 				comentario_adicional = $paritaria->set_comentarios_adicionales('$comentarios_adicionales'), 
 				resumen = $paritaria->set_resumen_reunion('$resumen') where id = '$id'";
 
 		$sql_1 = "update events set
-				  title = $paritaria->set_asunto('$asunto'),
+				  title = $paritaria->set_asunto_futuro('$asunto_futuro'),
 				  color = '$color',
 				  start = $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour'),
 				  end = $paritaria->set_fecha_prox_reunion('$fecha_prox_reunion$hour') where advance_paritaria_id = '$id' and paritaria_id = '$paritaria_id'";
