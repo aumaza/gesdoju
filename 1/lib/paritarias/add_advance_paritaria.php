@@ -16,9 +16,11 @@
       $fecha_reunion = mysqli_real_escape_string($conn,$_POST['fecha_reunion']);     
       $resumen = mysqli_real_escape_string($conn,$_POST['resumen']);
       $participantes_externos = mysqli_real_escape_string($conn,$_POST['participantes_externos']);
+      $documento_adjunto = mysqli_real_escape_string($conn,$_POST['documento_adjunto']);
       $asunto = mysqli_real_escape_string($conn,$_POST['asunto']);
       $compromisos_asumidos = mysqli_real_escape_string($conn,$_POST['compromisos_asumidos']);
       $fecha_prox_reunion = mysqli_real_escape_string($conn,$_POST['fecha_prox_reunion']);
+      $asunto_futuro = mysqli_real_escape_string($conn,$_POST['asunto_futuro']);
       $comentarios_adicionales = mysqli_real_escape_string($conn,$_POST['comentarios_adicionales']);
            
                   
@@ -31,14 +33,16 @@
                   ($fecha_reunion == '') ||
                     ($resumen == '') ||
                       ($participantes_externos == '') ||
+                        ($documento_adjunto == '') ||
                         ($asunto == '') ||
                           ($compromisos_asumidos == '') ||
                            ($fecha_prox_reunion == '') ||
+                            ($asunto_futuro == '') ||
                             ($comentarios_adicionales == '')){
                    echo 5; // hay campos vacios
                     
     }else{
-        $paritaria->addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $participantes_externos,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$comentarios_adicionales,$resumen, $conn, $dbase);
+        $paritaria->addAdvanceParitaria($paritaria, $id, $nro_actuacion, $organismo, $tipo_representacion, $grupo_representante, $fecha_reunion, $participantes_externos,$documento_adjunto,$asunto,$compromisos_asumidos,$fecha_prox_reunion,$asunto_futuro,$comentarios_adicionales,$resumen, $conn, $dbase);
     }
     }else{
         echo 13; //error de conexion
