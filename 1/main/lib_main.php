@@ -88,7 +88,7 @@ function mainNavBar($varsession,$nombre){
                     
                     <li><button type="submit" class="btn btn-default btn-block" name="B"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Normas</button></li>
                     
-                    <li><button type="submit" class="btn btn-default btn-block" name="a_s" data-toggle="tooltip" title="Sección en Desarrollo!" data-placement="right" disabled><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
+                    <li><button type="submit" class="btn btn-default btn-block" name="launch_autoridades_superiores" ><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Autoridades Superiores</button></li>
                     
                     <li><button type="submit" class="btn btn-default btn-block" data-toggle="tooltip" title="Sección en Desarrollo!" data-placement="right" disabled><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span> Escalas Salariales</button></li>
                     
@@ -527,7 +527,72 @@ function launchTablasBase(){
 
 }
 
+// LAUNCH AUTORIDADES SUPERIORES
+function launchAutoridadesSuperiores(){
 
+    echo '<div class="container">
+             <div class="jumbotron">
+             <h2>
+                <img class="img-reponsive img-rounded" src="../../icons/status/meeting-chair.png" /></span> Gestión Autoridades Superiores
+             </h2><hr>
+              <div class="panel-group">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" href="#collapse1">
+                      <img class="img-reponsive img-rounded" src="../../icons/actions/code-block.png" /> Estructura Organizacional</a>
+                    </h4>
+                  </div>
+                  <div id="collapse1" class="panel-collapse">
+                    <ul class="list-group">
+                    <form action="#" method="POST">
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="clasificador_institucional">
+                        <img class="img-reponsive img-rounded" src="../../icons/places/folder-bookmark.png" /> Clasificador Institucional</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="autoridades_superiores">
+                        <img class="img-reponsive img-rounded" src="../../icons/status/meeting-participant.png" /> Autoridades Superiores</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="estructura_estado">
+                        <img class="img-reponsive img-rounded" src="../../icons/emblems/image-has-versions-open.png" /> Estructura del Estado</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="presidencia">
+                        <img class="img-reponsive img-rounded" src="../../icons/organismos/argentina-presidencia_32.png" /> Presidencia</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="secretarias_presidencia">
+                        <img class="img-reponsive img-rounded" src="../../icons/organismos/institution_32x32.png" /> Secretarias de Presidencia</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="jefatura_gabinete">
+                        <img class="img-reponsive img-rounded" src="../../icons/organismos/institution_32x32.png" /> Jefatura Gabinete de Ministros</button>
+                      </li>
+
+                      <li class="list-group-item">
+                        <button type="submit" class="btn btn-default btn-block" name="ministerios">
+                        <img class="img-reponsive img-rounded" src="../../icons/organismos/institution_32x32.png" /> Ministerios</button>
+                      </li>
+
+
+                    </form>
+                    </ul>
+                    <div class="panel-footer" align=center><img class="img-reponsive img-rounded" src="../../img/escudo32x32.png" /> <strong>Dirección Nacional de Seguimiento de la Inversión en Capital Humano del Sector Público Nacional</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>';
+
+}
 
 
 ?>

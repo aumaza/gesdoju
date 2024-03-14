@@ -4,7 +4,7 @@
       ini_set('display_errors', 0);
 
 	  include "../../../connection/connection.php";
-      include "lib_paritarias.php";
+      include "lib_clasificador_institucional.php";
       include "../system/lib_system.php";
       include "../../../functions/functions.php";
 
@@ -45,7 +45,7 @@
       <!DOCTYPE html>
 		<html lang="es">
 		<head>
-		  <title>GESDO [ Agregar Avance Paritaria ]</title>
+		  <title>GESDO [ Eliminar Clasificador Institucional ]</title>
 		  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		  <meta name="viewport" content="width=device-width, initial-scale=1">
 		  <link rel="icon" type="image/png" href="../../icons/apps/accessories-dictionary.png" />
@@ -61,11 +61,11 @@
       	<?php
            
 	      if($conn){
+          // SE CAPTURAN LOS DATOS
+          $id = $_GET['id'];
 	      //creamos el objeto
-	      $paritaria = new Paritarias();
-	      $id = $_GET['id'];
-	      $paritaria->formAltaAvancesParitaria($paritaria, $id, $conn, $dbase);
-
+	      $oneClasificador = new ClasificadorInstitucional();
+	      $oneClasificador->formEliminarClasificador($oneClasificador,$id,$conn,$dbase);
 	  	  }else{
 	  	  	echo "sin conexion";
 	  	  }
@@ -73,7 +73,7 @@
 	  	  ?>
 
 	  	</div>
-	<script type="text/javascript" src="lib_paritarias.js"></script>
+	<script type="text/javascript" src="lib_clasificador_institucional.js"></script>
 
   	</body>
   	</html>

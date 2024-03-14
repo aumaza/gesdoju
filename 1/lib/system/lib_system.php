@@ -14,7 +14,7 @@ function sanityDataBase($conn,$dbase){
         $row = mysqli_fetch_assoc($query);
         $cantidad = $row['tables'];
         
-            if($cantidad == 22){
+            if($cantidad == 24){
                 return 1; // cantidad de tablas ok
             }else{
                 return 2; // cantidad de tablas erroneas
@@ -274,13 +274,13 @@ function emailLogs($success){
         $file = fopen($fileName, 'a');
         fwrite($file, "\n".$message);
         fclose($file);
-        chmod($file, 0777);
+        //chmod($file, 0777);
         
         }else{
             $file = fopen($fileName, 'w');
             fwrite($file, $message);
             fclose($file);
-            chmod($file, 0777);
+            //chmod($file, 0777);
             }
 
 }

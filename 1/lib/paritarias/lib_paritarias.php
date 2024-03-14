@@ -1802,7 +1802,7 @@ class Paritarias {
 				}
 			} else {
 				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
-				$myError = mysql_error($conn);
+				$myError = mysqli_error($conn);
 				$error = '[Se ha producido el error: ' .$myError. ' al intentar guardar en la tabla Avances Paritaria]';
 				mysqlErrorLogs($error);
 
@@ -1907,7 +1907,7 @@ class Paritarias {
 				}
 			} else {
 				echo -1;// hubo un problema al intentar insertar los datos en avances paritaria
-				$myError = mysql_error($conn);
+				$myError = mysqli_error($conn);
 				$error = '[Se ha producido el error: ' .$myError. ' al intentar guardar en la tabla Avances Paritaria]';
 				mysqlErrorLogs($error);
 
@@ -1970,7 +1970,7 @@ class Paritarias {
             fwrite($file, $message);
             fclose($file);
             //chmod($file, 0777);
-            $myError = mysql_error($conn);
+            $myError = mysqli_error($conn);
 			$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Avances Paritaria con ID: ' .$id.']';
 			mysqlErrorLogs($error);
 		}
@@ -2060,7 +2060,7 @@ class Paritarias {
                 			mysqlSuccessLogs($success);
 						} else {
 							echo -1; // actualizacion error
-							$myError = mysql_error($conn);
+							$myError = mysqli_error($conn);
 							$error = '[Se ha producido el error: ' .$myError. ' al intentar actualizar registro en la tabla Representación Paritaria con ID: ' .$id.']';
 							mysqlErrorLogs($error);
 						}

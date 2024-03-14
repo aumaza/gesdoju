@@ -1,7 +1,7 @@
 <?php session_start(); 
       
       error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('display_errors', 0);
+      ini_set('display_errors', 1);
             
       include "../../connection/connection.php"; 
       include "../../functions/functions.php";
@@ -11,7 +11,6 @@
       include "../lib/system/lib_system.php";
       include "../lib/organismos/lib_organismos.php";
       include "../lib/jurisdicciones/lib_jurisdicciones.php";
-      include "../lib/lib_autoridades_superiores.php";
       include "../lib/lib_funciones_ejecutivas.php";
       include "../lib/lib_escalas_sinep_pp.php";
       include "../lib/lib_adicional_grado.php";
@@ -26,6 +25,8 @@
       include "../lib/normas_vinculadas/lib_normas_vinculadas.php";
       include "../lib/requerimientos/lib_requerimientos.php";
       include "../lib/smtp_email/lib_smtp_email.php";
+      include "../lib/clasificador_institucional/lib_clasificador_institucional.php";
+      include "../lib/autoridades_superiores/lib_autoridades_superiores.php";
   
   
       
@@ -240,68 +241,6 @@
       // FIN SECCION CONSULTA DE NORMAS
 	  
 	  // ============================================================================== //
-	  
-	  // SECCION AUTORIDADES SUPERIORES
-	  if(isset($_POST['a_s'])){
-	    autoridadesSuperiores($conn);
-	  }
-	  if(isset($_POST['add_as'])){
-	    formAddAutoridad($conn);
-	  }
-	  if(isset($_POST['add_funcionario'])){
-	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-	    $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-	    $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
-	    $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
-	    $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
-	    $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
-	    $sac = mysqli_real_escape_string($conn,$_POST['sac']);
-	    $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
-	    $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
-	    addAutoridad($anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
-	  }
-	  if(isset($_POST['edit_autoridad'])){
-	    $id = mysqli_real_escape_string($conn,$_POST['id']);
-	    formEditAutoridad($id,$conn);
-	  }
-	  if(isset($_POST['update_funcionario'])){
-	    $id = mysqli_real_escape_string($conn,$_POST['id']);
-	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-	    $jurisdiccion = mysqli_real_escape_string($conn,$_POST['jurisdiccion']);
-	    $funcionario = mysqli_real_escape_string($conn,$_POST['funcionario']);
-	    $cargo = mysqli_real_escape_string($conn,$_POST['cargo']);
-	    $asignacion_mensual = mysqli_real_escape_string($conn,$_POST['salario']);
-	    $desarraigo = mysqli_real_escape_string($conn,$_POST['desarraigo']);
-	    $sac = mysqli_real_escape_string($conn,$_POST['sac']);
-	    $otros = mysqli_real_escape_string($conn,$_POST['otros_conceptos']);
-	    $observaciones = mysqli_real_escape_string($conn,$_POST['observaciones']);
-	    updateAutoridad($id,$anio,$mes,$jurisdiccion,$funcionario,$cargo,$asignacion_mensual,$desarraigo,$sac,$otros,$observaciones,$conn);
-	  }
-	  if(isset($_POST['del_autoridad'])){
-	    $id = mysqli_real_escape_string($conn,$_POST['id']);
-	    formBorrarAutoridad($id,$conn);
-	  }
-	  if(isset($_POST['delete_autoridad'])){
-	    $id = mysqli_real_escape_string($conn,$_POST['id']);
-	    delAutoridad($id,$conn);
-	  }
-	  if(isset($_POST['promedio_autoridades'])){
-	    formPromedio();
-	  }
-	  if(isset($_POST['promedio_mes_autoridades'])){
-	    $mes = mysqli_real_escape_string($conn,$_POST['mes']);
-	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-	    filtroMesAutoridades($mes,$anio,$conn);
-	  }
-	  if(isset($_POST['promedio_anio_autoridades'])){
-	    $anio = mysqli_real_escape_string($conn,$_POST['anio']);
-	    filtroAnioAutoridades($anio,$conn);
-	  }
-	    
-	  
-	  // FIN SECCION AUTORIDADES SUPERIORES
 	  // =============================================================================== //
 	  
 	  // SECCION ESCALAS SALARIALES
@@ -790,7 +729,37 @@
 	// ============================ FIN SECCION REQUERIMIENTOS======================= //
 	// ============================================================================== //
 
-	
+    // ============================================================================== //
+	//======================== SECCION AUTORIDADES SUPERIORES ======================= //
+	if(isset($_POST['launch_autoridades_superiores'])){
+        launchAutoridadesSuperiores();
+    }
+
+    $one_as = new AutoridadesSuperiores();
+
+	  if(isset($_POST['autoridades_superiores'])){
+	    $one_as-> listarAutoridadesSuperiores($one_as,$conn,$dbase);
+	  }
+
+	  if(isset($_POST['add_autoridad_superior'])){
+          $one_as->formAddAutoridadSuperior($conn,$dbase);
+    }
+
+    // =================== FIN SECCION AUTORIDADES SUPERIORES ======================= //
+	// ============================================================================== //
+
+    // ============================================================================== //
+	//======================== SECCION CLASIFICADOR INSTITUCIONAL =================== //
+    // se crea el objeto
+    $oneClasificador = new ClasificadorInstitucional();
+
+    // SE LISTAN LOS CLASIFICADORES INSTITUCIONALES
+    if(isset($_POST['clasificador_institucional'])){
+        $oneClasificador->listarClasificadorInstitucional($oneClasificador,$conn,$dbase);
+    }
+    // =================== FIN SECCION CLASIFICADOR INSTITUCIONAL =================== //
+	// ============================================================================== //
+
 	if(isset($_POST['launch_tablas_base'])){
         launchTablasBase();
 	}
@@ -825,6 +794,8 @@
 <script type="text/javascript" src="../lib/ambito_norma/lib_ambito_norma.js"></script>
 <script type="text/javascript" src="../lib/users/lib_users.js"></script>
 <script type="text/javascript" src="../lib/requerimientos/lib_requerimientos.js"></script>
+<script type="text/javascript" src="../lib/clasificador_institucional/lib_clasificador_institucional.js"></script>
+<script type="text/javascript" src="../lib/autoridades_superiores/lib_autoridades_superiores.js"></script>
 
 
 

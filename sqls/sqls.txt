@@ -4,7 +4,6 @@
 #user: gesdo.app@gmail.com
 #pass: proteo*310*311*
 
-
 #crear nuevo usuario y luego cambiar datos en archivo connection.php
 CREATE USER 'gesdoju'@'localhost' IDENTIFIED BY 'gesdoju';
 GRANT ALL PRIVILEGES ON gesdoju . * TO 'gesdoju'@'localhost';
@@ -55,17 +54,25 @@ alter table normas drop index observaciones;
 # para determinar varias columnas de busquedas
 ALTER TABLE normas ADD FULLTEXT index_combinado (nombre_norma,f_norma,observaciones);
 
-#tabla autoridades_superiores
-create table autoridades_superiores (
+# tabla autoridades_superiores
+create table autoridades_superiores(
 id int(11) auto_increment primary key,
+organismo varchar(300) not null,
+normativa varchar(300) not null,
+observacion varchar(1000)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla evolucion_autoridades_superiores
+create table evolucion_autoridades_superiores (
+id int(11) auto_increment primary key,
+autoridad_superior_id int(11) not null,
 anio varchar(4) not null,
-mes varchar(10) not null, 
-jurisdiccion varchar(120) not null,
+mes varchar(10) not null,
 apellido_nombre varchar(100) not null,
-cargo varchar(90) not null,
 asignacion_mensual float(8,2) not null,
 desarragaigo float(8,2),
 sac float(8,2),
+cant_ur int(11) not null,
 otros_conceptos float(8,2),
 observaciones varchar(300) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -299,6 +306,13 @@ cod_org varchar(2) not null,
 descripcion varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla clasificador_institucional
+create table clasificador_institucional(
+id int(11) auto_increment primary key,
+clasificador varchar(15) not null,
+descripcion varchar(500) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #subir csv organismos
 load data local infile '/var/www/html/gesdoju/sqls/organismos.csv' 
 into table organismos fields terminated by ',' enclosed by '"' lines terminated by '\n'
@@ -308,3 +322,8 @@ into table organismos fields terminated by ',' enclosed by '"' lines terminated 
 load data local infile '/mnt/sdb1/Documents/Proyecto_Gesdoju/file.csv' 
 into table normas fields terminated by ',' enclosed by '"' lines terminated by '\n'
 (nombre_norma,n_norma,tipo_norma,f_norma,f_pub,anio_pub,jurisdiccion,organismo,unidad_fisica,observaciones);
+
+#subir csv clasificador_institucional
+load data local infile '/mnt/storage/server/gesdoju/sqls/clasificador_institucional.csv'
+into table clasificador_institucional fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(clasificador,descripcion);
